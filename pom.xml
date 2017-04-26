@@ -58,7 +58,7 @@
 	</properties>
 	
 	<build>
-		<finalName>${artifactId}</finalName>
+		<finalName>${project.artifactId}</finalName>
 		
 		<plugins>
 			<!-- maven -->
@@ -194,6 +194,7 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- Spring data jpa -->
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
