@@ -5,8 +5,7 @@
 	layout:decorator="'layout/LayoutPadrao'">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Cadastro</title>
+    <title>Cadastrar aluno</title>
 </head>
 
 <body>
@@ -18,7 +17,7 @@
             </div>
             <div class="card">
                 <div class="header">
-                    <button type="button" class="btn bg-teal waves-effect"><i class="material-icons">search</i>PESQUISA</button>
+                    <button type="button" class="btn bg-teal waves-effect"><i class="material-icons">search</i>PESQUISAR</button>
                     <ul class="header-dropdown m-r--5">
                         <li>
                             <a href="javascript:void(0);">
@@ -40,13 +39,13 @@
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
                         <div class="col-md-12">
-                            <form>
+                            <form th:object="${aluno}">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
                                         <label for="matricula">Matricula</label>
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" id="matricula" class="form-control" placeholder="">
+                                                <input type="text" id="matricula" class="form-control" placeholder="" th:field="*{matricula}">
                                             </div>
                                         </div>
                                     </div>
@@ -54,7 +53,7 @@
                                         <label for="nome">Nome</label>
                                         <div class="form-group">
                                             <div class="form-line focused error">
-                                                <input type="text" id="nome" class="form-control" placeholder="">
+                                                <input type="text" id="nome" class="form-control" placeholder="" th:field="*{nome}">
                                             </div>
                                             <label id="name-error" class="error" for="name">Campo obrigatório.</label>
                                         </div>
@@ -64,16 +63,20 @@
                                     <div class="col-xs-12 col-sm-6 col-md-2">
                                         <label for="sexo">Sexo</label>
                                         <div class="form-group has-error">
+                                        	<th:block th:each="sexo : ${sexo}">
+                                        	
+                                        	</th:block>
                                             <input type="radio" name="sexo" id="masculino" class="with-gap">
                                             <label for="masculino">Masculino</label>
 
                                             <input type="radio" name="sexo" id="feminino" class="with-gap">
                                             <label for="feminino" class="m-l-20">Feminino</label>
+                                            
                                             <label id="sexo-error" class="error" for="name">Campo obrigatório.</label>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-3">
-                                        <label for="identificacao">Identificação</label>
+                                        <label for="identificacao">Identificacao</label>
                                         <select id="identificacao" class="form-control show-tick">
                                             <option>Interno</option>
                                             <option>Semi-Interno</option>
