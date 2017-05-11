@@ -13,11 +13,18 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
+import br.edu.ifbaiano.csi.ngti.cae.model.Identificacao;
+import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
+import br.edu.ifbaiano.csi.ngti.cae.model.Sexo;
+import br.edu.ifbaiano.csi.ngti.cae.repository.Cursos;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroAlunoService;
 
 @Controller
 @RequestMapping("/alunos")
 public class AlunosController {
+	
+	@Autowired
+	private Cursos cursos;
 	
 	@Autowired
 	private CadastroAlunoService cadastroAlunoService;
@@ -30,6 +37,10 @@ public class AlunosController {
 	@GetMapping("/novo")
 	public ModelAndView novo(Aluno aluno){
 		ModelAndView mv  = new ModelAndView("aluno/CadastroAluno");
+		mv.addObject("sexo", Sexo.values());
+		mv.addObject("identificacoes", Identificacao.values());
+		mv.addObject("series", SerieTurma.values());
+		mv.addObject("cursos", cursos.findAll());
 		mv.addObject("aluno", aluno);
 		
 		return mv;
@@ -38,8 +49,8 @@ public class AlunosController {
 	@PostMapping(value = { "/novo", "{\\d+}" })
 	public ModelAndView salvar(@Valid Aluno aluno, BindingResult result, RedirectAttributes attributs){
 		
-		if(result.hasErrors())
-			return novo(aluno);
+		if(result.hasErrors()){
+			 System.out.println("tem erros no formulário ------------->>>"); return novo(aluno);}
 		
 		cadastroAlunoService.salvar(aluno);
 

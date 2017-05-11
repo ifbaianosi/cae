@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Max;
@@ -39,7 +41,7 @@ public class Aluno extends Entidade {
 	/**CAMPOS PARA INSERIR A FOTO DO ALUNO*/
 	private String foto;
 	
-	@Column(name="contet_type")
+	@Column(name="content_type")
 	private String contentType;
 	/**FOTO*/
 	
@@ -50,22 +52,28 @@ public class Aluno extends Entidade {
 	@Transient
 	private Integer idade;
 	
-	@NotEmpty(message="Selecione sexo")
+	@NotNull(message="Selecione sexo")
 	@Enumerated(EnumType.STRING)
 	private Sexo sexo;
 	
-	@NotEmpty(message="Selecione a identificação do aluno")
+	@NotNull(message="Selecione a identificação do aluno")
 	@Enumerated(EnumType.STRING)
 	private Identificacao identificacao;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="serie_turma")
+	private SerieTurma serieTurma;
 	
 	@Max(value=100, message="O número do apartamento deve ser no máximo até 100")
 	private Integer apartamento;
 	
-	@Column(name="nome_mae")
-	private String nomeMae;
+	@ManyToOne
+	@JoinColumn(name="codigo_contato")
+	private Contato contato;
 	
-	@Column(name="nome_pai")
-	private String nomePai;
+	/*@ManyToOne
+	@JoinColumn(name="codigo_curso")
+	private Curso curso;*/
 	
 	
 	public String getMatricula() {
@@ -92,24 +100,6 @@ public class Aluno extends Entidade {
 	public void setSexo(Sexo sexo) {
 		this.sexo = sexo;
 	}
-	public int getApartamento() {
-		return apartamento;
-	}
-	public void setApartamento(int apartamento) {
-		this.apartamento = apartamento;
-	}
-	public String getNomeMae() {
-		return nomeMae;
-	}
-	public void setNomeMae(String nomeMae) {
-		this.nomeMae = nomeMae;
-	}
-	public String getNomePai() {
-		return nomePai;
-	}
-	public void setNomePai(String nomePai) {
-		this.nomePai = nomePai;
-	}
 	public String getEmail() {
 		return email;
 	}
@@ -134,14 +124,36 @@ public class Aluno extends Entidade {
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-	public void setApartamento(Integer apartamento) {
-		this.apartamento = apartamento;
-	}
 	public Integer getIdade() {
 		return idade;
 	}
 	public void setIdade(Integer idade) {
 		this.idade = idade;
+	}
+	/*public Curso getCurso() {
+		return curso;
+	}
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}*/
+	
+	public Integer getApartamento() {
+		return apartamento;
+	}
+	public void setApartamento(Integer apartamento) {
+		this.apartamento = apartamento;
+	}
+	public SerieTurma getSerieTurma() {
+		return serieTurma;
+	}
+	public void setSerieTurma(SerieTurma serieTurma) {
+		this.serieTurma = serieTurma;
+	}
+	public Contato getContato() {
+		return contato;
+	}
+	public void setContato(Contato contato) {
+		this.contato = contato;
 	}
 	@SuppressWarnings("unused")
 	private String getFotoOuMock() {

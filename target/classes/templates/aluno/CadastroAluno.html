@@ -39,9 +39,41 @@
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
                         <div class="col-md-12">
-                            <form th:object="${aluno}">
+                            <form class="js-formulario" th:action="@{/alunos/novo}" method="POST" th:object="${aluno}">
                                 <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
+                                        <label for="nome">Nome</label>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" id="nome" class="form-control" placeholder="" th:field="*{nome}">
+                                            </div>
+                                            <!-- <label id="name-error" class="error" for="name">Campo obrigatório.</label>  focused error -->
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                                        <label for="dataNascimento">Data Nascimento</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">date_range</i>
+                                            </span>
+                                            <div class="form-line">
+                                                <input type="text" class="form-control date" placeholder="Ex: 30/07/2016" th:field="*{dataNascimento}">
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+                                        <label for="sexo">Sexo</label>
+                                        <div class="form-group">
+                                        	<th:block th:each="sexo : ${sexo}">
+	                                            <input type="radio" th:value="${sexo}" th:field="*{sexo}" class="with-gap">
+	                                            <label th:for="${#ids.prev('sexo')}" th:text="${sexo.descricao}">Masculino</label>
+                                        	</th:block>                                            
+                                            <!-- <label id="sexo-error" class="error" for="sexo">Campo obrigatório.</label> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
                                         <label for="matricula">Matricula</label>
                                         <div class="form-group">
                                             <div class="form-line">
@@ -49,61 +81,68 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-8 col-lg-10">
-                                        <label for="nome">Nome</label>
-                                        <div class="form-group">
-                                            <div class="form-line focused error">
-                                                <input type="text" id="nome" class="form-control" placeholder="" th:field="*{nome}">
-                                            </div>
-                                            <label id="name-error" class="error" for="name">Campo obrigatório.</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-2">
-                                        <label for="sexo">Sexo</label>
-                                        <div class="form-group has-error">
-                                        	<th:block th:each="sexo : ${sexo}">
-                                        	
-                                        	</th:block>
-                                            <input type="radio" name="sexo" id="masculino" class="with-gap">
-                                            <label for="masculino">Masculino</label>
-
-                                            <input type="radio" name="sexo" id="feminino" class="with-gap">
-                                            <label for="feminino" class="m-l-20">Feminino</label>
-                                            
-                                            <label id="sexo-error" class="error" for="name">Campo obrigatório.</label>
-                                        </div>
-                                    </div>
                                     <div class="col-xs-12 col-sm-6 col-md-3">
                                         <label for="identificacao">Identificacao</label>
-                                        <select id="identificacao" class="form-control show-tick">
-                                            <option>Interno</option>
-                                            <option>Semi-Interno</option>
-                                            <option>Externo</option>
-                                            <option>Funcionário</option>
-                                            <option>Servidor</option>
-                                            <option>Não Identificado</option>
+                                        <select id="identificacao" class="form-control show-tick" th:field="*{identificacao}">
+                                        	<option value="">selecione...</option>
+                                            <option th:each="identificacao : ${identificacoes}" th:value="${identificacao}" th:text="${identificacao.descricao}">Interno</option>
                                         </select>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4">
-                                        <label for="email">Email</label>
-                                        <div class="form-group">
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                    	<label for="curso">Curso</label>
+	                                    <select class="form-control show-tick" data-live-search="true" data-size="5" data-container="body">
+	                                    	<option value="">selecione...</option>
+										    <option th:each="curso : ${cursos}" th:value="${curso.codigo}" th:text="${curso.nome}">Agropecuaria</option>
+										</select>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                    	<label for="serieTurma">Serie/Turma</label>
+	                                    <select class="form-control show-tick" data-live-search="true" data-size="5" data-container="body" th:field="*{serieTurma}">
+	                                    	<option value="">selecione...</option>
+										    <option th:each="serie : ${series}" th:value="${serie}" th:text="${serie.descricao}">1º ano A</option>
+										</select>
+                                    </div>
+                                </div>
+                               <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                    	<label for="apartamento">Numero do apartamento</label>
+	                                    <div class="form-group">
                                             <div class="form-line">
-                                                <input type="email" id="email" class="form-control" placeholder="">
+                                                <input type="text" id="apartamento" class="form-control" placeholder="" th:field="*{apartamento}">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
-                                        <label for="dataNascimento">Data Nascimento</label>
-                                        <div class="form-group">
+                                    <div class="col-xs-12 col-sm-6 col-md-9">
+                                        <label for="email">Email</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">email</i>
+                                            </span>
                                             <div class="form-line">
-                                                <input type="text" id="dataNascimento" class="form-control" placeholder="">
+                                                <input type="email" class="form-control" placeholder="Ex: example@example.com" th:field="*{email}">
                                             </div>
+                                        </div>
+                                    </div>
+                               </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                    	<label for="contato">Contato</label>
+                                    	<div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">phone</i>
+                                            </span>
+                                            <div class="form-line">
+                                                <input type="text" class="form-control mobile-phone-number js-contato-input" placeholder="" th:data-url="@{/contatos/novo}" th:field="*{contato.numero}">
+                                                <input type="hidden" class="js-codigo-contato" th:field="*{contato}">
+                                            </div>
+                                        </div>
+                                         <div class="form-group">
+                                            <input type="checkbox" id="whatsapp" class="chk-col-teal js-whatsapp" th:data-url="@{/contatos/iswhatsapp}" th:checked="${aluno.contato.whatsapp}">
+                                            <label for="whatsapp">WhatsApp</label>
                                         </div>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-primary m-t-15 waves-effect"><i class="material-icons">send</i> SALVAR</button>
+                                <button type="submit" class="btn btn-primary m-t-15 waves-effect  js-submit"><i class="material-icons">send</i> SALVAR</button>
                             </form>
                         </div>
                     </div>
@@ -114,7 +153,7 @@
 
 
    <th:block layout:fragment="javascript-extra">
-   
+   		<script th:src="@{/javascript/contato.cadastro-rapido.js}"></script>
    </th:block>
 </body>
 
