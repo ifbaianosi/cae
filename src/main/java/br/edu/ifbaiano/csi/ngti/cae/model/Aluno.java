@@ -16,7 +16,6 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.util.StringUtils;
 
 @Entity
@@ -71,9 +70,10 @@ public class Aluno extends Entidade {
 	@JoinColumn(name="codigo_contato")
 	private Contato contato;
 	
-	/*@ManyToOne
+	@NotNull(message="Selecione um curso")
+	@ManyToOne
 	@JoinColumn(name="codigo_curso")
-	private Curso curso;*/
+	private Curso curso;
 	
 	
 	public String getMatricula() {
@@ -130,13 +130,12 @@ public class Aluno extends Entidade {
 	public void setIdade(Integer idade) {
 		this.idade = idade;
 	}
-	/*public Curso getCurso() {
+	public Curso getCurso() {
 		return curso;
 	}
 	public void setCurso(Curso curso) {
 		this.curso = curso;
-	}*/
-	
+	}
 	public Integer getApartamento() {
 		return apartamento;
 	}

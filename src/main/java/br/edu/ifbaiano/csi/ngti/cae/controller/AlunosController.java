@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
+import br.edu.ifbaiano.csi.ngti.cae.model.GrauParentesco;
 import br.edu.ifbaiano.csi.ngti.cae.model.Identificacao;
 import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
 import br.edu.ifbaiano.csi.ngti.cae.model.Sexo;
@@ -41,6 +42,7 @@ public class AlunosController {
 		mv.addObject("identificacoes", Identificacao.values());
 		mv.addObject("series", SerieTurma.values());
 		mv.addObject("cursos", cursos.findAll());
+		mv.addObject("parentescos", GrauParentesco.values());
 		mv.addObject("aluno", aluno);
 		
 		return mv;

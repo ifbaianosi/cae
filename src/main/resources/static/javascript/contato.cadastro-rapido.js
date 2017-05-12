@@ -18,8 +18,7 @@ NGTICAE.ContatoCadastroRapido = (function(){
 	
 	function onCadastrarContato(){
 		this.codigoContato.val('');
-		this.whatsappCheckBox.attr('checked', false);
-		if(this.codigoContato.val().trim() == null || this.codigoContato.val().trim() == ""){
+		if(this.contatoInput.val().trim().length > 0){
 			console.log('Cadastrar contato agora!');
 			$.ajax({
 				url: this.contatoInput.data('url'), // /contatos/novo
@@ -32,12 +31,12 @@ NGTICAE.ContatoCadastroRapido = (function(){
 				complete: onFinalizarRequisicao.bind(this)
 			});
 		}else{
-			
 		}
 	}
 	
 	function onIniciarRequisicao(){
 		this.botaoSubmit.attr('disabled', true);
+		this.whatsappCheckBox.attr('disabled', true);
 	}
 	
 	function onErroSalvandoContato(erro){
@@ -53,6 +52,7 @@ NGTICAE.ContatoCadastroRapido = (function(){
 	
 	function onFinalizarRequisicao(){
 		this.botaoSubmit.attr('disabled', false);
+		this.whatsappCheckBox.attr('disabled', false);
 	}
 	
 	function onFocusContato(){
@@ -60,19 +60,22 @@ NGTICAE.ContatoCadastroRapido = (function(){
 	}
 	
 	function onWhatsappCheckBoxClicado(){
-		var checked = this.whatsappCheckBox.is(':checked');
-		$.ajax({
-			url: this.whatsappCheckBox.data('url'),
-			method: 'PUT',
-			data: {
-				codigo: this.codigoContato.val(),
-				whatsapp: checked
-			},
-			beforeSend: onIniciarRequisicao.bind(this),
-			error: onErroAtualizarContato,
-			success: onContatoAtualizado.bind(this),
-			complete: onFinalizarRequisicao.bind(this)
-		});
+		if(this.contatoInput.val().trim().length > 0){
+			var checked = this.whatsappCheckBox.is(':checked');
+			$.ajax({
+				url: this.whatsappCheckBox.data('url'),
+				method: 'PUT',
+				data: {
+					codigo: this.codigoContato.val(),
+					whatsapp: checked
+				},
+				beforeSend: onIniciarRequisicao.bind(this),
+				error: onErroAtualizarContato,
+				success: onContatoAtualizado.bind(this),
+				complete: onFinalizarRequisicao.bind(this)
+			});
+		}else{
+		}
 	}
 	
 	function onErroAtualizarContato(erro){ console.log('Erro ao atualizar o contato whatsapp: ', erro); }
