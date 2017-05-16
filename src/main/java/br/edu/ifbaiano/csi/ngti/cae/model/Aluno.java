@@ -66,10 +66,12 @@ public class Aluno extends Entidade {
 	@Max(value=100, message="O número do apartamento deve ser no máximo até 100")
 	private Integer apartamento;
 	
-	@ManyToOne
-	@JoinColumn(name="codigo_contato")
-	private Contato contato;
+	@NotBlank(message="O número para contato é obrigatório")
+	@Size(max=20, message="O número para contato deve conter no máximo {max} caracteres")
+	private String contato;
 	
+	private Boolean whatsapp;
+		
 	@NotNull(message="Selecione um curso")
 	@ManyToOne
 	@JoinColumn(name="codigo_curso")
@@ -148,11 +150,17 @@ public class Aluno extends Entidade {
 	public void setSerieTurma(SerieTurma serieTurma) {
 		this.serieTurma = serieTurma;
 	}
-	public Contato getContato() {
+	public String getContato() {
 		return contato;
 	}
-	public void setContato(Contato contato) {
+	public void setContato(String contato) {
 		this.contato = contato;
+	}
+	public Boolean getWhatsapp() {
+		return whatsapp;
+	}
+	public void setWhatsapp(Boolean whatsapp) {
+		this.whatsapp = whatsapp;
 	}
 	@SuppressWarnings("unused")
 	private String getFotoOuMock() {

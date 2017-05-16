@@ -1,10 +1,9 @@
 package br.edu.ifbaiano.csi.ngti.cae.model;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -17,9 +16,11 @@ public class Responsavel extends Entidade{
 	@NotBlank(message="O nome é obrigatorio")
 	private String nome;
 	
-	@ManyToOne
-	@JoinColumn(name="codigo_contato")
-	private Contato contato;
+	@NotBlank(message="O número para contato é obrigatório")
+	@Size(max=20, message="O número para contato deve conter no máximo {max} caracteres")
+	private String contato;
+	
+	private Boolean whatsapp;
 	
 	@Transient
 	private GrauParentesco parentesco;
@@ -32,12 +33,20 @@ public class Responsavel extends Entidade{
 		this.nome = nome;
 	}
 
-	public Contato getContato() {
+	public String getContato() {
 		return contato;
 	}
 
-	public void setContato(Contato contato) {
+	public void setContato(String contato) {
 		this.contato = contato;
+	}
+
+	public Boolean getWhatsapp() {
+		return whatsapp;
+	}
+
+	public void setWhatsapp(Boolean whatsapp) {
+		this.whatsapp = whatsapp;
 	}
 
 	public GrauParentesco getParentesco() {
