@@ -1,5 +1,7 @@
 package br.edu.ifbaiano.csi.ngti.cae.controller;
 
+import java.util.UUID;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +39,14 @@ public class AlunosController {
 	
 	@GetMapping("/novo")
 	public ModelAndView novo(Aluno aluno){
+		aluno.setUuid(UUID.randomUUID().toString());
 		ModelAndView mv  = new ModelAndView("aluno/CadastroAluno");
 		mv.addObject("sexo", Sexo.values());
 		mv.addObject("identificacoes", Identificacao.values());
 		mv.addObject("series", SerieTurma.values());
 		mv.addObject("cursos", cursos.findAll());
 		mv.addObject("parentescos", GrauParentesco.values());
-		mv.addObject("aluno", aluno);
+		/*mv.addObject("aluno", aluno);*/
 		
 		return mv;
 	}

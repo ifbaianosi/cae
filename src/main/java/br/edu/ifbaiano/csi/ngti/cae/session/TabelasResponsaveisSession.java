@@ -22,9 +22,9 @@ public class TabelasResponsaveisSession {
 		tabelas.add(tabela);
 	}
 
-	public void excluirResponsavel(String uuid, Responsavel contato) {
+	public void excluirResponsavel(String uuid, Responsavel responsavel) {
 		TabelaResponsavel tabela = buscarTabelaPorUuid(uuid);
-		tabela.excluirResponsavel(contato);;
+		tabela.excluirResponsavel(responsavel);;
 	}
 
 	public void excluirTodosOsResponsavels(String uuid) {
@@ -32,11 +32,11 @@ public class TabelasResponsaveisSession {
 		tabela.excluirTodosResponsaveis();
 	}
 	
-	public List<ResponsavelSession> getResponsavels(String uuid) {
+	public List<ResponsavelSession> getResponsaveis(String uuid) {
 		return buscarTabelaPorUuid(uuid).getResponsavels();
 	}
 	
-	public int totalResponsavels(String uuid){
+	public int totalResponsaveis(String uuid){
 		TabelaResponsavel tabela = buscarTabelaPorUuid(uuid);
 		return tabela.totalResponsaveis();
 	}

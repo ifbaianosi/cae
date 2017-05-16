@@ -30,10 +30,11 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import br.edu.ifbaiano.csi.ngti.cae.controller.AlunosController;
+import br.edu.ifbaiano.csi.ngti.cae.session.TabelasResponsaveisSession;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 @Configuration
-@ComponentScan(basePackageClasses = { AlunosController.class })
+@ComponentScan(basePackageClasses = { AlunosController.class, TabelasResponsaveisSession.class })
 @EnableWebMvc
 @EnableSpringDataWebSupport
 @EnableAsync

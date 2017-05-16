@@ -1,8 +1,11 @@
 package br.edu.ifbaiano.csi.ngti.cae.model;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -22,8 +25,13 @@ public class Responsavel extends Entidade{
 	
 	private Boolean whatsapp;
 	
+	@NotNull(message="Selecione o grau de parentesco")
+	@Enumerated(EnumType.STRING)
 	@Transient
 	private GrauParentesco parentesco;
+	
+	@Transient
+	private String uuid;
 
 	public String getNome() {
 		return nome;
@@ -57,5 +65,7 @@ public class Responsavel extends Entidade{
 		this.parentesco = parentesco;
 	}
 	
-	
+	public String getUuid() {
+		return uuid;
+	}
 }

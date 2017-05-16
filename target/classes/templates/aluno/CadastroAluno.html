@@ -132,12 +132,12 @@
                                                 <i class="material-icons">phone</i>
                                             </span>
                                             <div class="form-line">
-                                                <input type="text" class="form-control mobile-phone-number js-contato-input" placeholder="" th:data-url="@{/contatos/novo}" th:field="*{contato.numero}">
+                                                <input type="text" class="form-control mobile-phone-number js-contato-input" placeholder="" th:data-url="@{/contatos/novo}">
                                                 <input type="hidden" class="js-codigo-contato" th:field="*{contato}">
                                             </div>
                                         </div>
                                          <div class="form-group">
-                                            <input type="checkbox" id="whatsapp" class="chk-col-teal js-whatsapp" th:data-url="@{/contatos/iswhatsapp}" th:checked="${aluno.contato.whatsapp}">
+                                            <input type="checkbox" id="whatsapp" class="chk-col-teal js-whatsapp" th:data-url="@{/contatos/iswhatsapp}" th:checked="${aluno.whatsapp}">
                                             <label for="whatsapp">WhatsApp</label>
                                         </div>
                                     </div>
@@ -148,7 +148,7 @@
                                 	</div>
                                 	<div class="col-xs-12 col-sm-6">
 	                                	<div class="table-responsive">
-				                            <table class="table table-hover table-bordered">
+				                            <table class="table table-hover table-bordered  js-tabela-responsaveis">
 				                                <thead>
 				                                    <tr>
 				                                        <th>Nome</th>
@@ -158,45 +158,21 @@
 															<a href="javascript:void(0);" class="" data-toggle="modal" data-target="#defaultModal">
 							                                    <span class="material-icons col-teal">add_circle</span>
 							                                </a>
-							                                <a href="javascript:void(0);" class="">
+							                                <a href="javascript:void(0);" class="js-remover-todos">
 							                                    <i class="material-icons col-pink">delete_forever</i>
 							                                </a>
 														</th>
 				                                    </tr>
 				                                </thead>
-				                                <tbody>
-				                                    <tr>
-				                                        <td>Nome do pai</td>
-				                                        <td>(73) 98178-7390</td>
-				                                        <td><b>Pai</b></td>
-				                                        <th>
-															<a class="">
-							                                    <i class="material-icons">mode_edit</i>
-							                                </a>
-							                                <a class="">
-							                                    <i class="material-icons">delete</i>
-							                                </a>
-														</th>
-				                                    </tr>
-				                                    <tr>
-				                                        <td>Nome da mãe</td>
-				                                        <td>(73) 98178-7390</td>
-				                                        <td><b>Mae</b></td>
-				                                        <th>
-															<a class="">
-							                                    <i class="material-icons">mode_edit</i>
-							                                </a>
-							                                <a class="">
-							                                    <i class="material-icons">delete</i>
-							                                </a>
-														</th>
-				                                    </tr>
+				                                <tbody class="js-tabela-responsaveis-body">
+				                                    <tr><td colspan="4">Adicione ao menos um responsavel</td></tr>
 				                                </tbody>
 				                            </table>
 	                        			</div>
                                 	</div>
                                 </div>
                                 <button type="submit" class="btn btn-primary m-t-15 waves-effect  js-submit"><i class="material-icons">send</i> SALVAR</button>
+                        		<input type="hidden" id="uuid" th:field="*{uuid}">
                             </form>
                         </div>
                     </div>
@@ -215,37 +191,36 @@
                         </div>
                         <div class="body">
                         	<form>
-			                		<label for="">Grau de parentesco</label>
-			                        <div class="form-group">
-			                            <select id="" class="form-control show-tick">
-			                            	<option value="">selecione...</option>
-			                                <option th:each="parentesco : ${parentescos}" th:value="${parentesco}" th:text="${parentesco.descricao}">Pai</option>
-			                            </select>
-		                            </div>
-		                        	<label for="responsavel_nome">Nome</label>
-		                            <div class="form-group">
-		                                 <div class="form-line">
-		                                     <input type="text" id="responsavel_nome" class="form-control" placeholder="">
-		                                 </div>
-		                                 <!-- <label id="name-error" class="error" for="name">Campo obrigatório.</label>  focused error -->
-		                            </div>
-		                     		<label for="responsavel_contato">Contato</label>
-		                       		<div class="input-group">
-		                               <span class="input-group-addon">
-		                                   <i class="material-icons">phone</i>
-		                               </span>
-		                               <div class="form-line">
-		                                   <input type="text" id="responsavel_contato" class="form-control mobile-phone-number js-responsavel-contato-input" placeholder="" th:data-url="@{/contatos/novo}">
-		                                   <input type="hidden" class="js-responsavel-codigo-contato">
-		                               </div>
-		                           </div>
-		                            <div class="form-group">
-		                               <input type="checkbox" id="responsavel_whatsapp" class="chk-col-teal js-responsavel-whatsapp" th:data-url="@{/contatos/iswhatsapp}">
-		                               <label for="responsavel_whatsapp">WhatsApp</label>
-		                           </div>
-		                           <button type="button" class="btn btn-link waves-effect bg-teal">SALVAR</button>
-                       				<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">FECHAR</button>
-			                	</form>
+		                		<label for="">Grau de parentesco</label>
+		                        <div class="form-group">
+		                            <select id="responsavel_parentesco" class="form-control show-tick">
+		                            	<option value="">selecione...</option>
+		                                <option th:each="parentesco : ${parentescos}" th:value="${parentesco}" th:text="${parentesco.descricao}">Pai</option>
+		                            </select>
+	                            </div>
+	                        	<label for="responsavel_nome">Nome</label>
+	                            <div class="form-group">
+	                                 <div class="form-line">
+	                                     <input type="text" id="responsavel_nome" class="form-control" placeholder="">
+	                                 </div>
+	                                 <!-- <label id="name-error" class="error" for="name">Campo obrigatório.</label>  focused error -->
+	                            </div>
+	                     		<label for="responsavel_contato">Contato</label>
+	                       		<div class="input-group">
+	                               <span class="input-group-addon">
+	                                   <i class="material-icons">phone</i>
+	                               </span>
+	                               <div class="form-line">
+	                                   <input type="text" id="responsavel_contato" class="form-control mobile-phone-number" placeholder="" th:data-url="@{/contatos/novo}">
+	                               </div>
+	                           </div>
+	                            <div class="form-group">
+	                               <input type="checkbox" id="responsavel_whatsapp" class="chk-col-teal">
+	                               <label for="responsavel_whatsapp">WhatsApp</label>
+	                           </div>
+	                           <button type="button" class="btn btn-link waves-effect bg-teal  js-adicionar-responsavel" th:data-url="@{/responsaveis}">ADICIONAR</button>
+                      		   <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">FECHAR</button>
+		                	</form>
                         </div>
                         <!-- <div class="modal-footer" style="border-top: 1px solid #e5e5e5;">
                         	<button type="button" class="btn btn-link waves-effect bg-teal">SALVAR</button>
@@ -257,7 +232,7 @@
     </section>
 
    <th:block layout:fragment="javascript-extra">
-   		<script th:src="@{/javascript/contato.cadastro-rapido.js}"></script>
+   		<script th:src="@{/javascript/aluno.gerenciar-responsaveis.js}"></script>
    </th:block>
 </body>
 

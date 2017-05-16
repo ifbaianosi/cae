@@ -10,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,20 +36,37 @@ public class ResponsaveisController {
 	@Autowired
 	private Contatos responsavels;
 	
+	@Autowired
 	private TabelasResponsaveisSession tabelasResponsaveisSession;
 	
 	@PostMapping(value="/adicionar", consumes=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<?> adicionarResponsavel(@RequestBody @Valid Responsavel responsavel, @RequestParam("uuid") String uuid, BindingResult result){
+	public @ResponseBody ResponseEntity<?> adicionarResponsavel(@RequestBody @Valid Responsavel responsavel, BindingResult result){
 		
-		if(result.hasErrors())
-			return ResponseEntity.badRequest().build();
+		if(result.hasErrors()){System.out.println("não passou pela validação...");
+			return ResponseEntity.badRequest().build();}
 		
 		List<Responsavel> responsaveis = new ArrayList<>();
 		responsaveis.add(responsavel);
 		
-		tabelasResponsaveisSession.adicionarResponsavel(uuid, responsaveis);
+		tabelasResponsaveisSession.adicionarResponsavel(responsavel.getUuid(), responsaveis);
 		
-		return ResponseEntity.ok(responsavel);
+		return ResponseEntity.ok(tabelasResponsaveisSession.getResponsaveis(responsavel.getUuid()));
+	}
+	
+	@DeleteMapping(value="/remover-todos")
+	public ResponseEntity<?> removerTodosResponsaveis(@RequestBody String uuid){
+		tabelasResponsaveisSession.excluirTodosOsResponsavels(uuid);
+		
+		return ResponseEntity.ok(tabelasResponsaveisSession.getResponsaveis(uuid));
+	} 
+	
+	@DeleteMapping(value="/remover/{uuid}/{contato}")
+	public ResponseEntity<?> removerResponsavel(@PathVariable("uuid") String uuid, @PathVariable("contato") String contato){
+		Responsavel responsavel = new Responsavel();
+		responsavel.setContato(contato);
+		tabelasResponsaveisSession.excluirResponsavel(uuid, responsavel);
+		
+		return ResponseEntity.ok(tabelasResponsaveisSession.getResponsaveis(uuid));
 	} 
 
 	@PostMapping(value="/novo", consumes=MediaType.APPLICATION_JSON_VALUE)

@@ -36,7 +36,7 @@ public class TabelaResponsavel {
 	
 	public void excluirResponsavel(Responsavel responsavel){
 		int indice = IntStream.range(0, responsavelSession.size())
-				.filter(i -> responsavelSession.get(i).getResponsavel().equals(responsavel))
+				.filter(i -> responsavelSession.get(i).getResponsavel().getContato().equals(responsavel.getContato()))
 				.findAny().getAsInt();
 		
 		responsavelSession.remove(indice);
@@ -56,7 +56,7 @@ public class TabelaResponsavel {
 	
 	public Optional<ResponsavelSession> buscarPorResponsavel(Responsavel responsavel){
 		return responsavelSession.stream()
-				.filter(i -> i.getResponsavel().equals(responsavel))
+				.filter(i -> i.getResponsavel().getContato().equals(responsavel.getContato()))
 				.findAny();
 	}
 	

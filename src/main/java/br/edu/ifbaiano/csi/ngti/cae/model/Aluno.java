@@ -77,6 +77,9 @@ public class Aluno extends Entidade {
 	@JoinColumn(name="codigo_curso")
 	private Curso curso;
 	
+	@Transient
+	private String uuid;
+	
 	
 	public String getMatricula() {
 		return matricula;
@@ -161,6 +164,12 @@ public class Aluno extends Entidade {
 	}
 	public void setWhatsapp(Boolean whatsapp) {
 		this.whatsapp = whatsapp;
+	}
+	public String getUuid() {
+		return uuid;
+	}
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 	@SuppressWarnings("unused")
 	private String getFotoOuMock() {
