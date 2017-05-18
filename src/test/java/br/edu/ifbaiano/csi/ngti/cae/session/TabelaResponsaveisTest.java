@@ -28,7 +28,7 @@ public class TabelaResponsaveisTest {
 	public void deveAdicionarUmResponsavel() throws Exception {
 		List<Responsavel> contatos = new ArrayList<Responsavel>();
 		Responsavel a1 = new Responsavel();
-		a1.setCodigo(1L);
+		a1.setContato("1");
 		
 		contatos.add(a1);
 		
@@ -41,16 +41,16 @@ public class TabelaResponsaveisTest {
 	public void deveAdicionarVariosResponsaveis() throws Exception {
 		List<Responsavel> contatos = new ArrayList<>();
 		Responsavel a1 = new Responsavel();
-		a1.setCodigo(1L);
+		a1.setContato("1");
 		
 		Responsavel a2 = new Responsavel();
-		a2.setCodigo(2L);
+		a2.setContato("2");
 		
 		Responsavel a3 = new Responsavel();
-		a3.setCodigo(3L);
+		a3.setContato("3");
 
 		Responsavel a4 = new Responsavel();
-		a4.setCodigo(4L);
+		a4.setContato("4");
 		
 		contatos.add(a1);
 		contatos.add(a2);
@@ -66,16 +66,16 @@ public class TabelaResponsaveisTest {
 	public void deveManterTamanhoDaListaParaMesmosResponsaveis() throws Exception {
 		List<Responsavel> contatos = new ArrayList<>();
 		Responsavel a1 = new Responsavel();
-		a1.setCodigo(1L);
+		a1.setContato("1");
 		
 		Responsavel a2 = new Responsavel();
-		a2.setCodigo(2L);
+		a2.setContato("2");
 		
 		Responsavel a3 = new Responsavel();
-		a3.setCodigo(3L);
+		a3.setContato("3");
 
 		Responsavel a4 = new Responsavel();
-		a4.setCodigo(4L);
+		a4.setContato("4");
 		
 		contatos.add(a1);
 		contatos.add(a2);
@@ -92,16 +92,16 @@ public class TabelaResponsaveisTest {
 	public void deveExcluirResponsaveis() throws Exception {
 		List<Responsavel> contatos = new ArrayList<>();
 		Responsavel a1 = new Responsavel();
-		a1.setCodigo(1L);
+		a1.setContato("1");
 		
 		Responsavel a2 = new Responsavel();
-		a2.setCodigo(2L);
+		a2.setContato("2");
 		
 		Responsavel a3 = new Responsavel();
-		a3.setCodigo(3L);
+		a3.setContato("3");
 
 		Responsavel a4 = new Responsavel();
-		a4.setCodigo(4L);
+		a4.setContato("4");
 		
 		contatos.add(a1);
 		contatos.add(a2);

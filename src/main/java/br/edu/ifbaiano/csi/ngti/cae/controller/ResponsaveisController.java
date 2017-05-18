@@ -49,22 +49,34 @@ public class ResponsaveisController {
 		responsaveis.add(responsavel);
 		
 		tabelasResponsaveisSession.adicionarResponsavel(responsavel.getUuid(), responsaveis);
+		System.out.println("------------> uuid: "+responsavel.getUuid());
+		System.out.println("/adicionar -> quantidade de responsaveis: "+tabelasResponsaveisSession.totalResponsaveis(responsavel.getUuid()));
 		
 		return ResponseEntity.ok(tabelasResponsaveisSession.getResponsaveis(responsavel.getUuid()));
 	}
 	
-	@DeleteMapping(value="/remover-todos")
-	public ResponseEntity<?> removerTodosResponsaveis(@RequestBody String uuid){
-		tabelasResponsaveisSession.excluirTodosOsResponsavels(uuid);
+	@DeleteMapping(value="/remover-todos/{uuid}")
+	public @ResponseBody ResponseEntity<?> removerTodosResponsaveis(@PathVariable("uuid") String uuid){
+		System.out.println("------------> uuid: "+uuid);
+		System.out.println("/remover-todos -> quantidade de responsaveis: "+tabelasResponsaveisSession.totalResponsaveis(uuid));
+		
+		tabelasResponsaveisSession.excluirTodosOsResponsaveis(uuid);
+		
+		System.out.println("/remover-todos -> quantidade de responsaveis: "+tabelasResponsaveisSession.totalResponsaveis(uuid));
 		
 		return ResponseEntity.ok(tabelasResponsaveisSession.getResponsaveis(uuid));
 	} 
 	
 	@DeleteMapping(value="/remover/{uuid}/{contato}")
-	public ResponseEntity<?> removerResponsavel(@PathVariable("uuid") String uuid, @PathVariable("contato") String contato){
+	public @ResponseBody ResponseEntity<?> removerResponsavel(@PathVariable("uuid") String uuid, @PathVariable("contato") String contato){
 		Responsavel responsavel = new Responsavel();
 		responsavel.setContato(contato);
+		
+		System.out.println("/remover antes-> quantidade de responsaveis: "+tabelasResponsaveisSession.totalResponsaveis(uuid));
+		
 		tabelasResponsaveisSession.excluirResponsavel(uuid, responsavel);
+		
+		System.out.println("/remover depois de excluir-> quantidade de responsaveis: "+tabelasResponsaveisSession.totalResponsaveis(uuid));
 		
 		return ResponseEntity.ok(tabelasResponsaveisSession.getResponsaveis(uuid));
 	} 

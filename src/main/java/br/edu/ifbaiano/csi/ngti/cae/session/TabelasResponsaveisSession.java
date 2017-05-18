@@ -14,7 +14,7 @@ import br.edu.ifbaiano.csi.ngti.cae.model.ResponsavelSession;
 @Component
 public class TabelasResponsaveisSession {
 
-	private Set<TabelaResponsavel> tabelas = new HashSet<>();
+	private Set<TabelaResponsavel> tabelas = new HashSet<TabelaResponsavel>();
 
 	public void adicionarResponsavel(String uuid, List<Responsavel> responsaveis) {
 		TabelaResponsavel tabela = buscarTabelaPorUuid(uuid);
@@ -24,10 +24,10 @@ public class TabelasResponsaveisSession {
 
 	public void excluirResponsavel(String uuid, Responsavel responsavel) {
 		TabelaResponsavel tabela = buscarTabelaPorUuid(uuid);
-		tabela.excluirResponsavel(responsavel);;
+		tabela.excluirResponsavel(responsavel);
 	}
 
-	public void excluirTodosOsResponsavels(String uuid) {
+	public void excluirTodosOsResponsaveis(String uuid) {
 		TabelaResponsavel tabela = buscarTabelaPorUuid(uuid);
 		tabela.excluirTodosResponsaveis();
 	}

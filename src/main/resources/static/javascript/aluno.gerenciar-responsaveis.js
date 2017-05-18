@@ -3,10 +3,12 @@ var NGTICAE = NGTICAE || {}; //contrução do namespace
 NGTICAE.GerenciarResponsaveis = (function(){
 	
 	function GerenciarResponsaveis(){//construtor
+		this.modal = $('.js-modal-cadastro-responsavel');
 		this.tabelaResponsaveis = $('.js-tabela-responsaveis');
 		this.tabelaResponsaveisBody = $('.js-tabela-responsaveis-body');
 		this.removerTodosBtn = $('.js-remover-todos');
 		//CAMPOS DO FORMULARIO
+		this.formulario = $('#formulario_responsavel');
 		this.uuid = $('#uuid').val();
 		this.grauParentescoSelect = $('#responsavel_parentesco');
 		this.nomeResponsavelInput = $('#responsavel_nome');
@@ -24,7 +26,7 @@ NGTICAE.GerenciarResponsaveis = (function(){
 	GerenciarResponsaveis.prototype.iniciar = function(){
 		this.adicionarBtn.on('click', onAdicionarResponsavel.bind(this));
 		this.removerTodosBtn.on('click', onRemoverTodosResponsaveis.bind(this));
-		
+		this.modal.on('hide.bs.modal', onFecharModal);
 	}
 	
 	/* ADICIONAR */
@@ -44,22 +46,22 @@ NGTICAE.GerenciarResponsaveis = (function(){
 			}),
 			beforeSend: onIniciarRequisicao.bind(this),
 			error: onErroSalvandoResponsavel,
-			success: onResponsavelSalvo.bind(this),
+			success: onAtualizarTabela.bind(this),
 			complete: onFinalizarRequisicao.bind(this)
 		});
-		
+		console.log('--> uuid: '+this.uuid);
 	}
 	
 	/* REMOVER TODOS */
 	function onRemoverTodosResponsaveis(){
 		console.log('remover todos os responsaveis!');
+		console.log(this.uuid);
 		$.ajax({
-			url: this.urlResponsaveis + '/remover-todos', // /responsaveis/remover-todos
+			url: this.urlResponsaveis + '/remover-todos/' + this.uuid, // /responsaveis/remover-todos/uuid
 			method: 'DELETE',
-			data: {	uuid: this.uuid	},
 			beforeSend: onIniciarRequisicao.bind(this),
-			error: onErroExcluindoTodosResponsaveis,
-			success: onResponsavelSalvo.bind(this),
+			error: onErroExcluindoResponsaveis,
+			success: onAtualizarTabela.bind(this),
 			complete: onFinalizarRequisicao.bind(this)
 		});
 	}
@@ -74,26 +76,34 @@ NGTICAE.GerenciarResponsaveis = (function(){
 		console.log('Erro ao adicionar o responsavel: ', erro);
 	}
 	
-	function onResponsavelSalvo(responsaveis) {
-		console.log('lista de responsaveis atualizada com sucesso...');
-		
-		var tr = "";
-		for (i = 0; i < responsaveis.length; i++){
-			var responsavel = responsaveis[i].responsavel;
-			tr += "<tr><td>"+ responsavel.nome +"</td><td>"+ responsavel.contato +"</td><td><b>"+ responsavel.parentesco +"</b></td>"+
-				            "<td>"+
-								"<a href='javascript:void(0);'>"+
-				                    "<i class='material-icons'>mode_edit</i>"+
-				                "</a>"+
-				                "<a href='javascript:void(0);' class='js-remover' data-contato='" + responsavel.contato + "'>"+
-				                    "<i class='material-icons'>delete</i>"+
-				                "</a>"+
-							"</td>"+
-				        "</tr>";
+	function onAtualizarTabela(responsaveis) {
+		console.log('lista de responsaveis atualizada...');
+		console.log(responsaveis);
+		console.log('testando o contexto "this"',this.uuid)
+		if(responsaveis.length>0){
+			var tr = "";
+			for (i = 0; i < responsaveis.length; i++){
+				var responsavel = responsaveis[i].responsavel;
+				tr += "<tr><td>"+ responsavel.nome +"</td><td>"+ responsavel.contato +"</td><td><b>"+ responsavel.parentesco +"</b></td>"+
+				"<td>"+
+				"<a href='javascript:void(0);'>"+
+				"<i class='material-icons'>mode_edit</i>"+
+				"</a>"+
+				"<a href='javascript:void(0);' class='js-remover' data-contato='" + responsavel.contato + "'>"+
+				"<i class='material-icons'>delete</i>"+
+				"</a>"+
+				"</td>"+
+				"</tr>";
+			}
+			
+			this.tabelaResponsaveisBody.html(tr);
+			//ADICIONAR AÇÕES AOS BOTOES NAS LINHAS
+			this.removerResponsavelBtn = $('.js-remover');
+			this.removerResponsavelBtn.on('click', onRemoverResponsavel.bind(this));
+		}else{
+			this.tabelaResponsaveisBody.html('<tr><td colspan="4">Adicione ao menos um responsavel</td></tr>');
 		}
-		
-		this.tabelaResponsaveisBody.html(tr.length > 0 ? tr : '<tr><td colspan="4">Adicione ao menos um responsavel</td></tr>');
-		adicionarEventoRemocao();
+		this.modal.modal('hide');
 	}
 	
 	function onFinalizarRequisicao(){
@@ -101,7 +111,7 @@ NGTICAE.GerenciarResponsaveis = (function(){
 	}
 	
 	/* FUNCOES PARA REMOÇÃO DOS RESPONSAVEIS*/
-	function onErroExcluindoTodosResponsaveis(erro){ console.log('Erro ao remover todos os responsaveis: ', erro); }
+	function onErroExcluindoResponsaveis(erro){ console.log('Erro ao remover o(s) responsavel(is): ', erro); }
 
 	/* FUNÇÕES PARA REMOVER UM RESPONSAVEL */
 	function adicionarEventoRemocao(){
@@ -113,11 +123,27 @@ NGTICAE.GerenciarResponsaveis = (function(){
 		console.log('remover responsavel...');
 		var contato = $(evento.currentTarget).data('contato');
 		
+		console.log('contato:', contato);
+		console.log($('.js-adicionar-responsavel').data('url') + '/remover/' + $('#uuid').val() +'/' + contato);
+		
 		$.ajax({
-			url: $('.js-adicionar-responsavel').data('url') + "/remover/" + $('#uuid').val() +"/" + contato,
+			url: $('.js-adicionar-responsavel').data('url') + '/remover/' + $('#uuid').val() +'/' + contato,
 			method: 'DELETE',
-			success: onResponsavelSalvo.bind(this)
+			success: onAtualizarTabela.bind(this),
+			error: onErroExcluindoResponsaveis
 		});
+	}
+	
+	function onFecharModal(){
+		limparFormulario();
+	}
+	
+	function limparFormulario(){
+		console.log('limpar formulario...');
+		$('#formulario_responsavel').each(function(){
+			  this.reset();
+			});
+		$('#responsavel_parentesco').val('');
 	}
 	
 	return GerenciarResponsaveis;
