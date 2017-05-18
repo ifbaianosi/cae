@@ -96,7 +96,9 @@ NGTICAE.GerenciarResponsaveis = (function(){
 				"</tr>";
 			}
 			
+			//adiciona as linhas na tabela
 			this.tabelaResponsaveisBody.html(tr);
+			
 			//ADICIONAR AÇÕES AOS BOTOES NAS LINHAS
 			this.removerResponsavelBtn = $('.js-remover');
 			this.removerResponsavelBtn.on('click', onRemoverResponsavel.bind(this));

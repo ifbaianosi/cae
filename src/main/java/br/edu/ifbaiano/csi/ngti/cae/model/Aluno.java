@@ -51,14 +51,15 @@ public class Aluno extends Entidade {
 	@Transient
 	private Integer idade;
 	
-	@NotNull(message="Selecione sexo")
+	@NotNull(message="Selecione o sexo")
 	@Enumerated(EnumType.STRING)
 	private Sexo sexo;
 	
 	@NotNull(message="Selecione a identificação do aluno")
 	@Enumerated(EnumType.STRING)
 	private Identificacao identificacao;
-	
+
+	@NotNull(message="Selecione a serie/turma")
 	@Enumerated(EnumType.STRING)
 	@Column(name="serie_turma")
 	private SerieTurma serieTurma;
@@ -78,7 +79,7 @@ public class Aluno extends Entidade {
 	private Curso curso;
 	
 	@Transient
-	private String uuid;
+	private Boolean temResponsavel;
 	
 	
 	public String getMatricula() {
@@ -165,11 +166,11 @@ public class Aluno extends Entidade {
 	public void setWhatsapp(Boolean whatsapp) {
 		this.whatsapp = whatsapp;
 	}
-	public String getUuid() {
-		return uuid;
+	public Boolean getTemResponsavel() {
+		return temResponsavel;
 	}
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
+	public void setTemResponsavel(Boolean temResponsavel) {
+		this.temResponsavel = temResponsavel;
 	}
 	@SuppressWarnings("unused")
 	private String getFotoOuMock() {

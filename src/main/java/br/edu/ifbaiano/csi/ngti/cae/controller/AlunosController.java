@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -21,6 +22,8 @@ import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
 import br.edu.ifbaiano.csi.ngti.cae.model.Sexo;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Cursos;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroAlunoService;
+import br.edu.ifbaiano.csi.ngti.cae.service.exception.AlunoNumeroMatriculaJaCadastradoException;
+import br.edu.ifbaiano.csi.ngti.cae.session.TabelasResponsaveisSession;
 
 @Controller
 @RequestMapping("/alunos")
@@ -31,7 +34,10 @@ public class AlunosController {
 	
 	@Autowired
 	private CadastroAlunoService cadastroAlunoService;
-
+	
+	@Autowired
+	private TabelasResponsaveisSession tabelasResponsaveisSession;
+	
 	@GetMapping
 	public String pesquisar(){
 		return "aluno/PesquisaAlunos";
@@ -39,29 +45,46 @@ public class AlunosController {
 	
 	@GetMapping("/novo")
 	public ModelAndView novo(Aluno aluno){
-		aluno.setUuid(UUID.randomUUID().toString());
 		ModelAndView mv  = new ModelAndView("aluno/CadastroAluno");
 		mv.addObject("sexo", Sexo.values());
 		mv.addObject("identificacoes", Identificacao.values());
 		mv.addObject("series", SerieTurma.values());
 		mv.addObject("cursos", cursos.findAll());
 		mv.addObject("parentescos", GrauParentesco.values());
-		/*mv.addObject("aluno", aluno);*/
+		mv.addObject("uuid", UUID.randomUUID().toString());
 		
 		return mv;
 	}
 	
 	@PostMapping(value = { "/novo", "{\\d+}" })
-	public ModelAndView salvar(@Valid Aluno aluno, BindingResult result, RedirectAttributes attributs){
+	public ModelAndView salvar(@RequestParam("uuid") String uuid, @Valid Aluno aluno, BindingResult result, RedirectAttributes attributs){
 		
 		if(result.hasErrors()){
 			 System.out.println("tem erros no formulário ------------->>>"); return novo(aluno);}
 		
-		cadastroAlunoService.salvar(aluno);
+		//TODO: criar validação customizada para o cadastro do aluno
+		if(tabelasResponsaveisSession.totalResponsaveis(uuid) == 0){
+			result.rejectValue("temResponsavel", "Adicione ao menos um responsavel", "Adicione ao menos um responsavel");
+			System.out.println("Adicione ao menos um responsavel!");
+			return novo(aluno);
+		}
+		
+		try {
+			cadastroAlunoService.salvar(aluno, uuid);
+		} catch (AlunoNumeroMatriculaJaCadastradoException e) {
+			result.rejectValue("matricula", e.getMessage(), e.getMessage());
+			return novo(aluno);
+		}
 
 		attributs.addFlashAttribute("mensagemSucesso", "Aluno salvo com sucesso!");
 		
 		return new ModelAndView("redirect:/alunos/novo");
+	}
+	
+	@GetMapping("/detalhe")
+	public ModelAndView detalhesAluno(@RequestParam("matricula") String matricula){
+		
+		return new ModelAndView("aluno/DetalhesAluno");
 	}
 	
 	@GetMapping("/{codigo}")

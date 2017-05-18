@@ -11,4 +11,6 @@ import br.edu.ifbaiano.csi.ngti.cae.model.Responsavel;
 public interface Responsaveis extends JpaRepository<Responsavel, Long> {
 
 	public Optional<Responsavel> findByNomeIgnoreCaseAndContato(String nome, String contato);
+
+	public Optional<Responsavel> findByContato(String contato);
 }

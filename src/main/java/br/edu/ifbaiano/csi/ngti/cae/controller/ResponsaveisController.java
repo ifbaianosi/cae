@@ -13,29 +13,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.edu.ifbaiano.csi.ngti.cae.model.Contato;
 import br.edu.ifbaiano.csi.ngti.cae.model.Responsavel;
-import br.edu.ifbaiano.csi.ngti.cae.repository.Contatos;
-import br.edu.ifbaiano.csi.ngti.cae.service.CadastroContatoService;
-import br.edu.ifbaiano.csi.ngti.cae.service.exception.ContatoJaCadastradoException;
+import br.edu.ifbaiano.csi.ngti.cae.service.CadastroResponsavelService;
 import br.edu.ifbaiano.csi.ngti.cae.session.TabelasResponsaveisSession;
 
 @Controller
 @RequestMapping("/responsaveis")
 public class ResponsaveisController {
-	
-	@Autowired
-	private CadastroContatoService cadastroContatoService;
-	
-	@Autowired
-	private Contatos responsavels;
-	
+			
 	@Autowired
 	private TabelasResponsaveisSession tabelasResponsaveisSession;
 	
@@ -81,8 +70,8 @@ public class ResponsaveisController {
 		return ResponseEntity.ok(tabelasResponsaveisSession.getResponsaveis(uuid));
 	} 
 
-	@PostMapping(value="/novo", consumes=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<?> cadastroRapido(@RequestBody @Valid Contato responsavel, BindingResult result){
+	/*@PostMapping(value="/novo", consumes=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<?> cadastroRapido(@RequestBody @Valid responsavel responsavel, BindingResult result){
 		
 		if(result.hasErrors())
 			return ResponseEntity.badRequest().build();
@@ -103,5 +92,5 @@ public class ResponsaveisController {
 		cadastroContatoService.alterarWhatsapp(codigo, whatsapp);
 		
 		return ResponseEntity.ok().build();
-	}
+	}*/
 }
