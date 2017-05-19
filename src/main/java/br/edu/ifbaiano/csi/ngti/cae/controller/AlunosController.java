@@ -20,7 +20,9 @@ import br.edu.ifbaiano.csi.ngti.cae.model.GrauParentesco;
 import br.edu.ifbaiano.csi.ngti.cae.model.Identificacao;
 import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
 import br.edu.ifbaiano.csi.ngti.cae.model.Sexo;
+import br.edu.ifbaiano.csi.ngti.cae.repository.Alunos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Cursos;
+import br.edu.ifbaiano.csi.ngti.cae.repository.Ocorrencias;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroAlunoService;
 import br.edu.ifbaiano.csi.ngti.cae.service.exception.AlunoNumeroMatriculaJaCadastradoException;
 import br.edu.ifbaiano.csi.ngti.cae.session.TabelasResponsaveisSession;
@@ -28,6 +30,12 @@ import br.edu.ifbaiano.csi.ngti.cae.session.TabelasResponsaveisSession;
 @Controller
 @RequestMapping("/alunos")
 public class AlunosController {
+	
+	@Autowired
+	private Alunos alunos;
+	
+	@Autowired
+	private Ocorrencias ocorrencias;
 	
 	@Autowired
 	private Cursos cursos;
@@ -83,8 +91,12 @@ public class AlunosController {
 	
 	@GetMapping("/detalhe")
 	public ModelAndView detalhesAluno(@RequestParam("matricula") String matricula){
+		ModelAndView mv = new ModelAndView("aluno/DetalhesAluno");
+		Aluno aluno = alunos.findByMatricula(matricula).get();
+		mv.addObject("aluno", aluno);
+		mv.addObject("ocorrencias", ocorrencias.findByAluno(aluno));
 		
-		return new ModelAndView("aluno/DetalhesAluno");
+		return mv;
 	}
 	
 	@GetMapping("/{codigo}")
