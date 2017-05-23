@@ -11,6 +11,5 @@ import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
 @Repository
 public interface Ocorrencias extends JpaRepository<Ocorrencia, Long>{
 
-	public List<Ocorrencia> findByAluno(Aluno aluno);
-
+	public List<Ocorrencia> findByAlunoOrderByDataRegistroDesc(Aluno aluno);
 }

@@ -111,7 +111,7 @@
 										                        </div>
 										                        <div class="content">
 										                            <div class="text">OCORRENCIAS</div>
-										                            <div class="number count-to" data-from="0" th:data-to="${ocorrencias.size()}" data-speed="2000" data-fresh-interval="20">125</div>
+										                            <div class="number count-to  js-quantidade-ocorrencias" data-from="0" th:data-to="${ocorrencias.size()}" data-speed="2000" data-fresh-interval="20">125</div>
 										                        </div>
 										                    </div>
 										                </div>
@@ -132,28 +132,13 @@
 			                                    	<div class="row">
 			                                    		<div class="col-md-2 pull-right">
 				                                    		<button type="button" class="btn btn-block btn-default waves-effect  js-nova-ocorrencia" th:data-url="@{/ocorrencias}">NOVA</button>
-					                                    	<button type="button" class="btn btn-block btn-default waves-effect  js-editar-ocorrencia">EDITAR</button>
-					                                    	<button type="button" class="btn btn-block btn-default waves-effect  js-excluir-ocorrencias">EXCLUIR</button>
+					                                    	<button type="button" class="btn btn-block btn-default waves-effect  js-editar-ocorrencia" disabled="disabled">EDITAR</button>
+					                                    	<button type="button" class="btn btn-block btn-default waves-effect  js-excluir-ocorrencias" disabled="disabled">EXCLUIR</button>
 					                                    	<button type="button" class="btn btn-block bg-deep-orange waves-effect  js-cancelar-ocorrencias hide">CANCELAR</button>
 			                                    		</div>
 			                                    		<div class="col-md-10">
 					                                        <div class="table-responsive js-container-ocorrencias">
-					                                            <table class="table table-hover">
-					                                                <thead>
-					                                                    <tr>
-					                                                        <th>DATA</th>
-					                                                        <th>LOCAL</th>
-					                                                        <th>DESCRICAO</th>
-					                                                    </tr>
-					                                                </thead>
-					                                                <tbody>
-					                                                    <tr th:each="ocorrencia: ${ocorrencias}">
-					                                                        <td th:text="${ocorrencia.dataOcorrido}">Mark</td>
-					                                                        <td th:text="${ocorrencia.local}">Otto</td>
-					                                                        <td th:text="${ocorrencia.descricao}">@mdo</td>
-					                                                    </tr>
-					                                                </tbody>
-					                                            </table>
+					                                            <th:block th:replace="ocorrencia/TabelaOcorrenciasPorAluno :: tabelaOcorrencias"></th:block>
 					                                        </div>
 					                                        <div class="container-nova-ocorrencia  js-container-formulario-ocorrencias">
 					                                        	

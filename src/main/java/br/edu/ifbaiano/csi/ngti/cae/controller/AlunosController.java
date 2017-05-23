@@ -94,7 +94,7 @@ public class AlunosController {
 		ModelAndView mv = new ModelAndView("aluno/DetalhesAluno");
 		Aluno aluno = alunos.findByMatricula(matricula).get();
 		mv.addObject("aluno", aluno);
-		mv.addObject("ocorrencias", ocorrencias.findByAluno(aluno));
+		mv.addObject("ocorrencias", ocorrencias.findByAlunoOrderByDataRegistroDesc(aluno));
 		
 		return mv;
 	}
