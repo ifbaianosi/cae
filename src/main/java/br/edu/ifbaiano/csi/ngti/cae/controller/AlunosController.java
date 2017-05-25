@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 import br.edu.ifbaiano.csi.ngti.cae.model.GrauParentesco;
 import br.edu.ifbaiano.csi.ngti.cae.model.Identificacao;
+import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
 import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
 import br.edu.ifbaiano.csi.ngti.cae.model.Sexo;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Alunos;
@@ -93,8 +94,11 @@ public class AlunosController {
 	public ModelAndView detalhesAluno(@RequestParam("matricula") String matricula){
 		ModelAndView mv = new ModelAndView("aluno/DetalhesAluno");
 		Aluno aluno = alunos.findByMatricula(matricula).get();
+		Ocorrencia ocorrencia = new Ocorrencia();
+		ocorrencia.setAluno(aluno);
 		mv.addObject("aluno", aluno);
 		mv.addObject("ocorrencias", ocorrencias.findByAlunoOrderByDataRegistroDesc(aluno));
+		mv.addObject("ocorrencia", ocorrencia);
 		
 		return mv;
 	}

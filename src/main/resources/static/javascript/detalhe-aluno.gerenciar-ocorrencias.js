@@ -1,23 +1,41 @@
 var NGTICAE = NGTICAE || {};
 
-NGTICAE.GerenciarOcorrencias = function(){
+/*NGTICAE.ListarOcorrencias = function(){
 	
-	function GerenciarOcorrencias(){
-		this.novaOcorrenciaBtn = $('.js-nova-ocorrencia');
+	function ListarOcorrencias(){
 		this.containerOcorrencias = $('.js-container-ocorrencias');
-		this.containerFormularioOcorrencias = $('.js-container-formulario-ocorrencias');
-		this.cancelarOcorrenciaBtn = $('.js-cancelar-ocorrencias');
-		this.editarOcorrenciaBtn = $('.js-editar-ocorrencia');
-		this.excluirOcorrenciaBtn = $('.js-excluir-ocorrencias');
-		this.checkbox = $('.js-checkbox');
+		this.tabs = $('a[data-toggle="tab"]');
 	}
 	
-	GerenciarOcorrencias.prototype.iniciar = function (){
+	ListarOcorrencias.prototype.iniciar = function (){
+		this.tabs.on('shown.bs.tab', onAtualizarTabela.bind(this));
+	}
+	
+	function onAtualizarTabela(event) {
+		//pega a tab active
+		var tab = $(event.target).attr('href').replace('#', '');
+		console.log('activated tab:', tab);
+		if(){
+			
+		}
+	}
+	
+	return ListarOcorrencias;
+	
+}();*/
+
+NGTICAE.NovaOcorrencia = function(){
+	
+	function NovaOcorrencia(){
+		this.novaOcorrenciaBtn = $('.js-nova-ocorrencia');
+		this.cancelarOcorrenciaBtn = $('.js-cancelar-ocorrencias');
+		this.containerOcorrencias = $('.js-container-ocorrencias');
+		this.containerFormularioOcorrencias = $('.js-container-formulario-ocorrencias');
+	}
+	
+	NovaOcorrencia.prototype.iniciar = function (){
 		this.novaOcorrenciaBtn.on('click', onNovaOcorrenciaBtnClicado.bind(this));
 		this.cancelarOcorrenciaBtn.on('click', onCancelarOcorrenciaBtnClicado.bind(this));
-		this.checkbox.on('change', onVerificaCheckboxChecado.bind(this));
-		this.editarOcorrenciaBtn.on('click', onEditarOcorrencia.bind(this));
-		this.excluirOcorrenciaBtn.on('click', onExcluirOcorrencia.bind(this));
 	}
 	
 	function onNovaOcorrenciaBtnClicado(){
@@ -25,8 +43,6 @@ NGTICAE.GerenciarOcorrencias = function(){
 		
 		//desabilitar os botoes novo, editar e excluir
 		this.novaOcorrenciaBtn.attr('disabled', 'disabled');
-		this.editarOcorrenciaBtn.attr('disabled', 'disabled');
-		this.excluirOcorrenciaBtn.attr('disabled', 'disabled');
 		
 		//tornar visivel o botão cancelar
 		this.cancelarOcorrenciaBtn.removeClass('hide');
@@ -35,7 +51,7 @@ NGTICAE.GerenciarOcorrencias = function(){
 		this.containerOcorrencias.hide('slow');
 		
 		//monstrar container do formulario de ocorrencias
-		this.containerFormularioOcorrencias.show('slow', onBuscarFormulario.bind(this));
+		this.containerFormularioOcorrencias.show('slow');
 	}
 	
 	function onBuscarFormulario() { 
@@ -51,12 +67,48 @@ NGTICAE.GerenciarOcorrencias = function(){
 	function adicionaFormulario(formulario){
 			this.containerFormularioOcorrencias.html(formulario);
 			$('.js-formulario').on('submit', function(event){ event.preventDefault() });
-			$('.js-submit').on('click', onSalvarOcorrenciaBtnClicado.bind(this));
 	} 
 	
-	function onSalvarOcorrenciaBtnClicado(){
-		console.log('salvar ocorrencia via ajax ...');
-				
+	function onCancelarOcorrenciaBtnClicado(){
+		console.log('Cancelar nova ocorrencia...');
+		
+		//habilitar os botoes novo, editar e excluir
+		this.novaOcorrenciaBtn.removeAttr("disabled");
+		
+		//tornar invisivel o botão cancelar
+		this.cancelarOcorrenciaBtn.addClass('hide');
+		
+		//mostrar container de ocorrencias
+		this.containerOcorrencias.show('slow');
+		
+		//esconder container do formulario de ocorrencias
+		this.containerFormularioOcorrencias.hide('slow');
+	}
+	
+	return NovaOcorrencia;
+	
+}();
+
+NGTICAE.SalvarOcorrencia = function(){
+	
+	function SalvarOcorrencia(){
+		this.novaOcorrenciaBtn = $('.js-nova-ocorrencia');
+		this.salvarOcorrenciaBtn = $('.js-submit');
+		this.cancelarOcorrenciaBtn = $('.js-cancelar-ocorrencias');
+		this.containerOcorrencias = $('.js-container-ocorrencias');
+		this.containerFormularioOcorrencias = $('.js-container-formulario-ocorrencias');
+		this.htmlTabelaOcorrencias = $('#tabelaOcorrenciasPorAluno').html();
+		this.template = Handlebars.compile(this.htmlTabelaOcorrencias);
+	}
+	
+	SalvarOcorrencia.prototype.iniciar = function (){
+		this.salvarOcorrenciaBtn.on('click', onSalvarOcorrencia.bind(this));
+	}
+	
+	function onSalvarOcorrencia(){
+		console.log('Salvando ocorrencia...');
+		validarFormulario();
+		
 		$.ajax({
 			url: this.novaOcorrenciaBtn.data('url') + '/salvar',
 			method: 'POST',
@@ -66,102 +118,224 @@ NGTICAE.GerenciarOcorrencias = function(){
 				descricao: $('.js-descricao').val(),
 				local: $('.js-local').val()
 			},
-			/*beforeSend: onIniciarRequisicao.bind(this),*/
+			beforeSend: onIniciarRequisicao,
 			error: onErroSalvandoOcorrencia,
-			success: onAtualizarTabela.bind(this)/*,
-			complete: onFinalizarRequisicao.bind(this)*/
+			success: onOcorrenciaSalva.bind(this),
+			complete: onFinalizarRequisicao
 		});
 	}
 	
-	function onAtualizarTabela(retorno){
-		console.log('foi no servidor...', retorno);
-		this.containerFormularioOcorrencias.html(retorno);
-		
-		atualizarTabelaOcorrencias.call(this);
-		atualizarQuantidadeOcorrencias();
-		
-		/*onCancelarOcorrenciaBtnClicado.call(this);*/
-	}
-	
-	function onCancelarOcorrenciaBtnClicado(){
-		console.log('Cancelar nova ocorrencia...');
+	function onOcorrenciaSalva(retorno){
+		console.log('Sucesso... ocorrencia criada no servidor...', retorno);
+		limparFormulario();
+		mostrarNotificacao('sucesso', 'Ocorrencia salva!', 'success');
 		
 		//habilitar os botoes novo, editar e excluir
 		this.novaOcorrenciaBtn.removeAttr("disabled");
-		this.editarOcorrenciaBtn.removeAttr("disabled");
-		this.excluirOcorrenciaBtn.removeAttr("disabled");
 		
 		//tornar invisivel o botão cancelar
 		this.cancelarOcorrenciaBtn.addClass('hide');
 		
+		//esconder container do formulario de ocorrencias
+		this.containerFormularioOcorrencias.hide('slow');
+		
 		//mostrar container de ocorrencias
 		this.containerOcorrencias.show('slow');
 		
-		//esconder container do formulario de ocorrencias
-		this.containerFormularioOcorrencias.html('');
-		this.containerFormularioOcorrencias.hide('slow');
-	}
-	
-	function atualizarTabelaOcorrencias(){
-		console.log('atualizar tabela de ocorrencias na view...');
-		this.containerOcorrencias.html('<span>atualizando ocorrencias...</span>');
-		var resposta = $.ajax({
-			url: this.novaOcorrenciaBtn.data('url') + '/aluno/' + $('#codigo_aluno').val(),
+		$.ajax({
+			url: $('.js-nova-ocorrencia').data('url') + '/' + $('#codigo_aluno').val(),
 			method: 'GET',
-			contentType: 'application/json'
+			success: atualizarTabela.bind(this)
 		});
 		
-		resposta.done(function(tabelaOcorrencias){
-			$('.js-container-ocorrencias').html(tabelaOcorrencias)
+		//ATUALIZAR A QUANTIDADE DE OCORRENCIAS NA TAB GERAL
+		NGTICAE.AtualizarQuantidadeOcorrencias.iniciar();
+		
+	}
+	
+	function atualizarTabela(ocorrencias){
+		var novatabela = this.template(ocorrencias);
+		this.containerOcorrencias.html(novatabela);
+		
+		//instanciar objeto de outro arquivo [multiselecao.js]
+		var multiSelecao = new NGTICAE.MultiSelecao();
+		multiSelecao.iniciar();
+	}
+	
+	function validarFormulario(){
+		console.log('Validando formulario...');
+	}
+	
+	function onIniciarRequisicao(){
+		console.log('Iniciando requisição...');
+	}
+	
+	function onErroSalvandoOcorrencia(error){
+		console.log('Erro ao salvar ocorrencia...', error);
+		mostrarNotificacao('Formulario incompleto', 'preencha todos os campos!', 'danger');
+	}
+	
+	function onFinalizarRequisicao(){
+		console.log('Requisição finalizada...');
+	}
+	
+	function mostrarNotificacao(title, message, type){
+		$.notify({
+			title: '<strong>' + title + '</strong>',
+			message: message
+		},{
+			type: type,
+			placement: {
+				from: "top",
+				align: "center"
+			},
+			offset: {
+				x: 50,
+				y: 74
+			}
 		});
 	}
 	
-	function atualizarQuantidadeOcorrencias(){
-		console.log('atualizar quantidade de ocorrencias...');
-		var quantidade = $('.js-quantidade-ocorrencias').text();
-		console.log('quantidade atual: ', quantidade);
-		quantidade++;
-		console.log('quantidade atualizada: ', quantidade);
-		$('.js-quantidade-ocorrencias').text(quantidade);
+	function limparFormulario(){
+		$('.js-dataOcorrencia').val('');
+		$('.js-descricao').val('');
+		$('.js-local').val('');
 	}
-	
-	function onErroSalvandoOcorrencia(erro){
-		console.log('erro: ', erro)
-	}
-	
-	//ACÕES DOS CHECKBOX
-	function onVerificaCheckboxChecado(evento){
-		console.log('Checkbox selecionado...');
-		
-		var checkboxSelecionados = this.checkbox.filter(':checked');
-		console.log(checkboxSelecionados);
-		
-		if(checkboxSelecionados.length == 1){
-			this.editarOcorrenciaBtn.removeAttr('disabled');
-		}else{
-			this.editarOcorrenciaBtn.attr('disabled', 'disabled');
-		}
-		
-		if(checkboxSelecionados.length > 0){
-			this.excluirOcorrenciaBtn.removeAttr('disabled');
-		}else{
-			this.excluirOcorrenciaBtn.attr('disabled', 'disabled');
-		}
-	}
-	
-	function onEditarOcorrencia(){
-		console.log('Editar ocorrencia selecionada...')
-	}
-	
-	function onExcluirOcorrencia(){
-		console.log('Excluir ocorrencia(s) selecionada(s)...')
-	}
-	
-	return GerenciarOcorrencias;
+			
+	return SalvarOcorrencia;
 	
 }();
 
+NGTICAE.ExcluirOcorrencia = function(){
+	
+	function ExcluirOcorrencia(){
+		this.excluirOcorrenciaBtn = $('.js-excluir-ocorrencias');
+		this.editarOcorrenciaBtn = $('.js-editar-ocorrencia');
+		this.checkbox = $('.js-checkbox');
+		this.containerOcorrencias = $('.js-container-ocorrencias');
+		this.htmlTabelaOcorrencias = $('#tabelaOcorrenciasPorAluno').html();
+		this.template = Handlebars.compile(this.htmlTabelaOcorrencias);
+	}
+	
+	ExcluirOcorrencia.prototype.iniciar = function (){
+		this.excluirOcorrenciaBtn.on('click', onExcluirOcorrenciaBtnClicado.bind(this));
+	}
+	
+	function onExcluirOcorrenciaBtnClicado(){
+		// confirm dialog
+		alertify.confirm("Deseja realmente excluir os objetos selecionados", excluir.bind(this), function() {
+		    // user clicked "cancel"
+			console.log('Não, Cancelar exclusão!');
+		});
+	}
+	
+	function excluir() {
+		console.log('Sim, Excluir!');
+		
+		var checkboxMarcados = $('.js-checkbox').filter(':checked');
+		console.log('checkboxMarcados', checkboxMarcados);
+		
+		var codigs = $.map(checkboxMarcados, function(c){
+			return $(c).data('codigo');
+		})
+		
+		console.log('codigos', codigs);
+		
+		$.ajax({
+			url: $('.js-excluir-ocorrencias').data('url') + '/' + codigs,
+			method: 'DELETE',
+			success: onExcluidoComSucesso.bind(this),
+			error: onErroAoExcluir,
+			complete: finalizarRequisicao.bind(this)
+		});
+	}
+	
+	function onExcluidoComSucesso(){
+		console.log('Excluído com sucesso!');
+		mostrarNotificacao("Sucesso", "excluido", "success");
+		
+		$.ajax({
+			url: $('.js-nova-ocorrencia').data('url') + '/' + $('#codigo_aluno').val(),
+			method: 'GET',
+			success: atualizarTabela.bind(this)
+		});
+		
+		//ATUALIZAR A QUANTIDADE DE OCORRENCIAS NA TAB GERAL
+		NGTICAE.AtualizarQuantidadeOcorrencias.iniciar();
+	}
+	
+	function atualizarTabela(ocorrencias){
+		var novatabela = this.template(ocorrencias);
+		this.containerOcorrencias.html(novatabela);
+		
+		//instanciar objeto de outro arquivo [multiselecao.js]
+		var multiSelecao = new NGTICAE.MultiSelecao();
+		multiSelecao.iniciar();
+	}
+	
+	function finalizarRequisicao(){
+		this.excluirOcorrenciaBtn.attr('disabled', 'disabled');
+		this.editarOcorrenciaBtn.attr('disabled', 'disabled')
+	}
+	
+	function onErroAoExcluir(erro){
+		console.log('Erro ao tentar excluir!');
+		mostrarNotificacao("Ops!", erro, "danger");
+	}
+	
+	function mostrarNotificacao(title, message, type){
+		$.notify({
+			title: '<strong>' + title + '</strong>',
+			message: message
+		},{
+			type: type,
+			placement: {
+				from: "top",
+				align: "center"
+			},
+			offset: {
+				x: 50,
+				y: 74
+			}
+		});
+	}
+			
+	return ExcluirOcorrencia;
+	
+}();
+
+/* Atualizar quantidade ocorrencias ================================================================================================
+*  
+*/
+NGTICAE.AtualizarQuantidadeOcorrencias = {
+    iniciar: function () {
+    	var inputQuantidade = $('.js-quantidade-ocorrencias');
+    	
+    	$.ajax({
+    		url: $('.js-nova-ocorrencia').data('url') + '/quantidade/' + $('#codigo_aluno').val(),
+    		method: 'GET',
+    		success: function(quantidade){ inputQuantidade.text(quantidade) }
+    	});
+    }
+}
+//==========================================================================================================================
+
 $(function(){
-	var gerenciarOcorrencias = new NGTICAE.GerenciarOcorrencias();
-	gerenciarOcorrencias.iniciar();
+	var novaOcorrencia = new NGTICAE.NovaOcorrencia();
+	novaOcorrencia.iniciar();
+	
+	var salvarOcorrencia = new NGTICAE.SalvarOcorrencia();
+	salvarOcorrencia.iniciar();
+	
+	var excluirOcorrencia = new NGTICAE.ExcluirOcorrencia();
+	excluirOcorrencia.iniciar();
+
+	$('.datetimepicker').bootstrapMaterialDatePicker({
+        format: 'DD/MM/YYYY HH:mm',
+        lang: 'pt',
+        clearButton: true,
+        weekStart: 0,
+        cancelText: 'CANCELAR',
+        clearText: 'LIMPAR' 
+    });
 });

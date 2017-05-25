@@ -6,6 +6,12 @@
 
 <head>
     <title>Cadastrar aluno</title>
+
+    <!-- Aertify Css -->
+    <link th:href="@{/style/alertify.css}" rel="stylesheet" />
+
+    <!-- Bootstrap Material Datetime Picker Css -->
+    <link th:href="@{/layout/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css}" rel="stylesheet" />
 </head>
 
 <body>
@@ -66,10 +72,10 @@
 	                                        <a href="#" class="alterar-foto-aluno">
 	                                            <i class="material-icons" style="position: relative; top: 7px; margin-bottom: 8px;">photo_camera</i><span class="hidden-xs"> FOTO</span>
 	                                        </a>
-	                                        <img id="foto" style="cursor:pointer;" class="img-thumbnail" th:src="@{/layout/images/alunos/aluno-muckup.png}" alt="" heigth="280px" width="280px">
+	                                        <img id="foto" style="cursor:pointer;" class="img-thumbnail bg-teal" th:src="@{/layout/images/alunos/aluno-muckup.png}" alt="" heigth="280px" width="280px">
 	
 	                                    </div>
-	                                    <h3 th:text="${aluno.matricula}">matricula</h3>
+	                                    <h3 class="col-teal" th:text="${aluno.matricula}">matricula</h3>
 	                                </div>
 	                                <div class="container-info-aluno">
 	                                	<input type="hidden" id="codigo_aluno" name="ocorrencia.aluno" th:value="${aluno.codigo}">
@@ -82,7 +88,7 @@
 	                            	<div class="row">
 	                            		<div class="col-md-12">
 			                                <!-- Nav tabs -->
-			                                <ul class="nav nav-tabs" role="tablist">
+			                                <ul class="nav nav-tabs tab-col-teal" role="tablist">
 			                                	<li role="presentation" class="active">
 			                                        <a href="#geral" data-toggle="tab">
 			                                            <i class="material-icons">settings</i> GERAL
@@ -131,9 +137,9 @@
 			                                    <div role="tabpanel" class="tab-pane fade" id="ocorrencias">
 			                                    	<div class="row">
 			                                    		<div class="col-md-2 pull-right">
-				                                    		<button type="button" class="btn btn-block btn-default waves-effect  js-nova-ocorrencia" th:data-url="@{/ocorrencias}">NOVA</button>
-					                                    	<button type="button" class="btn btn-block btn-default waves-effect  js-editar-ocorrencia" disabled="disabled">EDITAR</button>
-					                                    	<button type="button" class="btn btn-block btn-default waves-effect  js-excluir-ocorrencias" disabled="disabled">EXCLUIR</button>
+				                                    		<button type="button" class="btn btn-block bg-teal waves-effect  js-nova-ocorrencia" th:data-url="@{/ocorrencias}">NOVA</button>
+					                                    	<button type="button" class="btn btn-block bg-teal waves-effect  js-editar-ocorrencia" disabled="disabled">EDITAR</button>
+					                                    	<button type="button" class="btn btn-block bg-teal waves-effect  js-excluir-ocorrencias" disabled="disabled" th:data-url="@{/ocorrencias}">EXCLUIR</button>
 					                                    	<button type="button" class="btn btn-block bg-deep-orange waves-effect  js-cancelar-ocorrencias hide">CANCELAR</button>
 			                                    		</div>
 			                                    		<div class="col-md-10">
@@ -141,7 +147,7 @@
 					                                            <th:block th:replace="ocorrencia/TabelaOcorrenciasPorAluno :: tabelaOcorrencias"></th:block>
 					                                        </div>
 					                                        <div class="container-nova-ocorrencia  js-container-formulario-ocorrencias">
-					                                        	
+					                                        	<th:block th:replace="ocorrencia/Formulario :: formularioNovaOcorrencia"></th:block>
 					                                        </div>
 			                                    		</div>
 			                                    	</div>
@@ -206,7 +212,19 @@
     </section>
 
    <th:block layout:fragment="javascript-extra">
+   		<script th:src="@{/javascript/vendors/plugins/alertify/alertify.js}"></script>
+   		<script th:src="@{/javascript/vendors/plugins/bootstrap-notify/bootstrap-notify.min.js}"></script>
+
+	    <!-- Moment Plugin Js -->
+	    <script th:src="@{/layout/plugins/momentjs/moment.js}"></script>
+	
+	    <!-- Bootstrap Material Datetime Picker Plugin Js -->
+	    <script th:src="@{/layout/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js}"></script>
+	    
+   		<script th:src="@{/javascript/vendors/plugins/handlebars/handlebars-v4.0.10.js}"></script>
+   		<script th:src="@{/javascript/multiselecao.js}"></script>
    		<script th:src="@{/javascript/detalhe-aluno.gerenciar-ocorrencias.js}"></script>
+   		<th:block th:replace="handlebars/TabelaOcorrenciasPorAlunoTemplate"></th:block>
    </th:block>
 </body>
 

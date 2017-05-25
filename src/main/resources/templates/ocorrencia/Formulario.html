@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org">
 	
 <div class="well">Para realizar uma ocorrência preencha corretamente o formulário abaixo e clique em salvar.</div>	
-<form class="js-formulario" th:action="@{/ocorrencias/nova}" method="POST" th:object="${ocorrencia}">
+<form id="formularioNovaOcorrencia" class="js-formulario" th:action="@{/ocorrencias/nova}" method="POST" th:object="${ocorrencia}" th:fragment="formularioNovaOcorrencia">
                             	
 <!-- MENSAGEM SUCESSO -->
 <div class="alert bg-teal alert-dismissible fade in" role="alert" th:if="${not #strings.isEmpty(mensagemSucesso)}" th:fragment="alert">
@@ -30,7 +30,8 @@
                                         <i class="material-icons">date_range</i>
                                     </span>
                                     <div class="form-line" th:classappend="${#fields.hasErrors('dataOcorrido')} ? 'focused error'">
-                                        <input type="text" class="form-control date  js-dataOcorrencia" placeholder="" th:field="*{dataOcorrido}">
+                                        <!-- <input type="text" class="form-control date  js-dataOcorrencia" placeholder="" th:field="*{dataOcorrido}"> -->
+                                        <input type="text" class="datetimepicker form-control  js-dataOcorrencia" placeholder="Selecione uma data..." th:field="*{dataOcorrido}">
                                     </div>
                                     <label th:if="${#fields.hasErrors('dataOcorrido')}" th:errors="*{dataOcorrido}" class="error" for="dataOcorrido"></label>
                                 </div>
@@ -58,7 +59,8 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary m-t-15 waves-effect  js-submit"><i class="material-icons">send</i> SALVAR</button>
+                        <button th:if="${ocorrencia.aluno} == null" type="submit" class="btn btn-primary m-t-15 waves-effect  js-submit"><i class="material-icons">send</i> SALVAR</button>
+                        <button th:unless="${ocorrencia.aluno} == null" type="button" class="btn btn-primary m-t-15 waves-effect  js-submit">SALVAR</button>
                 		<input type="hidden" id="uuid" th:value="${uuid}" name="uuid">
                     </form>
                     

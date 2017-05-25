@@ -16,7 +16,7 @@
      <tbody>
          <tr th:each="ocorrencia: ${ocorrencias}">
          	 <td>
-         	 	<input type="checkbox" th:id="|ID_${ocorrencia.codigo}|" class="chk-col-teal  js-checkbox">
+         	 	<input type="checkbox" th:id="|ID_${ocorrencia.codigo}|" class="chk-col-teal  js-checkbox" th:data-codigo="${ocorrencia.codigo}">
                 <label th:for="|ID_${ocorrencia.codigo}|"></label>
              </td>
              <td th:text="${ocorrencia.dataOcorrido}">Mark</td>

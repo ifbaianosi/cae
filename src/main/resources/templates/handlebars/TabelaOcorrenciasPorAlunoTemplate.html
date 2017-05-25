@@ -1,0 +1,29 @@
+<script id="tabelaOcorrenciasPorAluno" type="text/x-handlebars-template">
+<table id="tabelaOcorrencias" class="table table-hover" th:fragment="tabelaOcorrencias">
+     <thead>
+         <tr>
+         	 <th></th>
+             <th>DATA</th>
+             <th>LOCAL</th>
+             <th>DESCRICAO</th>
+         </tr>
+     </thead>
+     <tbody>
+		{{#if .}}
+			{{#each .}}
+         		<tr>
+         	 		<td>
+         	 			<input type="checkbox" id="ID_{{codigo}}" class="chk-col-teal  js-checkbox" data-codigo="{{codigo}}">
+                		<label for="ID_{{codigo}}"></label>
+             		</td>
+             		<td>{{dataOcorrido}}</td>
+             		<td>{{local}}</td>
+             		<td>{{descricao}}</td>
+         		</tr>
+			{{/each}}
+		{{else}}
+			<tr><td colspan="4">Nenhuma ocorrência encontrada.<td><tr>
+		{{/if}}
+     </tbody>
+ </table>                    
+</script>
