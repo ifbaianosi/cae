@@ -17,7 +17,7 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 	
 	@Override
 	public List<OcorrenciaDTO> porAluno(Aluno aluno) {
-		String jpql = "SELECT new br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO(codigo, dataOcorrido, local, descricao) "
+		String jpql = "SELECT new br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO(codigo, dataRegistro, dataOcorrido, local, descricao) "
 						+ "FROM Ocorrencia o "
 						+ "WHERE o.aluno = :aluno "
 						+ "ORDER BY o.dataRegistro DESC";
@@ -25,6 +25,19 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 		return manager.createQuery(jpql, OcorrenciaDTO.class)
 				.setParameter("aluno", aluno)
 				.getResultList();
+	}
+
+
+
+	@Override
+	public OcorrenciaDTO porCodigo(Long codigo) {
+		String jpql = "SELECT new br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO(codigo, dataRegistro, dataOcorrido, local, descricao) "
+				+ "FROM Ocorrencia o "
+				+ "WHERE o.codigo = :codigo";
+
+		return manager.createQuery(jpql, OcorrenciaDTO.class)
+				.setParameter("codigo", codigo)
+				.getSingleResult();
 	}
 
 }

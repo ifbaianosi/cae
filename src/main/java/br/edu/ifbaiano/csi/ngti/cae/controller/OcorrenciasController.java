@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -114,6 +115,11 @@ public class OcorrenciasController {
 	@GetMapping(value="/quantidade/{codigoaluno}")
 	public @ResponseBody Long getQuantidadeOcorenciasPorAluno(@PathVariable("codigoaluno") Aluno aluno){
 		return ocorrencias.countByAluno(aluno);
+	}
+	
+	@GetMapping(value="/ver/{codigoocorrencia}")
+	public @ResponseBody OcorrenciaDTO getOcorrencia(@PathVariable("codigoocorrencia") Long codigo){
+		return ocorrencias.porCodigo(codigo);
 	}
 	
 	@DeleteMapping(value="/{codigos}")

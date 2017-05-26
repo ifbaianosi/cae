@@ -6,14 +6,16 @@ import java.time.format.DateTimeFormatter;
 public class OcorrenciaDTO {
 
 	private Long codigo;
+	private String dataRegistro;
 	private String dataOcorrido;
 	private String local;
 	private String descricao;
 	
 	private DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 	
-	public OcorrenciaDTO(Long codigo, LocalDateTime dataOcorrido, String local, String descricao) {
+	public OcorrenciaDTO(Long codigo, LocalDateTime dataRegistro, LocalDateTime dataOcorrido, String local, String descricao) {
 		this.codigo = codigo;
+		this.dataRegistro = dataRegistro.format(formatador);
 		this.dataOcorrido = dataOcorrido.format(formatador);
 		this.local = local;
 		this.descricao = descricao;
@@ -49,6 +51,14 @@ public class OcorrenciaDTO {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public String getDataRegistro() {
+		return dataRegistro;
+	}
+
+	public void setDataRegistro(String dataRegistro) {
+		this.dataRegistro = dataRegistro;
 	}
 	
 	

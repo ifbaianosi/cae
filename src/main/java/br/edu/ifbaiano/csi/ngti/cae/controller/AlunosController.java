@@ -1,5 +1,6 @@
 package br.edu.ifbaiano.csi.ngti.cae.controller;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -93,12 +94,15 @@ public class AlunosController {
 	@GetMapping("/detalhe")
 	public ModelAndView detalhesAluno(@RequestParam("matricula") String matricula){
 		ModelAndView mv = new ModelAndView("aluno/DetalhesAluno");
-		Aluno aluno = alunos.findByMatricula(matricula).get();
-		Ocorrencia ocorrencia = new Ocorrencia();
-		ocorrencia.setAluno(aluno);
-		mv.addObject("aluno", aluno);
-		mv.addObject("ocorrencias", ocorrencias.findByAlunoOrderByDataRegistroDesc(aluno));
-		mv.addObject("ocorrencia", ocorrencia);
+		Optional<Aluno> alunoOptional = alunos.findByMatricula(matricula);
+		if(alunoOptional.isPresent()){
+			Aluno aluno = alunoOptional.get();
+			Ocorrencia ocorrencia = new Ocorrencia();
+			ocorrencia.setAluno(aluno);
+			mv.addObject("aluno", aluno);
+			mv.addObject("ocorrencias", ocorrencias.findByAlunoOrderByDataRegistroDesc(aluno));
+			mv.addObject("ocorrencia", ocorrencia);
+		}
 		
 		return mv;
 	}

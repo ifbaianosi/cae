@@ -19,7 +19,7 @@
          	 	<input type="checkbox" th:id="|ID_${ocorrencia.codigo}|" class="chk-col-teal  js-checkbox" th:data-codigo="${ocorrencia.codigo}">
                 <label th:for="|ID_${ocorrencia.codigo}|"></label>
              </td>
-             <td th:text="${ocorrencia.dataOcorrido}">Mark</td>
+             <td th:text="${ocorrencia.dataOcorridoFormatada}">Mark</td>
              <td th:text="${ocorrencia.local}">Otto</td>
              <td th:text="${ocorrencia.descricao}">@mdo</td>
          </tr>

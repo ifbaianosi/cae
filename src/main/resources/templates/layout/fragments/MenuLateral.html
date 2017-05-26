@@ -8,7 +8,7 @@
         <!-- Left Sidebar -->
         <aside id="leftsidebar" class="sidebar">
             <!-- User Info -->
-            <div class="user-info">
+            <!-- <div class="user-info">
                 <div class="image">
                     <img th:src="@{/layout/images/user.png}" width="48" height="48" alt="User" />
                 </div>
@@ -20,15 +20,15 @@
                         <ul class="dropdown-menu pull-right">
                             <li><a href="javascript:void(0);"><i class="material-icons">person</i>Perfil</a></li>
                             <li role="seperator" class="divider"></li>
-                            <!--<li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
+                            <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
                             <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
                             <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
-                            <li role="seperator" class="divider"></li>-->
+                            <li role="seperator" class="divider"></li>
                             <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sair</a></li>
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- #User Info -->
             <!-- Menu -->
             <div class="menu">
@@ -41,25 +41,25 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a th:href="@{/alunos/novo}">
                             <i class="material-icons">school</i>
                             <span>Alunos</span>
                         </a>
                     </li>
                     <li class="header">REGISTROS</li>
                     <li>
-                        <a href="#">
+                        <a th:href="@{/ocorrencias/nova}">
                             <i class="material-icons">notifications</i>
                             <span>Ocorrencias</span>
                         </a>
                     </li>
-                    <li class="header">ATENDIMENTOS</li>
+                    <!-- <li class="header">ATENDIMENTOS</li>
                     <li>
                         <a href="#">
                             <i class="material-icons">favorite</i>
                             <span>Enfermaria</span>
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <!-- #Menu -->

@@ -1,6 +1,7 @@
 package br.edu.ifbaiano.csi.ngti.cae.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,13 +9,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="ocorrencia")
+@DynamicUpdate
 public class Ocorrencia extends Entidade{
 
 	private static final long serialVersionUID = -4539578952663353947L;
@@ -84,6 +88,15 @@ public class Ocorrencia extends Entidade{
 		this.aluno = aluno;
 	}
 	
+	@Transient
+	private DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 	
+	public String getDataOcorridoFormatada() {
+		return dataOcorrido.format(formater);
+	}
+	
+	public String getDataRegistroFormatada() {
+		return dataRegistro.format(formater);
+	}
 	
 }

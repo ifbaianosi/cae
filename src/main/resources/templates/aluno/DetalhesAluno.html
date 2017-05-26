@@ -18,10 +18,10 @@
 	
     <section class="content" layout:fragment="conteudo">
         <div class="container-fluid">
-            <div class="block-header">
-                <h2>CADASTRO</h2>
-            </div>
-            <div class="card">
+            <!-- <div class="block-header">
+                <h2>HISTÓRICO DO ALUNO</h2>
+            </div> -->
+            <!-- <div class="card">
                 <div class="header">
                     <button type="button" class="btn bg-teal waves-effect"><i class="material-icons">search</i>PESQUISAR</button>
                     <ul class="header-dropdown m-r--5">
@@ -43,9 +43,12 @@
                     </ul>
                 </div>
                 
-            </div>
+            </div> -->
             <div class="container container-alt">
             	<div class="row">
+	            	<div class="block-header">
+		                <h2>HISTÓRICO DO ALUNO</h2>
+		            </div>
 	            	<div class="card">
 	                    <div class="header">
 	                        <h2 th:text="${aluno.nome}">
@@ -88,7 +91,7 @@
 	                            	<div class="row">
 	                            		<div class="col-md-12">
 			                                <!-- Nav tabs -->
-			                                <ul class="nav nav-tabs tab-col-teal" role="tablist">
+			                                <ul class="nav nav-tabs tab-col-teal m-b-15" role="tablist">
 			                                	<li role="presentation" class="active">
 			                                        <a href="#geral" data-toggle="tab">
 			                                            <i class="material-icons">settings</i> GERAL
