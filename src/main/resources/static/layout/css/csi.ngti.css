@@ -127,3 +127,10 @@
     width: 280px;*/
 }
 
+.logo-trino{
+	 background-image: url("../images/trino-bg.png");
+	         height: 500px;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: 450px;
+}
