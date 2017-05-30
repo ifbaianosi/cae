@@ -35,12 +35,13 @@ public class CadastroAlunoService {
 	
 	@Transactional
 	public void salvar(Aluno aluno, String uuid){
-		//TODO: AINDA FALTA EDITAR UM ALUNO...
-		
-		//verifica se já existe um aluno cadastrado com a matricula informada
-		Optional<Aluno> alunoOptional = alunos.findByMatricula(aluno.getMatricula());
-		if(alunoOptional.isPresent())
-			throw new AlunoNumeroMatriculaJaCadastradoException("Já existe um aluno cadastrado com o numero da matriucla informado");
+		//VERIFICA SE É UM NOVO REGISTRO OU EDIÇÃO
+		if(aluno.isNovo()){
+			//verifica se já existe um aluno cadastrado com a matricula informada
+			Optional<Aluno> alunoOptional = alunos.findByMatricula(aluno.getMatricula());
+			if(alunoOptional.isPresent())
+				throw new AlunoNumeroMatriculaJaCadastradoException("Já existe um aluno cadastrado com o numero da matriucla informado");
+		}
 		
 		//Salvar o aluno...
 		alunos.save(aluno);
@@ -56,25 +57,39 @@ public class CadastroAlunoService {
 		}
 		
 		//salvar na tabela responsavel_aluno...
-		ResponsavelAlunoID responsavelAlunoID = new ResponsavelAlunoID();
-		ResponsavelAluno responsavelAluno = new ResponsavelAluno();
+		/*ResponsavelAlunoID responsavelAlunoID = new ResponsavelAlunoID();*/
+		
 		
 		//recupera do banco de dados o aluno matriculado
 		Aluno a = alunos.findByMatricula(aluno.getMatricula()).get();
 		
 		//seta o aluno recuperado no model responsavelAlunoID
-		responsavelAlunoID.setAluno(a);
+		/*responsavelAlunoID.setAluno(a);*/
 		
 		
 		//recuperar da sessao os responsaveis para recuperar do banco com o id
+		
+		//TODO: logs
+		System.out.println("quantidade responsaveis: "+responsaveisSession.size());
+		
 		for(ResponsavelSession rs: responsaveisSession){
+			ResponsavelAluno responsavelAluno = new ResponsavelAluno();
+			responsavelAluno.setAluno(a);
+			
+			//TODO: Logs
+			System.out.println("contato do responsavel: "+rs.getResponsavel().getContato());
+			
 			Optional<Responsavel> responsavelOptional = responsaveis.findByContato(rs.getResponsavel().getContato());
 			if(responsavelOptional.isPresent()){
 				//seta o responsavel recuperado no model responsavelAlunoID
-				responsavelAlunoID.setResponsavel(responsavelOptional.get());
+				/*responsavelAlunoID.setResponsavel(responsavelOptional.get());*/
+				responsavelAluno.setResponsavel(responsavelOptional.get());
+				
+				//TODO: logs
+				System.out.println("Nome do responsavel: "+responsavelOptional.get().getNome());
 				
 				//seta o model responsavelAlunoID
-				responsavelAluno.setId(responsavelAlunoID);
+				/*responsavelAluno.setId(responsavelAlunoID);*/
 				responsavelAluno.setParentesco(rs.getResponsavel().getParentesco());
 				
 				//salvar na base de dados o model ResponsavelAluno

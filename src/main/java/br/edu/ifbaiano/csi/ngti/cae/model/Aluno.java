@@ -1,6 +1,7 @@
 package br.edu.ifbaiano.csi.ngti.cae.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -77,6 +78,9 @@ public class Aluno extends Entidade {
 	@ManyToOne
 	@JoinColumn(name="codigo_curso")
 	private Curso curso;
+	
+	@Transient
+	private List<ResponsavelAluno> responsaveisDoAluno;
 	
 	@Transient
 	private Boolean temResponsavel;
@@ -171,6 +175,12 @@ public class Aluno extends Entidade {
 	}
 	public void setTemResponsavel(Boolean temResponsavel) {
 		this.temResponsavel = temResponsavel;
+	}
+	public List<ResponsavelAluno> getResponsaveisDoAluno() {
+		return responsaveisDoAluno;
+	}
+	public void setResponsaveisDoAluno(List<ResponsavelAluno> responsaveisDoAluno) {
+		this.responsaveisDoAluno = responsaveisDoAluno;
 	}
 	@SuppressWarnings("unused")
 	private String getFotoOuMock() {

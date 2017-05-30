@@ -31,13 +31,15 @@ public class ResponsaveisController {
 	@PostMapping(value="/adicionar", consumes=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<?> adicionarResponsavel(@RequestBody @Valid Responsavel responsavel, BindingResult result){
 		
-		if(result.hasErrors()){System.out.println("não passou pela validação...");
-			return ResponseEntity.badRequest().build();}
+		if(result.hasErrors())
+			return ResponseEntity.badRequest().build();
 		
 		List<Responsavel> responsaveis = new ArrayList<>();
 		responsaveis.add(responsavel);
 		
 		tabelasResponsaveisSession.adicionarResponsavel(responsavel.getUuid(), responsaveis);
+		
+		//TODO: logs
 		System.out.println("------------> uuid: "+responsavel.getUuid());
 		System.out.println("/adicionar -> quantidade de responsaveis: "+tabelasResponsaveisSession.totalResponsaveis(responsavel.getUuid()));
 		
@@ -46,11 +48,14 @@ public class ResponsaveisController {
 	
 	@DeleteMapping(value="/remover-todos/{uuid}")
 	public @ResponseBody ResponseEntity<?> removerTodosResponsaveis(@PathVariable("uuid") String uuid){
+		
+		//TODO: logs
 		System.out.println("------------> uuid: "+uuid);
 		System.out.println("/remover-todos -> quantidade de responsaveis: "+tabelasResponsaveisSession.totalResponsaveis(uuid));
 		
 		tabelasResponsaveisSession.excluirTodosOsResponsaveis(uuid);
 		
+		//TODO: logs
 		System.out.println("/remover-todos -> quantidade de responsaveis: "+tabelasResponsaveisSession.totalResponsaveis(uuid));
 		
 		return ResponseEntity.ok(tabelasResponsaveisSession.getResponsaveis(uuid));
@@ -61,36 +66,14 @@ public class ResponsaveisController {
 		Responsavel responsavel = new Responsavel();
 		responsavel.setContato(contato);
 		
+		//TODO: logs
 		System.out.println("/remover antes-> quantidade de responsaveis: "+tabelasResponsaveisSession.totalResponsaveis(uuid));
 		
 		tabelasResponsaveisSession.excluirResponsavel(uuid, responsavel);
 		
+		//TODO: logs
 		System.out.println("/remover depois de excluir-> quantidade de responsaveis: "+tabelasResponsaveisSession.totalResponsaveis(uuid));
 		
 		return ResponseEntity.ok(tabelasResponsaveisSession.getResponsaveis(uuid));
 	} 
-
-	/*@PostMapping(value="/novo", consumes=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<?> cadastroRapido(@RequestBody @Valid responsavel responsavel, BindingResult result){
-		
-		if(result.hasErrors())
-			return ResponseEntity.badRequest().build();
-		
-		try {
-			cadastroContatoService.salvar(responsavel);
-		} catch (ContatoJaCadastradoException e) {
-			responsavel = responsavels.findByNumero(responsavel.getNumero()).get();
-			System.out.println("codigo: "+ responsavel.getCodigo());
-			return ResponseEntity.ok(responsavel);
-		}
-		
-		return ResponseEntity.ok(responsavel);
-	}
-	
-	@PutMapping(value="/iswhatsapp")
-	public @ResponseBody ResponseEntity<?> isWhatsapp(@RequestParam("codigo") Long codigo,@RequestParam("whatsapp") Boolean whatsapp){
-		cadastroContatoService.alterarWhatsapp(codigo, whatsapp);
-		
-		return ResponseEntity.ok().build();
-	}*/
 }

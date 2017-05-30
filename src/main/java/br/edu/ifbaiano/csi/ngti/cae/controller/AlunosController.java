@@ -20,11 +20,14 @@ import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 import br.edu.ifbaiano.csi.ngti.cae.model.GrauParentesco;
 import br.edu.ifbaiano.csi.ngti.cae.model.Identificacao;
 import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
+import br.edu.ifbaiano.csi.ngti.cae.model.ResponsavelAluno;
+import br.edu.ifbaiano.csi.ngti.cae.model.ResponsavelAlunoID;
 import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
 import br.edu.ifbaiano.csi.ngti.cae.model.Sexo;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Alunos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Cursos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Ocorrencias;
+import br.edu.ifbaiano.csi.ngti.cae.repository.ResponsavelAlunos;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroAlunoService;
 import br.edu.ifbaiano.csi.ngti.cae.service.exception.AlunoNumeroMatriculaJaCadastradoException;
 import br.edu.ifbaiano.csi.ngti.cae.session.TabelasResponsaveisSession;
@@ -48,14 +51,24 @@ public class AlunosController {
 	@Autowired
 	private TabelasResponsaveisSession tabelasResponsaveisSession;
 	
+	@Autowired
+	private ResponsavelAlunos responsaveisAluno;
+	
 	@GetMapping
-	public String pesquisar(){
-		return "aluno/PesquisaAlunos";
+	public ModelAndView pesquisar(){
+		ModelAndView mv = new ModelAndView("aluno/PesquisaAlunos");
+		
+		//TODO: teste pode apagar o aluno
+		mv.addObject("aluno", new Aluno());
+		mv.addObject("alunos", alunos.findAll());
+		
+		return mv;
 	}
 	
 	@GetMapping("/novo")
 	public ModelAndView novo(Aluno aluno){
 		ModelAndView mv  = new ModelAndView("aluno/CadastroAluno");
+		mv.addObject("aluno", aluno);
 		mv.addObject("sexo", Sexo.values());
 		mv.addObject("identificacoes", Identificacao.values());
 		mv.addObject("series", SerieTurma.values());
@@ -73,7 +86,7 @@ public class AlunosController {
 			 System.out.println("tem erros no formulário ------------->>>"); return novo(aluno);}
 		
 		//TODO: criar validação customizada para o cadastro do aluno
-		if(tabelasResponsaveisSession.totalResponsaveis(uuid) == 0){
+		if(tabelasResponsaveisSession.totalResponsaveis(uuid) == 0 && aluno.isNovo()){
 			result.rejectValue("temResponsavel", "Adicione ao menos um responsavel", "Adicione ao menos um responsavel");
 			System.out.println("Adicione ao menos um responsavel!");
 			return novo(aluno);
@@ -109,13 +122,8 @@ public class AlunosController {
 	
 	@GetMapping("/{codigo}")
 	public ModelAndView editar(@PathVariable("codigo") Aluno aluno){
-		/*Aluno aluno = new Aluno();
-		aluno.setCodigo(codigo);
-		aluno.setMatricula("123456");
-		aluno.setNome("nome do aluno");
-		
-		System.out.println("chamou o metodo editar!");
-		System.out.println("codigo do aluno: "+ aluno.getCodigo());*/
+		System.out.println("codigo do aluno: "+ aluno.getCodigo());
+		aluno.setResponsaveisDoAluno(responsaveisAluno.findByAluno(aluno));
 		return novo(aluno);
 	}
 }

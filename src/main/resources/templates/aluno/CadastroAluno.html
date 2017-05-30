@@ -17,7 +17,7 @@
             </div>
             <div class="card">
                 <div class="header">
-                    <button type="button" class="btn bg-teal waves-effect"><i class="material-icons">search</i>PESQUISAR</button>
+                    <a th:href="@{/alunos}" type="button" class="btn bg-teal waves-effect"><i class="material-icons">search</i>PESQUISAR</a>
                     <ul class="header-dropdown m-r--5">
                         <li>
                             <a href="javascript:void(0);">
@@ -39,7 +39,9 @@
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
                         <div class="col-md-12">
-                            <form class="js-formulario" th:action="@{/alunos/novo}" method="POST" th:object="${aluno}">
+                            <form class="js-formulario" th:object="${aluno}" th:action="${aluno.novo} ? @{/alunos/novo} : @{/alunos/{codigo}(codigo=${aluno.codigo})}" method="POST">
+                            	<input type="hidden" th:field="*{codigo}">
+                            	
                             	
                             	<!-- MENSAGEM SUCESSO -->
 								<div class="alert bg-teal alert-dismissible fade in" role="alert" th:if="${not #strings.isEmpty(mensagemSucesso)}" th:fragment="alert">
@@ -190,7 +192,14 @@
 					                                    </tr>
 					                                </thead>
 					                                <tbody class="js-tabela-responsaveis-body">
-					                                    <tr><td colspan="4" class="col-orange">Voce ainda nao adicionou responsaveis</td></tr>
+					                                	<th:block th:if="${aluno.responsaveisDoAluno} != null">
+						                                	<tr th:each="responsavelAluno : ${aluno.responsaveisDoAluno}">
+						                                		<th th:text="${responsavelAluno.responsavel.nome}">Nome</th>
+						                                        <th th:text="${responsavelAluno.responsavel.contato}">Contato</th>
+						                                        <th th:text="${responsavelAluno.parentesco.descricao}">Parentesco</th>
+						                                	</tr>
+					                                	</th:block>
+					                                    <tr th:unless="${aluno.responsaveisDoAluno} != null"><td colspan="4" class="col-orange">Voce ainda nao adicionou responsaveis</td></tr>
 					                                </tbody>
 					                            </table>
 	                                            <label th:if="${#fields.hasErrors('temResponsavel')}" th:errors="*{temResponsavel}" id="nome-error" class="error"></label>

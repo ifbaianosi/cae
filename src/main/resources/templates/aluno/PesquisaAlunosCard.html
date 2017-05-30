@@ -127,56 +127,10 @@
 	                                    </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary m-t-15 waves-effect  js-submit">PESQUISAR</button>
+                                <button type="submit" class="btn btn-primary m-t-15 waves-effect  js-submit"><i class="material-icons">search</i> PESQUISAR</button>
+                        		<input type="hidden" id="uuid" th:value="${uuid}" name="uuid">
                             </form>
                         </div>
-                    </div>
-                    <div class="row">
-                    	<div class="col-md-12">
-                    		<div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>MATRICULA</th>
-                                            <th>NOME</th>
-                                            <th>CURSO</th>
-                                            <th>IDENTIFICACAO</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each="aluno : ${alunos}">
-                                            <th scope="row" th:text="${aluno.matricula}">1</th>
-                                            <td th:text="${aluno.nome}">Mark</td>
-                                            <td th:text="${aluno.curso.nome}">Otto</td>
-                                            <td th:text="${aluno.identificacao.descricao}">@mdo</td>
-                                            <td><a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}">Editar</a></td>
-                                            <td>Excluir</td>
-                                            <td>Historico</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <nav class="text-center">
-                                    <ul class="pagination pagination-sm">
-                                        <li>
-                                            <a href="javascript:void(0);" class="waves-effect">
-                                                <i class="material-icons">chevron_left</i>
-                                            </a>
-                                        </li>
-                                        <li><a href="javascript:void(0);" class="waves-effect">1</a></li>
-                                        <li><a href="javascript:void(0);" class="waves-effect">2</a></li>
-                                        <li><a href="javascript:void(0);" class="waves-effect">3</a></li>
-                                        <li><a href="javascript:void(0);" class="waves-effect">4</a></li>
-                                        <li><a href="javascript:void(0);" class="waves-effect">5</a></li>
-                                        <li>
-                                            <a href="javascript:void(0);" class="waves-effect">
-                                                <i class="material-icons">chevron_right</i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                    	</div>
                     </div>
                 </div>
             </div>
