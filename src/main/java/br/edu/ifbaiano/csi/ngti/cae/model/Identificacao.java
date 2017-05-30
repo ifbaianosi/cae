@@ -5,9 +5,9 @@ public enum Identificacao {
 	INTERNO("Aluno Interno"),
 	SEMI_INTERNO("Aluno Semi-Interno"),
 	EXTERNO("Aluno Externo"),
-	FUNCIONARIO("Funcionário Terceirizado"),
+	/*FUNCIONARIO("Funcionário Terceirizado"),
 	SERVIDOR("Servidor"),
-	NAO_IDENTIFICADO("Não Identificado");
+	NAO_IDENTIFICADO("Não Identificado")*/;
 	
 	private String descricao;
 	

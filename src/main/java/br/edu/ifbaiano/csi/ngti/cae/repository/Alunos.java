@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
+import br.edu.ifbaiano.csi.ngti.cae.repository.helper.aluno.AlunosQueries;
 
 @Repository
-public interface Alunos extends JpaRepository<Aluno, Long>{
+public interface Alunos extends JpaRepository<Aluno, Long>, AlunosQueries{
 
 	public Optional<Aluno> findByMatricula(String matricula);
 

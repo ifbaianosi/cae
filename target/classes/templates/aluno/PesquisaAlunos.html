@@ -39,7 +39,7 @@
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
                         <div class="col-md-12">
-                            <form class="js-formulario" th:action="@{/alunos}" method="GET" th:object="${aluno}">
+                            <form class="js-formulario" th:action="@{/alunos}" method="GET" th:object="${alunoFilter}">
                             	
                             	<!-- MENSAGEM SUCESSO -->
 								<div class="alert bg-teal alert-dismissible fade in" role="alert" th:if="${not #strings.isEmpty(mensagemSucesso)}" th:fragment="alert">
@@ -54,7 +54,7 @@
 	                            </div> -->
                             
                                 <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-7">
                                         <label for="nome">Nome</label>
                                         <div class="form-group">
                                             <div class="form-line" th:classappend="${#fields.hasErrors('nome')} ? 'focused error'">
@@ -75,7 +75,7 @@
                                             <label th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}" class="error" for="dataNascimento"></label>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                                         <label for="sexo">Sexo</label>
                                         <div class="form-group"  th:classappend="${#fields.hasErrors('sexo')} ? 'focused error'">
                                         	<th:block th:each="sexo : ${sexo}">
@@ -100,7 +100,7 @@
                                         <label for="identificacao">Identificacao</label>
                                         <div class="form-group">
 	                                        <select id="identificacao" class="form-control show-tick" th:field="*{identificacao}">
-	                                        	<option value="">selecione...</option>
+	                                        	<option value="">todos...</option>
 	                                            <option th:each="identificacao : ${identificacoes}" th:value="${identificacao}" th:text="${identificacao.descricao}">Interno</option>
 	                                        </select>                                           
 	                                        <label th:if="${#fields.hasErrors('identificacao')}" th:errors="*{identificacao}" class="error" for="identificacao"></label>
@@ -110,7 +110,7 @@
                                     	<label for="curso">Curso</label>
                                         <div class="form-group">
 		                                    <select class="form-control show-tick" data-live-search="true" data-size="5" data-container="body" th:field="*{curso}">
-		                                    	<option value="">selecione...</option>
+		                                    	<option value="">todos...</option>
 											    <option th:each="curso : ${cursos}" th:value="${curso.codigo}" th:text="${curso.nome}">Agropecuaria</option>
 											</select>                                           
 	                                        <label th:if="${#fields.hasErrors('curso')}" th:errors="*{curso}" class="error" for="curso"></label>
@@ -120,14 +120,15 @@
                                     	<label for="serieTurma">Serie/Turma</label>
                                         <div class="form-group">
 		                                    <select class="form-control show-tick" data-live-search="true" data-size="5" data-container="body" th:field="*{serieTurma}">
-		                                    	<option value="">selecione...</option>
+		                                    	<option value="">todos...</option>
 											    <option th:each="serie : ${series}" th:value="${serie}" th:text="${serie.descricao}">1º ano A</option>
 											</select>
 	                                        <label th:if="${#fields.hasErrors('serieTurma')}" th:errors="*{serieTurma}" class="error" for="serieTurma"></label>
 	                                    </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary m-t-15 waves-effect  js-submit">PESQUISAR</button>
+                                <button type="submit" class="btn btn-primary waves-effect  js-submit">PESQUISAR</button>
+                                <a th:href="@{/alunos}" class="btn btn-default waves-effect">LIMPAR</a>
                             </form>
                         </div>
                     </div>
@@ -145,97 +146,27 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="aluno : ${alunos}">
+                                        <tr th:each="aluno : ${pagina.conteudo}">
                                             <th scope="row" th:text="${aluno.matricula}">1</th>
                                             <td th:text="${aluno.nome}">Mark</td>
                                             <td th:text="${aluno.curso.nome}">Otto</td>
                                             <td th:text="${aluno.identificacao.descricao}">@mdo</td>
-                                            <td><a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}">Editar</a></td>
-                                            <td>Excluir</td>
-                                            <td>Historico</td>
+                                            <td class="text-right">
+                                            	<a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}" class="col-red"><i class="material-icons">edit</i> Editar</a>
+	                                            <a th:href="@{/alunos/detalhe?matricula={matricula}(matricula=${aluno.matricula})}" class="col-teal"><i class="material-icons">history</i> Historico</a>
+                                            </td>
+                                        </tr>
+                                        <tr th:if="${pagina.vazia}">
+                                        	<td colspan="5">A pesquisa não retornou nenhum resultado.</td>
                                         </tr>
                                     </tbody>
                                 </table>
-                                <nav class="text-center">
-                                    <ul class="pagination pagination-sm">
-                                        <li>
-                                            <a href="javascript:void(0);" class="waves-effect">
-                                                <i class="material-icons">chevron_left</i>
-                                            </a>
-                                        </li>
-                                        <li><a href="javascript:void(0);" class="waves-effect">1</a></li>
-                                        <li><a href="javascript:void(0);" class="waves-effect">2</a></li>
-                                        <li><a href="javascript:void(0);" class="waves-effect">3</a></li>
-                                        <li><a href="javascript:void(0);" class="waves-effect">4</a></li>
-                                        <li><a href="javascript:void(0);" class="waves-effect">5</a></li>
-                                        <li>
-                                            <a href="javascript:void(0);" class="waves-effect">
-                                                <i class="material-icons">chevron_right</i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                <th:block th:replace="fragments/Paginacao :: paginacao"></th:block>
                             </div>
                     	</div>
                     </div>
                 </div>
             </div>
-            <!--cards com resultado da pesquisa de alunos-->
-		            <div class="row">
-		                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-		                    <div class="card">
-		                        <div class="header">
-		                            <h2>
-		                                Glauber de Oliveira Matos
-		                            </h2>
-		                            <ul class="header-dropdown m-r--5">
-		                                <li class="dropdown">
-		                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-		                                        <i class="material-icons">more_vert</i>
-		                                    </a>
-		                                    <ul class="dropdown-menu pull-right">
-		                                        <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
-		                                        <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
-		                                        <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
-		                                    </ul>
-		                                </li>
-		                            </ul>
-		                        </div>
-		                        <div class="body">
-		                            <div class="row">
-		                                <div class="col-md-5 col-sm-5 col-xs-12 pull-right">
-		                                    <div class="layout-foto">
-		                                        <img src="images\alunos\aluno-muckup.png" alt="" class="img-thumbnail" height="121px" width="121px">
-		                                        <h4>2035281</h4>
-		                                    </div>
-		                                </div>
-		                                <div class="col-md-7 col-sm-7 col-xs-12">
-		                                    <strong>Identidicação</strong><p>Servidor </p>
-		                                    <strong>Data Nascimento</strong><p>04/08/1988</p>
-		                                    <strong>Sexo</strong><p>Masculino </p>
-		                                </div>
-		                            </div>
-		                        </div>
-		                        <div class="card-footer">
-		                            <div class="ratings">
-		                                <div class="row">
-		                                    <div class="col-sm-9 col-xs-12">
-		                                        <a href="#"><span class="material-icons">delete_forever</span></a>
-		                                        <a href="#"><span class="material-icons">mode_edit</span></a>
-		                                        <a href="#"><span class="material-icons">notifications</span></a>
-		                                        <a href="#"><span class="material-icons">favorite</span></a>
-		                                    </div>
-		                                    <div class="col-sm-3 col-xs-12">
-		                                        <a href="#" class="btn bg-teal btn-xs pull-right">
-		                                            <i class="material-icons">remove_red_eye</i> VER DETALHES
-		                                        </a>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                        </div>
-		                    </div>
-		                </div>
-		        	</div>
         </div>
     </section>
 

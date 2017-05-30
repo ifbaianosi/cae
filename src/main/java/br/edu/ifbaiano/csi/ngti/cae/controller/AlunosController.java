@@ -3,9 +3,12 @@ package br.edu.ifbaiano.csi.ngti.cae.controller;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.edu.ifbaiano.csi.ngti.cae.controller.page.PageWrapper;
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 import br.edu.ifbaiano.csi.ngti.cae.model.GrauParentesco;
 import br.edu.ifbaiano.csi.ngti.cae.model.Identificacao;
@@ -28,6 +32,7 @@ import br.edu.ifbaiano.csi.ngti.cae.repository.Alunos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Cursos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Ocorrencias;
 import br.edu.ifbaiano.csi.ngti.cae.repository.ResponsavelAlunos;
+import br.edu.ifbaiano.csi.ngti.cae.repository.filter.AlunoFilter;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroAlunoService;
 import br.edu.ifbaiano.csi.ngti.cae.service.exception.AlunoNumeroMatriculaJaCadastradoException;
 import br.edu.ifbaiano.csi.ngti.cae.session.TabelasResponsaveisSession;
@@ -55,12 +60,15 @@ public class AlunosController {
 	private ResponsavelAlunos responsaveisAluno;
 	
 	@GetMapping
-	public ModelAndView pesquisar(){
+	public ModelAndView pesquisar(AlunoFilter alunoFilter, @PageableDefault(size=10) Pageable pageable, HttpServletRequest httpServletRequest){
 		ModelAndView mv = new ModelAndView("aluno/PesquisaAlunos");
+		mv.addObject("sexo", Sexo.values());
+		mv.addObject("identificacoes", Identificacao.values());
+		mv.addObject("series", SerieTurma.values());
+		mv.addObject("cursos", cursos.findAll());
 		
-		//TODO: teste pode apagar o aluno
-		mv.addObject("aluno", new Aluno());
-		mv.addObject("alunos", alunos.findAll());
+		PageWrapper<Aluno> paginaWrapper = new PageWrapper<>(alunos.filtrar(alunoFilter, pageable), httpServletRequest);
+		mv.addObject("pagina", paginaWrapper);
 		
 		return mv;
 	}
@@ -105,7 +113,7 @@ public class AlunosController {
 	}
 	
 	@GetMapping("/detalhe")
-	public ModelAndView detalhesAluno(@RequestParam("matricula") String matricula){
+	public ModelAndView detalhesAluno(@RequestParam("matricula") String matricula, RedirectAttributes attributs){
 		ModelAndView mv = new ModelAndView("aluno/DetalhesAluno");
 		Optional<Aluno> alunoOptional = alunos.findByMatricula(matricula);
 		if(alunoOptional.isPresent()){
@@ -115,6 +123,8 @@ public class AlunosController {
 			mv.addObject("aluno", aluno);
 			mv.addObject("ocorrencias", ocorrencias.findByAlunoOrderByDataRegistroDesc(aluno));
 			mv.addObject("ocorrencia", ocorrencia);
+		}else{
+			attributs.addAttribute("warnning", "O numero da matricula nao foi encontrado");
 		}
 		
 		return mv;
