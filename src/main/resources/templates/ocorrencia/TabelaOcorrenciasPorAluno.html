@@ -5,23 +5,24 @@
 <table id="tabelaOcorrencias" class="table table-hover" th:fragment="tabelaOcorrencias">
      <thead>
          <tr>
-         	 <th>
+         	 <th style="width: 10px;">
          	 	
              </th>
              <th>DATA</th>
-             <th>LOCAL</th>
              <th>DESCRICAO</th>
+             <th></th>
          </tr>
      </thead>
      <tbody>
          <tr th:each="ocorrencia: ${ocorrencias}">
-         	 <td>
+         	 <td style="width: 10px;">
          	 	<input type="checkbox" th:id="|ID_${ocorrencia.codigo}|" class="chk-col-teal  js-checkbox" th:data-codigo="${ocorrencia.codigo}">
                 <label th:for="|ID_${ocorrencia.codigo}|"></label>
              </td>
              <td th:text="${ocorrencia.dataOcorridoFormatada}">Mark</td>
-             <td th:text="${ocorrencia.local}">Otto</td>
+             <!-- <td th:text="${ocorrencia.local}">Otto</td> -->
              <td th:text="${ocorrencia.descricao}">@mdo</td>
+             <td><a href="#" class="col-teal"><i class="material-icons">call_made</i> Encaminhamento</a></td>
          </tr>
      </tbody>
  </table>                    

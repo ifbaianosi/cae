@@ -1,6 +1,8 @@
  CREATE TABLE curso (
     codigo BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(80) NOT NULL
+    nome VARCHAR(80) NOT NULL,
+    sigla VARCHAR(80) NOT NULL,
+    tipo_curso VARCHAR(40) NOT NULL
     
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

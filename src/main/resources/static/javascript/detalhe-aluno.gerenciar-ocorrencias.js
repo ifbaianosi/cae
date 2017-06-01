@@ -29,7 +29,8 @@ NGTICAE.SalvarOcorrencia = function(){
 		this.salvarOcorrenciaBtn.on('click', onSalvarOcorrencia.bind(this));
 	}
 	
-	function onSalvarOcorrencia(){
+	function onSalvarOcorrencia(event){
+		event.preventDefault();
 		console.log('Salvando ocorrencia...');
 		validarFormulario();
 		

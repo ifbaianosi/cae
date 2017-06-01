@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -79,9 +80,21 @@ public class AlunosController {
 	
 	@RequestMapping(consumes=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<AlunoDTO> pesquisarAluno(@RequestParam("nomeOuMatricula") String nomeOuMatricula){
-		//VALIDAR FORMULARIO...
+		//TODO: VALIDAR FORMULARIO COM JQUERY...
 		
 		return alunos.porNomeOuMatricula(nomeOuMatricula);
+	}
+	
+	@RequestMapping(value="/por-matricula", consumes=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<?> pesquisarAlunoPorMatricula(@RequestParam("matricula") String matricula){
+		//TODO: VALIDAR FORMULARIO COM JQUERY...
+		
+		Optional<Aluno> alunoOptional = alunos.findByMatricula(matricula);
+		if(!alunoOptional.isPresent()){
+			return ResponseEntity.badRequest().body("Aluno não encontrado");
+		}
+		
+		return ResponseEntity.ok(alunoOptional.get());
 	}
 	
 	@GetMapping("/novo")

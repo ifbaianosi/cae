@@ -9,15 +9,19 @@ NGTICAE.PesquisaAluno = (function(){
 		this.nomeOuMatriculaInputModal = $('.js-nomeOuMatricula-aluno-modal');
 		
 		this.matriculaInput = $('.js-matricula');
+		this.validarMatriculaBtn = $('.js-validar-numero-matricula');
 		
 		this.htmlTabelaAlunos = $('#tabelaPesquisaAluno').html();
 		this.template = Handlebars.compile(this.htmlTabelaAlunos);
 		this.containerTabelaAlunos = $('.js-container-tabela-alunos');
+		
+		this.remover = $('.js-remover');
 	}
 	
 	PesquisaAluno.prototype.iniciar = function(){
 		this.pesquisarBtn.on('click', onPesquisarClicado.bind(this));
-		this.matriculaInput.on('blur', onFocusPerdido.bind(this));
+		this.validarMatriculaBtn.on('click', onValidarMatriculaBtnClicado.bind(this));
+		this.remover.on('click', onRemoverAluno.bind(this));
 	}
 	
 	function onPesquisarClicado(evento){
@@ -46,12 +50,64 @@ NGTICAE.PesquisaAluno = (function(){
 		this.containerTabelaAlunos.html(novatabela);
 	}
 	
-	function onFocusPerdido(){
-		console.log('Fazer a pesquisa pela matricula informada...')
+	function onValidarMatriculaBtnClicado(event){
+		event.preventDefault();
+		
+		console.log('Fazer a pesquisa pela matricula informada...');
+		console.log('matricula: ', this.matriculaInput.val().trim());
+		
+		$.ajax({
+			url: this.url + '/por-matricula',
+			method: 'GET',
+			contentType: 'application/json',
+			data: {
+				matricula: this.matriculaInput.val().trim(),
+			},
+			beforeSend: iniciarRequisicaoModal.bind(this),
+			success: sucesso.bind(this),
+			error: erroRetornoPesquisa.bind(this),
+			complete: finalizaRequisicao.bind(this)
+		});
+		
+	}
+	
+	function sucesso(aluno){
+		if(aluno.codigo != null){
+			console.log('pesquisa concluida...', aluno);
+			console.log('aluno.nome: ', aluno.nome);
+			
+			$('.js-nome').text(aluno.nome);
+			$('.js-matricula').text(aluno.matricula);
+			$('.js-curso').text(aluno.curso.nome);
+			
+			$('.js-card-aluno').removeClass('hide');
+			$('.js-restante-formulario').removeClass('hide');
+			$('.js-aluno').addClass('hide');
+			
+			$('#aluno').val(aluno.codigo);
+			$('#name-error').hide();
+		}
+	}
+	
+	function onRemoverAluno(){
+		$('.js-nome').text('');
+		$('.js-matricula').text('');
+		$('.js-curso').text('');
+		
+		$('.js-card-aluno').addClass('hide');
+		$('.js-restante-formulario').addClass('hide');
+		$('.js-aluno').removeClass('hide');
+		
+		$('#aluno').val('');
+		this.matriculaInput.val('');
 	}
 	
 	function erroRetornoPesquisa(erro){
-		console.log('erro', erro);
+		console.log('erro', erro.responseText);
+		
+		var labelErro = '<label id="name-error" class="error" for="aluno">' + erro.responseText +'.</label>'
+		$('#divInput').after(labelErro);
+		$('#divInput').addClass('error');
 	}
 	
 	function iniciarRequisicaoModal(){

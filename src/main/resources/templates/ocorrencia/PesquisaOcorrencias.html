@@ -13,11 +13,11 @@
     <section class="content" layout:fragment="conteudo">
         <div class="container-fluid">
             <div class="block-header">
-                <h2>PESQUISAR ALUNOS</h2>
+                <h2>PESQUISAR OCORRENCIAS</h2>
             </div>
             <div class="card">
                 <div class="header">
-                    <a th:href="@{/alunos/novo}" type="button" class="btn bg-teal waves-effect"><i class="material-icons">add</i>NOVO</a>
+                    <a th:href="@{/ocorrencias/nova}" type="button" class="btn bg-teal waves-effect"><i class="material-icons">add</i>NOVA</a>
                     <ul class="header-dropdown m-r--5">
                         <li>
                             <a href="javascript:void(0);">
@@ -39,19 +39,13 @@
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
                         <div class="col-md-12">
-                            <form class="js-formulario" th:action="@{/alunos}" method="GET" th:object="${alunoFilter}">
+                            <!-- <form class="js-formulario" th:action="@{/ocorrencias}" method="GET" th:object="${ocorrenciaFilter}">
                             	
-                            	<!-- MENSAGEM SUCESSO -->
+                            	MENSAGEM SUCESSO
 								<div class="alert bg-teal alert-dismissible fade in" role="alert" th:if="${not #strings.isEmpty(mensagemSucesso)}" th:fragment="alert">
 	                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="material-icons">clear</i></button>
 	                                <span th:text="${mensagemSucesso}"></span>
 	                            </div>
-	                            
-	                            <!-- MENSAGEM ERRO -->
-								<!-- <div class="alert alert-danger alert-dismissible fade in" role="alert" th:if="${#fields.hasErrors('temResponsavel')}" th:fragment="alert">
-	                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="material-icons">clear</i></button>
-	                                <span th:errors="*{temResponsavel}"></span>
-	                            </div> -->
                             
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-7">
@@ -129,7 +123,7 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary waves-effect  js-submit">PESQUISAR</button>
                                 <a th:href="@{/alunos}" class="btn btn-default waves-effect">LIMPAR</a>
-                            </form>
+                            </form> -->
                         </div>
                     </div>
                     <div class="row">
@@ -138,26 +132,24 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th>MATRICULA</th>
-                                            <th>NOME</th>
-                                            <th>CURSO</th>
-                                            <th>IDENTIFICACAO</th>
+                                            <th>DATA</th>
+                                            <th>DESCRICAO</th>
+                                            <th>ALUNO</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="aluno : ${pagina.conteudo}">
-                                            <th scope="row" th:text="${aluno.matricula}">1</th>
-                                            <td th:text="${aluno.nome}">Mark</td>
-                                            <td th:text="${aluno.curso.nome}">Otto</td>
-                                            <td th:text="${aluno.identificacao.descricao}">@mdo</td>
+                                        <tr th:each="ocorrencia : ${pagina.conteudo}">
+                                            <th scope="row" th:text="${ocorrencia.dataOcorridoFormatada}">1</th>
+                                            <td th:text="${ocorrencia.descricao}">Mark</td>
+                                            <td th:text="${ocorrencia.aluno.nome}">Otto</td>
                                             <td class="text-right">
-                                            	<a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}" class="col-red"><i class="material-icons">edit</i> Editar</a>
-	                                            <a th:href="@{/alunos/detalhe?matricula={matricula}(matricula=${aluno.matricula})}" class="col-teal"><i class="material-icons">history</i> Historico</a>
+                                            	<a th:href="@{/ocorrencias/{codigo}(codigo=${ocorrencia.codigo})}" class="col-red"><i class="material-icons">edit</i> Editar</a>
+             									<a href="#" class="col-teal"><i class="material-icons">call_made</i> Encaminhamento</a>
                                             </td>
                                         </tr>
                                         <tr th:if="${pagina.vazia}">
-                                        	<td colspan="5">A pesquisa não retornou nenhum resultado.</td>
+                                        	<td colspan="4">A pesquisa não retornou nenhum resultado.</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -170,8 +162,7 @@
         </div>
     </section>
 
-   <th:block layout:fragment="javascript-extra">
-   </th:block>
+   <th:block layout:fragment="javascript-extra"></th:block>
 </body>
 
 </html>

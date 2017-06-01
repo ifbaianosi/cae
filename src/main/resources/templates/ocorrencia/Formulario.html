@@ -26,63 +26,90 @@
                                 </div>
                             </div>
                          </div> -->
+                         
                          <div class="row" th:if="${ocorrencia.aluno} == null">
                             <div class="col-xs-12 col-sm-12 col-md-4">
-                                <label for="aluno">Aluno</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#modalPesquisaAluno"><i class="material-icons">search</i></a>
-                                    </span>
-                                    <div class="form-line" th:classappend="${#fields.hasErrors('aluno')} ? 'focused error'">
-                                        <input type="text" class="form-control js-matricula" placeholder="Digite a matricula do aluno ou pesquise clicando no botão">
-                                    </div>
-                                    <label th:if="${#fields.hasErrors('aluno')}" th:errors="*{aluno}" id="nome-error" class="error" for="aluno"></label>
-                                    <!-- <span class="input-group-addon">
-                                        <i class="material-icons">send</i>
-                                    </span> -->
+                                <div class="js-aluno">
+	                                <label for="aluno">Aluno</label>
+	                                <div class="input-group">
+	                                    <span class="input-group-addon">
+	                                        <a href="javascript:void(0);" class="btn btn-xs btn-link waves-effect" data-toggle="modal" data-target="#modalPesquisaAluno"><i class="material-icons">search</i></a>
+	                                    </span>
+	                                    <div id="divInput" class="form-line" th:classappend="${#fields.hasErrors('aluno')} ? 'focused error'">
+	                                        <input type="text" id="aluno" class="form-control js-matricula" placeholder="Digite a matricula do aluno" autofocus>
+	                                    </div>
+	                                    <label th:if="${#fields.hasErrors('aluno')}" th:errors="*{aluno}" id="nome-error" class="error" for="aluno"></label>
+	                                    <span class="input-group-addon">
+	                                        <button class="btn-link waves-effect js-validar-numero-matricula"><i class="material-icons">send</i></button>
+	                                    </span>
+	                                    <div class="preloader pl-size-xs pull-right hide">
+		                                    <div class="spinner-layer pl-teal">
+		                                        <div class="circle-clipper left">
+		                                            <div class="circle"></div>
+		                                        </div>
+		                                        <div class="circle-clipper right">
+		                                            <div class="circle"></div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+	                                </div>
                                 </div>
+                                <!-- <div class="card js-card-aluno hide">
+			                        <div class="body"> -->
+			                        	<div class="row js-card-aluno m-t-15 m-b-20 hide">
+			                        		<div class="col-xs-10" style="margin-bottom: 0;">
+					                            <div><span class="col-teal js-nome">Glauber de Oliveira Matos</span></div>
+					                            <div><strong class="js-matricula">2035280</strong></div>
+					                            <span class="js-curso">Tecnico em Informática</span>
+			                        		</div>
+			                        		<div class="col-xs-2">
+			                        			<div class="align-right"><a href="#" class="btn-xs btn-link waves-effect js-remover" title="Remover">x</a></div>
+			                        		</div>
+			                        	</div>
+			                        <!-- </div>
+			                    </div> -->
                             </div>
                          </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-                                <label for="dataOcorrido">Data Ocorrencia</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="material-icons">date_range</i>
-                                    </span>
-                                    <div class="form-line" th:classappend="${#fields.hasErrors('dataOcorrido')} ? 'focused error'">
-                                        <!-- <input type="text" class="form-control date  js-dataOcorrencia" placeholder="" th:field="*{dataOcorrido}"> -->
-                                        <input type="text" class="datetimepicker form-control  js-dataOcorrencia" placeholder="" th:field="*{dataOcorrido}">
-                                    </div>
-                                    <label th:if="${#fields.hasErrors('dataOcorrido')}" th:errors="*{dataOcorrido}" class="error" for="dataOcorrido"></label>
-                                </div>
-                            </div>
+                         <div class="js-restante-formulario" th:classappend="${ocorrencia.aluno} == null ? 'hide'">
+	                        <div class="row">
+	                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+	                                <label for="dataOcorrido">Data Ocorrencia</label>
+	                                <div class="input-group">
+	                                    <span class="input-group-addon">
+	                                        <i class="material-icons">date_range</i>
+	                                    </span>
+	                                    <div class="form-line" th:classappend="${#fields.hasErrors('dataOcorrido')} ? 'focused error'">
+	                                        <!-- <input type="text" class="form-control date  js-dataOcorrencia" placeholder="" th:field="*{dataOcorrido}"> -->
+	                                        <input type="text" class="datetimepicker form-control  js-dataOcorrencia" placeholder="" th:field="*{dataOcorrido}">
+	                                    </div>
+	                                    <label th:if="${#fields.hasErrors('dataOcorrido')}" th:errors="*{dataOcorrido}" class="error" for="dataOcorrido"></label>
+	                                </div>
+	                            </div>
+	                         </div>
+	                         <div class="row">   
+	                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
+	                                <label for="descricao">Descricao</label>
+	                                <div class="form-group">
+	                                    <div class="form-line" th:classappend="${#fields.hasErrors('descricao')} ? 'focused error'">
+	                                        <textarea rows="2" class="form-control no-resize  js-descricao" placeholder="Digite aqui a descricao da ocorrencia..." th:field="*{descricao}"></textarea>
+	                                    </div>
+	                                    <label th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}" id="nome-error" class="error" for="descricao"></label>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <div class="row">
+	                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
+	                                <label for="local">Local da ocorrencia</label>
+	                                <div class="form-group">
+	                                    <div class="form-line" th:classappend="${#fields.hasErrors('local')} ? 'focused error'">
+	                                        <input type="text" class="form-control  js-local" placeholder="" th:field="*{local}">
+	                                    </div>
+	                                    <label th:if="${#fields.hasErrors('local')}" th:errors="*{local}" id="nome-error" class="error" for="local"></label>
+	                                </div>
+	                            </div>
+	                         </div>
+	                        <button type="submit" class="btn bg-teal m-t-10 waves-effect  js-submit">SALVAR</button>
                          </div>
-                         <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
-                                <label for="local">Local da ocorrencia</label>
-                                <div class="form-group">
-                                    <div class="form-line" th:classappend="${#fields.hasErrors('local')} ? 'focused error'">
-                                        <input type="text" class="form-control  js-local" placeholder="" th:field="*{local}">
-                                    </div>
-                                    <label th:if="${#fields.hasErrors('local')}" th:errors="*{local}" id="nome-error" class="error" for="local"></label>
-                                </div>
-                            </div>
-                         </div>
-                         <div class="row">   
-                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
-                                <label for="descricao">Descricao</label>
-                                <div class="form-group">
-                                    <div class="form-line" th:classappend="${#fields.hasErrors('descricao')} ? 'focused error'">
-                                        <textarea rows="2" class="form-control no-resize  js-descricao" placeholder="Digite aqui a descricao da ocorrencia..." th:field="*{descricao}"></textarea>
-                                    </div>
-                                    <label th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}" id="nome-error" class="error" for="descricao"></label>
-                                </div>
-                            </div>
-                        </div>
-                        <button th:if="${ocorrencia.aluno} == null" type="submit" class="btn btn-primary m-t-15 waves-effect  js-submit"><i class="material-icons">send</i> SALVAR</button>
-                        <button th:unless="${ocorrencia.aluno} == null" type="button" class="btn bg-teal m-t-5 waves-effect  js-submit">SALVAR</button>
-                		<input type="hidden" id="uuid" th:value="${uuid}" name="uuid">
                     </form>
                     
 </html>
