@@ -1,0 +1,31 @@
+<script id="tabelaPesquisaAluno" type="text/x-handlebars-template">
+<table id="tabelaAlunos" class="table table-hover" th:fragment="tabelaAlunos">
+     <thead>
+         <tr>
+         	 <th></th>
+             <th>NOME</th>
+             <th>MATRICULA</th>
+             <th>SERIE</th>
+             <th>SEXO</th>
+         </tr>
+     </thead>
+     <tbody>
+		{{#if .}}
+			{{#each .}}
+         		<tr>
+         	 		<td>
+         	 			<input type="checkbox" id="ID_{{codigo}}" class="chk-col-teal  js-checkbox" data-codigo="{{codigo}}">
+                		<label for="ID_{{codigo}}"></label>
+             		</td>
+             		<td>{{nome}}</td>
+             		<td>{{matricula}}</td>
+             		<td>{{serieTurma}}</td>
+             		<td>{{sexo}}</td>
+         		</tr>
+			{{/each}}
+		{{else}}
+			<tr><td colspan="4">A pesquisa não retornou nenhum registro.<td><tr>
+		{{/if}}
+     </tbody>
+ </table>                    
+</script>

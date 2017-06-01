@@ -1,5 +1,7 @@
 package br.edu.ifbaiano.csi.ngti.cae.repository.helper.aluno;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -15,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import br.edu.ifbaiano.csi.ngti.cae.dto.AlunoDTO;
+import br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO;
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 import br.edu.ifbaiano.csi.ngti.cae.repository.filter.AlunoFilter;
 import br.edu.ifbaiano.csi.ngti.cae.repository.paginacao.PaginacaoUtil;
@@ -40,6 +44,19 @@ public class AlunosImpl implements AlunosQueries {
 		adicionarFiltro(filtro, criteria);
 		
 		return new PageImpl<>(criteria.list(), pageable, total(filtro));
+	}
+	
+	@Override
+	public List<AlunoDTO> porNomeOuMatricula(String nomeOuMatricula) {
+		String jpql = "SELECT new br.edu.ifbaiano.csi.ngti.cae.dto.AlunoDTO(codigo, nome, matricula, serieTurma, sexo) "
+				+ "FROM Aluno a "
+				+ "WHERE lower(a.nome) like lower(:nomeOuMatricula) OR a.matricula like :nomeOuMatricula";
+		
+		List<AlunoDTO> alunosFiltrados = manager.createQuery(jpql, AlunoDTO.class)
+											.setParameter("nomeOuMatricula", nomeOuMatricula + "%")
+											.getResultList();
+
+		return alunosFiltrados;
 	}
 
 
@@ -87,4 +104,7 @@ public class AlunosImpl implements AlunosQueries {
 		criteria.setProjection(Projections.rowCount());
 		return (Long)criteria.uniqueResult();
 	}
+
+
+	
 }

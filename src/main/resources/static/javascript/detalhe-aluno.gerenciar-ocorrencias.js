@@ -394,12 +394,4 @@ $(function(){
 	var editarOcorrencia = new NGTICAE.EditarOcorrencia();
 	editarOcorrencia.iniciar();
 
-	$('.datetimepicker').bootstrapMaterialDatePicker({
-        format: 'DD/MM/YYYY HH:mm',
-        lang: 'pt',
-        clearButton: true,
-        weekStart: 0,
-        cancelText: 'CANCELAR',
-        clearText: 'LIMPAR' 
-    });
 });

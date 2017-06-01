@@ -1,5 +1,6 @@
 package br.edu.ifbaiano.csi.ngti.cae.controller;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -9,6 +10,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +18,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifbaiano.csi.ngti.cae.controller.page.PageWrapper;
+import br.edu.ifbaiano.csi.ngti.cae.dto.AlunoDTO;
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 import br.edu.ifbaiano.csi.ngti.cae.model.GrauParentesco;
 import br.edu.ifbaiano.csi.ngti.cae.model.Identificacao;
@@ -71,6 +75,13 @@ public class AlunosController {
 		mv.addObject("pagina", paginaWrapper);
 		
 		return mv;
+	}
+	
+	@RequestMapping(consumes=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<AlunoDTO> pesquisarAluno(@RequestParam("nomeOuMatricula") String nomeOuMatricula){
+		//VALIDAR FORMULARIO...
+		
+		return alunos.porNomeOuMatricula(nomeOuMatricula);
 	}
 	
 	@GetMapping("/novo")
