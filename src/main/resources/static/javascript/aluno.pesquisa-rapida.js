@@ -96,6 +96,7 @@ NGTICAE.PesquisaAluno = (function(){
 			console.log('aluno.nome: ', aluno.nome);
 			
 			$('.js-nome').text(aluno.nome);
+			$('.js-nome').val(aluno.matricula + ' - ' + aluno.nome);
 			$('.js-matricula').text(aluno.matricula);
 			$('.js-curso').text(aluno.curso.nome);
 			

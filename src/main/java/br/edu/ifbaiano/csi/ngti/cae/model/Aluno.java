@@ -1,6 +1,7 @@
 package br.edu.ifbaiano.csi.ngti.cae.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -182,9 +183,14 @@ public class Aluno extends Entidade {
 	public void setResponsaveisDoAluno(List<ResponsavelAluno> responsaveisDoAluno) {
 		this.responsaveisDoAluno = responsaveisDoAluno;
 	}
-	@SuppressWarnings("unused")
-	private String getFotoOuMock() {
+	public String getFotoOuMock() {
 		return !StringUtils.isEmpty(foto) ? foto : "aluno-mock.png";
 	}
+	
+	public String getDataNascimentoFormatada() {
+		DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return dataNascimento.format(formater);
+	}
+	
 	
 }

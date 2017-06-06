@@ -33,14 +33,14 @@
 	                                <label for="aluno">Aluno</label>
 	                                <div class="input-group">
 	                                    <span class="input-group-addon">
-	                                        <a href="javascript:void(0);" class="btn btn-xs btn-link waves-effect" data-toggle="modal" data-target="#modalPesquisaAluno"><i class="material-icons">search</i></a>
+	                                        <a href="javascript:void(0);" class="btn btn-xs waves-effect" data-toggle="modal" data-target="#modalPesquisaAluno"><i class="material-icons">search</i></a>
 	                                    </span>
 	                                    <div id="divInput" class="form-line" th:classappend="${#fields.hasErrors('aluno')} ? 'focused error'">
 	                                        <input type="text" id="aluno" class="form-control js-matricula" placeholder="Digite a matricula do aluno" autofocus>
 	                                    </div>
 	                                    <label th:if="${#fields.hasErrors('aluno')}" th:errors="*{aluno}" id="nome-error" class="error" for="aluno"></label>
 	                                    <span class="input-group-addon">
-	                                        <button class="btn-link waves-effect js-validar-numero-matricula"><i class="material-icons">send</i></button>
+	                                        <button class="btn btn-dafault btn-xs waves-effect js-validar-numero-matricula"><i class="material-icons">send</i></button>
 	                                    </span>
 	                                    <div class="preloader pl-size-xs pull-right hide">
 		                                    <div class="spinner-layer pl-teal">

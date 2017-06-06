@@ -35,7 +35,7 @@
 	                            Glauber de Oliveira Matos
 	                        </h2>
 	                        <ul class="header-dropdown m-r--5">
-	                        	<li><a th:href="@{/alunos}" class="btn bg-teal waves-effect waves-block">Retornar a pesquisa</a></li>
+	                        	<li><a th:href="@{/alunos}" class="btn bg-teal waves-effect waves-block">PESQUISAR</a></li>
 	                        </ul>
 	                    </div>
 	                    <div class="body">
@@ -53,9 +53,9 @@
 	                                </div>
 	                                <div class="container-info-aluno">
 	                                	<input type="hidden" id="codigo_aluno" name="ocorrencia.aluno" th:value="${aluno.codigo}">
-	                                    <strong>Identidicacao</strong><p th:text="${aluno.identificacao.descricao}">Servidor </p>
-	                                    <strong>Data Nascimento</strong><p th:text="${aluno.dataNascimento}">04/08/1988</p>
-	                                    <strong>Sexo</strong><p th:text="${aluno.sexo.descricao}">Masculino</p>
+	                                    <strong>IDENTIFICACAO</strong><p th:text="${aluno.identificacao.descricao}">Servidor </p>
+	                                    <strong>DATA NASCIMENTO</strong><p th:text="${aluno.dataNascimentoFormatada}">04/08/1988</p>
+	                                    <strong>SEXO</strong><p th:text="${aluno.sexo.descricao}">Masculino</p>
 	                                </div>
 	                            </div>
 	                            <div class="col-md-9">
@@ -109,7 +109,7 @@
 										            </div>
 			                                    </div>
 			                                    <div role="tabpanel" class="tab-pane fade" id="ocorrencias">
-			                                    	<div class="row">
+			                                    	<!-- <div class="row">
 										                <div class="col-xs-12">
 										                    <div class="info-box-3" style="margin-bottom: 0px;">
 										                        <div class="icon">
@@ -121,7 +121,7 @@
 										                        </div>
 										                    </div>
 										                </div>
-										            </div>
+										            </div> -->
 			                                    	<div class="row">
 			                                    		<div class="col-md-12">
 				                                    		<button type="button" class="btn btn-xs bg-teal waves-effect  js-nova-ocorrencia" th:data-url="@{/ocorrencias}">NOVA</button>

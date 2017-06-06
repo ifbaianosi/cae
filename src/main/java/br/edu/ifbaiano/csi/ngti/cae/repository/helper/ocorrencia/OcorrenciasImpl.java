@@ -1,5 +1,7 @@
 package br.edu.ifbaiano.csi.ngti.cae.repository.helper.ocorrencia;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -91,8 +93,16 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 				criteria.add(Restrictions.ilike("local", filtro.getLocal(), MatchMode.ANYWHERE));
 			
 			//FILTRO DATA OCORRIDO
-			if(filtro.getDataOcorrido() != null)
-				criteria.add(Restrictions.eq("dataOcorrido", filtro.getDataOcorrido()));
+			if(filtro.getDataOcorrido() != null){
+				LocalDateTime desde = LocalDateTime.of(filtro.getDataOcorrido(), LocalTime.of(0, 0));
+				criteria.add(Restrictions.ge("dataOcorrido", desde));
+			}
+			
+			//FILTRO DATA OCORRIDO ATE
+			if (filtro.getDataOcorridoAte() != null) {
+				LocalDateTime ate = LocalDateTime.of(filtro.getDataOcorridoAte(), LocalTime.of(23, 59));
+				criteria.add(Restrictions.le("dataOcorrido", ate));
+			}
 			
 			//FILTRO ALUNO
 			if(filtro.getAluno() != null && filtro.getAluno().getCodigo() != null)
