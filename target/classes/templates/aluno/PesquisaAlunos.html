@@ -132,38 +132,40 @@
                             </form>
                         </div>
                     </div>
-                    <div class="row">
-                    	<div class="col-md-12">
-                    		<div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>MATRICULA</th>
-                                            <th>NOME</th>
-                                            <th>CURSO</th>
-                                            <th>IDENTIFICACAO</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each="aluno : ${pagina.conteudo}">
-                                            <th scope="row" th:text="${aluno.matricula}">1</th>
-                                            <td th:text="${aluno.nome}">Mark</td>
-                                            <td th:text="${aluno.curso.nome}">Otto</td>
-                                            <td th:text="${aluno.identificacao.descricao}">@mdo</td>
-                                            <td class="text-right">
-                                            	<a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}" class="col-red"><i class="material-icons">edit</i> Editar</a>
-	                                            <a th:href="@{/alunos/detalhe?matricula={matricula}(matricula=${aluno.matricula})}" class="col-teal"><i class="material-icons">history</i> Historico</a>
-                                            </td>
-                                        </tr>
-                                        <tr th:if="${pagina.vazia}">
-                                        	<td colspan="5">A pesquisa não retornou nenhum resultado.</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <th:block th:replace="fragments/Paginacao :: paginacao"></th:block>
-                            </div>
-                    	</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="body">
+                	<div class="row">
+                  		<div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>MATRICULA</th>
+                                        <th>NOME</th>
+                                        <th>CURSO</th>
+                                        <th>IDENTIFICACAO</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="aluno : ${pagina.conteudo}">
+                                        <th scope="row" th:text="${aluno.matricula}">1</th>
+                                        <td th:text="${aluno.nome}">Mark</td>
+                                        <td th:text="${aluno.curso.nome}">Otto</td>
+                                        <td th:text="${aluno.identificacao.descricao}">@mdo</td>
+                                        <td class="text-right">
+                                        	<a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}" class="col-red"><i class="material-icons">edit</i> Editar</a>
+                                         <a th:href="@{/alunos/detalhe?matricula={matricula}(matricula=${aluno.matricula})}" class="col-teal"><i class="material-icons">history</i> Historico</a>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="${pagina.vazia}">
+                                    	<td colspan="5">A pesquisa não retornou nenhum resultado.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <th:block th:replace="fragments/Paginacao :: paginacao"></th:block>
+                        </div>
                     </div>
                 </div>
             </div>

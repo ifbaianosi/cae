@@ -56,12 +56,12 @@ NGTICAE.SalvarOcorrencia = function(){
 		console.log('Sucesso... ocorrencia criada no servidor...', retorno);
 		
 		$.ajax({
-			url: $('.js-nova-ocorrencia').data('url') + '/' + $('#codigo_aluno').val(),
+			url: $('.js-nova-ocorrencia').data('url') + '/aluno/' + $('#codigo_aluno').val(),
 			method: 'GET',
 			success: atualizarTabela.bind(this)
 		});
 		
-		NGTICAE.Notificacao.mostrar('sucesso', 'Ocorrencia salva!', 'success');
+		NGTICAE.Notificacao.mostrar('sucesso', 'Ocorrencia salva!', 'info');
 		
 		NGTICAE.Formulario.limpar();
 		NGTICAE.Formulario.esconder();
@@ -145,10 +145,10 @@ NGTICAE.ExcluirOcorrencia = function(){
 	
 	function onExcluidoComSucesso(){
 		console.log('Excluído com sucesso!');
-		NGTICAE.Notificacao.mostrar("Sucesso", "excluido", "success");
+		NGTICAE.Notificacao.mostrar("Sucesso", "excluido", "info");
 		
 		$.ajax({
-			url: $('.js-nova-ocorrencia').data('url') + '/' + $('#codigo_aluno').val(),
+			url: $('.js-nova-ocorrencia').data('url') + '/aluno/' + $('#codigo_aluno').val(),
 			method: 'GET',
 			success: atualizarTabela.bind(this)
 		});
@@ -249,10 +249,10 @@ NGTICAE.EditarOcorrencia = function(){
 	
 	function onExcluidoComSucesso(){
 		console.log('Excluído com sucesso!');
-		NGTICAE.Notificacao.mostrar("Sucesso", "excluido", "success");
+		NGTICAE.Notificacao.mostrar("Sucesso", "excluido", "info");
 		
 		$.ajax({
-			url: $('.js-nova-ocorrencia').data('url') + '/' + $('#codigo_aluno').val(),
+			url: $('.js-nova-ocorrencia').data('url') + '/aluno/' + $('#codigo_aluno').val(),
 			method: 'GET',
 			success: atualizarTabela.bind(this)
 		});

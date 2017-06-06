@@ -47,18 +47,19 @@ public class AlunosImpl implements AlunosQueries {
 	}
 	
 	@Override
-	public List<AlunoDTO> porNomeOuMatricula(String nomeOuMatricula) {
-		String jpql = "SELECT new br.edu.ifbaiano.csi.ngti.cae.dto.AlunoDTO(codigo, nome, matricula, serieTurma, sexo) "
+	public List<Aluno> porNomeOuMatricula(String nomeOuMatricula) {
+		String jpql = "SELECT a "
 				+ "FROM Aluno a "
 				+ "WHERE lower(a.nome) like lower(:nomeOuMatricula) OR a.matricula like :nomeOuMatricula ";
 		
-		List<AlunoDTO> alunosFiltrados = manager.createQuery(jpql, AlunoDTO.class)
+		List<Aluno> alunosFiltrados = manager.createQuery(jpql, Aluno.class)
 											.setParameter("nomeOuMatricula", nomeOuMatricula + "%")
 											.getResultList();
 
 		return alunosFiltrados;
 	}
 	
+	//NO MOMENTO NÃO ESTA SENDO USADO ESSE METODO, FOI USADO O PROPRIO METODO DO SPRING DATA JPA findByMatricula(matricula)
 	@Override
 	public Optional<AlunoDTO> porMatricula(String matricula) {
 		String jpql = "SELECT new br.edu.ifbaiano.csi.ngti.cae.dto.AlunoDTO(codigo, nome, matricula, serieTurma, sexo) "

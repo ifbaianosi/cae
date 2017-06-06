@@ -79,7 +79,7 @@ public class AlunosController {
 	}
 	
 	@RequestMapping(consumes=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<AlunoDTO> pesquisarAluno(@RequestParam("nomeOuMatricula") String nomeOuMatricula){
+	public @ResponseBody List<Aluno> pesquisarAluno(@RequestParam("nomeOuMatricula") String nomeOuMatricula){
 		//TODO: VALIDAR FORMULARIO COM JQUERY...
 		
 		return alunos.porNomeOuMatricula(nomeOuMatricula);

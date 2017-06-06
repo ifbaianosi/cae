@@ -48,6 +48,25 @@ NGTICAE.PesquisaAluno = (function(){
 		
 		var novatabela = this.template(alunos);
 		this.containerTabelaAlunos.html(novatabela);
+
+		this.containerTabelaAlunos.removeClass('hide');
+		
+		$('.js-selecionar').on('click', onSelecionar.bind(this));
+	}
+	
+	function onSelecionar(event){
+		console.log('Selecionar aluno clicado...', $(event.currentTarget).data('codigo'));
+		var aluno = {
+				codigo: $(event.currentTarget).data('codigo'),
+				nome: $(event.currentTarget).data('nome-aluno'),
+				matricula: $(event.currentTarget).data('matricula'),
+				curso: {
+					nome: $(event.currentTarget).data('curso')
+				}
+		}
+		console.log('aluno clicado...: ',aluno);
+		sucesso(aluno);
+		fecharJanela();
 	}
 	
 	function onValidarMatriculaBtnClicado(event){
@@ -73,7 +92,7 @@ NGTICAE.PesquisaAluno = (function(){
 	
 	function sucesso(aluno){
 		if(aluno.codigo != null){
-			console.log('pesquisa concluida...', aluno);
+			console.log('sucesso...', aluno);
 			console.log('aluno.nome: ', aluno.nome);
 			
 			$('.js-nome').text(aluno.nome);
@@ -105,7 +124,8 @@ NGTICAE.PesquisaAluno = (function(){
 	function erroRetornoPesquisa(erro){
 		console.log('erro', erro.responseText);
 		
-		var labelErro = '<label id="name-error" class="error" for="aluno">' + erro.responseText +'.</label>'
+		var labelErro = '<label id="name-error" class="error" for="aluno">' + erro.responseText +'.</label>';
+		$('#name-error').remove();
 		$('#divInput').after(labelErro);
 		$('#divInput').addClass('error');
 	}
@@ -118,6 +138,13 @@ NGTICAE.PesquisaAluno = (function(){
 	function finalizaRequisicao(){
 		console.log('finalizar requisição...');
 		this.preloader.addClass('hide');
+	}
+	
+	function fecharJanela(){
+		console.log('Fechar janela...');
+		$('.js-container-tabela-alunos').addClass('hide');
+		$('.js-matricula').val('');
+		$('#modalPesquisaAluno').modal('hide');
 	}
 	
 	return PesquisaAluno;

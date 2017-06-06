@@ -5,8 +5,7 @@
          	 <th></th>
              <th>NOME</th>
              <th>MATRICULA</th>
-             <th>SERIE</th>
-             <th>SEXO</th>
+             <th>CURSO</th>
          </tr>
      </thead>
      <tbody>
@@ -14,13 +13,12 @@
 			{{#each .}}
          		<tr>
          	 		<td>
-         	 			<input type="checkbox" id="ID_{{codigo}}" class="chk-col-teal  js-checkbox" data-codigo="{{codigo}}">
+         	 			<input type="checkbox" id="ID_{{codigo}}" class="chk-col-teal  js-selecionar" data-codigo="{{codigo}}" data-nome-aluno="{{nome}}" data-matricula="{{matricula}}" data-curso="{{curso.nome}}">
                 		<label for="ID_{{codigo}}"></label>
              		</td>
              		<td>{{nome}}</td>
              		<td>{{matricula}}</td>
-             		<td>{{serieTurma}}</td>
-             		<td>{{sexo}}</td>
+             		<td>{{curso.nome}}</td>
          		</tr>
 			{{/each}}
 		{{else}}

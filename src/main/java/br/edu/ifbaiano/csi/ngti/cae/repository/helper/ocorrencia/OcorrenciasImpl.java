@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,9 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 		
 		//SETA OS PARAMETROS DE TOTAL DE REGISTROS POR PAGINA E PRIMEIRO REGISTRO DA PAGINA
 		paginacaoUtil.preparar(criteria, pageable);
+		
+		//SETA ORDENACAO
+		criteria.addOrder(Order.desc("dataOcorrido"));
 		
 		//ADICIONA O FILTRO A CRITERIA DO HIBERNATE
 		adicionarFiltro(filtro, criteria);
@@ -84,7 +88,7 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 		if(filtro != null){
 			//FILTRO LOCAL
 			if(!StringUtils.isEmpty(filtro.getLocal()))
-				criteria.add(Restrictions.ilike("local", filtro.getLocal(), MatchMode.START));
+				criteria.add(Restrictions.ilike("local", filtro.getLocal(), MatchMode.ANYWHERE));
 			
 			//FILTRO DATA OCORRIDO
 			if(filtro.getDataOcorrido() != null)

@@ -13,6 +13,6 @@ import br.edu.ifbaiano.csi.ngti.cae.repository.filter.AlunoFilter;
 public interface AlunosQueries {
 
 	public Page<Aluno> filtrar(AlunoFilter alunoFilter, Pageable pageable);
-	public List<AlunoDTO> porNomeOuMatricula(String nomeOuMatricula);
+	public List<Aluno> porNomeOuMatricula(String nomeOuMatricula);
 	public Optional<AlunoDTO> porMatricula(String matricula);
 }

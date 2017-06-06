@@ -46,7 +46,7 @@
 	                                        <a href="#" class="alterar-foto-aluno">
 	                                            <i class="material-icons" style="position: relative; top: 7px; margin-bottom: 8px;">photo_camera</i><span class="hidden-xs"> FOTO</span>
 	                                        </a>
-	                                        <img id="foto" style="cursor:pointer;" class="img-thumbnail bg-teal" th:src="@{/layout/images/alunos/aluno-muckup.png}" alt="" heigth="280px" width="280px">
+	                                        <img id="foto" style="cursor:pointer;" class="img-thumbnail" th:src="@{/layout/images/alunos/aluno-muckup.png}" alt="" heigth="280px" width="280px">
 	
 	                                    </div>
 	                                    <h3 class="col-teal" th:text="${aluno.matricula}">matricula</h3>
@@ -73,11 +73,11 @@
 			                                            <i class="material-icons">notifications</i> OCORRENCIAS
 			                                        </a>
 			                                    </li>
-			                                    <li role="presentation">
+			                                    <!-- <li role="presentation">
 			                                        <a href="#enfermaria" data-toggle="tab">
 			                                            <i class="material-icons">favorite</i> ENFERMARIA
 			                                        </a>
-			                                    </li>
+			                                    </li> -->
 			                                </ul>
 			
 			                                <!-- Tab panes -->
@@ -91,11 +91,11 @@
 										                        </div>
 										                        <div class="content">
 										                            <div class="text">OCORRENCIAS</div>
-										                            <div class="number count-to  js-quantidade-ocorrencias" data-from="0" th:data-to="${ocorrencias.size()}" data-speed="2000" data-fresh-interval="20">125</div>
+										                            <div class="number js-quantidade-ocorrencias" th:text="${ocorrencias.size()}">125</div>
 										                        </div>
 										                    </div>
 										                </div>
-										                <div class="col-xs-12">
+										                <!-- <div class="col-xs-12">
 										                    <div class="info-box-3 hover-expand-effect" style="margin-bottom: 0px;">
 										                        <div class="icon">
 										                            <i class="material-icons col-red">favorite</i>
@@ -105,18 +105,31 @@
 										                            <div class="number count-to" data-from="0" data-to="14" data-speed="2000" data-fresh-interval="20">257</div>
 										                        </div>
 										                    </div>
-										                </div>
+										                </div> -->
 										            </div>
 			                                    </div>
 			                                    <div role="tabpanel" class="tab-pane fade" id="ocorrencias">
 			                                    	<div class="row">
-			                                    		<div class="col-md-2 pull-right">
-				                                    		<button type="button" class="btn btn-block bg-teal waves-effect  js-nova-ocorrencia" th:data-url="@{/ocorrencias}">NOVA</button>
-					                                    	<button type="button" class="btn btn-block bg-teal waves-effect  js-editar-ocorrencia" disabled="disabled">EDITAR</button>
-					                                    	<button type="button" class="btn btn-block bg-teal waves-effect  js-excluir-ocorrencias" disabled="disabled" th:data-url="@{/ocorrencias}">EXCLUIR</button>
-					                                    	<button type="button" class="btn btn-block bg-deep-orange waves-effect  js-cancelar-ocorrencias hide">CANCELAR</button>
+										                <div class="col-xs-12">
+										                    <div class="info-box-3" style="margin-bottom: 0px;">
+										                        <div class="icon">
+										                            <i class="material-icons col-blue">notifications</i>
+										                        </div>
+										                        <div class="content">
+										                            <div class="text">OCORRENCIAS</div>
+										                            <div class="number js-quantidade-ocorrencias" th:text="${ocorrencias.size()}">125</div>
+										                        </div>
+										                    </div>
+										                </div>
+										            </div>
+			                                    	<div class="row">
+			                                    		<div class="col-md-12">
+				                                    		<button type="button" class="btn btn-xs bg-teal waves-effect  js-nova-ocorrencia" th:data-url="@{/ocorrencias}">NOVA</button>
+					                                    	<button type="button" class="btn btn-xs bg-teal waves-effect  js-editar-ocorrencia" disabled="disabled">EDITAR</button>
+					                                    	<button type="button" class="btn btn-xs bg-teal waves-effect  js-excluir-ocorrencias" disabled="disabled" th:data-url="@{/ocorrencias}">EXCLUIR</button>
+					                                    	<button type="button" class="btn btn-xs bg-deep-orange waves-effect  js-cancelar-ocorrencias hide">CANCELAR</button>
 			                                    		</div>
-			                                    		<div class="col-md-10">
+			                                    		<div class="col-md-12">
 					                                        <div class="table-responsive js-container-ocorrencias">
 					                                            <th:block th:replace="ocorrencia/TabelaOcorrenciasPorAluno :: tabelaOcorrencias"></th:block>
 					                                        </div>
@@ -127,7 +140,7 @@
 			                                    	</div>
 			                                    </div>
 			                                    
-			                                    <div role="tabpanel" class="tab-pane fade" id="enfermaria">
+			                                    <!-- <div role="tabpanel" class="tab-pane fade" id="enfermaria">
 			                                        <div class="table-responsive">
 			                                            <table class="table table-hover">
 			                                                <thead>
@@ -172,7 +185,7 @@
 			                                                </tbody>
 			                                            </table>
 			                                        </div>
-			                                    </div>
+			                                    </div> -->
 			                                </div>
 	                            		</div>
 	                            	</div>

@@ -39,123 +39,76 @@
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
                         <div class="col-md-12">
-                            <!-- <form class="js-formulario" th:action="@{/ocorrencias}" method="GET" th:object="${ocorrenciaFilter}">
+                            <form class="js-formulario" th:action="@{/ocorrencias}" method="GET" th:object="${ocorrenciaFilter}">
                             	
-                            	MENSAGEM SUCESSO
-								<div class="alert bg-teal alert-dismissible fade in" role="alert" th:if="${not #strings.isEmpty(mensagemSucesso)}" th:fragment="alert">
-	                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="material-icons">clear</i></button>
-	                                <span th:text="${mensagemSucesso}"></span>
-	                            </div>
-                            
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-7">
-                                        <label for="nome">Nome</label>
+                                        <label for="aluno">Aluno</label>
                                         <div class="form-group">
-                                            <div class="form-line" th:classappend="${#fields.hasErrors('nome')} ? 'focused error'">
-                                                <input type="text" id="nome" class="form-control" placeholder="" th:field="*{nome}">
+                                            <div class="form-line">
+                                                <input type="text" id="aluno" class="form-control" placeholder="" th:field="*{aluno}">
                                             </div>
-                                            <label th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" id="nome-error" class="error" for="nome"></label>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
-                                        <label for="dataNascimento">Data Nascimento</label>
+                                        <label for="dataOcorrido">Data da ocorrencia</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="material-icons">date_range</i>
                                             </span>
-                                            <div class="form-line" th:classappend="${#fields.hasErrors('dataNascimento')} ? 'focused error'">
-                                                <input type="text" class="form-control date" placeholder="" th:field="*{dataNascimento}">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control date" placeholder="" th:field="*{dataOcorrido}">
                                             </div>
-                                            <label th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}" class="error" for="dataNascimento"></label>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                        <label for="sexo">Sexo</label>
-                                        <div class="form-group"  th:classappend="${#fields.hasErrors('sexo')} ? 'focused error'">
-                                        	<th:block th:each="sexo : ${sexo}">
-	                                            <input type="radio" th:value="${sexo}" th:field="*{sexo}" class="with-gap">
-	                                            <label th:for="${#ids.prev('sexo')}" th:text="${sexo.descricao}">Masculino</label>
-                                        	</th:block>                                            
-                                            <label th:if="${#fields.hasErrors('sexo')}" th:errors="*{sexo}" class="error" for="sexo"></label>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-7">
+                                        <label for="local">Local</label>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" id="local" class="form-control" placeholder="" th:field="*{local}">
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
-                                        <label for="matricula">Matricula</label>
-                                        <div class="form-group">
-                                            <div class="form-line" th:classappend="${#fields.hasErrors('matricula')} ? 'focused error'">
-                                                <input type="text" id="matricula" class="form-control" placeholder="" th:field="*{matricula}">
-                                            </div>                                            
-                                            <label th:if="${#fields.hasErrors('matricula')}" th:errors="*{matricula}" class="error" for="matricula"></label>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
-                                        <label for="identificacao">Identificacao</label>
-                                        <div class="form-group">
-	                                        <select id="identificacao" class="form-control show-tick" th:field="*{identificacao}">
-	                                        	<option value="">todos...</option>
-	                                            <option th:each="identificacao : ${identificacoes}" th:value="${identificacao}" th:text="${identificacao.descricao}">Interno</option>
-	                                        </select>                                           
-	                                        <label th:if="${#fields.hasErrors('identificacao')}" th:errors="*{identificacao}" class="error" for="identificacao"></label>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
-                                    	<label for="curso">Curso</label>
-                                        <div class="form-group">
-		                                    <select class="form-control show-tick" data-live-search="true" data-size="5" data-container="body" th:field="*{curso}">
-		                                    	<option value="">todos...</option>
-											    <option th:each="curso : ${cursos}" th:value="${curso.codigo}" th:text="${curso.nome}">Agropecuaria</option>
-											</select>                                           
-	                                        <label th:if="${#fields.hasErrors('curso')}" th:errors="*{curso}" class="error" for="curso"></label>
-	                                    </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
-                                    	<label for="serieTurma">Serie/Turma</label>
-                                        <div class="form-group">
-		                                    <select class="form-control show-tick" data-live-search="true" data-size="5" data-container="body" th:field="*{serieTurma}">
-		                                    	<option value="">todos...</option>
-											    <option th:each="serie : ${series}" th:value="${serie}" th:text="${serie.descricao}">1º ano A</option>
-											</select>
-	                                        <label th:if="${#fields.hasErrors('serieTurma')}" th:errors="*{serieTurma}" class="error" for="serieTurma"></label>
-	                                    </div>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary waves-effect  js-submit">PESQUISAR</button>
                                 <a th:href="@{/alunos}" class="btn btn-default waves-effect">LIMPAR</a>
-                            </form> -->
+                            </form>
                         </div>
                     </div>
-                    <div class="row">
-                    	<div class="col-md-12">
-                    		<div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>DATA</th>
-                                            <th>DESCRICAO</th>
-                                            <th>ALUNO</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each="ocorrencia : ${pagina.conteudo}">
-                                            <th scope="row" th:text="${ocorrencia.dataOcorridoFormatada}">1</th>
-                                            <td th:text="${ocorrencia.descricao}">Mark</td>
-                                            <td th:text="${ocorrencia.aluno.nome}">Otto</td>
-                                            <td class="text-right">
-                                            	<a th:href="@{/ocorrencias/{codigo}(codigo=${ocorrencia.codigo})}" class="col-red"><i class="material-icons">edit</i> Editar</a>
-             									<a href="#" class="col-teal"><i class="material-icons">call_made</i> Encaminhamento</a>
-                                            </td>
-                                        </tr>
-                                        <tr th:if="${pagina.vazia}">
-                                        	<td colspan="4">A pesquisa não retornou nenhum resultado.</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <th:block th:replace="fragments/Paginacao :: paginacao"></th:block>
-                            </div>
-                    	</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="body">
+                	<div class="row">
+                  		<div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>DATA</th>
+                                        <th>LOCAL</th>
+                                        <th>DESCRICAO</th>
+                                        <th>ALUNO</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="ocorrencia : ${pagina.conteudo}">
+                                        <th scope="row" th:text="${ocorrencia.dataOcorridoFormatada}">1</th>
+                                        <td th:text="${ocorrencia.local}">Mark</td>
+                                        <td th:text="${ocorrencia.descricao}">Mark</td>
+                                        <td th:text="${ocorrencia.aluno.nome}">Otto</td>
+                                        <td class="text-right">
+                                        	<a th:href="@{/ocorrencias/{codigo}(codigo=${ocorrencia.codigo})}" class="col-red"><i class="material-icons">edit</i> Editar</a>
+         									<a href="#" class="col-teal"><i class="material-icons">call_made</i> Encaminhamento</a>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="${pagina.vazia}">
+                                    	<td colspan="4">A pesquisa não retornou nenhum resultado.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <th:block th:replace="fragments/Paginacao :: paginacao"></th:block>
+                        </div>
                     </div>
                 </div>
             </div>

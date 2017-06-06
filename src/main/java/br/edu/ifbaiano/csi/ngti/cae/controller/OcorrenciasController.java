@@ -57,8 +57,10 @@ public class OcorrenciasController {
 	
 	@GetMapping(value="/nova")
 	public ModelAndView nova(Ocorrencia ocorrencia){
+		ModelAndView mv = new ModelAndView("ocorrencia/CadastroOcorrencia"); 
+		mv.addObject("ocorrencia", ocorrencia);
 		
-		return new ModelAndView("ocorrencia/CadastroOcorrencia"); 
+		return mv;
 	}
 	
 	@GetMapping(value="/formulario/{codigoaluno}")
@@ -112,14 +114,14 @@ public class OcorrenciasController {
 		return new ModelAndView("redirect:/ocorrencias/nova");
 	}
 	
-	@RequestMapping(value="/aluno/{codigoaluno}", method=RequestMethod.GET, consumes=MediaType.APPLICATION_JSON_VALUE)
+	/*@RequestMapping(value="/aluno/{codigoaluno}", method=RequestMethod.GET, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public ModelAndView getTabelaOcorrenciasPorAluno(@PathVariable("codigoaluno") Aluno aluno){
 		ModelAndView mv = new ModelAndView("ocorrencia/TabelaOcorrenciasPorAluno");
 		mv.addObject("ocorrencias", ocorrencias.findByAlunoOrderByDataRegistroDesc(aluno));
 		return mv;
-	}
+	}*/
 	
-	@GetMapping(value="/{codigoaluno}")
+	@GetMapping(value="/aluno/{codigoaluno}")
 	public @ResponseBody List<OcorrenciaDTO> getOcorencias(@PathVariable("codigoaluno") Aluno aluno){
 		return ocorrencias.porAluno(aluno);
 	}
@@ -144,5 +146,11 @@ public class OcorrenciasController {
 		}
 		
 		return ResponseEntity.ok().build();
+	}
+
+	@GetMapping("/{codigo}")
+	public ModelAndView editar(@PathVariable("codigo") Ocorrencia ocorrencia){
+		System.out.println("codigo da ocorrencia: "+ ocorrencia.getCodigo());
+		return nova(ocorrencia);
 	}
 }

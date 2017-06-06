@@ -65,7 +65,7 @@
 	                                    <label for="nome">Nome ou matricula</label>
 	                                    <div class="form-group">
 	                                        <div class="form-line">
-	                                            <input type="text" id="nome" class="form-control  js-nomeOuMatricula-aluno-modal" placeholder="Digite o nome ou a matricula do aluno">
+	                                            <input type="text" id="nome" class="form-control  js-nomeOuMatricula-aluno-modal" placeholder="Digite o nome ou a matricula do aluno" autocomplete="off">
 	                                        </div>
 	                                    </div>
 	                                </div>
@@ -80,7 +80,7 @@
                         		</div>
                         		<div class="row">
                         			<div class="col-xs-12">
-                        				<button type="submit" class="btn btn-xs waves-effect bg-teal  js-pesquisar-aluno" th:data-url="@{/alunos}">PESQUISAR</button>
+                        				<button type="submit" class="btn waves-effect bg-teal  js-pesquisar-aluno" th:data-url="@{/alunos}">PESQUISAR</button>
                         				<div class="preloader pl-size-xs pull-right hide">
 		                                    <div class="spinner-layer pl-teal">
 		                                        <div class="circle-clipper left">
