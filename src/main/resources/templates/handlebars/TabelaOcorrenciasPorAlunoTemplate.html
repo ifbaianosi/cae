@@ -5,7 +5,6 @@
          	 <th style="width: 20px;"></th>
              <th>DATA</th>
              <th>LOCAL</th>
-             <th>DESCRICAO</th>
              <th></th>
          </tr>
      </thead>
@@ -19,8 +18,7 @@
              		</td>
              		<td>{{dataOcorrido}}</td>
              		<td>{{local}}</td>
-             		<td>{{descricao}}</td>
-             		<td><a href="#" class="col-teal"><i class="material-icons">call_made</i> Encaminhamento</a></td>
+             		<td class="text-right"><a href="#" class="col-teal js-encaminhar-ocorrencia" data-codigo="{{codigo}}"><i class="material-icons btn-icon">call_made</i>Encaminhamento</a></td>
          		</tr>
 			{{/each}}
 		{{else}}

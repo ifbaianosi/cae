@@ -31,7 +31,7 @@
 		            </div>
 	            	<div class="card" th:if="${aluno} != null">
 	                    <div class="header">
-	                        <h2 th:text="${aluno.nome}">
+	                        <h2 id="nomeAluno" th:text="${aluno.nome}">
 	                            Glauber de Oliveira Matos
 	                        </h2>
 	                        <ul class="header-dropdown m-r--5">
@@ -44,7 +44,7 @@
 	                                <div class="container-foto-aluno">
 	                                    <div class="foto">
 	                                        <a href="#" class="alterar-foto-aluno">
-	                                            <i class="material-icons" style="position: relative; top: 7px; margin-bottom: 8px;">photo_camera</i><span class="hidden-xs"> FOTO</span>
+	                                            <i class="material-icons btn-icon">photo_camera</i><span class="hidden-xs"> FOTO</span>
 	                                        </a>
 	                                        <img id="foto" style="cursor:pointer;" class="img-thumbnail" th:src="@{/layout/images/alunos/aluno-muckup.png}" alt="" heigth="280px" width="280px">
 	
@@ -124,10 +124,10 @@
 										            </div> -->
 			                                    	<div class="row">
 			                                    		<div class="col-md-12">
-				                                    		<button type="button" class="btn btn-xs bg-teal waves-effect  js-nova-ocorrencia" th:data-url="@{/ocorrencias}">NOVA</button>
-					                                    	<button type="button" class="btn btn-xs bg-teal waves-effect  js-editar-ocorrencia" disabled="disabled">EDITAR</button>
-					                                    	<button type="button" class="btn btn-xs bg-teal waves-effect  js-excluir-ocorrencias" disabled="disabled" th:data-url="@{/ocorrencias}">EXCLUIR</button>
-					                                    	<button type="button" class="btn btn-xs bg-deep-orange waves-effect  js-cancelar-ocorrencias hide">CANCELAR</button>
+				                                    		<button type="button" class="btn btn-sm bg-teal waves-effect  js-nova-ocorrencia" th:data-url="@{/ocorrencias}">NOVA</button>
+					                                    	<button type="button" class="btn btn-sm bg-teal waves-effect  js-editar-ocorrencia" disabled="disabled">EDITAR</button>
+					                                    	<button type="button" class="btn btn-sm bg-teal waves-effect  js-excluir-ocorrencias" disabled="disabled" th:data-url="@{/ocorrencias}">EXCLUIR</button>
+					                                    	<button type="button" class="btn btn-sm bg-deep-orange waves-effect  js-cancelar-ocorrencias hide">CANCELAR</button>
 			                                    		</div>
 			                                    		<div class="col-md-12">
 					                                        <div class="table-responsive js-container-ocorrencias">
@@ -196,6 +196,91 @@
             	</div>
             </div>
         </div>
+        <div class="modal fade  js-modal-encaminhamento" id="modalEncaminhamento" tabindex="-1" role="dialog">
+           <div class="modal-dialog modal-lg" role="document">
+               <div class="card">
+                        <div class="header">
+                            <h2>
+                                Encaminhamento
+                            </h2>
+                       		<a href="javascript:void(0);" class="header-dropdown m-r--5" data-dismiss="modal"><i class="material-icons">clear</i></a>
+                        </div>
+                        <div class="body">
+                        	<div id="preloader" class="row hide">
+                        		<div class="col-xs-12">
+		                        	<div class="preloader pl-size-xs">
+		                                <div class="spinner-layer pl-teal">
+		                                    <div class="circle-clipper left">
+		                                        <div class="circle"></div>
+		                                    </div>
+		                                    <div class="circle-clipper right">
+		                                        <div class="circle"></div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                         </div>
+			                 </div>
+			                 <div class="card hide js-card-ocorrencia" style="background-color:#e9e9e9;">
+		                        <div class="body">
+		                        	<fieldset class="hide js-card-ocorrencia">
+		                        		<legend>Registro de ocorrencia do aluno <span class="js-nome-aluno"></span></legend>
+			                            <dl>
+										  <dt>DATA</dt>
+										  <dd class="js-data-ocorrencia">15/04/2017</dd>
+										  <dt>LOCAL</dt>
+										  <dd class="js-local-ocorrencia">Pavilhao administrativo</dd>
+										  <dt>DESCRICAO</dt>
+										  <dd class="js-descricao-ocorrencia">é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado.</dd>
+										</dl>
+		                        	</fieldset>
+		                        </div>
+		                    </div>
+		                    <fieldset class="hide js-card-formulario-encaminhamento">
+		                    	<legend>Tipo do encaminhamento</legend>
+	                        	<form id="">
+	                        		<input id="ocorrencia" type="hidden" name="ocorrencia">
+	                        		<div class="row">
+		                        		<div class="col-xs-12 col-sm-6 col-md-4">
+	                                        <!-- <label for="tipoEncaminhamento">Tipo do encaminhamento</label> -->
+	                                        <div class="form-group" th:classappend="${#fields.hasErrors('tipoEncaminhamento')} ? 'focused error'">
+	                                        	<select id="tipoEncaminhamento" class="form-control show-tick">
+		                                        	<option value="">selecione...</option>
+		                                            <option th:each="tipo : ${tipoEncaminhamento}" th:value="${tipo}" th:text="${tipo.descricao}">SUSPENSAO</option>
+		                                        </select>                                           
+		                                        <label th:if="${#fields.hasErrors('tipoEncaminhamento')}" th:errors="*{tipoEncaminhamento}" class="error" for="tipoEncaminhamento"></label>
+	                                        </div>
+	                                    </div>
+	                               </div>
+	                               <div class="row">
+		                                <div class="col-xs-12">
+		                                    <div class="form-group">
+		                                        <div class="form-line">
+		                                            <textarea rows="4" class="form-control no-resize  js-encaminhamento-descricao" placeholder="Digite aqui a descricao da medida disciplinar ao aluno..."></textarea>
+		                                        </div>
+		                                    </div>
+		                                </div>
+	                        		</div>
+	                        		<div class="row">
+	                        			<div class="col-xs-12">
+	                        				<button type="submit" class="btn waves-effect bg-teal  js-salvar-encaminhamento" th:data-url="@{/encaminhamento}">SALVAR</button>
+	                        				<div class="preloader pl-size-xs pull-right hide">
+			                                    <div class="spinner-layer pl-teal">
+			                                        <div class="circle-clipper left">
+			                                            <div class="circle"></div>
+			                                        </div>
+			                                        <div class="circle-clipper right">
+			                                            <div class="circle"></div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+	                        			</div>
+	                        		</div>
+			                	</form>
+		                    </fieldset>
+                        </div>
+                    </div>
+           </div>
+       </div>
     </section>
 
    <th:block layout:fragment="javascript-extra">
@@ -211,7 +296,10 @@
 	    
    		<script th:src="@{/javascript/vendors/plugins/handlebars/handlebars-v4.0.10.js}"></script>
    		<script th:src="@{/javascript/multiselecao.js}"></script>
+   		
    		<script th:src="@{/javascript/detalhe-aluno.gerenciar-ocorrencias.js}"></script>
+   		<script th:src="@{/javascript/detalhe-aluno.gerenciar-encaminhamento.js}"></script>
+   		
    		<th:block th:replace="handlebars/TabelaOcorrenciasPorAlunoTemplate"></th:block>
    </th:block>
 </body>

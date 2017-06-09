@@ -88,19 +88,6 @@ public class OcorrenciasController {
 		return ResponseEntity.ok().body(HttpStatus.CREATED);
 	}
 	
-	/*@PostMapping(value="/salvar")
-	public ModelAndView salvarViaAjax(@Valid Ocorrencia ocorrencia, BindingResult result, RedirectAttributes attributs){
-		ModelAndView mv = new ModelAndView("ocorrencia/Formulario");
-		if(result.hasErrors()){
-			mv.addObject("ocorrencia", ocorrencia);
-			return mv;
-		}
-		
-		cadastroOcorrenciaService.salvar(ocorrencia);
-		
-		return formulario(ocorrencia.getAluno().getCodigo());
-	}*/
-	
 	@PostMapping(value={ "/nova", "{\\d+}" })
 	public ModelAndView salvar(@Valid Ocorrencia ocorrencia, BindingResult result, RedirectAttributes attributs){
 		
@@ -113,13 +100,6 @@ public class OcorrenciasController {
 		
 		return new ModelAndView("redirect:/ocorrencias/nova");
 	}
-	
-	/*@RequestMapping(value="/aluno/{codigoaluno}", method=RequestMethod.GET, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public ModelAndView getTabelaOcorrenciasPorAluno(@PathVariable("codigoaluno") Aluno aluno){
-		ModelAndView mv = new ModelAndView("ocorrencia/TabelaOcorrenciasPorAluno");
-		mv.addObject("ocorrencias", ocorrencias.findByAlunoOrderByDataRegistroDesc(aluno));
-		return mv;
-	}*/
 	
 	@GetMapping(value="/aluno/{codigoaluno}")
 	public @ResponseBody List<OcorrenciaDTO> getOcorencias(@PathVariable("codigoaluno") Aluno aluno){

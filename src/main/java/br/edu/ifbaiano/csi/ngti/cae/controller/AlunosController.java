@@ -33,6 +33,7 @@ import br.edu.ifbaiano.csi.ngti.cae.model.ResponsavelAluno;
 import br.edu.ifbaiano.csi.ngti.cae.model.ResponsavelAlunoID;
 import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
 import br.edu.ifbaiano.csi.ngti.cae.model.Sexo;
+import br.edu.ifbaiano.csi.ngti.cae.model.TipoEncaminhamento;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Alunos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Cursos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Ocorrencias;
@@ -147,6 +148,7 @@ public class AlunosController {
 			mv.addObject("aluno", aluno);
 			mv.addObject("ocorrencias", ocorrencias.findByAlunoOrderByDataRegistroDesc(aluno));
 			mv.addObject("ocorrencia", ocorrencia);
+			mv.addObject("tipoEncaminhamento", TipoEncaminhamento.values());
 		}else{
 			attributs.addAttribute("warnning", "O numero da matricula nao foi encontrado");
 		}

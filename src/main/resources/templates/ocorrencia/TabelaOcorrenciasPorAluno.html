@@ -10,7 +10,8 @@
              </th>
              <th>DATA</th>
              <th>LOCAL</th>
-             <th>DESCRICAO</th>
+             <!-- <th>DESCRICAO</th> -->
+             <th>ENCAMINHAMENTO</th>
              <th></th>
          </tr>
      </thead>
@@ -22,8 +23,11 @@
              </td>
              <td th:text="${ocorrencia.dataOcorridoFormatada}">Mark</td>
              <td th:text="${ocorrencia.local}">Otto</td>
-             <td th:text="${ocorrencia.descricao}">@mdo</td>
-             <td><a href="#" class="col-teal"><i class="material-icons">call_made</i> Encaminhamento</a></td>
+             <!-- <td th:text="${ocorrencia.descricao}">@mdo</td> -->
+             <td><span class="label bg-brown">Suspensão</span></td>
+             <td class="text-right">
+             	<a href="#" class="col-teal js-encaminhar-ocorrencia" th:data-codigo="${ocorrencia.codigo}"><i class="material-icons btn-icon">call_made</i>Encaminhamento</a>
+             </td>
          </tr>
      </tbody>
  </table>                    

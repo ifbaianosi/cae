@@ -1,12 +1,10 @@
 package br.edu.ifbaiano.csi.ngti.cae.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.edu.ifbaiano.csi.ngti.cae.dto.AlunoDTO;
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 import br.edu.ifbaiano.csi.ngti.cae.repository.helper.aluno.AlunosQueries;
 

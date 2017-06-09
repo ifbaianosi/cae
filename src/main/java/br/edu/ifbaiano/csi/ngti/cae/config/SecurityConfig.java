@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 				.and()
 			.sessionManagement()
-				.invalidSessionUrl("/login");
+				.invalidSessionUrl("/login").and().csrf().disable();
 			
 	}
 	

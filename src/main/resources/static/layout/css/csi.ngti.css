@@ -134,3 +134,9 @@
   	background-repeat: no-repeat;
   	background-position: 450px;
 }
+
+.btn-icon {
+    position: relative;
+    top: 7px;
+    margin-bottom: 8px;
+}

@@ -61,7 +61,7 @@ NGTICAE.SalvarOcorrencia = function(){
 			success: atualizarTabela.bind(this)
 		});
 		
-		NGTICAE.Notificacao.mostrar('sucesso', 'Ocorrencia salva!', 'info');
+		NGTICAE.Notificacao.mostrar('sucesso', 'Ocorrencia salva!', 'info', $('body'));
 		
 		NGTICAE.Formulario.limpar();
 		NGTICAE.Formulario.esconder();
@@ -76,6 +76,7 @@ NGTICAE.SalvarOcorrencia = function(){
 		
 		NGTICAE.MultiSelecao.iniciar();
 		NGTICAE.MultiSelecao.toggleBtn();
+		NGTICAE.Modal.ocorrencia;
 	}
 	
 	function validarFormulario(){
@@ -88,7 +89,7 @@ NGTICAE.SalvarOcorrencia = function(){
 	
 	function onErroSalvandoOcorrencia(error){
 		console.log('Erro ao salvar ocorrencia...', error);
-		NGTICAE.Notificacao.mostrar('Formulario incompleto', 'preencha todos os campos!', 'danger');
+		NGTICAE.Notificacao.mostrar('Formulario incompleto', 'preencha todos os campos!', 'danger', $('body'));
 	}
 	
 	function onFinalizarRequisicao(){
@@ -288,15 +289,17 @@ NGTICAE.EditarOcorrencia = function(){
 *  
 */
 NGTICAE.Notificacao = {
-		mostrar: function mostrarNotificacao(title, message, type){
+		mostrar: function mostrarNotificacao(title, message, type, elementoPai){
 			$.notify({
 				title: '<strong>' + title + '</strong>',
-				message: message
+				message: message,
+				target: '_top'
 			},{
+				element: elementoPai,
 				type: type,
 				placement: {
 					from: "top",
-					align: "right"
+					align: "center"
 				},
 				offset: {
 					x: 50,
