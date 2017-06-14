@@ -13,6 +13,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -52,6 +53,18 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 		adicionarFiltro(filtro, criteria);
 		
 		return new PageImpl<>(criteria.list(), pageable, total(filtro));
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly = true)
+	@Override
+	public List<Ocorrencia> buscarComEncaminhamentos(Aluno aluno) {
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(Ocorrencia.class);
+		criteria.createAlias("encaminhamentos", "e", JoinType.INNER_JOIN);
+		/*criteria.add(Restrictions.eq("aluno", aluno));
+		criteria.addOrder(Order.desc("dataRegistro"));*/
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return (List<Ocorrencia>)criteria.list();
 	}
 	
 	@Override

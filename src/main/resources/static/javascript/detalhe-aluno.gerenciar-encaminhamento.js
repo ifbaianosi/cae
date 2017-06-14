@@ -103,11 +103,9 @@ NGTICAE.Encaminhamento = function(){
 	function sucesso(retorno){
 		console.log('Sucesso... ocorrencia criada no servidor...', retorno);
 		
-		NGTICAE.Notificacao.mostrar('sucesso', 'Encaminhamento salvo!', 'info', $('#modalEncaminhamento'));
-		
-		/*NGTICAE.Formulario.limpar();
-		NGTICAE.Formulario.esconder();*/
-		
+		$('#modalEncaminhamento').modal('hide');
+		NGTICAE.Tabela.atualizar();
+		NGTICAE.Notificacao.mostrar('sucesso', 'Encaminhamento salvo!', 'info', $('body'));
 	}
 	
 	function validarFormulario(){
@@ -157,7 +155,6 @@ NGTICAE.FormularioEncaminhamento = {
 
 $(function(){
 	
-	NGTICAE.Modal.iniciar();
 	
 	var encaminhamento = new NGTICAE.Encaminhamento();
 	encaminhamento.iniciar();

@@ -2,11 +2,15 @@ package br.edu.ifbaiano.csi.ngti.cae.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -43,6 +47,9 @@ public class Ocorrencia extends Entidade{
 	@JoinColumn(name="codigo_aluno")
 	private Aluno aluno;
 	
+	@OneToMany(mappedBy = "ocorrencia", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Encaminhamento> encaminhamentos = new ArrayList<>();
+
 	@PrePersist
 	public void prePersist(){
 		this.dataRegistro = LocalDateTime.now();
@@ -86,6 +93,14 @@ public class Ocorrencia extends Entidade{
 
 	public void setAluno(Aluno aluno) {
 		this.aluno = aluno;
+	}
+	
+	public List<Encaminhamento> getEncaminhamentos() {
+		return encaminhamentos;
+	}
+
+	public void setEncaminhamentos(List<Encaminhamento> encaminhamentos) {
+		this.encaminhamentos = encaminhamentos;
 	}
 	
 	@Transient

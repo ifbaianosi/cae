@@ -24,9 +24,3 @@ NGTICAE.MultiSelecao = {
 			}
 		}
 }
-
-
-$(function(){
-	
-	NGTICAE.MultiSelecao.iniciar();
-});

@@ -2,6 +2,9 @@ package br.edu.ifbaiano.csi.ngti.cae.dto;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import br.edu.ifbaiano.csi.ngti.cae.model.Encaminhamento;
 
 public class OcorrenciaDTO {
 
@@ -10,6 +13,7 @@ public class OcorrenciaDTO {
 	private String dataOcorrido;
 	private String local;
 	private String descricao;
+	private List<Encaminhamento> encaminhamentos;
 	
 	private DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 	
@@ -59,6 +63,14 @@ public class OcorrenciaDTO {
 
 	public void setDataRegistro(String dataRegistro) {
 		this.dataRegistro = dataRegistro;
+	}
+
+	public List<Encaminhamento> getEncaminhamentos() {
+		return encaminhamentos;
+	}
+
+	public void setEncaminhamentos(List<Encaminhamento> encaminhamentos) {
+		this.encaminhamentos = encaminhamentos;
 	}
 	
 	

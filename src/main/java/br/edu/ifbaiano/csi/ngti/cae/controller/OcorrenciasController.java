@@ -102,8 +102,8 @@ public class OcorrenciasController {
 	}
 	
 	@GetMapping(value="/aluno/{codigoaluno}")
-	public @ResponseBody List<OcorrenciaDTO> getOcorencias(@PathVariable("codigoaluno") Aluno aluno){
-		return ocorrencias.porAluno(aluno);
+	public @ResponseBody List<Ocorrencia> getOcorencias(@PathVariable("codigoaluno") Aluno aluno){
+		return ocorrencias.buscarComEncaminhamentos(aluno);
 	}
 	
 	@GetMapping(value="/quantidade/{codigoaluno}")
