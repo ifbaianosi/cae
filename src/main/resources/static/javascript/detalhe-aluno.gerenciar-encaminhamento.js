@@ -37,7 +37,7 @@ NGTICAE.Modal = {
 					$('.js-descricao-ocorrencia').text(ocorrencia.descricao);
 					$('.js-nome-aluno').text($('#nomeAluno').text());
 					
-					alert('test');
+					//alert('test');
 					
 					$('.js-card-ocorrencia').removeClass('hide');
 					

@@ -13,7 +13,7 @@
     <section class="content" layout:fragment="conteudo">
         <div class="container-fluid">
             <div class="block-header">
-                <h2>CADASTRO</h2>
+                <h2>CADASTRAR NOVO ALUNO</h2>
             </div>
             <div class="card">
                 <div class="header">
@@ -113,15 +113,43 @@
                                     </div>
                                 </div>
                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
-                                    	<label for="apartamento">Numero do apartamento</label>
+                               		<div class="col-xs-12 col-sm-6 col-md-3">
+                                    	<label for="alojamento">Alojamento</label>
 	                                    <div class="form-group">
-                                            <div class="form-line">
-                                                <input type="text" id="apartamento" class="form-control" placeholder="" th:field="*{apartamento}">
-                                            </div>
+                                            <select class="form-control show-tick" data-container="body" th:field="*{alojamento}">
+		                                    	<option value="">selecione...</option>
+											    <option th:each="alojamento : ${alojamentos}" th:value="${alojamento}" th:text="${alojamento.descricao}">Alojamento Masculino</option>
+											</select>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-9">
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                    	<label for="apartamento">Nº Apartamento</label>
+	                                    <div class="form-group">
+	                                    	<select class="form-control show-tick" data-live-search="true" data-size="5" data-container="body" th:field="*{apartamento}">
+		                                    	<option value="">selecione...</option>
+		                                    	<option value="1">1</option>
+		                                    	<option value="2">2</option>
+		                                    	<option value="3">3</option>
+		                                    	<option value="4">4</option>
+		                                    	<option value="5">5</option>
+		                                    	<option value="6">6</option>
+		                                    	<option value="7">7</option>
+		                                    	<option value="8">8</option>
+		                                    	<option value="9">9</option>
+		                                    	<option value="10">10</option>
+		                                    	<option value="11">11</option>
+		                                    	<option value="12">12</option>
+		                                    	<option value="13">13</option>
+		                                    	<option value="14">14</option>
+		                                    	<option value="15">15</option>
+											</select>
+											
+                                            <!-- <div class="form-line">
+                                                <input type="text" id="apartamento" class="form-control" placeholder="" th:field="*{apartamento}">
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
                                         <label for="email">Email</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">

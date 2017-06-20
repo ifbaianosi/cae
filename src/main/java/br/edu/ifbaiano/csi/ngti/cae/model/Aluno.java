@@ -41,7 +41,7 @@ public class Aluno extends Entidade {
 	
 	/**CAMPOS PARA INSERIR A FOTO DO ALUNO*/
 	private String foto;
-	
+
 	@Column(name="content_type")
 	private String contentType;
 	/**FOTO*/
@@ -72,6 +72,10 @@ public class Aluno extends Entidade {
 	@NotBlank(message="O número para contato é obrigatório")
 	@Size(max=20, message="O número para contato deve conter no máximo {max} caracteres")
 	private String contato;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="alojamento")
+	private Alojamento alojamento;
 	
 	private Boolean whatsapp;
 		
@@ -183,6 +187,13 @@ public class Aluno extends Entidade {
 	public void setResponsaveisDoAluno(List<ResponsavelAluno> responsaveisDoAluno) {
 		this.responsaveisDoAluno = responsaveisDoAluno;
 	}
+	public Alojamento getAlojamento() {
+		return alojamento;
+	}
+	public void setAlojamento(Alojamento alojamento) {
+		this.alojamento = alojamento;
+	}
+	
 	public String getFotoOuMock() {
 		return !StringUtils.isEmpty(foto) ? foto : "aluno-mock.png";
 	}

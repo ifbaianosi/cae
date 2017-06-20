@@ -12,6 +12,7 @@ CREATE TABLE aluno (
     matricula VARCHAR(7) NOT NULL,
     email VARCHAR (80),
     sexo VARCHAR (15) NOT NULL,
+    alojamento VARCHAR(25),
     data_nascimento DATE NOT NULL,
     apartamento INTEGER,
     identificacao VARCHAR(20) NOT NULL,

@@ -3,8 +3,11 @@ package br.edu.ifbaiano.csi.ngti.cae.model;
 public enum TipoEncaminhamento {
 	
 	ADVERTENCIA_ESCRITA("Advertência escrita"),
+	ADVERTENCIA_VERBAL("Advertência verbal"),
 	CONVOCACAO_PAIS("Convocação dos pais"),
-	SUSPENSAO("Suspensão");
+	SUSPENSAO("Suspensão"),
+	EXPULSAO("Expulsao"),
+	COMISSAO_DISCIPLINAR("Comissão disciplinar");
 	
 	private String descricao;
 	

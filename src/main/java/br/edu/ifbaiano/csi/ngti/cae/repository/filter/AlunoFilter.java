@@ -2,6 +2,7 @@ package br.edu.ifbaiano.csi.ngti.cae.repository.filter;
 
 import java.time.LocalDate;
 
+import br.edu.ifbaiano.csi.ngti.cae.model.Alojamento;
 import br.edu.ifbaiano.csi.ngti.cae.model.Curso;
 import br.edu.ifbaiano.csi.ngti.cae.model.Identificacao;
 import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
@@ -16,6 +17,8 @@ public class AlunoFilter {
 	private Identificacao identificacao;
 	private Curso curso;
 	private SerieTurma serieTurma;
+	private Alojamento alojamento;
+	private Integer apartamento;
 	
 	public String getMatricula() {
 		return matricula;
@@ -58,6 +61,18 @@ public class AlunoFilter {
 	}
 	public void setSerieTurma(SerieTurma serieTurma) {
 		this.serieTurma = serieTurma;
+	}
+	public Integer getApartamento() {
+		return apartamento;
+	}
+	public void setApartamento(Integer apartamento) {
+		this.apartamento = apartamento;
+	}
+	public Alojamento getAlojamento() {
+		return alojamento;
+	}
+	public void setAlojamento(Alojamento alojamento) {
+		this.alojamento = alojamento;
 	}
 	
 }

@@ -109,6 +109,14 @@ public class AlunosImpl implements AlunosQueries {
 			//FILTRO SERIE/TURMA
 			if(filtro.getSerieTurma() != null)
 				criteria.add(Restrictions.eq("serieTurma", filtro.getSerieTurma()));
+			
+			//FILTRO ALOJAMENTO
+			if(filtro.getAlojamento() != null)
+				criteria.add(Restrictions.eq("alojamento", filtro.getAlojamento()));
+			
+			//FILTRO APARTAMENTO
+			if(filtro.getApartamento() != null)
+				criteria.add(Restrictions.eq("apartamento", filtro.getApartamento()));
 		}
 	}
 

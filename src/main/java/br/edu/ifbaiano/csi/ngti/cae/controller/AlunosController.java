@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifbaiano.csi.ngti.cae.controller.page.PageWrapper;
 import br.edu.ifbaiano.csi.ngti.cae.dto.AlunoDTO;
+import br.edu.ifbaiano.csi.ngti.cae.model.Alojamento;
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 import br.edu.ifbaiano.csi.ngti.cae.model.GrauParentesco;
 import br.edu.ifbaiano.csi.ngti.cae.model.Identificacao;
@@ -72,6 +73,7 @@ public class AlunosController {
 		mv.addObject("identificacoes", Identificacao.values());
 		mv.addObject("series", SerieTurma.values());
 		mv.addObject("cursos", cursos.findAll());
+		mv.addObject("alojamentos", Alojamento.values());
 		
 		PageWrapper<Aluno> paginaWrapper = new PageWrapper<>(alunos.filtrar(alunoFilter, pageable), httpServletRequest);
 		mv.addObject("pagina", paginaWrapper);
@@ -107,6 +109,7 @@ public class AlunosController {
 		mv.addObject("series", SerieTurma.values());
 		mv.addObject("cursos", cursos.findAll());
 		mv.addObject("parentescos", GrauParentesco.values());
+		mv.addObject("alojamentos", Alojamento.values());
 		mv.addObject("uuid", UUID.randomUUID().toString());
 		
 		return mv;
