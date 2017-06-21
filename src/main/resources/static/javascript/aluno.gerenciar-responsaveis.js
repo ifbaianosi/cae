@@ -13,14 +13,19 @@ NGTICAE.GerenciarResponsaveis = (function(){
 		this.grauParentescoSelect = $('#responsavel_parentesco');
 		this.nomeResponsavelInput = $('#responsavel_nome');
 		this.contatoResponsavelInput = $('#responsavel_contato');
-		this.contatoResponsavelInput = $('#responsavel_contato');
+		this.contato2Input = $('#responsavel_contato2');
 		this.whatsappResponsavelCheckBox = $('#responsavel_whatsapp');
+		this.whatsapp2CheckBox = $('#responsavel_whatsapp2');
 
 		this.adicionarBtn = $('.js-adicionar-responsavel');
 		this.urlResponsaveis = this.adicionarBtn.data('url');
 		
 		//BOTOES DA TABELA DE RESPONSAVEIS
 		this.removerResponsavelBtn = null;
+		
+		this.containerResponsaveis = $('.js-container-tabela-responsaveis');
+		this.htmlTabelaResponsaveis = $('#tabelaResponsaveisTemplate').html();
+		this.template = Handlebars.compile(this.htmlTabelaResponsaveis);
 	}
 	
 	GerenciarResponsaveis.prototype.iniciar = function(){
@@ -41,7 +46,9 @@ NGTICAE.GerenciarResponsaveis = (function(){
 				parentesco: this.grauParentescoSelect.val(),
 				nome: this.nomeResponsavelInput.val(),
 				contato: this.contatoResponsavelInput.val(),
-				whatsapp: this.whatsappResponsavelCheckBox.val() == 'on' ? 'true' : 'false',
+				contato_whatsapp: this.whatsappResponsavelCheckBox.val() == 'on' ? 'true' : 'false',
+				contato2: this.contato2Input.val(),
+				contato_whatsapp2: this.whatsapp2CheckBox.val() == 'on' ? 'true' : 'false',
 				uuid: this.uuid
 			}),
 			beforeSend: onIniciarRequisicao.bind(this),
@@ -79,11 +86,19 @@ NGTICAE.GerenciarResponsaveis = (function(){
 	function onAtualizarTabela(responsaveis) {
 		console.log('lista de responsaveis atualizada...');
 		console.log(responsaveis);
-		console.log('testando o contexto "this"',this.uuid)
-		if(responsaveis.length>0){
+		console.log('testando o contexto "this"',this.uuid);
+		
+		var novatabela = this.template(responsaveis);
+		this.containerResponsaveis.html(novatabela);
+		
+		this.removerResponsavelBtn = $('.js-remover');
+		this.removerResponsavelBtn.on('click', onRemoverResponsavel.bind(this));
+		
+		/*if(responsaveis.length>0){
 			var tr = "";
 			for (i = 0; i < responsaveis.length; i++){
 				var responsavel = responsaveis[i].responsavel;
+				
 				tr += "<tr><td>"+ responsavel.nome +"</td><td>"+ responsavel.contato +"</td><td><b>"+ responsavel.parentesco +"</b></td>"+
 				"<td>"+
 				"<a href='javascript:void(0);'>"+
@@ -94,6 +109,10 @@ NGTICAE.GerenciarResponsaveis = (function(){
 				"</a>"+
 				"</td>"+
 				"</tr>";
+				
+				
+				
+				
 			}
 			
 			//adiciona as linhas na tabela
@@ -104,8 +123,10 @@ NGTICAE.GerenciarResponsaveis = (function(){
 			this.removerResponsavelBtn.on('click', onRemoverResponsavel.bind(this));
 		}else{
 			this.tabelaResponsaveisBody.html('<tr><td colspan="4">Adicione ao menos um responsavel</td></tr>');
-		}
+		}*/
+		
 		this.modal.modal('hide');
+		this.removerTodosBtn.removeAttr("disabled");
 	}
 	
 	function onFinalizarRequisicao(){

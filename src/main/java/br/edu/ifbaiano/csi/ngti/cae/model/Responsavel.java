@@ -23,7 +23,12 @@ public class Responsavel extends Entidade{
 	@Size(max=20, message="O número para contato deve conter no máximo {max} caracteres")
 	private String contato;
 	
-	private Boolean whatsapp;
+	private Boolean contato_whatsapp;
+	
+	@Size(max=20, message="O número para contato deve conter no máximo {max} caracteres")
+	private String contato2;
+	
+	private Boolean contato_whatsapp2;
 	
 	@NotNull(message="Selecione o grau de parentesco")
 	@Enumerated(EnumType.STRING)
@@ -49,14 +54,6 @@ public class Responsavel extends Entidade{
 		this.contato = contato;
 	}
 
-	public Boolean getWhatsapp() {
-		return whatsapp;
-	}
-
-	public void setWhatsapp(Boolean whatsapp) {
-		this.whatsapp = whatsapp;
-	}
-
 	public GrauParentesco getParentesco() {
 		return parentesco;
 	}
@@ -68,4 +65,30 @@ public class Responsavel extends Entidade{
 	public String getUuid() {
 		return uuid;
 	}
+
+	public Boolean getContato_whatsapp() {
+		return contato_whatsapp;
+	}
+
+	public void setContato_whatsapp(Boolean contato_whatsapp) {
+		this.contato_whatsapp = contato_whatsapp;
+	}
+
+	public String getContato2() {
+		return contato2;
+	}
+
+	public void setContato2(String contato2) {
+		this.contato2 = contato2;
+	}
+
+	public Boolean getContato_whatsap2() {
+		return contato_whatsapp2;
+	}
+
+	public void setContato_whatsapp2(Boolean contato_whatsapp2) {
+		this.contato_whatsapp2 = contato_whatsapp2;
+	}
+	
+	
 }

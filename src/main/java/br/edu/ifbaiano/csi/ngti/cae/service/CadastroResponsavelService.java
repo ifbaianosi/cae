@@ -20,18 +20,18 @@ public class CadastroResponsavelService {
 	@Transactional
 	public void salvar(Responsavel responsavel){
 		if(responsavel.isNovo()){
-			Optional<Responsavel> responsavelOptional = responsaveis.findByContato(responsavel.getContato());
+			Optional<Responsavel> responsavelOptional = responsaveis.findByNomeIgnoreCaseAndContato(responsavel.getNome(), responsavel.getContato());
 			if(!responsavelOptional.isPresent())
 				responsaveis.saveAndFlush(responsavel);
 		}
 	}
 
-	@Transactional
+	/*@Transactional
 	public void alterarWhatsapp(Long codigo, Boolean whatsapp) {
 		responsaveis.findOne(codigo).setWhatsapp(whatsapp);
 	}
 	
 	public void salvarResponsaveis(List<ResponsavelSession> responsaveisDaSession){
 		System.out.println("SalvarResponsaveis: "+responsaveisDaSession.size());
-	}
+	}*/
 }

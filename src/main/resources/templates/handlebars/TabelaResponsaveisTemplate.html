@@ -1,0 +1,44 @@
+<script id="tabelaResponsaveisTemplate" type="text/x-handlebars-template">
+<div class="panel-group full-body" id="accordion_19" role="tablist" aria-multiselectable="true" th:fragment="tabelaResponsaveis">
+{{#if .}}
+	{{#each .}}
+		<div class="panel">
+    		<div class="panel-heading" role="tab" id="{{responsavel.contato}}">
+        		<h4 class="panel-title">
+            		<a class="collapsed" role="button" data-toggle="collapse" href="#collapseThree_{{responsavel.contato}}" aria-expanded="false" aria-controls="collapseThree_{{responsavel.contato}}">
+                		{{responsavel.nome}}
+            		</a>
+        		</h4>
+    		</div>
+    		<div id="collapseThree_{{responsavel.contato}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree_{{responsavel.contato}}">
+        		<div class="panel-body">
+					<div class="row">
+                         <div class="col-xs-12 col-sm-6">
+                             <p>
+                                PARENTESCO: {{responsavel.parentesco}}
+                             </p>
+                             <p>
+                                CONTATO 1: {{responsavel.contato}}
+                             </p>
+                             <p>
+                                CONTATO 2: {{responsavel.contato2}}
+                             </p>
+                         </div>
+                         <div class="col-xs-12 col-sm-6 text-right">
+                              <a href='javascript:void(0);'>
+                                  <i class='material-icons col-teal btn-icon'>mode_edit</i> EDITAR
+                              </a>
+                              <a href='javascript:void(0);' class='js-remover' data-contato='{{responsavel.contato}}'>
+                                  <i class='material-icons col-pink btn-icon'>delete</i> REMOVER
+                              </a>
+                         </div>
+                      </div>
+        		</div>
+    		</div>
+		</div>
+	{{/each}}
+ {{else}}
+	<div>O aluno ainda não possui responsáveis cadastrados no sistema.</div>
+ {{/if}}
+</div>
+</script>
