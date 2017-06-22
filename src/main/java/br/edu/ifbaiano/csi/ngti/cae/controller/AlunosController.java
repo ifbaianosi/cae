@@ -122,11 +122,11 @@ public class AlunosController {
 			 System.out.println("tem erros no formulário ------------->>>"); return novo(aluno);}
 		
 		//TODO: criar validação customizada para o cadastro do aluno
-		if(tabelasResponsaveisSession.totalResponsaveis(uuid) == 0 && aluno.isNovo()){
+		/*if(tabelasResponsaveisSession.totalResponsaveis(uuid) == 0 && aluno.isNovo()){
 			result.rejectValue("temResponsavel", "Adicione ao menos um responsavel", "Adicione ao menos um responsavel");
 			System.out.println("Adicione ao menos um responsavel!");
 			return novo(aluno);
-		}
+		}*/
 		
 		try {
 			cadastroAlunoService.salvar(aluno, uuid);

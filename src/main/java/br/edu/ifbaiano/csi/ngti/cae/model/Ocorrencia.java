@@ -47,12 +47,18 @@ public class Ocorrencia extends Entidade{
 	@JoinColumn(name="codigo_aluno")
 	private Aluno aluno;
 	
+	private String serie;
+	
+	private String identificacao;
+	
 	@OneToMany(mappedBy = "ocorrencia", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Encaminhamento> encaminhamentos = new ArrayList<>();
 
 	@PrePersist
 	public void prePersist(){
 		this.dataRegistro = LocalDateTime.now();
+		this.serie = aluno.getSerieTurma().getDescricao();
+		this.identificacao = aluno.getIdentificacao().getDescricao();
 	}
 
 	public LocalDateTime getDataRegistro() {
@@ -103,6 +109,23 @@ public class Ocorrencia extends Entidade{
 		this.encaminhamentos = encaminhamentos;
 	}
 	
+	public String getSerie() {
+		return serie;
+	}
+
+	public void setSerie(String serie) {
+		this.serie = serie;
+	}
+
+	public String getIdentificacao() {
+		return identificacao;
+	}
+
+	public void setIdentificacao(String identificacao) {
+		this.identificacao = identificacao;
+	}
+
+
 	@Transient
 	private DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 	

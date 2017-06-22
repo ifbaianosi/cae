@@ -256,35 +256,36 @@
 		                                        	<th:block th:if="${aluno.responsaveisDoAluno} != null">
 					                                		<div class="panel-group full-body" id="accordion_19" role="tablist" aria-multiselectable="true" th:fragment="tabelaResponsaveis">
 																	<div class="panel" th:each="responsavelAluno : ${aluno.responsaveisDoAluno}">
-															    		<div class="panel-heading" role="tab" id="{{responsavel.contato}}">
+															    		<div class="panel-heading" role="tab" th:id="${responsavelAluno.responsavel.contato}">
 															        		<h4 class="panel-title">
-															            		<a class="collapsed" role="button" data-toggle="collapse" href="#collapseThree_{{responsavel.contato}}" aria-expanded="false" aria-controls="collapseThree_{{responsavel.contato}}">
+															            		<a class="collapsed" role="button" data-toggle="collapse" th:href="|#collapseThree_${responsavelAluno.responsavel.contato}|" 
+															            			aria-expanded="false" th:aria-controls="|collapseThree_${responsavelAluno.responsavel.contato}|" th:text="${responsavelAluno.responsavel.nome}">
 															                		{{responsavel.nome}}
 															            		</a>
 															        		</h4>
 															    		</div>
-															    		<div id="collapseThree_{{responsavel.contato}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree_{{responsavel.contato}}">
+															    		<div th:id="|collapseThree_${responsavelAluno.responsavel.contato}|" class="panel-collapse collapse" role="tabpanel" th:aria-labelledby="|headingThree_${responsavelAluno.responsavel.contato}|">
 															        		<div class="panel-body">
 																				<div class="row">
 															                         <div class="col-xs-12 col-sm-6">
 															                             <p>
-															                                PARENTESCO: {{responsavel.parentesco}}
+															                                PARENTESCO: <span th:text="${responsavelAluno.parentesco}"></span>
 															                             </p>
 															                             <p>
-															                                CONTATO 1: {{responsavel.contato}}
+															                                CONTATO 1: <span th:text="${responsavelAluno.responsavel.contato}"></span>
 															                             </p>
 															                             <p>
-															                                CONTATO 2: {{responsavel.contato2}}
+															                                CONTATO 2: <span th:text="${responsavelAluno.responsavel.contato2}"></span>
 															                             </p>
 															                         </div>
-															                         <div class="col-xs-12 col-sm-6 text-right">
+															                         <!-- <div class="col-xs-12 col-sm-6 text-right">
 															                              <a href='javascript:void(0);'>
 															                                  <i class='material-icons col-teal btn-icon'>mode_edit</i> EDITAR
 															                              </a>
 															                              <a href='javascript:void(0);' class='js-remover' data-contato='{{responsavel.contato}}'>
 															                                  <i class='material-icons col-pink btn-icon'>delete</i> REMOVER
 															                              </a>
-															                         </div>
+															                         </div> -->
 															                      </div>
 															        		</div>
 															    		</div>
