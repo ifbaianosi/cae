@@ -26,6 +26,7 @@ public class Aluno extends Entidade {
 
 	private static final long serialVersionUID = 2970810779587217348L;
 
+	// CAMPOS OBRIGATORIOS PARA CADASTRO RAPIDO ===========================
 	@NotBlank(message="A matricula é obrigatória")
 	@Size(max=7, message="A matricula deve conter no máximo {max} números")
 	private String matricula;
@@ -33,6 +34,16 @@ public class Aluno extends Entidade {
 	@NotBlank(message="O nome é obrigatório")
 	@Size(max=80, message="O nome deve conter no máximo {max} caracteres")
 	private String nome;
+	
+	@NotNull(message="Selecione a identificação do aluno")
+	@Enumerated(EnumType.STRING)
+	private Identificacao identificacao;
+	
+	@NotNull(message="Selecione um curso")
+	@ManyToOne
+	@JoinColumn(name="codigo_curso")
+	private Curso curso;
+	//=====================================================================
 	
 	@Email(message="Email inválido")
 	@Size(max=80, message="O email deve conter no máximo {max} caracteres")
@@ -46,22 +57,19 @@ public class Aluno extends Entidade {
 	private String contentType;
 	/**FOTO*/
 	
-	@NotNull(message="A data de nascimento é obrigatório")
+	//@NotNull(message="A data de nascimento é obrigatório")
 	@Column(name="data_nascimento")
 	private LocalDate dataNascimento;
 	
 	@Transient
 	private Integer idade;
 	
-	@NotNull(message="Selecione o sexo")
+	//@NotNull(message="Selecione o sexo")
 	@Enumerated(EnumType.STRING)
 	private Sexo sexo;
 	
-	@NotNull(message="Selecione a identificação do aluno")
-	@Enumerated(EnumType.STRING)
-	private Identificacao identificacao;
 
-	@NotNull(message="Selecione a serie/turma")
+	//@NotNull(message="Selecione a serie/turma")
 	@Enumerated(EnumType.STRING)
 	@Column(name="serie_turma")
 	private SerieTurma serieTurma;
@@ -69,7 +77,7 @@ public class Aluno extends Entidade {
 	@Max(value=100, message="O número do apartamento deve ser no máximo até 100")
 	private Integer apartamento;
 	
-	@NotBlank(message="O número para contato é obrigatório")
+	//@NotBlank(message="O número para contato é obrigatório")
 	@Size(max=20, message="O número para contato deve conter no máximo {max} caracteres")
 	private String contato;
 	
@@ -78,11 +86,9 @@ public class Aluno extends Entidade {
 	private Alojamento alojamento;
 	
 	private Boolean whatsapp;
+	
+	private Boolean saida;//Saida do campus
 		
-	@NotNull(message="Selecione um curso")
-	@ManyToOne
-	@JoinColumn(name="codigo_curso")
-	private Curso curso;
 	
 	@Transient
 	private List<ResponsavelAluno> responsaveisDoAluno;
@@ -193,6 +199,13 @@ public class Aluno extends Entidade {
 	public void setAlojamento(Alojamento alojamento) {
 		this.alojamento = alojamento;
 	}
+	public Boolean getSaida() {
+		return saida;
+	}
+	public void setSaida(Boolean saida) {
+		this.saida = saida;
+	}
+	
 	
 	public String getFotoOuMock() {
 		return !StringUtils.isEmpty(foto) ? foto : "aluno-mock.png";
@@ -200,8 +213,13 @@ public class Aluno extends Entidade {
 	
 	public String getDataNascimentoFormatada() {
 		DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		return dataNascimento.format(formater);
+		return dataNascimento!=null ? dataNascimento.format(formater) : "";
 	}
 	
+
+	public boolean isCadastroCompleto(){
+		System.out.println("cadastroCompletoAluno: " + (serieTurma != null));
+		return serieTurma != null;
+	}
 	
 }

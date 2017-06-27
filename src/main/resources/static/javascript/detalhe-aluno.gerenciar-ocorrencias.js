@@ -40,15 +40,17 @@ NGTICAE.SalvarOcorrencia = function(){
 			data: {
 				codigo: $('#codigo').val(),
 				dataRegistro: $('#dataRegistro').val(),
+				serie: $('#serie').val(),
+				identificacao: $('#identificacao').val(),
 				aluno:  $('#codigo_aluno').val(),
 				dataOcorrido: $('.js-dataOcorrencia').val(),
 				descricao: $('.js-descricao').val(),
 				local: $('.js-local').val()
 			},
-			beforeSend: onIniciarRequisicao,
+			beforeSend: onIniciarRequisicao.bind(this),
 			error: onErroSalvandoOcorrencia,
 			success: onOcorrenciaSalva.bind(this),
-			complete: onFinalizarRequisicao
+			complete: onFinalizarRequisicao.bind(this)
 		});
 	}
 	
@@ -72,6 +74,7 @@ NGTICAE.SalvarOcorrencia = function(){
 	
 	function onIniciarRequisicao(){
 		console.log('Iniciando requisição...');
+		this.salvarOcorrenciaBtn.text('SALVANDO, Aguarde...').attr("disabled", "true");
 	}
 	
 	function onErroSalvandoOcorrencia(error){
@@ -81,6 +84,7 @@ NGTICAE.SalvarOcorrencia = function(){
 	
 	function onFinalizarRequisicao(){
 		console.log('Requisição finalizada...');
+		this.salvarOcorrenciaBtn.text('SALVAR').removeAttr("disabled");
 	}
 	
 	return SalvarOcorrencia;
@@ -189,6 +193,8 @@ NGTICAE.EditarOcorrencia = function(){
 		//Adiciona o codigo da ocorrencia no campo hidden para o spring fazer a verificação se será criado um novo registro ou atualizar um ja existente
 		$('#codigo').val(ocorrencia.codigo);
 		$('#dataRegistro').val(ocorrencia.dataRegistro);
+		$('#serie').val(ocorrencia.serie);
+		$('#identificacao').val(ocorrencia.identificacao);
 		
 		//preenchar o formulario com os dados da ocorrencia para edição
 		$('.js-dataOcorrencia').val(ocorrencia.dataOcorrido);
@@ -296,7 +302,25 @@ NGTICAE.Formulario = {
 			$('.js-container-ocorrencias').hide('slow');
 			
 			//monstrar container do formulario de ocorrencias
-			$('.js-container-formulario-ocorrencias').show('slow');
+			var resposta = $.ajax({
+				url: $('.js-nova-ocorrencia').data('url-alunos') + '/por-matricula',
+				method: 'GET',
+				contentType: 'application/json',
+				data: {
+					matricula: $('.js-matricula-aluno').text(),
+				}
+			});
+			
+			resposta.done(function(aluno){
+				$('.js-container-formulario-ocorrencias').show('slow');
+				if(!aluno.cadastroCompleto){
+					$('.js-mensagem-cadastro-incompleto').removeClass('hide');
+					$('.js-link-completar-cadastro').attr('href', aluno.codigo);
+					$('.js-restante-formulario').addClass('hide');
+				}else{
+					
+				}
+			});
 		},
 		
 		esconder: function(){

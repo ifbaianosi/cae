@@ -57,8 +57,14 @@ public class Ocorrencia extends Entidade{
 	@PrePersist
 	public void prePersist(){
 		this.dataRegistro = LocalDateTime.now();
-		this.serie = aluno.getSerieTurma().getDescricao();
 		this.identificacao = aluno.getIdentificacao().getDescricao();
+		setSerieDoAluno();
+	}
+	
+	private void setSerieDoAluno(){
+		if(aluno.getCurso().getTipoCurso() != TipoCurso.SUPERIOR){
+			this.serie = aluno.getSerieTurma().getDescricao();
+		}
 	}
 
 	public LocalDateTime getDataRegistro() {
@@ -124,7 +130,7 @@ public class Ocorrencia extends Entidade{
 	public void setIdentificacao(String identificacao) {
 		this.identificacao = identificacao;
 	}
-
+	
 
 	@Transient
 	private DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");

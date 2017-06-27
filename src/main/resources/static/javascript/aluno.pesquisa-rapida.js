@@ -56,16 +56,29 @@ NGTICAE.PesquisaAluno = (function(){
 	
 	function onSelecionar(event){
 		console.log('Selecionar aluno clicado...', $(event.currentTarget).data('codigo'));
-		var aluno = {
+		console.log('Selecionar aluno clicado com matricula...', $(event.currentTarget).data('matricula'));
+		/*var aluno = {
 				codigo: $(event.currentTarget).data('codigo'),
 				nome: $(event.currentTarget).data('nome-aluno'),
 				matricula: $(event.currentTarget).data('matricula'),
 				curso: {
 					nome: $(event.currentTarget).data('curso')
 				}
-		}
-		console.log('aluno clicado...: ',aluno);
-		sucesso(aluno);
+		}*/
+		
+		var resposta = $.ajax({
+			url: this.url + '/por-matricula',
+			method: 'GET',
+			contentType: 'application/json',
+			data: {
+				matricula: $(event.currentTarget).data('matricula'),
+			}
+		});
+		
+		resposta.done(sucesso);
+		
+		/*console.log('aluno clicado...: ',aluno);*/
+		/*sucesso(aluno);*/
 		fecharJanela();
 	}
 	
@@ -91,6 +104,7 @@ NGTICAE.PesquisaAluno = (function(){
 	}
 	
 	function sucesso(aluno){
+		console.log('aluno', aluno);
 		if(aluno.codigo != null){
 			console.log('sucesso...', aluno);
 			console.log('aluno.nome: ', aluno.nome);
@@ -101,11 +115,19 @@ NGTICAE.PesquisaAluno = (function(){
 			$('.js-curso').text(aluno.curso.nome);
 			
 			$('.js-card-aluno').removeClass('hide');
-			$('.js-restante-formulario').removeClass('hide');
 			$('.js-aluno').addClass('hide');
 			
 			$('#aluno').val(aluno.codigo);
 			$('#name-error').hide();
+			
+			if(aluno.cadastroCompleto){
+				$('.js-restante-formulario').removeClass('hide');
+				$('.js-mensagem-cadastro-incompleto').addClass('hide');
+			}else{
+				$('.js-mensagem-cadastro-incompleto').removeClass('hide');
+				$('.js-link-completar-cadastro').attr('href', $('.js-pesquisar-aluno').data('url') + '/' + aluno.codigo);
+				$('.js-restante-formulario').addClass('hide');
+			}
 		}
 	}
 	
@@ -116,6 +138,7 @@ NGTICAE.PesquisaAluno = (function(){
 		
 		$('.js-card-aluno').addClass('hide');
 		$('.js-restante-formulario').addClass('hide');
+		$('.js-mensagem-cadastro-incompleto').addClass('hide');
 		$('.js-aluno').removeClass('hide');
 		
 		$('#aluno').val('');

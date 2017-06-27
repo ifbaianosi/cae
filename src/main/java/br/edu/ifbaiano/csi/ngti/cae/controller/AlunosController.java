@@ -165,4 +165,10 @@ public class AlunosController {
 		aluno.setResponsaveisDoAluno(responsaveisAluno.findByAluno(aluno));
 		return novo(aluno);
 	}
+	
+	@GetMapping("/pesquisa")
+	public ModelAndView pesquisaDadosAluno(){
+		ModelAndView mv = new ModelAndView("aluno/ConsultarDadosAluno");
+		return mv;
+	}
 }

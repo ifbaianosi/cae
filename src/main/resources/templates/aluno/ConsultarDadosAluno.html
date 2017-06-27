@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/LayoutPadrao'">
+
+<head>
+    <title>Consultar dados do aluno</title>
+
+    <!-- Bootstrap Material Datetime Picker Css -->
+    <link th:href="@{/layout/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css}" rel="stylesheet" />
+</head>
+
+<body>
+	
+    <section class="content" layout:fragment="conteudo">
+        <div class="container-fluid">
+            <div class="block-header">
+                <h2>CONSULTAR DADOS DO ALUNO</h2>
+            </div>
+            <div class="card">
+                <!-- <div class="header">
+                    <button type="button" class="btn bg-teal waves-effect"><i class="material-icons">search</i>PESQUISAR</button>
+                </div> -->
+                <div class="body"> <!--  card-padding-->
+                    <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-4">
+                                <div class="js-aluno">
+	                                <label for="aluno">Aluno</label>
+	                                <div class="input-group">
+	                                    <span class="input-group-addon">
+	                                        <a href="javascript:void(0);" class="btn btn-xs waves-effect" data-toggle="modal" data-target="#modalPesquisaAluno"><i class="material-icons">search</i></a>
+	                                    </span>
+	                                    <div id="divInput" class="form-line">
+	                                        <input type="text" id="aluno" class="form-control js-matricula" placeholder="Digite a matricula do aluno" autofocus>
+	                                    </div>
+	                                    <span class="input-group-addon">
+	                                        <button class="btn btn-dafault btn-xs waves-effect js-validar-numero-matricula"><i class="material-icons">send</i></button>
+	                                    </span>
+	                                    <div class="preloader pl-size-xs pull-right hide">
+		                                    <div class="spinner-layer pl-teal">
+		                                        <div class="circle-clipper left">
+		                                            <div class="circle"></div>
+		                                        </div>
+		                                        <div class="circle-clipper right">
+		                                            <div class="circle"></div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+	                                </div>
+                                </div>
+                                <!-- <div class="card js-card-aluno hide">
+			                        <div class="body"> -->
+			                        	<div class="row js-card-aluno m-t-15 m-b-20 hide">
+			                        		<div class="col-xs-10" style="margin-bottom: 0;">
+					                            <div><span class="col-teal js-nome">Glauber de Oliveira Matos</span></div>
+					                            <div><strong class="js-matricula">2035280</strong></div>
+					                            <span class="js-curso">Tecnico em Informática</span>
+			                        		</div>
+			                        		<div class="col-xs-2">
+			                        			<div class="align-right"><a href="javascript:void(0);" class="btn-xs btn-link waves-effect js-remover" title="Remover">x</a></div>
+			                        		</div>
+			                        	</div>
+			                        <!-- </div>
+			                    </div> -->
+                            </div>
+                         </div>
+                    
+                    <!-- <div class="row">
+                        <div class="col-md-12">
+                            <th:block th:replace="ocorrencia/Formulario :: formularioNovaOcorrencia"></th:block>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="modal fade  js-modal-pesquisa-aluno" id="modalPesquisaAluno" tabindex="-1" role="dialog">
+           <div class="modal-dialog modal-lg" role="document">
+               <div class="card">
+                        <div class="header">
+                            <h2>
+                                Pesquisar aluno
+                            </h2>
+                       		<a href="javascript:void(0);" class="header-dropdown m-r--5" data-dismiss="modal"><i class="material-icons">clear</i></a>
+                            
+                        </div>
+                        <div class="body">
+                        	<form id="formulario_responsavel">
+                        		<div class="row">
+	                        		<div class="col-xs-12 col-sm-12 col-md-12">
+	                                    <label for="nome">Nome ou matricula</label>
+	                                    <div class="form-group">
+	                                        <div class="form-line">
+	                                            <input type="text" id="nome" class="form-control  js-nomeOuMatricula-aluno-modal" placeholder="Digite o nome ou a matricula do aluno" autocomplete="off">
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <!-- <div class="col-xs-12 col-sm-12 col-md-4">
+	                                    <label for="matricula">Matricula</label>
+	                                    <div class="form-group">
+	                                        <div class="form-line">
+	                                            <input type="text" id="matricula" class="form-control js-matricula-aluno-modal" placeholder="Pesquisar pela matricula">
+	                                        </div>
+	                                    </div>
+	                                </div> -->
+                        		</div>
+                        		<div class="row">
+                        			<div class="col-xs-12">
+                        				<button type="submit" class="btn waves-effect bg-teal  js-pesquisar-aluno" th:data-url="@{/alunos}">PESQUISAR</button>
+                        				<div class="preloader pl-size-xs pull-right hide">
+		                                    <div class="spinner-layer pl-teal">
+		                                        <div class="circle-clipper left">
+		                                            <div class="circle"></div>
+		                                        </div>
+		                                        <div class="circle-clipper right">
+		                                            <div class="circle"></div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+                        			</div>
+                        		</div>
+                        		<div class="row">
+                        			<div class="col-xs-12">
+                        				<div class="js-container-tabela-alunos"></div>
+                        			</div>
+                        		</div>
+		                	</form>
+                        </div>
+                    </div>
+           </div>
+       </div>
+    </section>
+
+   <th:block layout:fragment="javascript-extra">
+   		
+   		<!-- Moment Plugin Js -->
+	    <script th:src="@{/layout/plugins/momentjs/moment.js}"></script>
+	
+	    <!-- Bootstrap Material Datetime Picker Plugin Js -->
+	    <script th:src="@{/layout/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js}"></script>
+	    <script th:src="@{/javascript/componente-material-date-time-picker.js}"></script>
+	    
+   		<script th:src="@{/javascript/vendors/plugins/handlebars/handlebars-v4.0.10.js}"></script>
+	    <script th:src="@{/javascript/aluno.pesquisa-rapida.js}"></script>
+	    
+   		<th:block th:replace="handlebars/TabelaPesquisaAlunoTemplate"></th:block>
+   </th:block>
+</body>
+
+</html>
