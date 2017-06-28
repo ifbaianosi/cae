@@ -57,14 +57,6 @@ NGTICAE.PesquisaAluno = (function(){
 	function onSelecionar(event){
 		console.log('Selecionar aluno clicado...', $(event.currentTarget).data('codigo'));
 		console.log('Selecionar aluno clicado com matricula...', $(event.currentTarget).data('matricula'));
-		/*var aluno = {
-				codigo: $(event.currentTarget).data('codigo'),
-				nome: $(event.currentTarget).data('nome-aluno'),
-				matricula: $(event.currentTarget).data('matricula'),
-				curso: {
-					nome: $(event.currentTarget).data('curso')
-				}
-		}*/
 		
 		var resposta = $.ajax({
 			url: this.url + '/por-matricula',
@@ -76,9 +68,6 @@ NGTICAE.PesquisaAluno = (function(){
 		});
 		
 		resposta.done(sucesso);
-		
-		/*console.log('aluno clicado...: ',aluno);*/
-		/*sucesso(aluno);*/
 		fecharJanela();
 	}
 	
@@ -113,6 +102,34 @@ NGTICAE.PesquisaAluno = (function(){
 			$('.js-nome').val(aluno.matricula + ' - ' + aluno.nome);
 			$('.js-matricula').text(aluno.matricula);
 			$('.js-curso').text(aluno.curso.nome);
+			
+			//CONSULTA DADOS DO ALUNO - VIGILANTE ================
+			$('.js-identificacao').text(aluno.identificacao);
+			$('.js-sexo-descricao').text(aluno.sexo != null ? aluno.sexo : '-');
+			$('.js-alojamento').text(aluno.alojamento != null ? aluno.alojamento : '-');
+			$('.js-apartamento').text(aluno.apartamento != null ? aluno.apartamento : '-');
+			$('.js-serie-turma').text(aluno.serieTurma != null ? aluno.serieTurma : '-');
+			$('.js-data-nascimento').text(aluno.dataNascimentoFormatada != null ? aluno.dataNascimentoFormatada : '-');
+			$('.js-email').text(aluno.email != null ? aluno.email : '-');
+			$('.js-contato').text(aluno.contato != null ? aluno.contato : '-');
+			if(aluno.whatsapp != true){
+				$('.js-whatsapp').removeAttr('checked');
+			}else{
+				$('.js-whatsapp').attr('checked', true);
+			}
+			if(aluno.saida != true){
+				$('.js-saida').removeAttr('checked');
+			}else{
+				$('.js-saida').attr('checked', true);
+			}
+			
+			var htmlPanelResponsavel = $('#panelResponsaveisTemplate').html();
+			var template = Handlebars.compile(htmlPanelResponsavel);
+			
+			var novoPainel = template(aluno.responsaveisDoAluno);
+			$('.js-container-tabela-responsaveis').html(novoPainel);
+			
+			//=====================================================
 			
 			$('.js-card-aluno').removeClass('hide');
 			$('.js-aluno').addClass('hide');

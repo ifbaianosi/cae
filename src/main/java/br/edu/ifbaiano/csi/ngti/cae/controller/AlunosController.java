@@ -88,7 +88,7 @@ public class AlunosController {
 		return alunos.porNomeOuMatricula(nomeOuMatricula);
 	}
 	
-	@RequestMapping(value="/por-matricula", consumes=MediaType.APPLICATION_JSON_VALUE)
+	/*@RequestMapping(value="/por-matricula", consumes=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<?> pesquisarAlunoPorMatricula(@RequestParam("matricula") String matricula){
 		//TODO: VALIDAR FORMULARIO COM JQUERY...
 		
@@ -98,6 +98,21 @@ public class AlunosController {
 		}
 		
 		return ResponseEntity.ok(alunoOptional.get());
+	}*/
+	
+	@RequestMapping(value="/por-matricula", consumes=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<?> consultarDadosDoAluno(@RequestParam("matricula") String matricula){
+		//TODO: VALIDAR FORMULARIO COM JQUERY...
+		
+		Optional<Aluno> alunoOptional = alunos.findByMatricula(matricula);
+		if(!alunoOptional.isPresent()){
+			return ResponseEntity.badRequest().body("Aluno não encontrado");
+		}
+		
+		Aluno aluno = alunoOptional.get();
+		aluno.setResponsaveisDoAluno(responsaveisAluno.findByAluno(aluno));
+		
+		return ResponseEntity.ok(aluno);
 	}
 	
 	@GetMapping("/novo")

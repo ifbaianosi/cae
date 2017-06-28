@@ -37,6 +37,9 @@ public class Responsavel extends Entidade{
 	
 	@Transient
 	private String uuid;
+	
+	@Transient
+	private String identificador;
 
 	public String getNome() {
 		return nome;
@@ -82,13 +85,19 @@ public class Responsavel extends Entidade{
 		this.contato2 = contato2;
 	}
 
-	public Boolean getContato_whatsap2() {
-		return contato_whatsapp2;
-	}
-
 	public void setContato_whatsapp2(Boolean contato_whatsapp2) {
 		this.contato_whatsapp2 = contato_whatsapp2;
 	}
+
+	public Boolean getContato_whatsapp2() {
+		return contato_whatsapp2;
+	}
 	
-	
+	public String getIdentificador() {
+		return identificador;
+	}
+
+	public void setIdentificador(String identificador) {
+		this.identificador = identificador;
+	}
 }

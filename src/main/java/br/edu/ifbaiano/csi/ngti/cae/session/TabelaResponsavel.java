@@ -27,6 +27,12 @@ public class TabelaResponsavel {
 			
 			if (!responsavelSessionOptional.isPresent()){
 				responsavelSesseion = new ResponsavelSession();
+				responsavel.setIdentificador(responsavel.getContato()
+																.trim()
+																.replace("(", "")
+																.replace(")", "")
+																.replace(" ", "")
+																.replace("-", ""));
 				responsavelSesseion.setResponsavel(responsavel);
 				responsavelSession.add(0, responsavelSesseion);
 			}

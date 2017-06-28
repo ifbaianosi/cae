@@ -1,0 +1,36 @@
+<script id="panelResponsaveisTemplate" type="text/x-handlebars-template">
+<div class="panel-group full-body" id="accordion_19" role="tablist" aria-multiselectable="true" th:fragment="tabelaResponsaveis">
+{{#if .}}
+	{{#each .}}
+		<div class="panel">
+    		<div class="panel-heading" role="tab" id="{{responsavel.codigo}}">
+        		<h4 class="panel-title">
+            		<a class="collapsed" role="button" data-toggle="collapse" href="#collapseThree_{{responsavel.codigo}}" aria-expanded="false" aria-controls="collapseThree_{{responsavel.codigo}}">
+                		{{responsavel.nome}}
+            		</a>
+        		</h4>
+    		</div>
+    		<div id="collapseThree_{{responsavel.codigo}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree_{{responsavel.codigo}}">
+        		<div class="panel-body">
+					<div class="row">
+                         <div class="col-xs-12 col-sm-6">
+                             <p>
+                                PARENTESCO: {{parentesco}}
+                             </p>
+                             <p>
+                                CONTATO 1: {{responsavel.contato}}
+                             </p>
+                             <p>
+                                CONTATO 2: {{responsavel.contato2}}
+                             </p>
+                         </div>
+                      </div>
+        		</div>
+    		</div>
+		</div>
+	{{/each}}
+ {{else}}
+	<div>O aluno ainda não possui responsáveis cadastrados no sistema.</div>
+ {{/if}}
+</div>
+</script>
