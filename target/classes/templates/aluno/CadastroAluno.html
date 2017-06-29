@@ -255,19 +255,20 @@
 		                                        	
 		                                        	<th:block th:if="${aluno.responsaveisDoAluno} != null">
 					                                		<div class="panel-group full-body" id="accordion_19" role="tablist" aria-multiselectable="true" th:fragment="tabelaResponsaveis">
+																	
 																	<div class="panel" th:each="responsavelAluno : ${aluno.responsaveisDoAluno}">
-															    		<div class="panel-heading" role="tab" th:id="${responsavelAluno.responsavel.contato}">
+															    		<div class="panel-heading" role="tab" th:id="${responsavelAluno.responsavel.codigo}">
 															        		<h4 class="panel-title">
-															            		<a class="collapsed" role="button" data-toggle="collapse" th:href="|#collapseThree_${responsavelAluno.responsavel.contato}|" 
-															            			aria-expanded="false" th:aria-controls="|collapseThree_${responsavelAluno.responsavel.contato}|" th:text="${responsavelAluno.responsavel.nome}">
+															            		<a class="collapsed" role="button" data-toggle="collapse" th:href="|#collapseThree_${responsavelAluno.responsavel.codigo}|" 
+															            			aria-expanded="false" th:aria-controls="|collapseThree_${responsavelAluno.responsavel.codigo}|" th:text="${responsavelAluno.responsavel.nome}">
 															                		{{responsavel.nome}}
 															            		</a>
 															        		</h4>
 															    		</div>
-															    		<div th:id="|collapseThree_${responsavelAluno.responsavel.contato}|" class="panel-collapse collapse" role="tabpanel" th:aria-labelledby="|headingThree_${responsavelAluno.responsavel.contato}|">
+															    		<div th:id="|collapseThree_${responsavelAluno.responsavel.codigo}|" class="panel-collapse collapse" role="tabpanel" th:aria-labelledby="|headingThree_${responsavelAluno.responsavel.codigo}|">
 															        		<div class="panel-body">
 																				<div class="row">
-															                         <div class="col-xs-12 col-sm-6">
+															                         <div class="col-xs-12 col-sm-12">
 															                             <p>
 															                                PARENTESCO: <span th:text="${responsavelAluno.parentesco}"></span>
 															                             </p>

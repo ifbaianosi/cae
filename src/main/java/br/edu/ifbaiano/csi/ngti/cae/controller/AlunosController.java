@@ -27,6 +27,7 @@ import br.edu.ifbaiano.csi.ngti.cae.controller.page.PageWrapper;
 import br.edu.ifbaiano.csi.ngti.cae.dto.AlunoDTO;
 import br.edu.ifbaiano.csi.ngti.cae.model.Alojamento;
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
+import br.edu.ifbaiano.csi.ngti.cae.model.Curso;
 import br.edu.ifbaiano.csi.ngti.cae.model.GrauParentesco;
 import br.edu.ifbaiano.csi.ngti.cae.model.Identificacao;
 import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
@@ -72,7 +73,10 @@ public class AlunosController {
 		mv.addObject("sexo", Sexo.values());
 		mv.addObject("identificacoes", Identificacao.values());
 		mv.addObject("series", SerieTurma.values());
-		mv.addObject("cursos", cursos.findAll());
+		List<Curso> cursosList = cursos.findAll();
+		//TODO: apagar...
+		System.out.println("quantidade de cursos: "+ cursosList.size());
+		mv.addObject("cursos", cursosList);
 		mv.addObject("alojamentos", Alojamento.values());
 		
 		PageWrapper<Aluno> paginaWrapper = new PageWrapper<>(alunos.filtrar(alunoFilter, pageable), httpServletRequest);
