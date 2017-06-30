@@ -18,7 +18,7 @@
                     	<input type="hidden" th:field="*{codigo}">
                     	<input type="hidden" th:field="*{dataRegistro}">
                     	<input type="hidden" th:field="*{serie}">
-                    	<input type="hidden" th:field="*{identificacao}">
+                    	<input type="hidden" th:field="*{regime}">
                     	
                          <!-- <div class="row" th:if="${ocorrencia.aluno} == null">
                             <div class="col-xs-12 col-sm-12 col-md-4">
@@ -84,7 +84,8 @@
 									                            <div><span class="text-uppercase js-nome">Glauber de Oliveira Matos</span></div>
 									                            <div><strong class="js-matricula">2035280</strong></div>
 									                            <div><span class="js-curso">Tecnico em Informática</span></div>
-									                            <div><span class="js-identificacao">Aluno Interno</span></div>
+									                            <div><span class="js-regime">Aluno Interno</span></div>
+									                            <div><span class="js-status label bg-blue-grey">Frequentando</span></div>
 						                        			</div>
 						                        		</div>
 				                        		</div>
@@ -144,7 +145,6 @@
                          	<a class="col-teal js-link-completar-cadastro">aqui</a> para completar o cadastro.
                          </p>
                          
-                         <!-- <th:block th:if="${ocorrencia.aluno.cadastroCompletoAluno} == true"> -->
 	                         <div class="js-restante-formulario" th:classappend="${ocorrencia.aluno} == null ? 'hide'">
 	                        	<div class="row">
 	                            	<div class="col-md-12">
@@ -159,7 +159,7 @@
 		                                        <i class="material-icons">date_range</i>
 		                                    </span>
 		                                    <div class="form-line" th:classappend="${#fields.hasErrors('dataOcorrido')} ? 'focused error'">
-		                                        <!-- <input type="text" class="form-control date  js-dataOcorrencia" placeholder="" th:field="*{dataOcorrido}"> -->
+		                                        <input type="text" class="form-control date  js-dataOcorrencia" placeholder="" th:field="*{dataOcorrido}">
 		                                        <input type="text" class="datetimepicker form-control  js-dataOcorrencia" placeholder="" th:field="*{dataOcorrido}">
 		                                    </div>
 		                                    <label th:if="${#fields.hasErrors('dataOcorrido')}" th:errors="*{dataOcorrido}" class="error" for="dataOcorrido"></label>
@@ -190,7 +190,6 @@
 		                         </div>
 		                        <button type="submit" class="btn bg-teal m-t-10 waves-effect  js-submit">SALVAR</button>
 	                         </div>
-                         <!-- </th:block> -->
                          
 		<!-- </div> -->                           	
                     </form>

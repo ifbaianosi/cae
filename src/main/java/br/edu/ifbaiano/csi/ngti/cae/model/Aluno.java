@@ -10,6 +10,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Max;
@@ -35,15 +36,19 @@ public class Aluno extends Entidade {
 	@Size(max=80, message="O nome deve conter no máximo {max} caracteres")
 	private String nome;
 	
-	@NotNull(message="Selecione a identificação do aluno")
+	@NotNull(message="Selecione o regime do aluno")
 	@Enumerated(EnumType.STRING)
-	private Identificacao identificacao;
+	private Regime regime;
 	
 	@NotNull(message="Selecione um curso")
 	@ManyToOne
 	@JoinColumn(name="codigo_curso")
 	private Curso curso;
 	//=====================================================================
+	
+	@Size(max=80, message="O nome social deve conter no máximo {max} caracteres")
+	@Column(name="nome_social")
+	private String nomeSocial;
 	
 	@Email(message="Email inválido")
 	@Size(max=80, message="O email deve conter no máximo {max} caracteres")
@@ -88,14 +93,21 @@ public class Aluno extends Entidade {
 	private Boolean whatsapp;
 	
 	private Boolean saida;//Saida do campus
-		
 	
+	@Enumerated(EnumType.STRING)
+	private Status status;
+	
+	//TODO: Rever o mapeamento de responsaveis do aluno
 	@Transient
 	private List<ResponsavelAluno> responsaveisDoAluno;
 	
 	@Transient
 	private Boolean temResponsavel;
 	
+	@PrePersist
+	public void prePersist(){
+		status = Status.FREQUENTANDO;
+	}
 	
 	public String getMatricula() {
 		return matricula;
@@ -109,11 +121,11 @@ public class Aluno extends Entidade {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Identificacao getIdentificacao() {
-		return identificacao;
+	public Regime getRegime() {
+		return regime;
 	}
-	public void setIdentificacao(Identificacao identificacao) {
-		this.identificacao = identificacao;
+	public void setRegime(Regime regime) {
+		this.regime = regime;
 	}
 	public Sexo getSexo() {
 		return sexo;
@@ -205,12 +217,21 @@ public class Aluno extends Entidade {
 	public void setSaida(Boolean saida) {
 		this.saida = saida;
 	}
-	
-	
+	public String getNomeSocial() {
+		return nomeSocial;
+	}
+	public void setNomeSocial(String nomeSocial) {
+		this.nomeSocial = nomeSocial;
+	}
 	public String getFotoOuMock() {
 		return !StringUtils.isEmpty(foto) ? foto : "aluno-mock.png";
 	}
-	
+	public Status getStatus() {
+		return status;
+	}
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 	public String getDataNascimentoFormatada() {
 		DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		return dataNascimento!=null ? dataNascimento.format(formater) : "";
@@ -220,6 +241,11 @@ public class Aluno extends Entidade {
 	public boolean isCadastroCompleto(){
 		System.out.println("cadastroCompletoAluno: " + (serieTurma != null));
 		return serieTurma != null;
+	}
+	
+	public boolean podeRegistrarOcorrencia(){
+		System.out.println("cadastroCompletoAluno: " + (serieTurma != null));
+		return serieTurma != null && status == Status.FREQUENTANDO;
 	}
 	
 }

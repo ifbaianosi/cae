@@ -69,10 +69,7 @@ public class OcorrenciasController {
 		
 		Ocorrencia ocorrencia = new Ocorrencia();
 		ocorrencia.setAluno(alunos.findOne(codigoaluno));
-		
 		mv.addObject("ocorrencia", ocorrencia);
-		
-		System.out.println("codigo aluno: "+ocorrencia.getAluno().getCodigo());
 		
 		return mv; 
 	}
@@ -82,7 +79,6 @@ public class OcorrenciasController {
 		if(result.hasErrors()){
 			return ResponseEntity.badRequest().build();
 		}
-		
 		cadastroOcorrenciaService.salvar(ocorrencia);
 		
 		return ResponseEntity.ok().body(HttpStatus.CREATED);

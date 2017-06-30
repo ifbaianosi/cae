@@ -5,6 +5,7 @@ CREATE TABLE responsavel (
     contato VARCHAR(20) NOT NULL,
     contato_whatsapp BOOLEAN default false,
     contato2 VARCHAR(20) NOT NULL,
-    contato2_whatsapp BOOLEAN default false
+    contato2_whatsapp BOOLEAN default false,
+    email VARCHAR(80)
     
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -41,7 +41,7 @@ NGTICAE.SalvarOcorrencia = function(){
 				codigo: $('#codigo').val(),
 				dataRegistro: $('#dataRegistro').val(),
 				serie: $('#serie').val(),
-				identificacao: $('#identificacao').val(),
+				regime: $('#regime').val(),
 				aluno:  $('#codigo_aluno').val(),
 				dataOcorrido: $('.js-dataOcorrencia').val(),
 				descricao: $('.js-descricao').val(),
@@ -194,7 +194,7 @@ NGTICAE.EditarOcorrencia = function(){
 		$('#codigo').val(ocorrencia.codigo);
 		$('#dataRegistro').val(ocorrencia.dataRegistro);
 		$('#serie').val(ocorrencia.serie);
-		$('#identificacao').val(ocorrencia.identificacao);
+		$('#regime').val(ocorrencia.regime);
 		
 		//preenchar o formulario com os dados da ocorrencia para edição
 		$('.js-dataOcorrencia').val(ocorrencia.dataOcorrido);

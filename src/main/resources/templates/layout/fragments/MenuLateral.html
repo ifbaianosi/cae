@@ -37,21 +37,51 @@
                     <li class="active">
                         <a th:href="@{/}">
                             <i class="material-icons">home</i>
-                            <span>Inicio</span>
+                            <span>INICIO</span>
                         </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a th:href="@{/alunos}">
                             <i class="material-icons">school</i>
                             <span>Alunos</span>
                         </a>
+                    </li> -->
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
+                            <i class="material-icons">school</i>
+                            <span>ALUNO</span>
+                        </a>
+                        <ul class="ml-menu" style="display: none;">
+                            <li>
+                                <a th:href="@{/alunos}" class="waves-effect waves-block">
+                                    <span>PESQUISAR</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/alunos/novo}" class="waves-effect waves-block">
+                                    <span>CADASTRAR</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="header">REGISTROS</li>
                     <li>
-                        <a th:href="@{/ocorrencias}">
+                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
                             <i class="material-icons">notifications</i>
-                            <span>Ocorrencias</span>
+                            <span>OCORRENCIA</span>
                         </a>
+                        <ul class="ml-menu" style="display: none;">
+                            <li>
+                                <a th:href="@{/ocorrencias}" class="waves-effect waves-block">
+                                    <span>PESQUISAR</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/ocorrencias/nova}" class="waves-effect waves-block">
+                                    <span>REGISTRAR</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <!-- <li class="header">ATENDIMENTOS</li>
                     <li>
@@ -64,7 +94,7 @@
                     <li>
                         <a th:href="@{/alunos/pesquisa}">
                             <i class="material-icons">search</i>
-                            <span>Alunos</span>
+                            <span>ALUNOS</span>
                         </a>
                     </li>
                 </ul>

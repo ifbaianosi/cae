@@ -53,13 +53,10 @@
 	                                </div>
 	                                <div class="container-info-aluno">
 	                                	<input type="hidden" id="codigo_aluno" name="ocorrencia.aluno" th:value="${aluno.codigo}">
-	                                	<p><strong>IDENTIFICACAO: </strong><span th:text="${aluno.identificacao.descricao}">Aluno Interno</span></p>
-	                                	<p><strong>DATA NASCIMENTO: </strong><span th:if="${aluno.dataNascimento} != null" th:text="${aluno.dataNascimentoFormatada}">04/08/1988</span></p>
-	                                	<p><strong>SEXO: </strong><span  th:if="${aluno.sexo} != null" th:text="${aluno.sexo.descricao}">Masculino</span></p>
-	                                	
-	                                    <!-- <strong>IDENTIFICACAO</strong><p >Aluno Semi-Interno </p>
-	                                    <strong>DATA NASCIMENTO</strong><p >04/08/1988</p>
-	                                    <strong>SEXO</strong><p >Masculino</p> -->
+	                                	<strong>REGIME</strong><p><span th:text="${aluno.regime.descricao}">Aluno Interno</span></p>
+	                                	<strong>DATA NASCIMENTO</strong><p><span th:if="${aluno.dataNascimento} != null" th:text="${aluno.dataNascimentoFormatada}">04/08/1988</span></p>
+	                                	<strong>SEXO</strong><p><span  th:if="${aluno.sexo} != null" th:text="${aluno.sexo.descricao}">Masculino</span></p>
+	                                	<strong>STATUS</strong><p><span  th:if="${aluno.status} != null" class="label" th:classappend="${aluno.status.cor}" th:text="${aluno.status.descricao}">Frequentando</span></p>
 	                                </div>
 	                            </div>
 	                            <div class="col-md-9">
@@ -128,7 +125,7 @@
 										            </div> -->
 			                                    	<div class="row">
 			                                    		<div class="col-md-12">
-				                                    		<button type="button" class="btn btn-sm bg-teal waves-effect  js-nova-ocorrencia" th:data-url="@{/ocorrencias}"  th:data-url-alunos="@{/alunos}">NOVA</button>
+				                                    		<button type="button" class="btn btn-sm bg-teal waves-effect  js-nova-ocorrencia" th:data-url="@{/ocorrencias}" th:disabled="${aluno.status != status.FREQUENTANDO}" th:data-url-alunos="@{/alunos}">NOVA</button>
 					                                    	<button type="button" class="btn btn-sm bg-teal waves-effect  js-editar-ocorrencia" disabled="disabled">EDITAR</button>
 					                                    	<button type="button" class="btn btn-sm bg-teal waves-effect  js-excluir-ocorrencias" disabled="disabled" th:data-url="@{/ocorrencias}">EXCLUIR</button>
 					                                    	<button type="button" class="btn btn-sm bg-deep-orange waves-effect  js-cancelar-ocorrencias hide">CANCELAR</button>

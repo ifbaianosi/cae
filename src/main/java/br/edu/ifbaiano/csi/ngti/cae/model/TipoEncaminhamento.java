@@ -6,7 +6,7 @@ public enum TipoEncaminhamento {
 	ADVERTENCIA_VERBAL("Advertência verbal"),
 	CONVOCACAO_PAIS("Convocação dos pais"),
 	SUSPENSAO("Suspensão"),
-	EXPULSAO("Expulsao"),
+	DESLIGADO("Desligado"),
 	COMISSAO_DISCIPLINAR("Comissão disciplinar");
 	
 	private String descricao;

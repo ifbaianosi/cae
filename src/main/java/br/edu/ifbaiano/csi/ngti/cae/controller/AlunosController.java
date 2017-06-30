@@ -24,17 +24,14 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifbaiano.csi.ngti.cae.controller.page.PageWrapper;
-import br.edu.ifbaiano.csi.ngti.cae.dto.AlunoDTO;
 import br.edu.ifbaiano.csi.ngti.cae.model.Alojamento;
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
-import br.edu.ifbaiano.csi.ngti.cae.model.Curso;
 import br.edu.ifbaiano.csi.ngti.cae.model.GrauParentesco;
-import br.edu.ifbaiano.csi.ngti.cae.model.Identificacao;
 import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
-import br.edu.ifbaiano.csi.ngti.cae.model.ResponsavelAluno;
-import br.edu.ifbaiano.csi.ngti.cae.model.ResponsavelAlunoID;
+import br.edu.ifbaiano.csi.ngti.cae.model.Regime;
 import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
 import br.edu.ifbaiano.csi.ngti.cae.model.Sexo;
+import br.edu.ifbaiano.csi.ngti.cae.model.Status;
 import br.edu.ifbaiano.csi.ngti.cae.model.TipoEncaminhamento;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Alunos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Cursos;
@@ -71,13 +68,11 @@ public class AlunosController {
 	public ModelAndView pesquisar(AlunoFilter alunoFilter, @PageableDefault(size=10) Pageable pageable, HttpServletRequest httpServletRequest){
 		ModelAndView mv = new ModelAndView("aluno/PesquisaAlunos");
 		mv.addObject("sexo", Sexo.values());
-		mv.addObject("identificacoes", Identificacao.values());
+		mv.addObject("regimes", Regime.values());
 		mv.addObject("series", SerieTurma.values());
-		List<Curso> cursosList = cursos.findAll();
-		//TODO: apagar...
-		System.out.println("quantidade de cursos: "+ cursosList.size());
-		mv.addObject("cursos", cursosList);
+		mv.addObject("cursos", cursos.findAll());
 		mv.addObject("alojamentos", Alojamento.values());
+		mv.addObject("statusList", Status.values());
 		
 		PageWrapper<Aluno> paginaWrapper = new PageWrapper<>(alunos.filtrar(alunoFilter, pageable), httpServletRequest);
 		mv.addObject("pagina", paginaWrapper);
@@ -116,6 +111,9 @@ public class AlunosController {
 		Aluno aluno = alunoOptional.get();
 		aluno.setResponsaveisDoAluno(responsaveisAluno.findByAluno(aluno));
 		
+		//TODO: log
+		System.out.println("status do aluno: "+aluno.getStatus().getDescricao());
+		
 		return ResponseEntity.ok(aluno);
 	}
 	
@@ -124,7 +122,7 @@ public class AlunosController {
 		ModelAndView mv  = new ModelAndView("aluno/CadastroAluno");
 		mv.addObject("aluno", aluno);
 		mv.addObject("sexo", Sexo.values());
-		mv.addObject("identificacoes", Identificacao.values());
+		mv.addObject("regimes", Regime.values());
 		mv.addObject("series", SerieTurma.values());
 		mv.addObject("cursos", cursos.findAll());
 		mv.addObject("parentescos", GrauParentesco.values());
@@ -171,6 +169,7 @@ public class AlunosController {
 			mv.addObject("ocorrencias", ocorrencias.findByAlunoOrderByDataRegistroDesc(aluno));
 			mv.addObject("ocorrencia", ocorrencia);
 			mv.addObject("tipoEncaminhamento", TipoEncaminhamento.values());
+			mv.addObject("status", Status.class);
 		}else{
 			attributs.addAttribute("warnning", "O numero da matricula nao foi encontrado");
 		}

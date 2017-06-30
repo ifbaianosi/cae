@@ -1,17 +1,14 @@
 package br.edu.ifbaiano.csi.ngti.cae.model;
 
-public enum Identificacao {
+public enum Regime {
 
 	INTERNO("Aluno Interno"),
 	SEMI_INTERNO("Aluno Semi-Interno"),
-	EXTERNO("Aluno Externo"),
-	/*FUNCIONARIO("Funcionário Terceirizado"),
-	SERVIDOR("Servidor"),
-	NAO_IDENTIFICADO("Não Identificado")*/;
+	EXTERNO("Aluno Externo");
 	
 	private String descricao;
 	
-	private Identificacao(String descricao) {
+	private Regime(String descricao) {
 		this.descricao = descricao;
 	}
 	

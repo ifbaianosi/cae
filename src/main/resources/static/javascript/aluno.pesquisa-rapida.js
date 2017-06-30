@@ -102,6 +102,8 @@ NGTICAE.PesquisaAluno = (function(){
 			$('.js-nome').val(aluno.matricula + ' - ' + aluno.nome);
 			$('.js-matricula').text(aluno.matricula);
 			$('.js-curso').text(aluno.curso.nome);
+			$('.js-status').text(aluno.status);
+			
 			
 			//CONSULTA DADOS DO ALUNO - VIGILANTE ================
 			$('.js-identificacao').text(aluno.identificacao);

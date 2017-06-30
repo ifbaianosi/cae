@@ -4,9 +4,10 @@ import java.time.LocalDate;
 
 import br.edu.ifbaiano.csi.ngti.cae.model.Alojamento;
 import br.edu.ifbaiano.csi.ngti.cae.model.Curso;
-import br.edu.ifbaiano.csi.ngti.cae.model.Identificacao;
+import br.edu.ifbaiano.csi.ngti.cae.model.Regime;
 import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
 import br.edu.ifbaiano.csi.ngti.cae.model.Sexo;
+import br.edu.ifbaiano.csi.ngti.cae.model.Status;
 
 public class AlunoFilter {
 
@@ -14,11 +15,13 @@ public class AlunoFilter {
 	private String nome;
 	private LocalDate dataNascimento;
 	private Sexo sexo;
-	private Identificacao identificacao;
+	private Regime regime;
 	private Curso curso;
 	private SerieTurma serieTurma;
 	private Alojamento alojamento;
 	private Integer apartamento;
+	private String nomeSocial;
+	private Status status;
 	
 	public String getMatricula() {
 		return matricula;
@@ -44,11 +47,11 @@ public class AlunoFilter {
 	public void setSexo(Sexo sexo) {
 		this.sexo = sexo;
 	}
-	public Identificacao getIdentificacao() {
-		return identificacao;
+	public Regime getRegime() {
+		return regime;
 	}
-	public void setIdentificacao(Identificacao identificacao) {
-		this.identificacao = identificacao;
+	public void setRegime(Regime regime) {
+		this.regime = regime;
 	}
 	public Curso getCurso() {
 		return curso;
@@ -73,6 +76,18 @@ public class AlunoFilter {
 	}
 	public void setAlojamento(Alojamento alojamento) {
 		this.alojamento = alojamento;
+	}
+	public String getNomeSocial() {
+		return nomeSocial;
+	}
+	public void setNomeSocial(String nomeSocial) {
+		this.nomeSocial = nomeSocial;
+	}
+	public Status getStatus() {
+		return status;
+	}
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 	
 }

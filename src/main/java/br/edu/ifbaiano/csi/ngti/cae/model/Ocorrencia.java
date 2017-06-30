@@ -49,7 +49,7 @@ public class Ocorrencia extends Entidade{
 	
 	private String serie;
 	
-	private String identificacao;
+	private String regime;
 	
 	@OneToMany(mappedBy = "ocorrencia", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Encaminhamento> encaminhamentos = new ArrayList<>();
@@ -57,7 +57,7 @@ public class Ocorrencia extends Entidade{
 	@PrePersist
 	public void prePersist(){
 		this.dataRegistro = LocalDateTime.now();
-		this.identificacao = aluno.getIdentificacao().getDescricao();
+		this.regime = aluno.getRegime().getDescricao();
 		setSerieDoAluno();
 	}
 	
@@ -123,12 +123,12 @@ public class Ocorrencia extends Entidade{
 		this.serie = serie;
 	}
 
-	public String getIdentificacao() {
-		return identificacao;
+	public String getRegime() {
+		return regime;
 	}
 
-	public void setIdentificacao(String identificacao) {
-		this.identificacao = identificacao;
+	public void setRegime(String regime) {
+		this.regime = regime;
 	}
 	
 

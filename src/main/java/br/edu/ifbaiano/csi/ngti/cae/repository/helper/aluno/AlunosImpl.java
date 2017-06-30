@@ -50,7 +50,7 @@ public class AlunosImpl implements AlunosQueries {
 	public List<Aluno> porNomeOuMatricula(String nomeOuMatricula) {
 		String jpql = "SELECT a "
 				+ "FROM Aluno a "
-				+ "WHERE lower(a.nome) like lower(:nomeOuMatricula) OR a.matricula like :nomeOuMatricula ";
+				+ "WHERE lower(a.nome) like lower(:nomeOuMatricula) OR a.matricula like :nomeOuMatricula";
 		
 		List<Aluno> alunosFiltrados = manager.createQuery(jpql, Aluno.class)
 											.setParameter("nomeOuMatricula", nomeOuMatricula + "%")
@@ -99,8 +99,8 @@ public class AlunosImpl implements AlunosQueries {
 				criteria.add(Restrictions.eq("dataNascimento", filtro.getDataNascimento()));
 			
 			//FILTRO IDENTIFICACAO
-			if(filtro.getIdentificacao() != null)
-				criteria.add(Restrictions.eq("identificacao", filtro.getIdentificacao()));
+			if(filtro.getRegime() != null)
+				criteria.add(Restrictions.eq("regime", filtro.getRegime()));
 			
 			//FILTRO CURSO
 			if(filtro.getCurso() != null && filtro.getCurso().getCodigo() != null)
@@ -117,6 +117,14 @@ public class AlunosImpl implements AlunosQueries {
 			//FILTRO APARTAMENTO
 			if(filtro.getApartamento() != null)
 				criteria.add(Restrictions.eq("apartamento", filtro.getApartamento()));
+			
+			//FILTRO NOMESOCIAL
+			if(!StringUtils.isEmpty(filtro.getNomeSocial()))
+				criteria.add(Restrictions.ilike("nomeSocial", filtro.getNomeSocial(), MatchMode.START));
+			
+			//FILTRO STATUS
+			if(filtro.getStatus() != null)
+				criteria.add(Restrictions.eq("status", filtro.getStatus()));
 		}
 	}
 

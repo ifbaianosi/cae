@@ -69,7 +69,7 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 	
 	@Override
 	public List<OcorrenciaDTO> porAluno(Aluno aluno) {
-		String jpql = "SELECT new br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO(codigo, dataRegistro, dataOcorrido, local, descricao, serie, identificacao) "
+		String jpql = "SELECT new br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO(codigo, dataRegistro, dataOcorrido, local, descricao, serie, regime) "
 						+ "FROM Ocorrencia o "
 						+ "WHERE o.aluno = :aluno "
 						+ "ORDER BY o.dataRegistro DESC";
@@ -83,7 +83,7 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 
 	@Override
 	public OcorrenciaDTO porCodigo(Long codigo) {
-		String jpql = "SELECT new br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO(codigo, dataRegistro, dataOcorrido, local, descricao, serie, identificacao) "
+		String jpql = "SELECT new br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO(codigo, dataRegistro, dataOcorrido, local, descricao, serie, regime) "
 				+ "FROM Ocorrencia o "
 				+ "WHERE o.codigo = :codigo";
 

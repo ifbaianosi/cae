@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import br.edu.ifbaiano.csi.ngti.cae.model.Encaminhamento;
-import br.edu.ifbaiano.csi.ngti.cae.model.Identificacao;
+import br.edu.ifbaiano.csi.ngti.cae.model.Regime;
 import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
 
 public class OcorrenciaDTO {
@@ -16,19 +16,19 @@ public class OcorrenciaDTO {
 	private String local;
 	private String descricao;
 	private String serie;
-	private String identificacao;
+	private String regime;
 	private List<Encaminhamento> encaminhamentos;
 	
 	private DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 	
-	public OcorrenciaDTO(Long codigo, LocalDateTime dataRegistro, LocalDateTime dataOcorrido, String local, String descricao, String serie, String identificacao) {
+	public OcorrenciaDTO(Long codigo, LocalDateTime dataRegistro, LocalDateTime dataOcorrido, String local, String descricao, String serie, String regime) {
 		this.codigo = codigo;
 		this.dataRegistro = dataRegistro.format(formatador);
 		this.dataOcorrido = dataOcorrido.format(formatador);
 		this.local = local;
 		this.descricao = descricao;
 		this.serie = serie;
-		this.identificacao = identificacao;
+		this.regime = regime;
 	}
 
 	public Long getCodigo() {
@@ -79,12 +79,12 @@ public class OcorrenciaDTO {
 		this.serie = serie;
 	}
 
-	public String getIdentificacao() {
-		return identificacao;
+	public String getRegime() {
+		return regime;
 	}
 
-	public void setIdentificacao(String identificacao) {
-		this.identificacao = identificacao;
+	public void setRegime(String regime) {
+		this.regime = regime;
 	}
 
 	public List<Encaminhamento> getEncaminhamentos() {

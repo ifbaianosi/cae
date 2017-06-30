@@ -112,13 +112,13 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-3">
-                                        <label for="identificacao">Identificacao</label>
+                                        <label for="regime">Regime</label>
                                         <div class="form-group">
-	                                        <select id="identificacao" class="form-control show-tick" th:field="*{identificacao}">
+	                                        <select id="regime" class="form-control show-tick" th:field="*{regime}">
 	                                        	<option value="">todos...</option>
-	                                            <option th:each="identificacao : ${identificacoes}" th:value="${identificacao}" th:text="${identificacao.descricao}">Interno</option>
+	                                            <option th:each="regime : ${regimes}" th:value="${regime}" th:text="${regime.descricao}">Interno</option>
 	                                        </select>                                           
-	                                        <label th:if="${#fields.hasErrors('identificacao')}" th:errors="*{identificacao}" class="error" for="identificacao"></label>
+	                                        <label th:if="${#fields.hasErrors('regime')}" th:errors="*{regime}" class="error" for="regime"></label>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-3">
@@ -139,6 +139,27 @@
 											    <option th:each="serie : ${series}" th:value="${serie}" th:text="${serie.descricao}">1º ano A</option>
 											</select>
 	                                        <label th:if="${#fields.hasErrors('serieTurma')}" th:errors="*{serieTurma}" class="error" for="serieTurma"></label>
+	                                    </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                	<div class="col-xs-12 col-sm-6 col-md-4">
+                                        <label for="nomeSocial">Nome Social</label>
+                                        <div class="form-group">
+                                            <div class="form-line" th:classappend="${#fields.hasErrors('nomeSocial')} ? 'focused error'">
+                                                <input type="text" id="nomeSocial" class="form-control" placeholder="" th:field="*{nomeSocial}">  
+                                            </div>
+                                            <label th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" id="nome-error" class="error" for="nome"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                    	<label for="status">Status</label>
+                                        <div class="form-group">
+		                                    <select class="form-control show-tick" data-live-search="true" data-size="5" data-container="body" th:field="*{status}">
+		                                    	<option value="">todos...</option>
+											    <option th:each="status : ${statusList}" th:value="${status}" th:text="${status.descricao}">FREQUENTANDO</option>
+											</select>
+	                                        <label th:if="${#fields.hasErrors('status')}" th:errors="*{status}" class="error" for="status"></label>
 	                                    </div>
                                     </div>
                                 </div>
@@ -164,7 +185,8 @@
                                         <th>MATRICULA</th>
                                         <th>NOME</th>
                                         <th>CURSO</th>
-                                        <th>IDENTIFICACAO</th>
+                                        <th>REGIME</th>
+                                        <th>STATUS</th>
                                         <th class="text-right">ACOES</th>
                                     </tr>
                                 </thead>
@@ -173,7 +195,10 @@
                                         <th scope="row" th:text="${aluno.matricula}">1</th>
                                         <td th:text="${aluno.nome}">Mark</td>
                                         <td th:text="${aluno.curso.nome}">Otto</td>
-                                        <td th:text="${aluno.identificacao.descricao}">@mdo</td>
+                                        <td th:text="${aluno.regime.descricao}">@mdo</td>
+                                        <td>
+                                        	<span class="label" th:text="${aluno.status.descricao}" th:classappend="${aluno.status.cor}">FREQUENTAO</span>
+                                        </td>
                                         <td class="text-right">
                                         	<a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}" class="col-red"><i class="material-icons btn-icon">edit</i>Editar</a>
                                          <a th:href="@{/alunos/detalhe?matricula={matricula}(matricula=${aluno.matricula})}" class="col-teal"><i class="material-icons btn-icon">history</i>Historico</a>

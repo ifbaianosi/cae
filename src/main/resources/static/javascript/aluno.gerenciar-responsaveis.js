@@ -16,6 +16,7 @@ NGTICAE.GerenciarResponsaveis = (function(){
 		this.contato2Input = $('#responsavel_contato2');
 		this.whatsappResponsavelCheckBox = $('#responsavel_whatsapp');
 		this.whatsapp2CheckBox = $('#responsavel_whatsapp2');
+		this.email = $('#responsavel_email');
 
 		this.adicionarBtn = $('.js-adicionar-responsavel');
 		this.urlResponsaveis = this.adicionarBtn.data('url');
@@ -49,6 +50,7 @@ NGTICAE.GerenciarResponsaveis = (function(){
 				contato_whatsapp: this.whatsappResponsavelCheckBox.val() == 'on' ? 'true' : 'false',
 				contato2: this.contato2Input.val(),
 				contato_whatsapp2: this.whatsapp2CheckBox.val() == 'on' ? 'true' : 'false',
+				email: this.email.val(),
 				uuid: this.uuid
 			}),
 			beforeSend: onIniciarRequisicao.bind(this),

@@ -10,8 +10,9 @@ CREATE TABLE aluno (
     codigo BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(80) NOT NULL,
     matricula VARCHAR(7) NOT NULL,
-    identificacao VARCHAR(20) NOT NULL,
+    regime VARCHAR(20) NOT NULL,
     codigo_curso BIGINT(20) NOT NULL,
+    nome_social VARCHAR(80),
     sexo VARCHAR (15),
     alojamento VARCHAR(25),
     apartamento INTEGER,
@@ -23,6 +24,7 @@ CREATE TABLE aluno (
     contato VARCHAR(20),
     whatsapp BOOLEAN default false,
     saida BOOLEAN default false,
+    status VARCHAR(30),
     FOREIGN KEY (codigo_curso) REFERENCES curso(codigo)
     
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
