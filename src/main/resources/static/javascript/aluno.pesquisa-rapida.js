@@ -22,25 +22,36 @@ NGTICAE.PesquisaAluno = (function(){
 		this.pesquisarBtn.on('click', onPesquisarClicado.bind(this));
 		this.validarMatriculaBtn.on('click', onValidarMatriculaBtnClicado.bind(this));
 		this.remover.on('click', onRemoverAluno.bind(this));
+		$('#modalPesquisaAluno').on('hidden.bs.modal', fecharJanela);
 	}
 	
 	function onPesquisarClicado(evento){
 		evento.preventDefault();
+		$('.js-mensagem-caracteres').addClass('hide');
 		console.log('Iniciando pesquisa');
 		console.log('url: ', this.url);
 		console.log('nomeOuMatricula: ', this.nomeOuMatriculaInputModal.val().trim());
-		$.ajax({
-			url: this.url,
-			method: 'GET',
-			contentType: 'application/json',
-			data: {
-				nomeOuMatricula: this.nomeOuMatriculaInputModal.val().trim(),
-			},
-			beforeSend: iniciarRequisicaoModal.bind(this),
-			success: pesquisaConcluida.bind(this),
-			error: erroRetornoPesquisa.bind(this),
-			complete: finalizaRequisicao.bind(this)
-		});
+		
+		if(this.nomeOuMatriculaInputModal.val().trim().length > 2){
+			console.log('pesquisando...');
+			$.ajax({
+				url: this.url,
+				method: 'GET',
+				contentType: 'application/json',
+				data: {
+					nomeOuMatricula: this.nomeOuMatriculaInputModal.val().trim(),
+				},
+				beforeSend: iniciarRequisicaoModal.bind(this),
+				success: pesquisaConcluida.bind(this),
+				error: erroRetornoPesquisa.bind(this),
+				complete: finalizaRequisicao.bind(this)
+			});
+		}else{
+			console.log('Digite ao menos 3 caracteres para efetuar a pesquisa.');
+			$('.js-mensagem-caracteres').removeClass('hide');
+			this.containerTabelaAlunos.addClass('hide');
+		}
+		
 	}
 	
 	function pesquisaConcluida(alunos){
@@ -103,10 +114,10 @@ NGTICAE.PesquisaAluno = (function(){
 			$('.js-matricula').text(aluno.matricula);
 			$('.js-curso').text(aluno.curso.nome);
 			$('.js-status').text(aluno.status);
+			$('.js-regime').text(aluno.regime);
 			
 			
 			//CONSULTA DADOS DO ALUNO - VIGILANTE ================
-			$('.js-identificacao').text(aluno.identificacao);
 			$('.js-sexo-descricao').text(aluno.sexo != null ? aluno.sexo : '-');
 			$('.js-alojamento').text(aluno.alojamento != null ? aluno.alojamento : '-');
 			$('.js-apartamento').text(aluno.apartamento != null ? aluno.apartamento : '-');
@@ -186,7 +197,8 @@ NGTICAE.PesquisaAluno = (function(){
 	function fecharJanela(){
 		console.log('Fechar janela...');
 		$('.js-container-tabela-alunos').addClass('hide');
-		$('.js-matricula').val('');
+		$('.js-nomeOuMatricula-aluno-modal').val('');
+		$('.js-mensagem-caracteres').addClass('hide');
 		$('#modalPesquisaAluno').modal('hide');
 	}
 	

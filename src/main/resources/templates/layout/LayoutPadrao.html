@@ -26,6 +26,9 @@
     <!-- Animation Css -->
     <link th:href="@{/layout/plugins/animate-css/animate.css}" rel="stylesheet" />
 
+    <!-- Bootstrap datepicker Css -->
+    <link th:href="@{/javascript/vendors/plugins/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css}" rel="stylesheet" />
+
     <!-- Custom Css -->
     <link th:href="@{/layout/css/style.css}" rel="stylesheet">
 
@@ -37,6 +40,9 @@
 </head>
 
 <body class="theme-teal">
+	
+	<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+	<input type="hidden" name="_csrf_header" th:value="${_csrf.headerName}"/>
 
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
@@ -93,6 +99,15 @@
     <!-- Jquery CountTo Plugin Js -->
     <script th:src="@{/layout/plugins/jquery-countto/jquery.countTo.js}"></script>
 
+    <!-- JQuery Mask plugin JS -->
+    <script th:src="@{/javascript/vendors/plugins/jquery-mask-plugin/jquery.mask.min.js}"></script>
+
+    <!-- Bootstrap datepicker plugin JS -->
+    <script th:src="@{/javascript/vendors/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js}"></script>
+
+    <!-- JS NGTICSI-->
+    <script th:src="@{/javascript/NGTICSI.js}"></script>
+    
     <!-- Custom Js -->
     <script th:src="@{/layout/js/cae.js}"></script>
 

@@ -6,6 +6,16 @@
     
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `curso` (`codigo`, `nome`, `sigla`, `tipo_curso`) VALUES
+(1, 'Curso Técnico em Informática', 'Informática', 'SUBSEQUENTE'),
+(2, 'Curso Técnico em Alimentos', 'Alimentos', 'INTEGRADO'),
+(3, 'Curso Técnico em Agropecuária', 'Agropecuária', 'INTEGRADO'),
+(4, 'Curso Técnico em Zootecnia', 'Zootecnia', 'INTEGRADO'),
+(5, 'Licenciatura em Ciências Biológicas', 'Biologia', 'SUPERIOR'),
+(6, 'Licenciatura em Geografia', 'Geografia', 'SUPERIOR'),
+(7, 'Bacharelado em Zootecnia', 'B. Zootecnia', 'SUPERIOR');
+
+
 CREATE TABLE aluno (
     codigo BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(80) NOT NULL,

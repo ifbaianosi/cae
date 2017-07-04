@@ -41,7 +41,7 @@
 			                                <div class="input-group">
 			                                    <span class="input-group-addon">
 			                                        <a href="javascript:void(0);" class="btn btn-xs waves-effect" data-toggle="modal" data-target="#modalPesquisaAluno"><i class="material-icons">search</i></a>
-			                                        <a href="javascript:void(0);" class="btn btn-xs waves-effect"><i class="material-icons">add</i></a>
+			                                        <!-- <a href="javascript:void(0);" class="btn btn-xs waves-effect"><i class="material-icons">add</i></a> -->
 			                                    </span>
 			                                    <div id="divInput" class="form-line">
 			                                        <input type="text" id="aluno" class="form-control js-matricula" placeholder="Digite a matricula do aluno" autofocus>
@@ -159,7 +159,6 @@
 		                                        <i class="material-icons">date_range</i>
 		                                    </span>
 		                                    <div class="form-line" th:classappend="${#fields.hasErrors('dataOcorrido')} ? 'focused error'">
-		                                        <input type="text" class="form-control date  js-dataOcorrencia" placeholder="" th:field="*{dataOcorrido}">
 		                                        <input type="text" class="datetimepicker form-control  js-dataOcorrencia" placeholder="" th:field="*{dataOcorrido}">
 		                                    </div>
 		                                    <label th:if="${#fields.hasErrors('dataOcorrido')}" th:errors="*{dataOcorrido}" class="error" for="dataOcorrido"></label>

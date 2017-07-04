@@ -35,12 +35,6 @@
 	                                <span th:text="${mensagemSucesso}"></span>
 	                            </div>
 	                            
-	                            <!-- MENSAGEM ERRO -->
-								<!-- <div class="alert alert-danger alert-dismissible fade in" role="alert" th:if="${#fields.hasErrors('temResponsavel')}" th:fragment="alert">
-	                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="material-icons">clear</i></button>
-	                                <span th:errors="*{temResponsavel}"></span>
-	                            </div> -->
-                            
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-6 col-md-2">
                                         <label for="matricula">Matricula</label>
@@ -150,7 +144,7 @@
                                                 <i class="material-icons">date_range</i>
                                             </span>
                                             <div class="form-line" th:classappend="${#fields.hasErrors('dataNascimento')} ? 'focused error'">
-                                                <input type="text" class="form-control date" placeholder="" th:field="*{dataNascimento}">
+                                                <input type="text" class="form-control js-date" readonly="readonly" placeholder="" th:field="*{dataNascimento}">
                                             </div>
                                             <label th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}" class="error" for="dataNascimento"></label>
                                         </div>
@@ -173,7 +167,7 @@
                                                 <i class="material-icons">phone</i>
                                             </span>
                                             <div class="form-line" th:classappend="${#fields.hasErrors('contato')} ? 'focused error'">
-                                                <input type="text" class="form-control mobile-phone-number js-contato-input" placeholder="" th:field="*{contato}">
+                                                <input type="text" class="form-control mobile-phone-number js-phone-number" placeholder="" th:field="*{contato}">
                                             </div>
 	                                        <label th:if="${#fields.hasErrors('contato')}" th:errors="*{contato}" class="error" for="contato"></label>
                                         </div>
@@ -416,7 +410,7 @@
                                         <label for="responsavel_contato">Contato 1</label>
                                         <div class="input-group">
                                             <div class="form-line">
-                                                <input type="text" id="responsavel_contato" class="form-control mobile-phone-number" placeholder="">
+                                                <input type="text" id="responsavel_contato" class="form-control mobile-phone-number js-phone-number" placeholder="">
                                             </div>
                                             <input type="checkbox" id="responsavel_whatsapp" class="chk-col-teal">
                                             <label for="responsavel_whatsapp">WhatsApp</label>
@@ -426,7 +420,7 @@
                                         <label for="responsavel_contato2">Contato 2</label>
                                         <div class="input-group">
                                             <div class="form-line">
-                                                <input type="text" id="responsavel_contato2" class="form-control mobile-phone-number" placeholder="">
+                                                <input type="text" id="responsavel_contato2" class="form-control mobile-phone-number js-phone-number" placeholder="">
                                             </div>
                                             <input type="checkbox" id="responsavel_whatsapp2" class="chk-col-teal">
                                             <label for="responsavel_whatsapp2">WhatsApp</label>

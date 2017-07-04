@@ -94,7 +94,7 @@
                                                 <i class="material-icons">date_range</i>
                                             </span>
                                             <div class="form-line" th:classappend="${#fields.hasErrors('dataNascimento')} ? 'focused error'">
-                                                <input type="text" class="form-control date" placeholder="" th:field="*{dataNascimento}">
+                                                <input type="text" class="form-control js-date" readonly="readonly" placeholder="" th:field="*{dataNascimento}">
                                             </div>
                                             <label th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}" class="error" for="dataNascimento"></label>
                                         </div>
