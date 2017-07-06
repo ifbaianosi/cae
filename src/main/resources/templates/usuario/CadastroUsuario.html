@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/LayoutPadrao'">
+
+<head>
+    <title>Cadastrar usuario</title>
+</head>
+
+<body>
+	
+    <section class="content" layout:fragment="conteudo">
+        <div class="container-fluid">
+            <div class="block-header">
+                <h2>CADASTRAR NOVO USUARIO</h2>
+            </div>
+            <div class="card">
+                <div class="header">
+                    <a th:href="@{/usuarios}" type="button" class="btn bg-teal waves-effect">PESQUISAR</a>
+                </div>
+                <div class="body"> <!--  card-padding-->
+                    <div class="row">
+                        <!-- <div class="col-md-12">
+                            <h2 class="card-inside-title col-teal">IDENTIFICAÇÃO DO ALUNO</h2>
+                        </div> -->
+                        <div class="col-md-12">
+                            <form class="js-formulario" th:object="${usuario}" th:action="${usuario.novo} ? @{/usuarios/novo} : @{/usuarios/{codigo}(codigo=${usuario.codigo})}" method="POST">
+                            	<input type="hidden" th:field="*{codigo}">
+                            	
+                            	
+                            	<!-- MENSAGEM SUCESSO -->
+								<div class="alert bg-teal alert-dismissible fade in" role="alert" th:if="${not #strings.isEmpty(mensagemSucesso)}" th:fragment="alert">
+	                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="material-icons">clear</i></button>
+	                                <span th:text="${mensagemSucesso}"></span>
+	                            </div>
+	                            
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                        <label for="nome">Nome</label>
+                                        <div class="form-group">
+                                            <div class="form-line" th:classappend="${#fields.hasErrors('nome')} ? 'focused error'">
+                                                <input type="text" id="nome" class="form-control" placeholder="" th:field="*{nome}">
+                                            </div>                                            
+                                            <label th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="error" for="nome"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                        <label for="email">E-mail</label>
+                                        <div class="form-group">
+                                            <div class="form-line" th:classappend="${#fields.hasErrors('email')} ? 'focused error'">
+                                                <input type="text" id="email" class="form-control" placeholder="" th:field="*{email}">
+                                            </div>
+                                            <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" id="email-error" class="error" for="email"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                        <label for="senha">Senha</label>
+                                        <div class="form-group">
+                                            <div class="form-line" th:classappend="${#fields.hasErrors('senha')} ? 'focused error'">
+                                                <input type="password" id="senha" class="form-control" placeholder="" th:field="*{senha}">
+                                            </div>
+                                            <label th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}" id="senha-error" class="error" for="senha"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                        <label for="confirmacaoSenha">Confirmação da senha</label>
+                                        <div class="form-group">
+                                            <div class="form-line" th:classappend="${#fields.hasErrors('confirmacaoSenha')} ? 'focused error'">
+                                                <input type="password" id="confirmacaoSenha" class="form-control" placeholder="" th:field="*{confirmacaoSenha}">
+                                            </div>
+                                            <label th:if="${#fields.hasErrors('confirmacaoSenha')}" th:errors="*{confirmacaoSenha}" id="confirmacaoSenha-error" class="error" for="confirmacaoSenha"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                        <label for="dataNascimento">Data Nascimento</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">date_range</i>
+                                            </span>
+                                            <div class="form-line" th:classappend="${#fields.hasErrors('dataNascimento')} ? 'focused error'">
+                                                <input type="text" class="form-control js-date" readonly="readonly" placeholder="" th:field="*{dataNascimento}">
+                                            </div>
+                                            <label th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}" class="error" for="dataNascimento"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn bg-teal m-t-15 waves-effect  js-submit">SALVAR</button>
+                        		<input type="hidden" id="uuid" th:value="${uuid}" name="uuid">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <th:block layout:fragment="javascript-extra">
+   </th:block>
+</body>
+
+</html>

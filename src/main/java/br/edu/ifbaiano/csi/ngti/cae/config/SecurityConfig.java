@@ -20,7 +20,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.and()
 			.withUser("admin").password("#ngti@si$$").roles("SYS_ADMIN")
 			.and()
-			.withUser("aijalon.junior").password("#ngti@si$$").roles("SYS_ADMIN");
+			.withUser("aijalon.junior").password("#ngti@si$$").roles("SYS_ADMIN")
+			.and()
+			.withUser("tamires.luz").password("070597").roles("ASS_ALUNOS")
+			.and()
+			.withUser("cae").password("ana0516").roles("CAE");
 	}
 	
 	@Override

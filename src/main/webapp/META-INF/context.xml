@@ -5,7 +5,7 @@
             factory="org.apache.naming.factory.BeanFactory"
             type="com.mchange.v2.c3p0.ComboPooledDataSource"
             driverClass="com.mysql.jdbc.Driver"
-            jdbcUrl="jdbc:mysql://10.90.100.50/trino_producao?useSSL=false"
+            jdbcUrl="jdbc:mysql://10.90.100.50/cae?useSSL=false"
             user="cae"
             password="#ngti@si$$" 
             initialPoolSize="5" 
