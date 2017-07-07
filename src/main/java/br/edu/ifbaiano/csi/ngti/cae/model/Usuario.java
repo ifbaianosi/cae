@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -42,18 +43,23 @@ public class Usuario extends Entidade {
 	
 	private Boolean ativo;
 	
-	@NotNull(message="Data nascimento é obrigatório")
+	/*@NotNull(message="Data nascimento é obrigatório")*/
 	@Column(name="data_nascimento")
 	private LocalDate dataNascimento;
 	
 	/**
 	 * GRUPO PODE SER ALTERADO NA VIEW PARA PERFIL
 	 */
-	@NotNull(message="Selecione pelo menos um perfil")
+	@Size(min=1, message="Selecione pelo menos um perfil")
 	@ManyToMany
 	@JoinTable(name="usuario_grupo", joinColumns = @JoinColumn(name="codigo_usuario")
 								   , inverseJoinColumns = @JoinColumn(name="codigo_grupo"))
 	private List<Grupo> grupos;
+	
+	@PrePersist
+	public void prePersist(){
+		this.ativo = true;
+	}
 
 	public String getNome() {
 		return nome;

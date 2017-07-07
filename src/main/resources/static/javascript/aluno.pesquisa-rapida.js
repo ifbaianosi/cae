@@ -35,7 +35,7 @@ NGTICAE.PesquisaAluno = (function(){
 		if(this.nomeOuMatriculaInputModal.val().trim().length > 2){
 			console.log('pesquisando...');
 			$.ajax({
-				url: this.url,
+				url: this.url + '/por',
 				method: 'GET',
 				contentType: 'application/json',
 				data: {

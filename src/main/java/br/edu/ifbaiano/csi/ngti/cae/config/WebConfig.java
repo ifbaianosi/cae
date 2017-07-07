@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.data.repository.support.DomainClassConverter;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
-import org.springframework.format.datetime.DateFormatterRegistrar;
 import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 import org.springframework.format.number.NumberStyleFormatter;
 import org.springframework.format.support.DefaultFormattingConversionService;
@@ -24,6 +23,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
@@ -63,6 +63,7 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 		engine.setTemplateResolver(templateResolver());
 		
 		engine.addDialect(new LayoutDialect());
+		engine.addDialect(new SpringSecurityDialect());
 		/*engine.addDialect(new PalmaDialect());*/
 
 		return engine;

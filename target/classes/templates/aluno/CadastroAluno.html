@@ -27,7 +27,7 @@
                         <div class="col-md-12">
                             <form class="js-formulario" th:object="${aluno}" th:action="${aluno.novo} ? @{/alunos/novo} : @{/alunos/{codigo}(codigo=${aluno.codigo})}" method="POST">
                             	<input type="hidden" th:field="*{codigo}">
-                            	
+                            	<input type="hidden" th:field="*{status}">
                             	
                             	<!-- MENSAGEM SUCESSO -->
 								<div class="alert bg-teal alert-dismissible fade in" role="alert" th:if="${not #strings.isEmpty(mensagemSucesso)}" th:fragment="alert">

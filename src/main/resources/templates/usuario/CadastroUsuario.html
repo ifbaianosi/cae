@@ -6,6 +6,9 @@
 
 <head>
     <title>Cadastrar usuario</title>
+
+    <!-- Customização de componentes NGTI -->
+    <link th:href="@{/layout/css/customizacao.componentes.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -21,22 +24,22 @@
                 </div>
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
-                        <!-- <div class="col-md-12">
-                            <h2 class="card-inside-title col-teal">IDENTIFICAÇÃO DO ALUNO</h2>
-                        </div> -->
                         <div class="col-md-12">
                             <form class="js-formulario" th:object="${usuario}" th:action="${usuario.novo} ? @{/usuarios/novo} : @{/usuarios/{codigo}(codigo=${usuario.codigo})}" method="POST">
                             	<input type="hidden" th:field="*{codigo}">
                             	
                             	
                             	<!-- MENSAGEM SUCESSO -->
-								<div class="alert bg-teal alert-dismissible fade in" role="alert" th:if="${not #strings.isEmpty(mensagemSucesso)}" th:fragment="alert">
+								<div class="alert bg-light-blue alert-dismissible fade in" role="alert" th:if="${not #strings.isEmpty(mensagemSucesso)}" th:fragment="alert">
 	                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="material-icons">clear</i></button>
 	                                <span th:text="${mensagemSucesso}"></span>
 	                            </div>
 	                            
                                 <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
+	                                <div class="col-md-12">
+			                            <h2 class="card-inside-title col-teal">IDENTIFICAÇÃO DO USUÁRIO</h2>
+			                        </div>
+                                    <div class="col-xs-12 col-sm-6">
                                         <label for="nome">Nome</label>
                                         <div class="form-group">
                                             <div class="form-line" th:classappend="${#fields.hasErrors('nome')} ? 'focused error'">
@@ -55,6 +58,20 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-3">
+                                        <label for="dataNascimento">Data Nascimento</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">date_range</i>
+                                            </span>
+                                            <div class="form-line" th:classappend="${#fields.hasErrors('dataNascimento')} ? 'focused error'">
+                                                <input type="text" class="form-control js-date" readonly="readonly" placeholder="" th:field="*{dataNascimento}">
+                                            </div>
+                                            <label th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}" class="error" for="dataNascimento"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
                                         <label for="senha">Senha</label>
                                         <div class="form-group">
                                             <div class="form-line" th:classappend="${#fields.hasErrors('senha')} ? 'focused error'">
@@ -72,19 +89,28 @@
                                             <label th:if="${#fields.hasErrors('confirmacaoSenha')}" th:errors="*{confirmacaoSenha}" id="confirmacaoSenha-error" class="error" for="confirmacaoSenha"></label>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
-                                        <label for="dataNascimento">Data Nascimento</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="material-icons">date_range</i>
-                                            </span>
-                                            <div class="form-line" th:classappend="${#fields.hasErrors('dataNascimento')} ? 'focused error'">
-                                                <input type="text" class="form-control js-date" readonly="readonly" placeholder="" th:field="*{dataNascimento}">
+                                </div>
+                                <div class="row">
+	                                <div class="col-md-12">
+			                            <h2 class="card-inside-title col-teal">PERFIL DO USUÁRIO</h2>
+                                        <!-- <button type="button" class="btn btn-xs bg-teal waves-effect" data-toggle="modal" data-target="#defaultModal"><i class="material-icons btn-icon">add_circle_outline</i>CRIAR</button> -->
+			                        </div>
+			                        <div class="col-xs-12">
+			                        	<label for="grupos">Selecione o perfil</label>
+                                        <div class="form-group">
+                                            <div class="form-line" th:classappend="${#fields.hasErrors('grupos')} ? 'focused error'">
+                                                <th:block th:each="grupo : ${grupos}">
+		                                        	<div class="checkbox-inline"> 
+								    					<input type="checkbox" th:value="${grupo.codigo}" class="chk-col-teal" th:field="*{grupos}">
+		                                            	<label th:for="${#ids.prev('grupos')}" th:text="${grupo.nome}">CAE</label>
+							    					</div>
+	                                        	</th:block>
                                             </div>
-                                            <label th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}" class="error" for="dataNascimento"></label>
+                                            <label th:if="${#fields.hasErrors('grupos')}" th:errors="*{grupos}" id="grupos-error" class="error" for="grupos"></label>
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <button type="submit" class="btn bg-teal m-t-15 waves-effect  js-submit">SALVAR</button>
                         		<input type="hidden" id="uuid" th:value="${uuid}" name="uuid">
                             </form>
@@ -93,6 +119,37 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade  js-modal-gerenciar-grupos" id="defaultModal" tabindex="-1" role="dialog">
+           <div class="modal-dialog modal-xs" role="document">
+               <div class="card">
+                        <div class="header">
+                            <h2>
+                                CRIAR PERFIL
+                            </h2>
+                       		<a href="javascript:void(0);" class="header-dropdown m-r--5" data-dismiss="modal"><i class="material-icons">clear</i></a>
+                            
+                        </div>
+                        <div class="body">
+                        	<form id="formulario_responsavel">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label for="nome_perfil">Nome do perfil</label>
+                                        <div class="form-group">
+                                           <div class="form-line">
+                                                <input type="text" id="nome_perfil" class="form-control" placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <button type="button" class="btn btn-link waves-effect bg-teal  js-adicionar-grupo" th:data-url="@{/grupos}">OK</button>
+                      		            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+                                    </div>
+                                </div>
+		                	</form>
+                        </div>
+                    </div>
+           </div>
+       </div>
     </section>
 
    <th:block layout:fragment="javascript-extra">

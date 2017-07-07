@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 	
 	<body>
 	
@@ -8,27 +9,27 @@
         <!-- Left Sidebar -->
         <aside id="leftsidebar" class="sidebar">
             <!-- User Info -->
-            <!-- <div class="user-info">
+            <div class="user-info">
                 <div class="image">
                     <img th:src="@{/layout/images/user.png}" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><strong>Glauber Matos</strong></div>
-                    <div class="email">glauber.matos@si.ifbaiano.edu.br</div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><strong th:text="${#authentication.principal.usuario.nome}">Glauber Matos</strong></div>
+                    <div class="email" th:text="${#authentication.principal.usuario.email}">glauber.matos@si.ifbaiano.edu.br</div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
                             <li><a href="javascript:void(0);"><i class="material-icons">person</i>Perfil</a></li>
-                            <li role="seperator" class="divider"></li>
+                            <!-- <li role="seperator" class="divider"></li>
                             <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
                             <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
                             <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
-                            <li role="seperator" class="divider"></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sair</a></li>
+                            <li role="seperator" class="divider"></li> -->
+                            <li><a th:href="@{/logout}"><i class="material-icons">input</i>Sair</a></li>
                         </ul>
                     </div>
                 </div>
-            </div> -->
+            </div>
             <!-- #User Info -->
             <!-- Menu -->
             <div class="menu">
@@ -52,19 +53,19 @@
                             <span>ALUNO</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
-                            <li>
+                            <li sec:authorize-url="/alunos">
                                 <a th:href="@{/alunos}" class="waves-effect waves-block">
                                     <span>PESQUISAR</span>
                                 </a>
                             </li>
-                            <li>
+                            <li sec:authorize-url="/alunos/novo">
                                 <a th:href="@{/alunos/novo}" class="waves-effect waves-block">
                                     <span>CADASTRAR</span>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <li sec:authorize-url="/usuarios/novo">
                         <a th:href="@{/usuarios/novo}">
                             <i class="material-icons">people</i>
                             <span>USUARIOS</span>
@@ -77,12 +78,12 @@
                             <span>OCORRENCIA</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
-                            <li>
+                            <li sec:authorize-url="/ocorrencias">
                                 <a th:href="@{/ocorrencias}" class="waves-effect waves-block">
                                     <span>PESQUISAR</span>
                                 </a>
                             </li>
-                            <li>
+                            <li sec:authorize-url="/ocorrencias/nova">
                                 <a th:href="@{/ocorrencias/nova}" class="waves-effect waves-block">
                                     <span>REGISTRAR</span>
                                 </a>
@@ -97,7 +98,7 @@
                         </a>
                     </li> -->
                     <li class="header">CONSULTAS</li>
-                    <li>
+                    <li sec:authorize-url="/alunos/pesquisa">
                         <a th:href="@{/alunos/pesquisa}">
                             <i class="material-icons">search</i>
                             <span>ALUNOS</span>

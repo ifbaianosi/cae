@@ -36,7 +36,7 @@ public class JPAConfig {
 	public JpaVendorAdapter jpaVendorAdapter() {
 		HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
 		adapter.setDatabase(Database.MYSQL);
-		adapter.setShowSql(false);
+		adapter.setShowSql(true);
 		adapter.setGenerateDdl(false); // quem irá gerar as tabelas será o Flyway
 		adapter.setDatabasePlatform("org.hibernate.dialect.MySQLDialect");
 		return adapter;
