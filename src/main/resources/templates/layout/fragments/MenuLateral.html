@@ -41,13 +41,7 @@
                             <span>INICIO</span>
                         </a>
                     </li>
-                    <!-- <li>
-                        <a th:href="@{/alunos}">
-                            <i class="material-icons">school</i>
-                            <span>Alunos</span>
-                        </a>
-                    </li> -->
-                    <li>
+                    <li sec:authorize="hasRole('ROLE_MENU_ALUNOS')">
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
                             <i class="material-icons">school</i>
                             <span>ALUNO</span>
@@ -71,8 +65,8 @@
                             <span>USUARIOS</span>
                         </a>
                     </li>
-                    <li class="header">REGISTROS</li>
-                    <li>
+                    <li sec:authorize="hasRole('ROLE_MENU_REGISTROS')"  class="header">REGISTROS</li>
+                    <li  sec:authorize="hasRole('ROLE_MENU_REGISTROS')" >
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
                             <i class="material-icons">notifications</i>
                             <span>OCORRENCIA</span>
@@ -90,13 +84,6 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- <li class="header">ATENDIMENTOS</li>
-                    <li>
-                        <a href="#">
-                            <i class="material-icons">favorite</i>
-                            <span>Enfermaria</span>
-                        </a>
-                    </li> -->
                     <li class="header">CONSULTAS</li>
                     <li sec:authorize-url="/alunos/pesquisa">
                         <a th:href="@{/alunos/pesquisa}">

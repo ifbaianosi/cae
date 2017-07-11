@@ -104,4 +104,8 @@ public class Usuario extends Entidade {
 		this.confirmacaoSenha = confirmacaoSenha;
 	}
 	
+	public String getPrimeiroNomeEmail(){
+		return email.substring(0, email.indexOf("@")).trim();
+	}
+	
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import br.edu.ifbaiano.csi.ngti.cae.model.Encaminhamento;
 import br.edu.ifbaiano.csi.ngti.cae.model.Regime;
 import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
+import br.edu.ifbaiano.csi.ngti.cae.model.Usuario;
 
 public class OcorrenciaDTO {
 
@@ -17,6 +18,7 @@ public class OcorrenciaDTO {
 	private String descricao;
 	private String serie;
 	private String regime;
+	private Usuario usuario;
 	private List<Encaminhamento> encaminhamentos;
 	
 	private DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -94,6 +96,4 @@ public class OcorrenciaDTO {
 	public void setEncaminhamentos(List<Encaminhamento> encaminhamentos) {
 		this.encaminhamentos = encaminhamentos;
 	}
-	
-	
 }

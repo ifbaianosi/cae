@@ -11,6 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,6 +31,7 @@ import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Alunos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Ocorrencias;
 import br.edu.ifbaiano.csi.ngti.cae.repository.filter.OcorrenciaFilter;
+import br.edu.ifbaiano.csi.ngti.cae.security.UsuarioSistema;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroOcorrenciaService;
 
 @Controller
@@ -85,10 +87,12 @@ public class OcorrenciasController {
 	}
 	
 	@PostMapping(value={ "/nova", "{\\d+}" })
-	public ModelAndView salvar(@Valid Ocorrencia ocorrencia, BindingResult result, RedirectAttributes attributs){
+	public ModelAndView salvar(@Valid Ocorrencia ocorrencia, BindingResult result, @AuthenticationPrincipal UsuarioSistema usuarioSistema, RedirectAttributes attributs){
 		
-		if(result.hasErrors())
-			return nova(ocorrencia);
+		ocorrencia.setUsuario(usuarioSistema.getUsuario());
+		
+		if(result.hasErrors()){
+			System.out.println("erro no bean ocorrencia!!!");return nova(ocorrencia);}
 		
 		cadastroOcorrenciaService.salvar(ocorrencia);
 			

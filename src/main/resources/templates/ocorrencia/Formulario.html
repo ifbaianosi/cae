@@ -151,6 +151,30 @@
                                         <h2 class="card-inside-title col-teal">FORMULARIO DE REGISTRO DE OCORRENCIA</h2>
                                     </div>
                                 </div>
+                                <div class="row" th:if="${ocorrencia.novo} == false">
+		                            <div class="col-xs-12 col-sm-6 col-md-4">
+                                       <label for="autor">Registrado por</label>
+                                       <div class="input-group">
+                                           <span class="input-group-addon">
+                                               <i class="material-icons">people</i>
+                                           </span>
+                                           <div class="form-line">
+                                               <span class="js-autor" th:text="${ocorrencia.usuario.primeiroNomeEmail}"></span>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="col-xs-12 col-sm-6 col-md-4">
+                                       <label for="autor">Data do registro</label>
+                                       <div class="input-group">
+                                           <span class="input-group-addon">
+                                               <i class="material-icons">date_range</i>
+                                           </span>
+                                           <div class="form-line">
+                                               <span class="js-dataRegistro" th:text="${ocorrencia.dataRegistroFormatada}"></span>
+                                           </div>
+                                       </div>
+                                   </div>
+                                </div>
 		                        <div class="row">
 		                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 		                                <label for="dataOcorrido">Data Ocorrencia</label>

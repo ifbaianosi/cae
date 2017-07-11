@@ -35,7 +35,7 @@ NGTICAE.SalvarOcorrencia = function(){
 		validarFormulario();
 		
 		$.ajax({
-			url: this.novaOcorrenciaBtn.data('url') + '/salvar',
+			url: $('#url_nova_ocorrencia').data('url') + '/salvar',
 			method: 'POST',
 			data: {
 				codigo: $('#codigo').val(),
@@ -178,7 +178,7 @@ NGTICAE.EditarOcorrencia = function(){
 			
 			//recuperar o model ocorrencia via AJAX
 			$.ajax({
-				url: $('.js-nova-ocorrencia').data('url') + '/ver/' + codigoocorrencia,
+				url: $('#url_nova_ocorrencia').data('url') + '/ver/' + codigoocorrencia,
 				method: 'GET',
 				success: onObjetoRetornado.bind(this),
 				error: function(){ console.log('Ops! Algo de muito estranho aconteceu e não foi possivel recuperar o recurso solicitado.') }
@@ -303,7 +303,7 @@ NGTICAE.Formulario = {
 			
 			//monstrar container do formulario de ocorrencias
 			var resposta = $.ajax({
-				url: $('.js-nova-ocorrencia').data('url-alunos') + '/por-matricula',
+				url: $('#url_nova_ocorrencia').data('url-alunos') + '/por-matricula',
 				method: 'GET',
 				contentType: 'application/json',
 				data: {
@@ -355,7 +355,7 @@ NGTICAE.AtualizarQuantidadeOcorrencias = {
     	var inputQuantidade = $('.js-quantidade-ocorrencias');
     	
     	$.ajax({
-    		url: $('.js-nova-ocorrencia').data('url') + '/quantidade/' + $('#codigo_aluno').val(),
+    		url: $('#url_nova_ocorrencia').data('url') + '/quantidade/' + $('#codigo_aluno').val(),
     		method: 'GET',
     		success: function(quantidade){ inputQuantidade.text(quantidade) }
     	});
@@ -370,7 +370,7 @@ NGTICAE.Tabela = {
 		atualizar: function(){
 			console.log('Atualizando tabela...');
 			$.ajax({
-				url: $('.js-nova-ocorrencia').data('url') + '/aluno/' + $('#codigo_aluno').val(),
+				url: $('#url_nova_ocorrencia').data('url') + '/aluno/' + $('#codigo_aluno').val(),
 				method: 'GET',
 				success: this.atualizarTabela
 			});

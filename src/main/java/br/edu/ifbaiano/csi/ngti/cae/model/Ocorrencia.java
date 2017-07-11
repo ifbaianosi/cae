@@ -47,6 +47,10 @@ public class Ocorrencia extends Entidade{
 	@JoinColumn(name="codigo_aluno")
 	private Aluno aluno;
 	
+	@ManyToOne
+	@JoinColumn(name="codigo_usuario")
+	private Usuario usuario;
+	
 	private String serie;
 	
 	private String regime;
@@ -130,7 +134,15 @@ public class Ocorrencia extends Entidade{
 	public void setRegime(String regime) {
 		this.regime = regime;
 	}
-	
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 
 	@Transient
 	private DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");

@@ -92,6 +92,7 @@
                                         <th>DATA</th>
                                         <th>ALUNO</th>
                                         <th>LOCAL</th>
+                                        <th>AUTOR</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -100,6 +101,7 @@
                                         <th scope="row" th:text="${ocorrencia.dataOcorridoFormatada}">1</th>
                                         <td th:text="${ocorrencia.aluno.nome}">Otto</td>
                                         <td th:text="${ocorrencia.local}">Otto</td>
+                                        <td th:text="${ocorrencia.usuario.primeiroNomeEmail}">Otto</td>
                                         <td class="text-right">
                                         	<a th:href="@{/ocorrencias/{codigo}(codigo=${ocorrencia.codigo})}" class="col-red"><i class="material-icons">edit</i> Editar</a>
          									<a href="#" class="col-teal"><i class="material-icons">call_made</i> Encaminhamento</a>

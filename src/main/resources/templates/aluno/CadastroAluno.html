@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="'layout/LayoutPadrao'">
+	layout:decorator="'layout/LayoutPadrao'"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
     <title>Cadastrar aluno</title>
@@ -360,7 +361,7 @@
                                         </div>
                                     </div>
                                </div>
-                                <button type="submit" class="btn bg-teal m-t-15 waves-effect  js-submit">SALVAR</button>
+                                <button sec:authorize="hasRole('ROLE_SALVAR_OCORRENCIA')" type="submit" class="btn bg-teal m-t-15 waves-effect  js-submit">SALVAR</button>
                         		<input type="hidden" id="uuid" th:value="${uuid}" name="uuid">
                             </form>
                         </div>

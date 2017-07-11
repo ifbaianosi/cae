@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="'layout/LayoutPadrao'">
+	layout:decorator="'layout/LayoutPadrao'"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
     <title>Cadastrar aluno</title>
@@ -124,8 +125,9 @@
 										                </div>
 										            </div> -->
 			                                    	<div class="row">
-			                                    		<div class="col-md-12">
-				                                    		<button type="button" class="btn btn-sm bg-teal waves-effect  js-nova-ocorrencia" th:data-url="@{/ocorrencias}" th:disabled="${aluno.status != status.FREQUENTANDO}" th:data-url-alunos="@{/alunos}">NOVA</button>
+			                                    		<input type="hidden" id="url_nova_ocorrencia" th:data-url="@{/ocorrencias}" th:data-url-alunos="@{/alunos}"/>
+			                                    		<div sec:authorize-url="/ocorrencias/nova" class="col-md-12">
+				                                    		<button type="button" class="btn btn-sm bg-teal waves-effect  js-nova-ocorrencia" th:disabled="${aluno.status != status.FREQUENTANDO}">NOVA</button>
 					                                    	<button type="button" class="btn btn-sm bg-teal waves-effect  js-editar-ocorrencia" disabled="disabled">EDITAR</button>
 					                                    	<button type="button" class="btn btn-sm bg-teal waves-effect  js-excluir-ocorrencias" disabled="disabled" th:data-url="@{/ocorrencias}">EXCLUIR</button>
 					                                    	<button type="button" class="btn btn-sm bg-deep-orange waves-effect  js-cancelar-ocorrencias hide">CANCELAR</button>
