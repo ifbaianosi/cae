@@ -30,6 +30,7 @@ import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Alunos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Ocorrencias;
+import br.edu.ifbaiano.csi.ngti.cae.repository.Usuarios;
 import br.edu.ifbaiano.csi.ngti.cae.repository.filter.OcorrenciaFilter;
 import br.edu.ifbaiano.csi.ngti.cae.security.UsuarioSistema;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroOcorrenciaService;
@@ -47,12 +48,16 @@ public class OcorrenciasController {
 	@Autowired
 	private Ocorrencias ocorrencias;
 	
+	@Autowired
+	private Usuarios usuarios;
+	
 	@GetMapping
 	public ModelAndView pesquisar(OcorrenciaFilter ocorrenciaFilter, @PageableDefault(size=10) Pageable pageable, HttpServletRequest httpServletRequest){
 		ModelAndView mv = new ModelAndView("ocorrencia/PesquisaOcorrencias");
 		
 		PageWrapper<Ocorrencia> paginaWrapper = new PageWrapper<>(ocorrencias.filtrar(ocorrenciaFilter, pageable), httpServletRequest);
 		mv.addObject("pagina", paginaWrapper);
+		mv.addObject("usuarios", usuarios.findByAtivoTrue());
 		
 		return mv;
 	}

@@ -74,6 +74,15 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                    	<label for="usuario">Autor</label>
+                                        <div class="form-group">
+		                                    <select class="form-control show-tick" data-live-search="true" data-size="5" data-container="body" th:field="*{usuario}">
+		                                    	<option value="">todos...</option>
+											    <option th:each="usuario : ${usuarios}" th:value="${usuario.codigo}" th:text="${usuario.primeiroNomeEmail}">glauber.matos</option>
+											</select>                                           
+	                                    </div>
+                                    </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary waves-effect  js-submit">PESQUISAR</button>
                                 <a th:href="@{/ocorrencias}" class="btn btn-default waves-effect">LIMPAR</a>

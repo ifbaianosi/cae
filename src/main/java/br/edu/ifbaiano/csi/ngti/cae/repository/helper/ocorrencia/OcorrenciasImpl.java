@@ -120,6 +120,10 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 			//FILTRO ALUNO
 			if(filtro.getAluno() != null && filtro.getAluno().getCodigo() != null)
 				criteria.add(Restrictions.eq("aluno", filtro.getAluno()));
+			
+			//FILTRO USUARIO
+			if(filtro.getUsuario() != null && filtro.getUsuario().getCodigo() != null)
+				criteria.add(Restrictions.eq("usuario", filtro.getUsuario()));
 		}
 	}
 

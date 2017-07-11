@@ -3,6 +3,7 @@ package br.edu.ifbaiano.csi.ngti.cae.repository.filter;
 import java.time.LocalDate;
 
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
+import br.edu.ifbaiano.csi.ngti.cae.model.Usuario;
 
 public class OcorrenciaFilter {
 
@@ -10,6 +11,7 @@ public class OcorrenciaFilter {
 	private LocalDate dataOcorridoAte;
 	private String local;
 	private Aluno aluno;
+	private Usuario usuario;
 	
 	public LocalDate getDataOcorrido() {
 		return dataOcorrido;
@@ -34,6 +36,12 @@ public class OcorrenciaFilter {
 	}
 	public void setAluno(Aluno aluno) {
 		this.aluno = aluno;
+	}
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
 }
