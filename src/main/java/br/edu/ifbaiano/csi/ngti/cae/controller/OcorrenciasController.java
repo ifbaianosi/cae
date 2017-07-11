@@ -28,10 +28,12 @@ import br.edu.ifbaiano.csi.ngti.cae.controller.page.PageWrapper;
 import br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO;
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
+import br.edu.ifbaiano.csi.ngti.cae.model.TipoEncaminhamento;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Alunos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Ocorrencias;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Usuarios;
 import br.edu.ifbaiano.csi.ngti.cae.repository.filter.OcorrenciaFilter;
+import br.edu.ifbaiano.csi.ngti.cae.repository.helper.ocorrencia.OcorrenciasQueries;
 import br.edu.ifbaiano.csi.ngti.cae.security.UsuarioSistema;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroOcorrenciaService;
 
@@ -56,8 +58,15 @@ public class OcorrenciasController {
 		ModelAndView mv = new ModelAndView("ocorrencia/PesquisaOcorrencias");
 		
 		PageWrapper<Ocorrencia> paginaWrapper = new PageWrapper<>(ocorrencias.filtrar(ocorrenciaFilter, pageable), httpServletRequest);
+		
+		/*List<Ocorrencia> ocorrenciasList = paginaWrapper.getConteudo();
+		System.err.println("encaminhamentos da ocorrencia 0: "+ocorrenciasList.get(0).getEncaminhamentos().get(0).getDescricao());
+		
+		System.out.println("buscarComEncaminhamentos: "+ocorrencias.buscarComEncaminhamentos(new Aluno()).get(0).getEncaminhamentos().get(0).getDescricao());*/
+		
 		mv.addObject("pagina", paginaWrapper);
 		mv.addObject("usuarios", usuarios.findByAtivoTrue());
+		mv.addObject("tipoEncaminhamento", TipoEncaminhamento.values());
 		
 		return mv;
 	}

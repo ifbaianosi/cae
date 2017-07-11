@@ -369,11 +369,17 @@ NGTICAE.AtualizarQuantidadeOcorrencias = {
 NGTICAE.Tabela = {
 		atualizar: function(){
 			console.log('Atualizando tabela...');
-			$.ajax({
-				url: $('#url_nova_ocorrencia').data('url') + '/aluno/' + $('#codigo_aluno').val(),
-				method: 'GET',
-				success: this.atualizarTabela
-			});
+			
+			if (window.location.search.indexOf('ocorrencias') > -1) {
+				window.location.reload(true);
+			}else{
+				$.ajax({
+					url: $('#url_nova_ocorrencia').data('url') + '/aluno/' + $('#codigo_aluno').val(),
+					method: 'GET',
+					success: this.atualizarTabela
+				});
+			}
+			
 		},
 		atualizarTabela: function(ocorrencias){
 			var containerOcorrencias = $('.js-container-ocorrencias');

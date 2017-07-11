@@ -94,6 +94,7 @@
             <div class="card">
                 <div class="body">
                 	<div class="row">
+                		<input type="hidden" id="url_nova_ocorrencia" th:data-url="@{/ocorrencias}" th:data-url-alunos="@{/alunos}"/>
                   		<div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
@@ -102,7 +103,8 @@
                                         <th>ALUNO</th>
                                         <th>LOCAL</th>
                                         <th>AUTOR</th>
-                                        <th></th>
+                                        <th>ENCAMINHAMENTO</th>
+                                        <th class="text-right">AÇOES</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -111,9 +113,16 @@
                                         <td th:text="${ocorrencia.aluno.nome}">Otto</td>
                                         <td th:text="${ocorrencia.local}">Otto</td>
                                         <td th:text="${ocorrencia.usuario.primeiroNomeEmail}">Otto</td>
+                                        <td>
+                                        	<th:block th:if="${ocorrencia.encaminhamentos.size()} > 0" th:each="encaminhamento : ${ocorrencia.encaminhamentos}">
+                                        		<a href="#" class="col-teal" role="button" tabindex="0" data-placement="top" data-toggle="popover" th:title="${encaminhamento.tipoEncaminhamento.descricao}" th:data-content="${encaminhamento.descricao}"><i class="material-icons btn-icon">call_made</i><span th:text="${encaminhamento.tipoEncaminhamento.descricao}" class="text-uppercase">ADVERTENCIA VERBAL</span></a>
+											</th:block>
+											<th:block th:unless="${ocorrencia.encaminhamentos.size()} > 0">
+       											<a href="#" class="col-teal js-encaminhar-ocorrencia" th:data-codigo="${ocorrencia.codigo}"><i class="material-icons btn-icon">call_made</i>Encaminhamento</a>
+											</th:block>
+										</td>
                                         <td class="text-right">
                                         	<a th:href="@{/ocorrencias/{codigo}(codigo=${ocorrencia.codigo})}" class="col-red"><i class="material-icons">edit</i> Editar</a>
-         									<a href="#" class="col-teal"><i class="material-icons">call_made</i> Encaminhamento</a>
                                         </td>
                                     </tr>
                                     <tr th:if="${pagina.vazia}">
@@ -182,18 +191,116 @@
                     </div>
            </div>
        </div>
+       <div class="modal fade  js-modal-encaminhamento" id="modalEncaminhamento" tabindex="-1" role="dialog">
+           <div class="modal-dialog modal-lg" role="document">
+               <div class="card">
+                        <div class="header">
+                            <h2>
+                                FORMULARIO DE ENCAMINHAMENTO
+                            </h2>
+                       		<a href="javascript:void(0);" class="header-dropdown m-r--5" data-dismiss="modal"><i class="material-icons">clear</i></a>
+                        </div>
+                        <div class="body">
+                        	<div id="preloader" class="row hide">
+                        		<div class="col-xs-12">
+		                        	<div class="preloader pl-size-xs">
+		                                <div class="spinner-layer pl-teal">
+		                                    <div class="circle-clipper left">
+		                                        <div class="circle"></div>
+		                                    </div>
+		                                    <div class="circle-clipper right">
+		                                        <div class="circle"></div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                         </div>
+			                 </div>
+			                 <div class="hide js-card-ocorrencia"><!--  style="background-color:#e9e9e9;" -->
+		                        <!-- <div class="body"> -->
+		                        	<fieldset class="hide js-card-ocorrencia">
+		                        		<legend>DADOS DA OCORRENCIA</legend><!-- <span class="js-nome-aluno"></span> -->
+			                            <dl class="horizontal">
+			                              <dt>ALUNO</dt>
+										  <dd class="js-nome-aluno">Nome do aluno</dd>
+										  <dt>DATA</dt>
+										  <dd class="js-data-ocorrencia">15/04/2017</dd>
+										  <dt>LOCAL</dt>
+										  <dd class="js-local-ocorrencia">Pavilhao administrativo</dd>
+										  <dt>DESCRICAO</dt>
+										  <dd class="js-descricao-ocorrencia">é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado.</dd>
+										</dl>
+		                        	</fieldset>
+		                        <!-- </div> -->
+		                    </div>
+		                    <fieldset class="hide js-card-formulario-encaminhamento">
+		                    	<legend>TIPO DO ENCAMINHAMENTO</legend>
+	                        	<form id="">
+	                        		<input id="ocorrencia" type="hidden" name="ocorrencia">
+	                        		<div class="row">
+		                        		<div class="col-xs-12 col-sm-6 col-md-4">
+	                                        <!-- <label for="tipoEncaminhamento">Tipo do encaminhamento</label> -->
+	                                        <div class="form-group">
+	                                        	<select id="tipoEncaminhamento" class="form-control show-tick">
+		                                        	<option value="">selecione...</option>
+		                                            <option th:each="tipo : ${tipoEncaminhamento}" th:value="${tipo}" th:text="${tipo.descricao}">SUSPENSAO</option>
+		                                        </select>                                           
+	                                        </div>
+	                                    </div>
+	                               </div>
+	                               <div class="row">
+		                                <div class="col-xs-12">
+		                                    <div class="form-group">
+		                                        <div class="form-line">
+		                                            <textarea rows="4" class="form-control no-resize  js-encaminhamento-descricao" placeholder="Digite aqui a descricao da medida disciplinar ao aluno..."></textarea>
+		                                        </div>
+		                                    </div>
+		                                </div>
+	                        		</div>
+	                        		<div class="row">
+	                        			<div class="col-xs-12">
+	                        				<button type="submit" class="btn waves-effect bg-teal  js-salvar-encaminhamento" th:data-url="@{/encaminhamento}">SALVAR</button>
+	                        				<div class="preloader pl-size-xs pull-right hide">
+			                                    <div class="spinner-layer pl-teal">
+			                                        <div class="circle-clipper left">
+			                                            <div class="circle"></div>
+			                                        </div>
+			                                        <div class="circle-clipper right">
+			                                            <div class="circle"></div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+	                        			</div>
+	                        		</div>
+			                	</form>
+		                    </fieldset>
+                        </div>
+                    </div>
+           </div>
+       </div>
     </section>
 
    <th:block layout:fragment="javascript-extra">
    <!-- Moment Plugin Js -->
 	    <script th:src="@{/layout/plugins/momentjs/moment.js}"></script>
+	    <!-- notificações -->
+   		<script th:src="@{/javascript/vendors/plugins/alertify/alertify.js}"></script>
+   		<script th:src="@{/javascript/vendors/plugins/bootstrap-notify/bootstrap-notify.min.js}"></script>
 	
 	    <!-- Bootstrap Material Datetime Picker Plugin Js -->
 	    <script th:src="@{/layout/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js}"></script>
 	    <script th:src="@{/javascript/componente-material-date-time-picker.js}"></script>
 	    
    		<script th:src="@{/javascript/vendors/plugins/handlebars/handlebars-v4.0.10.js}"></script>
+   		<script th:src="@{/javascript/notificacoes-push.js}"></script>
+   		<script th:src="@{/javascript/atualizar-tabela-ocorrencias.js}"></script>
 	    <script th:src="@{/javascript/aluno.pesquisa-rapida.js}"></script>
+   		<script th:src="@{/javascript/detalhe-aluno.gerenciar-encaminhamento.js}"></script>
+	    
+	    <script>
+	    	$(function () {
+	    	  $('[data-toggle="popover"]').popover()
+	    	});
+	    </script>
 	    
    		<th:block th:replace="handlebars/TabelaPesquisaAlunoTemplate"></th:block>
    </th:block>

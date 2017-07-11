@@ -27,7 +27,7 @@ NGTICAE.Modal = {
 			
 			//recuperar o model ocorrencia via AJAX
 			$.ajax({
-				url: $('.js-nova-ocorrencia').data('url') + '/ver/' + NGTICAE.Modal.ocorrencia,
+				url: $('#url_nova_ocorrencia').data('url') + '/ver/' + NGTICAE.Modal.ocorrencia,
 				method: 'GET',
 				success: function(ocorrencia){
 					console.log('sucesso!', ocorrencia);
@@ -158,5 +158,7 @@ $(function(){
 	
 	var encaminhamento = new NGTICAE.Encaminhamento();
 	encaminhamento.iniciar();
+	
+	NGTICAE.Modal.iniciar();
 	
 });

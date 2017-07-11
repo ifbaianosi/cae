@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -55,8 +56,8 @@ public class Ocorrencia extends Entidade{
 	
 	private String regime;
 	
-	@OneToMany(mappedBy = "ocorrencia", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Encaminhamento> encaminhamentos = new ArrayList<>();
+	@OneToMany(mappedBy = "ocorrencia", cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.EAGER)
+	private List<Encaminhamento> encaminhamentos;
 
 	@PrePersist
 	public void prePersist(){
