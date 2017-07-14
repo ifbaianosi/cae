@@ -1,5 +1,6 @@
 package br.edu.ifbaiano.csi.ngti.cae.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -33,7 +32,6 @@ import br.edu.ifbaiano.csi.ngti.cae.repository.Alunos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Ocorrencias;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Usuarios;
 import br.edu.ifbaiano.csi.ngti.cae.repository.filter.OcorrenciaFilter;
-import br.edu.ifbaiano.csi.ngti.cae.repository.helper.ocorrencia.OcorrenciasQueries;
 import br.edu.ifbaiano.csi.ngti.cae.security.UsuarioSistema;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroOcorrenciaService;
 
@@ -54,15 +52,10 @@ public class OcorrenciasController {
 	private Usuarios usuarios;
 	
 	@GetMapping
-	public ModelAndView pesquisar(OcorrenciaFilter ocorrenciaFilter, @PageableDefault(size=10) Pageable pageable, HttpServletRequest httpServletRequest){
+	public ModelAndView pesquisar(OcorrenciaFilter ocorrenciaFilter, @PageableDefault(size=10) Pageable pageable, HttpServletRequest httpServletRequest, @AuthenticationPrincipal UsuarioSistema usuarioSistema){
 		ModelAndView mv = new ModelAndView("ocorrencia/PesquisaOcorrencias");
 		
 		PageWrapper<Ocorrencia> paginaWrapper = new PageWrapper<>(ocorrencias.filtrar(ocorrenciaFilter, pageable), httpServletRequest);
-		
-		/*List<Ocorrencia> ocorrenciasList = paginaWrapper.getConteudo();
-		System.err.println("encaminhamentos da ocorrencia 0: "+ocorrenciasList.get(0).getEncaminhamentos().get(0).getDescricao());
-		
-		System.out.println("buscarComEncaminhamentos: "+ocorrencias.buscarComEncaminhamentos(new Aluno()).get(0).getEncaminhamentos().get(0).getDescricao());*/
 		
 		mv.addObject("pagina", paginaWrapper);
 		mv.addObject("usuarios", usuarios.findByAtivoTrue());
@@ -91,7 +84,10 @@ public class OcorrenciasController {
 	}
 	
 	@PostMapping(value="/salvar")
-	public ResponseEntity<?> salvarViaAjax(@Valid Ocorrencia ocorrencia, BindingResult result){
+	public ResponseEntity<?> salvarViaAjax(@Valid Ocorrencia ocorrencia, BindingResult result, @AuthenticationPrincipal UsuarioSistema usuarioSistema){
+		
+		ocorrencia.setUsuario(usuarioSistema.getUsuario());
+		
 		if(result.hasErrors()){
 			return ResponseEntity.badRequest().build();
 		}
@@ -117,7 +113,15 @@ public class OcorrenciasController {
 	
 	@GetMapping(value="/aluno/{codigoaluno}")
 	public @ResponseBody List<OcorrenciaDTO> getOcorencias(@PathVariable("codigoaluno") Aluno aluno){
-		return ocorrencias.porAluno(aluno);
+		List<OcorrenciaDTO> ocorrenciasDTO = new ArrayList<>();
+			List<Ocorrencia> ocorrenciasComEncaminhamentos = ocorrencias.buscarComEncaminhamentos(aluno);
+			
+			for(Ocorrencia o : ocorrenciasComEncaminhamentos){
+				ocorrenciasDTO.add(new OcorrenciaDTO(o));
+			}
+			
+		return ocorrenciasDTO;
+		/*return ocorrencias.porAluno(aluno);*/
 	}
 	
 	@GetMapping(value="/quantidade/{codigoaluno}")
@@ -145,6 +149,7 @@ public class OcorrenciasController {
 	@GetMapping("/{codigo}")
 	public ModelAndView editar(@PathVariable("codigo") Ocorrencia ocorrencia){
 		System.out.println("codigo da ocorrencia: "+ ocorrencia.getCodigo());
+		ocorrencia = ocorrencias.buscarComEncaminhamentosPorCodigo(ocorrencia.getCodigo());
 		return nova(ocorrencia);
 	}
 }

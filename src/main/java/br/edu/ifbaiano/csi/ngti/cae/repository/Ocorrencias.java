@@ -16,4 +16,5 @@ public interface Ocorrencias extends JpaRepository<Ocorrencia, Long>, Ocorrencia
 
 	public List<Ocorrencia> findByAlunoOrderByDataRegistroDesc(Aluno aluno);
 	public Long countByAluno(Aluno aluno);
+	public List<Ocorrencia> findByAluno(Aluno aluno);
 }

@@ -1,27 +1,34 @@
 package br.edu.ifbaiano.csi.ngti.cae.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.edu.ifbaiano.csi.ngti.cae.validation.AtributoConfirmacao;
 
 @AtributoConfirmacao(atributo = "senha", atributoConfirmacao = "confirmacaoSenha", message = "Confirmação da senha não confere")
 @Entity
 @Table(name="usuario")
+@DynamicUpdate
 public class Usuario extends Entidade {
 
 	private static final long serialVersionUID = -1704912817129220803L;
@@ -41,24 +48,30 @@ public class Usuario extends Entidade {
 	@Transient
 	private String confirmacaoSenha;
 	
+	@Transient
+	private UsuarioStatus status;
+	
 	private Boolean ativo;
 	
 	/*@NotNull(message="Data nascimento é obrigatório")*/
 	@Column(name="data_nascimento")
 	private LocalDate dataNascimento;
 	
-	/**
-	 * GRUPO PODE SER ALTERADO NA VIEW PARA PERFIL
-	 */
 	@Size(min=1, message="Selecione pelo menos um perfil")
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	@JoinTable(name="usuario_grupo", joinColumns = @JoinColumn(name="codigo_usuario")
 								   , inverseJoinColumns = @JoinColumn(name="codigo_grupo"))
+	@JsonIgnoreProperties
 	private List<Grupo> grupos;
 	
 	@PrePersist
 	public void prePersist(){
 		this.ativo = true;
+	}
+	
+	@PreUpdate
+	private void preUpdate() {
+		this.confirmacaoSenha = senha;
 	}
 
 	public String getNome() {
@@ -106,6 +119,15 @@ public class Usuario extends Entidade {
 	
 	public String getPrimeiroNomeEmail(){
 		return email.substring(0, email.indexOf("@")).trim();
+	}
+
+	public String getDataNascimentoFormatada() {
+		DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return dataNascimento!=null ? dataNascimento.format(formater) : "";
+	}
+	
+	public UsuarioStatus getAtivoOuInativo(){
+		return ativo == true ? UsuarioStatus.Ativo : UsuarioStatus.Inativo;
 	}
 	
 }

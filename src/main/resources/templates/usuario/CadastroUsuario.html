@@ -25,12 +25,13 @@
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
                         <div class="col-md-12">
-                            <form class="js-formulario" th:object="${usuario}" th:action="${usuario.novo} ? @{/usuarios/novo} : @{/usuarios/{codigo}(codigo=${usuario.codigo})}" method="POST">
+                            <form class="js-formulario" th:object="${usuario}" 
+                            	th:action="${usuario.novo} ? @{/usuarios/novo} : @{/usuarios/{codigo}(codigo=${usuario.codigo})}" method="POST">
                             	<input type="hidden" th:field="*{codigo}">
                             	
                             	
                             	<!-- MENSAGEM SUCESSO -->
-								<div class="alert bg-light-blue alert-dismissible fade in" role="alert" th:if="${not #strings.isEmpty(mensagemSucesso)}" th:fragment="alert">
+								<div class="alert bg-teal alert-dismissible fade in" role="alert" th:if="${not #strings.isEmpty(mensagemSucesso)}" th:fragment="alert">
 	                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="material-icons">clear</i></button>
 	                                <span th:text="${mensagemSucesso}"></span>
 	                            </div>
@@ -102,7 +103,7 @@
                                                 <th:block th:each="grupo : ${grupos}">
 		                                        	<div class="checkbox-inline"> 
 								    					<input type="checkbox" th:value="${grupo.codigo}" class="chk-col-teal" th:field="*{grupos}">
-		                                            	<label th:for="${#ids.prev('grupos')}" th:text="${grupo.nome}">CAE</label>
+		                                            	<label class="text-uppercase" th:for="${#ids.prev('grupos')}" th:text="${grupo.nome}">CAE</label>
 							    					</div>
 	                                        	</th:block>
                                             </div>

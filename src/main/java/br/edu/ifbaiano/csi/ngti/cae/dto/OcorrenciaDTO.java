@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import br.edu.ifbaiano.csi.ngti.cae.model.Encaminhamento;
+import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
 import br.edu.ifbaiano.csi.ngti.cae.model.Regime;
 import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
 import br.edu.ifbaiano.csi.ngti.cae.model.Usuario;
@@ -18,10 +19,24 @@ public class OcorrenciaDTO {
 	private String descricao;
 	private String serie;
 	private String regime;
-	private Usuario usuario;
-	private List<Encaminhamento> encaminhamentos;
+	private String usuario;
+	private String tipoEncaminhamento;
+	private String descricaoEncaminhamento;
 	
 	private DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+	
+	public OcorrenciaDTO(Ocorrencia ocorrencia) {
+		this.codigo = ocorrencia.getCodigo();
+		this.dataRegistro = ocorrencia.getDataRegistro().format(formatador);
+		this.dataOcorrido = ocorrencia.getDataOcorrido().format(formatador);
+		this.local = ocorrencia.getLocal();
+		this.descricao = ocorrencia.getDescricao();
+		this.serie = ocorrencia.getSerie();
+		this.regime = ocorrencia.getRegime();
+		this.usuario = ocorrencia.getUsuario().getPrimeiroNomeEmail();
+		this.tipoEncaminhamento = ocorrencia.getEncaminhamentos().size() > 0 ? ocorrencia.getEncaminhamentos().get(0).getTipoEncaminhamento().getDescricao() : "";
+		this.descricaoEncaminhamento = ocorrencia.getEncaminhamentos().size() > 0 ? ocorrencia.getEncaminhamentos().get(0).getDescricao() : "";
+	}
 	
 	public OcorrenciaDTO(Long codigo, LocalDateTime dataRegistro, LocalDateTime dataOcorrido, String local, String descricao, String serie, String regime) {
 		this.codigo = codigo;
@@ -89,11 +104,28 @@ public class OcorrenciaDTO {
 		this.regime = regime;
 	}
 
-	public List<Encaminhamento> getEncaminhamentos() {
-		return encaminhamentos;
+	public String getUsuario() {
+		return usuario;
 	}
 
-	public void setEncaminhamentos(List<Encaminhamento> encaminhamentos) {
-		this.encaminhamentos = encaminhamentos;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
+
+	public String getTipoEncaminhamento() {
+		return tipoEncaminhamento;
+	}
+
+	public void setTipoEncaminhamento(String tipoEncaminhamento) {
+		this.tipoEncaminhamento = tipoEncaminhamento;
+	}
+
+	public String getDescricaoEncaminhamento() {
+		return descricaoEncaminhamento;
+	}
+
+	public void setDescricaoEncaminhamento(String descricaoEncaminhamento) {
+		this.descricaoEncaminhamento = descricaoEncaminhamento;
+	}
+
 }

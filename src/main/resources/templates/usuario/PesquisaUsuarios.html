@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/LayoutPadrao'">
+
+<head>
+    <title>Pesquisar usuarios</title>
+</head>
+
+<body>
+	
+    <section class="content" layout:fragment="conteudo">
+        <div class="container-fluid">
+            <div class="block-header">
+                <h2>PESQUISAR USUARIOS</h2>
+            </div>
+            <div class="card">
+                <div class="header">
+                    <a th:href="@{/usuarios/novo}" type="button" class="btn bg-teal waves-effect">NOVO<span> USUARIO</span></a>
+                </div>
+                <div class="body"> <!--  card-padding-->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="js-formulario" th:action="@{/usuarios}" method="GET" th:object="${usuarioFilter}">
+                                <div class="row">
+                                	<div class="col-xs-12  col-sm-6 col-md-3">
+                                        <label for="nome">Nome</label>
+                                        <div class="form-group">
+                                            <div class="form-line" th:classappend="${#fields.hasErrors('nome')} ? 'focused error'">
+                                                <input type="text" id="nome" class="form-control" placeholder="" th:field="*{nome}">
+                                            </div>                                            
+                                            <label th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="error" for="nome"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                        <label for="email">E-mail</label>
+                                        <div class="form-group">
+                                            <div class="form-line" th:classappend="${#fields.hasErrors('email')} ? 'focused error'">
+                                                <input type="text" id="email" class="form-control" placeholder="" th:field="*{email}">
+                                            </div>
+                                            <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" id="email-error" class="error" for="email"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                        <label for="dataNascimento">Data Nascimento</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">date_range</i>
+                                            </span>
+                                            <div class="form-line" th:classappend="${#fields.hasErrors('dataNascimento')} ? 'focused error'">
+                                                <input type="text" class="form-control js-date" readonly="readonly" placeholder="" th:field="*{dataNascimento}">
+                                            </div>
+                                            <label th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}" class="error" for="dataNascimento"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary waves-effect  js-submit">PESQUISAR</button>
+                                <a th:href="@{/usuarios}" class="btn btn-default waves-effect">LIMPAR</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="body">
+                	<div class="row">
+                		<div class="col-md-12">
+                    		<button type="button" class="btn btn-xs bg-teal waves-effect js-status-btn disabled" th:data-status="ATIVAR" th:data-url="@{/usuarios/status}">ATIVAR</button>
+                    		<button type="button" class="btn btn-xs bg-teal waves-effect js-status-btn disabled" th:data-status="DESATIVAR" th:data-url="@{/usuarios/status}">DESATIVAR</button>
+                   		</div>
+                   		<div class="col-md-12">
+	                  		<div class="table-responsive">
+	                            <table class="table table-hover">
+	                                <thead>
+	                                    <tr>
+	                                        <th></th>
+	                                        <th>NOME</th>
+	                                        <th>EMAIL</th>
+	                                        <th>DATA NASCIMENTO</th>
+	                                        <th>STATUS</th>
+	                                        <th class="text-right">AÇOES</th>
+	                                    </tr>
+	                                </thead>
+	                                <tbody>
+	                                    <tr th:each="usuario : ${pagina.conteudo}">
+		                                    <td style="width: 20px;">
+		                                    	<div th:if="${#authentication.principal.usuario.codigo != usuario.codigo}">
+							         	 			<input type="checkbox" th:id="|ID_${usuario.codigo}|" class="chk-col-teal  js-checkbox" th:data-codigo="${usuario.codigo}">
+							                		<label th:for="|ID_${usuario.codigo}|"></label>
+						                		</div>
+						             		</td>
+	                                        <td th:text="${usuario.nome}">nome do usuario</td>
+	                                        <td th:text="${usuario.email}">email@email.com</td>
+	                                        <td th:text="${usuario.dataNascimentoFormatada}">10/09/1998</td>
+	                                        <td><span class="label" th:classappend="${usuario.ativoOuInativo.cor}" th:text="${usuario.ativoOuInativo}"></span></td>
+	                                        <td class="text-right">
+	                                        	<a th:href="@{/usuarios/{codigo}(codigo=${usuario.codigo})}" class="col-red"><i class="material-icons btn-icon">edit</i>EDITAR</a>
+	                                        	<a th:href="@{/usuarios/{codigo}(codigo=${usuario.codigo})}" class="col-red js-exclusao-btn" title="Excluir" href="#" 
+														th:data-url="@{/usuarios/{codigo}(codigo=${usuario.codigo})}" th:data-objeto="${usuario.nome}">
+													<i class="material-icons btn-icon">delete</i>
+												EXCLUIR</a>
+	                                        </td>
+	                                    </tr>
+	                                    <tr th:if="${pagina.vazia}">
+	                                    	<td colspan="4">A pesquisa não retornou nenhum resultado.</td>
+	                                    </tr>
+	                                </tbody>
+	                            </table>
+	                            <th:block th:replace="fragments/Paginacao :: paginacao"></th:block>
+	                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <th:block layout:fragment="javascript-extra">
+   <!-- Moment Plugin Js -->
+	    <script th:src="@{/layout/plugins/momentjs/moment.js}"></script>
+	    
+   		<script th:src="@{/javascript/vendors/plugins/alertify/alertify.js}"></script>
+   		<script th:src="@{/javascript/vendors/plugins/bootstrap-notify/bootstrap-notify.min.js}"></script>
+   		
+   		
+	    <script th:src="@{/javascript/notificacoes-push.js}"></script>
+	
+	    <!-- Bootstrap Material Datetime Picker Plugin Js -->
+	    <script th:src="@{/layout/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js}"></script>
+	    <script th:src="@{/javascript/componente-material-date-time-picker.js}"></script>
+	    <script th:src="@{/javascript/usuario.multiselecao.js}"></script>
+	    <script th:src="@{/javascript/trino.excluir-objeto.js}"></script>
+	    
+   </th:block>
+</body>
+
+</html>

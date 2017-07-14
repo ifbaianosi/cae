@@ -13,7 +13,7 @@
                 <!-- <div class="image">
                     <img th:src="@{/layout/images/user.png}" width="48" height="48" alt="User" />
                 </div> -->
-                <div class="info-container">
+                <div class="info-container" style="top: 0px;">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><strong th:text="${#authentication.principal.usuario.nome}">Glauber Matos</strong></div>
                     <div class="email" th:text="${#authentication.principal.usuario.email}">glauber.matos@si.ifbaiano.edu.br</div>
                     <div class="btn-group user-helper-dropdown">
@@ -25,7 +25,7 @@
                             <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
                             <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
                             <li role="seperator" class="divider"></li> -->
-                            <li><a th:href="@{/logout}"><i class="material-icons">input</i>Sair</a></li>
+                            <li><a th:href="@{/logout}"><i class="material-icons">exit_to_app</i>Sair</a></li>
                         </ul>
                     </div>
                 </div>
@@ -59,14 +59,26 @@
                             </li>
                         </ul>
                     </li>
-                    <li sec:authorize-url="/usuarios/novo">
-                        <a th:href="@{/usuarios/novo}">
-                            <i class="material-icons">people</i>
+                    <li sec:authorize="hasRole('ROLE_MENU_USUARIOS')">
+                        <a class="menu-toggle waves-effect waves-block">
+                            <i class="material-icons">security</i>
                             <span>USUARIOS</span>
                         </a>
+                        <ul class="ml-menu" style="display: none;">
+                            <li sec:authorize-url="/usuarios">
+                                <a th:href="@{/usuarios}" class="waves-effect waves-block">
+                                    <span>PESQUISAR</span>
+                                </a>
+                            </li>
+                            <li sec:authorize-url="/usuarios/novo">
+                                <a th:href="@{/usuarios/novo}" class="waves-effect waves-block">
+                                    <span>CADASTRAR</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li sec:authorize="hasRole('ROLE_MENU_REGISTROS')"  class="header">REGISTROS</li>
-                    <li  sec:authorize="hasRole('ROLE_MENU_REGISTROS')" >
+                    <li  sec:authorize="hasRole('ROLE_MENU_OCORRENCIAS')" >
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
                             <i class="material-icons">notifications</i>
                             <span>OCORRENCIA</span>

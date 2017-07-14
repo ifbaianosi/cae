@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -35,7 +36,7 @@ public class Encaminhamento extends Entidade {
 	private TipoEncaminhamento tipoEncaminhamento;
 	
 	@NotNull(message="Uma ocorrencia é necessária para criar um encaminhamento.")
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="codigo_ocorrencia")
 	private Ocorrencia ocorrencia;
 	

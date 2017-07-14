@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -58,8 +60,6 @@ public class AlunosController {
 	@Autowired
 	private CadastroAlunoService cadastroAlunoService;
 	
-	@Autowired
-	private TabelasResponsaveisSession tabelasResponsaveisSession;
 	
 	@Autowired
 	private ResponsavelAlunos responsaveisAluno;
@@ -83,36 +83,18 @@ public class AlunosController {
 	@RequestMapping(value="/por",consumes=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<Aluno> pesquisarAluno(@RequestParam("nomeOuMatricula") String nomeOuMatricula){
 		//TODO: VALIDAR FORMULARIO COM JQUERY...
-		
 		return alunos.porNomeOuMatricula(nomeOuMatricula);
 	}
-	
-	/*@RequestMapping(value="/por-matricula", consumes=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<?> pesquisarAlunoPorMatricula(@RequestParam("matricula") String matricula){
-		//TODO: VALIDAR FORMULARIO COM JQUERY...
-		
-		Optional<Aluno> alunoOptional = alunos.findByMatricula(matricula);
-		if(!alunoOptional.isPresent()){
-			return ResponseEntity.badRequest().body("Aluno não encontrado");
-		}
-		
-		return ResponseEntity.ok(alunoOptional.get());
-	}*/
 	
 	@RequestMapping(value="/por-matricula", consumes=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<?> consultarDadosDoAluno(@RequestParam("matricula") String matricula){
 		//TODO: VALIDAR FORMULARIO COM JQUERY...
-		
 		Optional<Aluno> alunoOptional = alunos.findByMatricula(matricula);
 		if(!alunoOptional.isPresent()){
 			return ResponseEntity.badRequest().body("Aluno não encontrado");
 		}
-		
 		Aluno aluno = alunoOptional.get();
 		aluno.setResponsaveisDoAluno(responsaveisAluno.findByAluno(aluno));
-		
-		//TODO: log
-		System.out.println("status do aluno: "+aluno.getStatus().getDescricao());
 		
 		return ResponseEntity.ok(aluno);
 	}

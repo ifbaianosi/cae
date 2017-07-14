@@ -2,10 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="'layout/LayoutPadrao'">
+	layout:decorator="'layout/LayoutPadrao'"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
     <title>Alunos</title>
+    
+    <!-- Customização de componentes NGTI -->
+    <link th:href="@{/layout/css/customizacao.componentes.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -23,24 +27,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <form class="js-formulario" th:action="@{/alunos}" method="GET" th:object="${alunoFilter}">
-                            	
-                            	<!-- MENSAGEM SUCESSO -->
-								<div class="alert bg-teal alert-dismissible fade in" role="alert" th:if="${not #strings.isEmpty(mensagemSucesso)}" th:fragment="alert">
-	                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="material-icons">clear</i></button>
-	                                <span th:text="${mensagemSucesso}"></span>
-	                            </div>
-	                            
-	                            <!-- MENSAGEM ERRO -->
-								<!-- <div class="alert alert-danger alert-dismissible fade in" role="alert" th:if="${#fields.hasErrors('temResponsavel')}" th:fragment="alert">
-	                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="material-icons">clear</i></button>
-	                                <span th:errors="*{temResponsavel}"></span>
-	                            </div> -->
                             
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-3">
                                         <label for="nome">Nome</label>
                                         <div class="form-group">
-                                            <div class="form-line" th:classappend="${#fields.hasErrors('nome')} ? 'focused error'">
+                                            <div class="form-line">
                                                 <input type="text" id="nome" class="form-control" placeholder="" th:field="*{nome}">
                                             </div>
                                             <label th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" id="nome-error" class="error" for="nome"></label>
@@ -162,6 +154,15 @@
 	                                        <label th:if="${#fields.hasErrors('status')}" th:errors="*{status}" class="error" for="status"></label>
 	                                    </div>
                                     </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                    	<label for="saida">Saida do campus</label>
+                                        <div class="form-group">
+		                                    <input type="checkbox" id="saida" class="chk-col-teal" name="saida" th:field="*{saida}">
+                                             <label class="text-uppercase" for="saida">
+                                                 Autorizado
+                                             </label>
+	                                    </div>
+                                    </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary waves-effect  js-submit">PESQUISAR</button>
                                 <a th:href="@{/alunos}" class="btn btn-default waves-effect">LIMPAR</a>
@@ -173,10 +174,9 @@
             <div class="card">
                 <div class="body">
                 	<div class="row">
-                   		<div class="col-md-12">
+                   		<!-- <div class="col-md-12">
                     		<button type="button" class="btn btn-sm bg-teal waves-effect">ATUALIZAR SERIE</button>
-	                     	<button type="button" class="btn btn-sm bg-teal waves-effect">HISTORICO</button>
-                   		</div>
+                   		</div> -->
                    		<div class="col-md-12">
                   		<div class="table-responsive">
                             <table class="table table-hover">
@@ -201,7 +201,7 @@
                                         </td>
                                         <td class="text-right">
                                         	<a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}" class="col-red"><i class="material-icons btn-icon">edit</i>Editar</a>
-                                         <a th:href="@{/alunos/detalhe?matricula={matricula}(matricula=${aluno.matricula})}" class="col-teal"><i class="material-icons btn-icon">history</i>Historico</a>
+                                         	<a sec:authorize-url="/alunos/detalhe" th:href="@{/alunos/detalhe?matricula={matricula}(matricula=${aluno.matricula})}" class="col-teal"><i class="material-icons btn-icon">history</i>Historico</a>
                                         </td>
                                     </tr>
                                     <tr th:if="${pagina.vazia}">

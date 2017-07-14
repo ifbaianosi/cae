@@ -85,6 +85,9 @@ $(function() {
 	
 	// Enable Bootstrap tooltip
 	 $('.js-tooltip').tooltip();
+	 
+	// Enable Bootstrap popover
+	 $('[data-toggle="popover"]').popover();
 	
 });
 

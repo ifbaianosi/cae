@@ -47,10 +47,12 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 		paginacaoUtil.preparar(criteria, pageable);
 		
 		//SETA ORDENACAO
-		criteria.addOrder(Order.desc("dataOcorrido"));
+		criteria.addOrder(Order.desc("dataRegistro"));
 		
 		//ADICIONA O FILTRO A CRITERIA DO HIBERNATE
 		adicionarFiltro(filtro, criteria);
+		criteria.createAlias("usuario", "u", JoinType.INNER_JOIN);
+		criteria.createAlias("encaminhamentos", "e", JoinType.LEFT_OUTER_JOIN);
 		
 		return new PageImpl<>(criteria.list(), pageable, total(filtro));
 	}
@@ -59,26 +61,75 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 	@Transactional(readOnly = true)
 	@Override
 	public List<Ocorrencia> buscarComEncaminhamentos(Aluno aluno) {
+		System.out.println("====> buscarComEncaminhamentos");
 		Criteria criteria = manager.unwrap(Session.class).createCriteria(Ocorrencia.class);
-		criteria.createAlias("encaminhamentos", "e", JoinType.INNER_JOIN);
-		/*criteria.add(Restrictions.eq("aluno", aluno));
-		criteria.addOrder(Order.desc("dataRegistro"));*/
-		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		return (List<Ocorrencia>)criteria.list();
+		criteria.createAlias("usuario", "u", JoinType.LEFT_OUTER_JOIN);
+		criteria.createAlias("encaminhamentos", "e", JoinType.LEFT_OUTER_JOIN);
+		criteria.add(Restrictions.eq("aluno", aluno));
+		criteria.addOrder(Order.desc("dataRegistro"));
+		/*criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);*/
+		return (List<Ocorrencia>) criteria.list();
 	}
+	
+	@Transactional(readOnly = true)
+	@Override
+	public Ocorrencia buscarComEncaminhamentosPorCodigo(Long codigoOcorrencia) {
+		System.out.println("====> buscarComEncaminhamentos");
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(Ocorrencia.class);
+		criteria.createAlias("usuario", "u", JoinType.LEFT_OUTER_JOIN);
+		criteria.createAlias("encaminhamentos", "e", JoinType.LEFT_OUTER_JOIN);
+		criteria.add(Restrictions.eq("codigo", codigoOcorrencia));
+		criteria.addOrder(Order.desc("dataRegistro"));
+		return (Ocorrencia) criteria.uniqueResult();
+	}
+	
+	/*@Transactional(readOnly = true)
+	@Override
+	public List<Ocorrencia> buscarComEncaminhamentos(Aluno aluno) {
+		
+		String jpql = "SELECT o FROM Ocorrencia o "
+				+ "INNER JOIN o.aluno a "
+				+ "INNER JOIN o.usuario u "
+				+ "where o.aluno = :aluno";
+		
+		
+		return manager.createQuery(jpql, Ocorrencia.class)
+				.setParameter("aluno", aluno)
+				.getResultList();
+		
+		
+	}*/
 	
 	@Override
 	public List<OcorrenciaDTO> porAluno(Aluno aluno) {
-		String jpql = "SELECT new br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO(codigo, dataRegistro, dataOcorrido, local, descricao, serie, regime) "
+		System.out.println("==> porAluno");
+		String jpql = "SELECT o "
 						+ "FROM Ocorrencia o "
+						+ "INNER JOIN o.usuario u "
+						+ "LEFT OUTER JOIN o.encaminhamentos e "
 						+ "WHERE o.aluno = :aluno "
 						+ "ORDER BY o.dataRegistro DESC";
 		
+		List<Ocorrencia> ocorrencias =  manager.createQuery(jpql, Ocorrencia.class)
+				.setParameter("aluno", aluno)
+				.getResultList();
+		
+		System.out.println("ocorrencias(quantidade): "+ocorrencias.size());
+		System.out.println("ocorrencia 0: "+ocorrencias.get(0).getCodigo());
+		System.out.println("ocorrencias(usuario): "+ocorrencias.get(0).getUsuario().getEmail());
+		System.out.println("ocorrencia 0 quantidade encaminhamentos: "+ocorrencias.get(0).getEncaminhamentos().size());
+		
+		jpql = "SELECT new br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO(codigo, dataRegistro, dataOcorrido, local, descricao, serie, regime) "
+				+ "FROM Ocorrencia o "
+				+ "INNER JOIN o.usuario u "
+				+ "LEFT OUTER JOIN o.encaminhamentos e "
+				+ "WHERE o.aluno = :aluno "
+				+ "ORDER BY o.dataRegistro DESC";
+
 		return manager.createQuery(jpql, OcorrenciaDTO.class)
 				.setParameter("aluno", aluno)
 				.getResultList();
 	}
-
 
 
 	@Override

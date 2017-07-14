@@ -105,6 +105,7 @@ NGTICAE.Encaminhamento = function(){
 		
 		$('#modalEncaminhamento').modal('hide');
 		NGTICAE.Tabela.atualizar();
+		$('[data-toggle="popover"]').popover();
 		NGTICAE.Notificacao.mostrar('sucesso', 'Encaminhamento salvo!', 'info', $('body'));
 	}
 	

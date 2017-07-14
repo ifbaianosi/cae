@@ -22,6 +22,7 @@ public class AlunoFilter {
 	private Integer apartamento;
 	private String nomeSocial;
 	private Status status;
+	private Boolean saida;
 	
 	public String getMatricula() {
 		return matricula;
@@ -88,6 +89,12 @@ public class AlunoFilter {
 	}
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+	public Boolean getSaida() {
+		return saida;
+	}
+	public void setSaida(Boolean saida) {
+		this.saida = saida;
 	}
 	
 }

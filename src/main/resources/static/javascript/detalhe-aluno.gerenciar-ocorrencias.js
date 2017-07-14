@@ -293,8 +293,6 @@ NGTICAE.Formulario = {
 			$('.js-editar-ocorrencia').attr('disabled', 'disabled');
 			$('.js-excluir-ocorrencias').attr('disabled', 'disabled');
 			
-			//NGTICAE.MultiSelecao.toggleBtn();
-			
 			//tornar visivel o botão cancelar
 			$('.js-cancelar-ocorrencias').removeClass('hide');
 			
@@ -370,15 +368,11 @@ NGTICAE.Tabela = {
 		atualizar: function(){
 			console.log('Atualizando tabela...');
 			
-			if (window.location.search.indexOf('ocorrencias') > -1) {
-				window.location.reload(true);
-			}else{
-				$.ajax({
-					url: $('#url_nova_ocorrencia').data('url') + '/aluno/' + $('#codigo_aluno').val(),
-					method: 'GET',
-					success: this.atualizarTabela
-				});
-			}
+			$.ajax({
+				url: $('#url_nova_ocorrencia').data('url') + '/aluno/' + $('#codigo_aluno').val(),
+				method: 'GET',
+				success: this.atualizarTabela
+			});
 			
 		},
 		atualizarTabela: function(ocorrencias){
@@ -393,6 +387,8 @@ NGTICAE.Tabela = {
 			NGTICAE.MultiSelecao.iniciar();
 			NGTICAE.MultiSelecao.toggleBtn();
 			NGTICAE.Modal.iniciar();
+			
+			$('[data-toggle="popover"]').popover();
 		}
 }
 //==========================================================================================================================

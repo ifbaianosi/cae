@@ -125,6 +125,10 @@ public class AlunosImpl implements AlunosQueries {
 			//FILTRO STATUS
 			if(filtro.getStatus() != null)
 				criteria.add(Restrictions.eq("status", filtro.getStatus()));
+			
+			//FILTRO PERMISSÃO DE SAIDA DO CAMPUS
+			if(filtro.getSaida() != null)
+				criteria.add(Restrictions.eq("saida", filtro.getSaida()));
 		}
 	}
 

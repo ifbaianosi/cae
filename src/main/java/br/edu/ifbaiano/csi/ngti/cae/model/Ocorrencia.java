@@ -48,7 +48,7 @@ public class Ocorrencia extends Entidade{
 	@JoinColumn(name="codigo_aluno")
 	private Aluno aluno;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="codigo_usuario")
 	private Usuario usuario;
 	
@@ -56,7 +56,7 @@ public class Ocorrencia extends Entidade{
 	
 	private String regime;
 	
-	@OneToMany(mappedBy = "ocorrencia", cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "ocorrencia", orphanRemoval = true, fetch=FetchType.LAZY)
 	private List<Encaminhamento> encaminhamentos;
 
 	@PrePersist

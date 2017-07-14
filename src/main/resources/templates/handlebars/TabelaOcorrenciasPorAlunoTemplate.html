@@ -5,8 +5,9 @@
          	 <th style="width: 20px;"></th>
              <th>DATA</th>
              <th>LOCAL</th>
+             <th>DESCRÇÃO</th>
+             <th>AUTOR</th>
              <th>ENCAMINHAMENTO</th>
-             <th></th>
          </tr>
      </thead>
      <tbody>
@@ -19,10 +20,23 @@
              		</td>
              		<td>{{dataOcorrido}}</td>
              		<td>{{local}}</td>
-					<td>
-					</td>
-             		<td class="text-right"><a href="#" class="col-teal js-encaminhar-ocorrencia" data-codigo="{{codigo}}">
-						<i class="material-icons btn-icon">call_made</i>Encaminhamento</a>
+             		<td>{{descricao}}</td>
+             		<td>{{usuario}}</td>
+             		<td>
+						{{#if tipoEncaminhamento}}
+							<label class="label bg-primary" role="button" tabindex="0" data-placement="top" data-toggle="popover" data-trigger="focus"
+                                        									 title="{{tipoEncaminhamento}}" 
+                                        									 data-content="{{descricaoEncaminhamento}}">
+																<span class="text-uppercase">{{tipoEncaminhamento}}</span>
+
+							</label>
+
+						{{else}}
+							<button class="btn btn-xs bg-teal waves-effect js-encaminhar-ocorrencia" data-codigo="{{codigo}}">
+								<i class="material-icons btn-icon">call_made</i>
+								EMITIR
+							</button>
+						{{/if}}
 					</td>
          		</tr>
 			{{/each}}

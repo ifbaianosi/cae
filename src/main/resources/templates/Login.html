@@ -29,12 +29,17 @@
 <body class="login-page">
     <div class="login-box">
         <div class="logo">
-            <a href="javascript:void(0);"><b>TRINO</b></a>
-            <small>IF BAIANO CAMPUS SANTA INÊS - NGTI</small>
+            <img class="img-responsive" alt="logo-trino" style="margin-left: 90px;" th:src="@{/layout/images/marca-if-baiano-para-o-site.png}">
+            <small style="text-shadow: 3px 3px 2px #3b5f31; font-size: 180%;">SANTA INÊS</small>
         </div>
         <div class="card">
             <div class="body">
                 <form id="sign_in" th:action="@{/login}" method="POST">
+                	<div class="row" >
+		            	<div class="col-md-12">
+			            	<img class="img-responsive" alt="logo-trino" th:src="@{/layout/images/trino-bg.png}">
+		            	</div>
+		            </div>
                     <div class="msg">Faça login para acesso ao sistema</div>
                     <div class="msg col-pink" th:if="${#bools.isTrue(param.error)}">Email e/ou senha incorreto(s)</div>
                     <div class="input-group">

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 	
 	<body>
 	
 	<div th:fragment="cabecalho">
 	<!-- Search Bar -->
-    <div class="search-bar">
-    	<form th:action="@{/alunos/detalhe}">
+    <div sec:authorize-url="/alunos/detalhe" class="search-bar">
+    	<form th:action="@{/alunos/detalhe}" method="GET">
 	        <div class="search-icon">
 	            <i class="material-icons">search</i>
 	        </div>
@@ -25,12 +26,14 @@
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="#">TRINO</a>
+                <a class="navbar-brand" style="padding: 5px 15px;" th:href="@{/}">
+                	<img class="img-responsive" width="100px" height="55px" alt="logo-trino" th:src="@{/layout/images/trino-bg.png}">
+                </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Call Search -->
-                    <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
+                    <li sec:authorize-url="/alunos/detalhe"><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
                     <!-- #END# Call Search -->
                     <!-- Notifications -->
                     
@@ -39,7 +42,7 @@
                     
                     <!-- #END# Tasks -->
                     <!-- Right Sidebar -->
-                    <li class="pull-right"><a th:href="@{/logout}"><i class="material-icons">input</i></a></li>
+                    <li class="pull-right"><a th:href="@{/logout}"><i class="material-icons js-tooltip" title="Sair">exit_to_app</i></a></li>
                     <!-- #END# Right Sidebar -->
                 </ul>
             </div>

@@ -16,4 +16,5 @@ public interface OcorrenciasQueries {
 	public OcorrenciaDTO porCodigo(Long codigo);
 	public Page<Ocorrencia> filtrar(OcorrenciaFilter ocorrenciaFilter, Pageable pageable);
 	public List<Ocorrencia> buscarComEncaminhamentos(Aluno aluno);
+	public Ocorrencia buscarComEncaminhamentosPorCodigo(Long codigoOcorrencia);
 }

@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="'layout/LayoutPadrao'">
+	layout:decorator="'layout/LayoutPadrao'"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
     <title>Pesquisar ocorrencias</title>
@@ -108,23 +109,54 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="ocorrencia : ${pagina.conteudo}">
-                                        <th scope="row" th:text="${ocorrencia.dataOcorridoFormatada}">1</th>
-                                        <td th:text="${ocorrencia.aluno.nome}">Otto</td>
-                                        <td th:text="${ocorrencia.local}">Otto</td>
-                                        <td th:text="${ocorrencia.usuario.primeiroNomeEmail}">Otto</td>
-                                        <td>
-                                        	<th:block th:if="${ocorrencia.encaminhamentos.size()} > 0" th:each="encaminhamento : ${ocorrencia.encaminhamentos}">
-                                        		<a href="#" class="col-teal" role="button" tabindex="0" data-placement="top" data-toggle="popover" th:title="${encaminhamento.tipoEncaminhamento.descricao}" th:data-content="${encaminhamento.descricao}"><i class="material-icons btn-icon">call_made</i><span th:text="${encaminhamento.tipoEncaminhamento.descricao}" class="text-uppercase">ADVERTENCIA VERBAL</span></a>
-											</th:block>
-											<th:block th:unless="${ocorrencia.encaminhamentos.size()} > 0">
-       											<a href="#" class="col-teal js-encaminhar-ocorrencia" th:data-codigo="${ocorrencia.codigo}"><i class="material-icons btn-icon">call_made</i>Encaminhamento</a>
-											</th:block>
-										</td>
-                                        <td class="text-right">
-                                        	<a th:href="@{/ocorrencias/{codigo}(codigo=${ocorrencia.codigo})}" class="col-red"><i class="material-icons">edit</i> Editar</a>
-                                        </td>
-                                    </tr>
+                                	<th:block th:if="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')}">
+	                                	<tr th:each="ocorrencia : ${pagina.conteudo}">
+		                                        <th scope="row" th:text="${ocorrencia.dataOcorridoFormatada}">1</th>
+		                                        <td th:text="${ocorrencia.aluno.nome}">Otto</td>
+		                                        <td th:text="${ocorrencia.local}">Otto</td>
+		                                        <td th:text="${ocorrencia.usuario.primeiroNomeEmail}">Otto</td>
+		                                        <td>
+		                                        	<th:block th:if="${ocorrencia.encaminhamentos.size()} > 0" th:each="encaminhamento : ${ocorrencia.encaminhamentos}">
+		                                        		<span class="label bg-teal" role="button" tabindex="0" data-placement="top" data-toggle="popover" data-trigger="focus"
+		                                        									 th:title="${encaminhamento.tipoEncaminhamento.descricao}" 
+		                                        									 th:data-content="${encaminhamento.descricao}">
+																		<span th:text="${encaminhamento.tipoEncaminhamento.descricao}" class="text-uppercase">ADVERTENCIA VERBAL</span>
+														</span>
+													</th:block>
+													<th:block th:unless="${ocorrencia.encaminhamentos.size()} > 0">
+		       											<a href="javascript:void(0);" class="col-teal waves-effect js-encaminhar-ocorrencia" th:data-codigo="${ocorrencia.codigo}"><i class="material-icons btn-icon">call_made</i>EMITIR</a>
+													</th:block>
+												</td>
+		                                        <td class="text-right">
+		                                        	<a th:href="@{/ocorrencias/{codigo}(codigo=${ocorrencia.codigo})}" class="col-red"><i class="material-icons btn-icon">edit</i>Editar</a>
+		                                        </td>
+	                                    </tr>
+                                	</th:block>
+                                	<th:block th:unless="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')}">
+	                                    <tr th:each="ocorrencia : ${pagina.conteudo}">
+	                                    	<th:block th:if="${ocorrencia.usuario.codigo == #authentication.principal.usuario.codigo}">
+		                                        <th scope="row" th:text="${ocorrencia.dataOcorridoFormatada}">1</th>
+		                                        <td th:text="${ocorrencia.aluno.nome}">Otto</td>
+		                                        <td th:text="${ocorrencia.local}">Otto</td>
+		                                        <td th:text="${ocorrencia.usuario.primeiroNomeEmail}">Otto</td>
+		                                        <td>
+		                                        	<th:block th:if="${ocorrencia.encaminhamentos.size()} > 0" th:each="encaminhamento : ${ocorrencia.encaminhamentos}">
+		                                        		<span class="label bg-teal" role="button" tabindex="0" data-placement="top" data-toggle="popover" data-trigger="focus"
+		                                        									 th:title="${encaminhamento.tipoEncaminhamento.descricao}" 
+		                                        									 th:data-content="${encaminhamento.descricao}">
+																		<span th:text="${encaminhamento.tipoEncaminhamento.descricao}" class="text-uppercase">ADVERTENCIA VERBAL</span>
+														</span>
+													</th:block>
+													<th:block th:unless="${ocorrencia.encaminhamentos.size()} > 0">
+		       											<a href="javascript:void(0);" class="col-teal waves-effect js-encaminhar-ocorrencia" th:data-codigo="${ocorrencia.codigo}"><i class="material-icons btn-icon">call_made</i>EMITIR</a>
+													</th:block>
+												</td>
+		                                        <td class="text-right">
+		                                        	<a th:href="@{/ocorrencias/{codigo}(codigo=${ocorrencia.codigo})}" class="col-red"><i class="material-icons btn-icon">edit</i>Editar</a>
+		                                        </td>
+	                                        </th:block>
+	                                    </tr>
+                                    </th:block>
                                     <tr th:if="${pagina.vazia}">
                                     	<td colspan="4">A pesquisa não retornou nenhum resultado.</td>
                                     </tr>
