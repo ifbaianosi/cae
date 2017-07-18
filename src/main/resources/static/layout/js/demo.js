@@ -74,7 +74,7 @@ function activateNotificationAndTasksScroll() {
 }
 
 //Google Analiytics ======================================================================================
-addLoadEvent(loadTracking);
+/*addLoadEvent(loadTracking);
 var trackingId = 'UA-30038099-6';
 
 function addLoadEvent(func) {
@@ -99,5 +99,5 @@ function loadTracking() {
 
     ga('create', trackingId, 'auto');
     ga('send', 'pageview');
-}
+}*/
 //========================================================================================================

@@ -83,6 +83,7 @@ NGTICAE.GerenciarResponsaveis = (function(){
 	
 	function onErroSalvandoResponsavel(erro){
 		console.log('Erro ao adicionar o responsavel: ', erro);
+		NGTICAE.Notificacao.mostrar("Ops!", "Preencha os campos obrigatórios", "danger", $('.js-modal-cadastro-responsavel'));
 	}
 	
 	function onAtualizarTabela(responsaveis) {
@@ -136,7 +137,10 @@ NGTICAE.GerenciarResponsaveis = (function(){
 	}
 	
 	/* FUNCOES PARA REMOÇÃO DOS RESPONSAVEIS*/
-	function onErroExcluindoResponsaveis(erro){ console.log('Erro ao remover o(s) responsavel(is): ', erro); }
+	function onErroExcluindoResponsaveis(erro){ 
+		console.log('Erro ao remover o(s) responsavel(is): ', erro); 
+		NGTICAE.Notificacao.mostrar("Ops!", "Erro ao remover o(s) responsavel(is)", "danger", $('.js-modal-cadastro-responsavel'));
+	}
 
 	/* FUNÇÕES PARA REMOVER UM RESPONSAVEL */
 	function adicionarEventoRemocao(){
