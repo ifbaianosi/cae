@@ -6,7 +6,7 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
-    <title>Cadastrar aluno</title>
+    <title th:text="${aluno.novo} ? 'Novo aluno' : 'Editar aluno'">Cadastrar aluno</title>
 </head>
 
 <body>
@@ -14,7 +14,8 @@
     <section class="content" layout:fragment="conteudo">
         <div class="container-fluid">
             <div class="block-header">
-                <h2>CADASTRAR NOVO ALUNO</h2>
+                <h2 th:if="${aluno.novo}">CADASTRAR NOVO ALUNO</h2>
+				<h2 th:unless="${aluno.novo}" th:text="|EDITAR ALUNO ${aluno.nome}|">EDITAR ALUNO</h2>
             </div>
             <div class="card">
                 <!--<div class="header">

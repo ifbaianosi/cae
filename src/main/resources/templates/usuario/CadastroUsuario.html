@@ -5,7 +5,7 @@
 	layout:decorator="'layout/LayoutPadrao'">
 
 <head>
-    <title>Cadastrar usuario</title>
+    <title th:text="${usuario.novo} ? 'Cadastrar usuario' : 'Editar usuario'">Cadastrar usuario</title>
 
     <!-- Customização de componentes NGTI -->
     <link th:href="@{/layout/css/customizacao.componentes.css}" rel="stylesheet">
@@ -16,7 +16,8 @@
     <section class="content" layout:fragment="conteudo">
         <div class="container-fluid">
             <div class="block-header">
-                <h2>CADASTRAR NOVO USUARIO</h2>
+                <h2 th:if="${usuario.novo}">CADASTRAR NOVO USUARIO</h2>
+				<h2 class="text-uppercase" th:unless="${usuario.novo}" th:text="|EDITAR USUARIO ${usuario.nome}|">EDITAR USUARIO</h2>
             </div>
             <div class="card">
                 <div class="header">

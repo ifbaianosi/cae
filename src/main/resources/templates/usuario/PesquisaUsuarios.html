@@ -96,10 +96,10 @@
 	                                        <td><span class="label" th:classappend="${usuario.ativoOuInativo.cor}" th:text="${usuario.ativoOuInativo}"></span></td>
 	                                        <td class="text-right">
 	                                        	<a th:href="@{/usuarios/{codigo}(codigo=${usuario.codigo})}" class="col-red"><i class="material-icons btn-icon">edit</i>EDITAR</a>
-	                                        	<a th:href="@{/usuarios/{codigo}(codigo=${usuario.codigo})}" class="col-red js-exclusao-btn" title="Excluir" href="#" 
+	                                        	<!-- <a th:href="@{/usuarios/{codigo}(codigo=${usuario.codigo})}" class="col-red js-exclusao-btn" title="Excluir" href="#" 
 														th:data-url="@{/usuarios/{codigo}(codigo=${usuario.codigo})}" th:data-objeto="${usuario.nome}">
 													<i class="material-icons btn-icon">delete</i>
-												EXCLUIR</a>
+												EXCLUIR</a> -->
 	                                        </td>
 	                                    </tr>
 	                                    <tr th:if="${pagina.vazia}">

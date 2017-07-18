@@ -46,6 +46,10 @@ public class PageWrapper<T> {
 		return page.isLast();
 	}
 	
+	public boolean isUnicaPagina() {
+		return getTotal() < 2;
+	}
+	
 	public String urlParaPagina(int pagina){
 		return uriBuilder.replaceQueryParam("page", pagina).build(true).encode().toUriString();
 	}

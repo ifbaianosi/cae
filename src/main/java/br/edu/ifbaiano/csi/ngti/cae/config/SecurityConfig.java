@@ -52,6 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			
 			.antMatchers("/ocorrencias").hasRole("PESQUISAR_OCORRENCIA")
 			.antMatchers("/ocorrencias/nova").hasRole("NOVA_OCORRENCIA")
+			.antMatchers("/ocorrencias/autoria").hasRole("PESQUISAR_OCORRENCIAS_PROPRIA_AUTORIA")
 			.antMatchers("/ocorrencias/{\\d+}").hasRole("EDITAR_OCORRENCIA")
 				
 				.anyRequest().authenticated()

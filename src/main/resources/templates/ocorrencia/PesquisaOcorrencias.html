@@ -23,7 +23,10 @@
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
                         <div class="col-md-12">
-                            <form class="js-formulario" th:action="@{/ocorrencias}" method="GET" th:object="${ocorrenciaFilter}">
+                        
+                            <form class="js-formulario" th:action="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}" 
+                            							method="GET" th:object="${ocorrenciaFilter}">
+                            	
                             	<input type="hidden" th:field="*{aluno}">
                                 <div class="row">
                                     <!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-7">
@@ -79,14 +82,14 @@
                                     	<label for="usuario">Autor</label>
                                         <div class="form-group">
 		                                    <select class="form-control show-tick" data-live-search="true" data-size="5" data-container="body" th:field="*{usuario}">
-		                                    	<option value="">todos...</option>
+		                                    	<option value="" th:if="${usuarios.size() > 1}">todos...</option>
 											    <option th:each="usuario : ${usuarios}" th:value="${usuario.codigo}" th:text="${usuario.primeiroNomeEmail}">glauber.matos</option>
 											</select>                                           
 	                                    </div>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary waves-effect  js-submit">PESQUISAR</button>
-                                <a th:href="@{/ocorrencias}" class="btn btn-default waves-effect">LIMPAR</a>
+                                <a th:href="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}" class="btn btn-default waves-effect">LIMPAR</a>
                             </form>
                         </div>
                     </div>
@@ -103,62 +106,37 @@
                                         <th>DATA</th>
                                         <th>ALUNO</th>
                                         <th>LOCAL</th>
+                                        <th>DESCRICAO</th>
                                         <th>AUTOR</th>
                                         <th>ENCAMINHAMENTO</th>
                                         <th class="text-right">AÇOES</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                	<th:block th:if="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')}">
-	                                	<tr th:each="ocorrencia : ${pagina.conteudo}">
-		                                        <th scope="row" th:text="${ocorrencia.dataOcorridoFormatada}">1</th>
-		                                        <td th:text="${ocorrencia.aluno.nome}">Otto</td>
-		                                        <td th:text="${ocorrencia.local}">Otto</td>
-		                                        <td th:text="${ocorrencia.usuario.primeiroNomeEmail}">Otto</td>
-		                                        <td>
-		                                        	<th:block th:if="${ocorrencia.encaminhamentos.size()} > 0" th:each="encaminhamento : ${ocorrencia.encaminhamentos}">
-		                                        		<span class="label bg-teal" role="button" tabindex="0" data-placement="top" data-toggle="popover" data-trigger="focus"
-		                                        									 th:title="${encaminhamento.tipoEncaminhamento.descricao}" 
-		                                        									 th:data-content="${encaminhamento.descricao}">
-																		<span th:text="${encaminhamento.tipoEncaminhamento.descricao}" class="text-uppercase">ADVERTENCIA VERBAL</span>
-														</span>
-													</th:block>
-													<th:block th:unless="${ocorrencia.encaminhamentos.size()} > 0">
-		       											<a href="javascript:void(0);" class="col-teal waves-effect js-encaminhar-ocorrencia" th:data-codigo="${ocorrencia.codigo}"><i class="material-icons btn-icon">call_made</i>EMITIR</a>
-													</th:block>
-												</td>
-		                                        <td class="text-right">
-		                                        	<a th:href="@{/ocorrencias/{codigo}(codigo=${ocorrencia.codigo})}" class="col-red"><i class="material-icons btn-icon">edit</i>Editar</a>
-		                                        </td>
-	                                    </tr>
-                                	</th:block>
-                                	<th:block th:unless="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')}">
-	                                    <tr th:each="ocorrencia : ${pagina.conteudo}">
-	                                    	<th:block th:if="${ocorrencia.usuario.codigo == #authentication.principal.usuario.codigo}">
-		                                        <th scope="row" th:text="${ocorrencia.dataOcorridoFormatada}">1</th>
-		                                        <td th:text="${ocorrencia.aluno.nome}">Otto</td>
-		                                        <td th:text="${ocorrencia.local}">Otto</td>
-		                                        <td th:text="${ocorrencia.usuario.primeiroNomeEmail}">Otto</td>
-		                                        <td>
-		                                        	<th:block th:if="${ocorrencia.encaminhamentos.size()} > 0" th:each="encaminhamento : ${ocorrencia.encaminhamentos}">
-		                                        		<span class="label bg-teal" role="button" tabindex="0" data-placement="top" data-toggle="popover" data-trigger="focus"
-		                                        									 th:title="${encaminhamento.tipoEncaminhamento.descricao}" 
-		                                        									 th:data-content="${encaminhamento.descricao}">
-																		<span th:text="${encaminhamento.tipoEncaminhamento.descricao}" class="text-uppercase">ADVERTENCIA VERBAL</span>
-														</span>
-													</th:block>
-													<th:block th:unless="${ocorrencia.encaminhamentos.size()} > 0">
-		       											<a href="javascript:void(0);" class="col-teal waves-effect js-encaminhar-ocorrencia" th:data-codigo="${ocorrencia.codigo}"><i class="material-icons btn-icon">call_made</i>EMITIR</a>
-													</th:block>
-												</td>
-		                                        <td class="text-right">
-		                                        	<a th:href="@{/ocorrencias/{codigo}(codigo=${ocorrencia.codigo})}" class="col-red"><i class="material-icons btn-icon">edit</i>Editar</a>
-		                                        </td>
-	                                        </th:block>
-	                                    </tr>
-                                    </th:block>
+                                	<tr th:each="ocorrencia : ${pagina.conteudo}">
+	                                        <td th:text="${ocorrencia.dataOcorridoFormatada}">1</td>
+	                                        <td th:text="${ocorrencia.aluno.nome}">Otto</td>
+	                                        <td th:text="${ocorrencia.local}">Otto</td>
+	                                        <td th:text="${ocorrencia.descricao}">Descricao da ocorrencia</td>
+	                                        <td th:text="${ocorrencia.usuario.primeiroNomeEmail}">Otto</td>
+	                                        <td>
+	                                        	<th:block th:if="${ocorrencia.encaminhamentos.size()} > 0" th:each="encaminhamento : ${ocorrencia.encaminhamentos}">
+	                                        		<span class="label bg-teal" role="button" tabindex="0" data-placement="top" data-toggle="popover" data-trigger="focus"
+	                                        									 th:title="${encaminhamento.tipoEncaminhamento.descricao}" 
+	                                        									 th:data-content="${encaminhamento.descricao}">
+																	<span th:text="${encaminhamento.tipoEncaminhamento.descricao}" class="text-uppercase">ADVERTENCIA VERBAL</span>
+													</span>
+												</th:block>
+												<th:block sec:authorize="hasRole('ROLE_NOVO_ENCAMINHAMENTO')" th:unless="${ocorrencia.encaminhamentos.size()} > 0">
+	       											<a href="javascript:void(0);" class="col-teal waves-effect js-encaminhar-ocorrencia" th:data-codigo="${ocorrencia.codigo}"><i class="material-icons btn-icon">call_made</i>EMITIR</a>
+												</th:block>
+											</td>
+	                                        <td class="text-right">
+	                                        	<a sec:authorize="hasRole('ROLE_EDITAR_OCORRENCIA')" th:href="@{/ocorrencias/{codigo}(codigo=${ocorrencia.codigo})}" class="col-red"><i class="material-icons btn-icon">edit</i>Editar</a>
+	                                        </td>
+                                    </tr>
                                     <tr th:if="${pagina.vazia}">
-                                    	<td colspan="4">A pesquisa não retornou nenhum resultado.</td>
+                                    	<td colspan="7">A pesquisa não retornou nenhum resultado.</td>
                                     </tr>
                                 </tbody>
                             </table>

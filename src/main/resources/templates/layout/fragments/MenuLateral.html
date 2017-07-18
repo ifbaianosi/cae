@@ -19,7 +19,7 @@
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="javascript:void(0);"><i class="material-icons">person</i>Perfil</a></li>
+                            <!-- <li><a href="javascript:void(0);"><i class="material-icons">person</i>Perfil</a></li> -->
                             <!-- <li role="seperator" class="divider"></li>
                             <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
                             <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
@@ -47,14 +47,14 @@
                             <span>ALUNO</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
-                            <li sec:authorize-url="/alunos">
-                                <a th:href="@{/alunos}" class="waves-effect waves-block">
-                                    <span>PESQUISAR</span>
-                                </a>
-                            </li>
                             <li sec:authorize-url="/alunos/novo">
                                 <a th:href="@{/alunos/novo}" class="waves-effect waves-block">
                                     <span>CADASTRAR</span>
+                                </a>
+                            </li>
+                            <li sec:authorize-url="/alunos">
+                                <a th:href="@{/alunos}" class="waves-effect waves-block">
+                                    <span>PESQUISAR</span>
                                 </a>
                             </li>
                         </ul>
@@ -65,33 +65,33 @@
                             <span>USUARIOS</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
-                            <li sec:authorize-url="/usuarios">
-                                <a th:href="@{/usuarios}" class="waves-effect waves-block">
-                                    <span>PESQUISAR</span>
-                                </a>
-                            </li>
                             <li sec:authorize-url="/usuarios/novo">
                                 <a th:href="@{/usuarios/novo}" class="waves-effect waves-block">
                                     <span>CADASTRAR</span>
                                 </a>
                             </li>
+                            <li sec:authorize-url="/usuarios">
+                                <a th:href="@{/usuarios}" class="waves-effect waves-block">
+                                    <span>PESQUISAR</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li sec:authorize="hasRole('ROLE_MENU_REGISTROS')"  class="header">REGISTROS</li>
-                    <li  sec:authorize="hasRole('ROLE_MENU_OCORRENCIAS')" >
+                    <li sec:authorize="hasRole('ROLE_MENU_OCORRENCIAS')">
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
                             <i class="material-icons">notifications</i>
                             <span>OCORRENCIA</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
-                            <li sec:authorize-url="/ocorrencias">
-                                <a th:href="@{/ocorrencias}" class="waves-effect waves-block">
-                                    <span>PESQUISAR</span>
-                                </a>
-                            </li>
                             <li sec:authorize-url="/ocorrencias/nova">
                                 <a th:href="@{/ocorrencias/nova}" class="waves-effect waves-block">
                                     <span>REGISTRAR</span>
+                                </a>
+                            </li>
+                            <li sec:authorize="hasRole('ROLE_PESQUISAR_TODAS_OCORRENCIAS') or hasRole('PESQUISAR_OCORRENCIAS_PROPRIA_AUTORIA')">
+                                <a th:href="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}" class="waves-effect waves-block">
+                                    <span>PESQUISAR</span>
                                 </a>
                             </li>
                         </ul>
@@ -112,7 +112,7 @@
                     &copy; 2017 <a href="javascript:void(0);">IF BAIANO - SANTA INÊS - NGTI</a>.
                 </div>
                 <div class="version">
-                    <b>Version: </b> 1.0.0
+                    <b>Versao: </b> 1.0.0
                 </div>
             </div>
             <!-- #Footer -->

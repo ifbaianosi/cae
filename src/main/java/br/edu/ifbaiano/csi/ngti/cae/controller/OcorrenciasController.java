@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -57,8 +58,24 @@ public class OcorrenciasController {
 		
 		PageWrapper<Ocorrencia> paginaWrapper = new PageWrapper<>(ocorrencias.filtrar(ocorrenciaFilter, pageable), httpServletRequest);
 		
+		
 		mv.addObject("pagina", paginaWrapper);
 		mv.addObject("usuarios", usuarios.findByAtivoTrue());
+		mv.addObject("tipoEncaminhamento", TipoEncaminhamento.values());
+		
+		return mv;
+	}
+	
+	@GetMapping(value="/autoria")
+	public ModelAndView pesquisarOcorrenciasPorUsuario(OcorrenciaFilter ocorrenciaFilter, @PageableDefault(size=10) Pageable pageable, HttpServletRequest httpServletRequest, @AuthenticationPrincipal UsuarioSistema usuarioSistema){
+		ModelAndView mv = new ModelAndView("ocorrencia/PesquisaOcorrencias");
+		
+		ocorrenciaFilter.setUsuario(usuarioSistema.getUsuario());
+		PageWrapper<Ocorrencia> paginaWrapper = new PageWrapper<>(ocorrencias.filtrar(ocorrenciaFilter, pageable), httpServletRequest);
+		
+		mv.addObject("pagina", paginaWrapper);
+		Long [] codigos = {usuarioSistema.getUsuario().getCodigo()};
+		mv.addObject("usuarios", usuarios.findByCodigoIn(codigos));
 		mv.addObject("tipoEncaminhamento", TipoEncaminhamento.values());
 		
 		return mv;
@@ -129,6 +146,7 @@ public class OcorrenciasController {
 		return ocorrencias.countByAluno(aluno);
 	}
 	
+	@Secured(value="ROLE_NOVO_ENCAMINHAMENTO")
 	@GetMapping(value="/ver/{codigoocorrencia}")
 	public @ResponseBody OcorrenciaDTO getOcorrencia(@PathVariable("codigoocorrencia") Long codigo){
 		return ocorrencias.porCodigo(codigo);
