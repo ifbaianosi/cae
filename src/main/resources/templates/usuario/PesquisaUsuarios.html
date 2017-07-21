@@ -13,11 +13,11 @@
     <section class="content" layout:fragment="conteudo">
         <div class="container-fluid">
             <div class="block-header">
-                <h2>PESQUISAR USUARIOS</h2>
+                <h2>PESQUISAR USUÁRIOS</h2>
             </div>
             <div class="card">
                 <div class="header">
-                    <a th:href="@{/usuarios/novo}" type="button" class="btn bg-teal waves-effect">NOVO<span> USUARIO</span></a>
+                    <a th:href="@{/usuarios/novo}" type="button" class="btn bg-teal waves-effect">NOVO<span> USUÁRIO</span></a>
                 </div>
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
@@ -55,23 +55,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary waves-effect  js-submit">PESQUISAR</button>
+                                <button type="submit" class="btn bg-teal waves-effect  js-submit">PESQUISAR</button>
                                 <a th:href="@{/usuarios}" class="btn btn-default waves-effect">LIMPAR</a>
                             </form>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="body">
-                	<div class="row">
-                		<div class="col-md-12">
+                		<div class="col-md-12 align-left">
                     		<button type="button" class="btn btn-xs bg-teal waves-effect js-status-btn disabled" th:data-status="ATIVAR" th:data-url="@{/usuarios/status}">ATIVAR</button>
                     		<button type="button" class="btn btn-xs bg-teal waves-effect js-status-btn disabled" th:data-status="DESATIVAR" th:data-url="@{/usuarios/status}">DESATIVAR</button>
                    		</div>
                    		<div class="col-md-12">
 	                  		<div class="table-responsive">
-	                            <table class="table table-hover">
+	                            <table class="table table-striped table-hover table-bordered">
 	                                <thead>
 	                                    <tr>
 	                                        <th></th>
@@ -79,7 +73,7 @@
 	                                        <th>EMAIL</th>
 	                                        <th>DATA NASCIMENTO</th>
 	                                        <th>STATUS</th>
-	                                        <th class="text-right">AÇOES</th>
+	                                        <th class="text-right">AÇÕES</th>
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
@@ -113,6 +107,57 @@
                     </div>
                 </div>
             </div>
+            <!-- <div class="card">
+                <div class="body">
+                	<div class="row">
+                		<div class="col-md-12">
+                    		<button type="button" class="btn btn-xs bg-teal waves-effect js-status-btn disabled" th:data-status="ATIVAR" th:data-url="@{/usuarios/status}">ATIVAR</button>
+                    		<button type="button" class="btn btn-xs bg-teal waves-effect js-status-btn disabled" th:data-status="DESATIVAR" th:data-url="@{/usuarios/status}">DESATIVAR</button>
+                   		</div>
+                   		<div class="col-md-12">
+	                  		<div class="table-responsive">
+	                            <table class="table table-striped table-hover table-bordered">
+	                                <thead>
+	                                    <tr>
+	                                        <th></th>
+	                                        <th>NOME</th>
+	                                        <th>EMAIL</th>
+	                                        <th>DATA NASCIMENTO</th>
+	                                        <th>STATUS</th>
+	                                        <th class="text-right">AÇOES</th>
+	                                    </tr>
+	                                </thead>
+	                                <tbody>
+	                                    <tr th:each="usuario : ${pagina.conteudo}">
+		                                    <td style="width: 20px;">
+		                                    	<div th:if="${#authentication.principal.usuario.codigo != usuario.codigo}">
+							         	 			<input type="checkbox" th:id="|ID_${usuario.codigo}|" class="chk-col-teal  js-checkbox" th:data-codigo="${usuario.codigo}">
+							                		<label th:for="|ID_${usuario.codigo}|"></label>
+						                		</div>
+						             		</td>
+	                                        <td th:text="${usuario.nome}">nome do usuario</td>
+	                                        <td th:text="${usuario.email}">email@email.com</td>
+	                                        <td th:text="${usuario.dataNascimentoFormatada}">10/09/1998</td>
+	                                        <td><span class="label" th:classappend="${usuario.ativoOuInativo.cor}" th:text="${usuario.ativoOuInativo}"></span></td>
+	                                        <td class="text-right">
+	                                        	<a th:href="@{/usuarios/{codigo}(codigo=${usuario.codigo})}" class="col-red"><i class="material-icons btn-icon">edit</i>EDITAR</a>
+	                                        	<a th:href="@{/usuarios/{codigo}(codigo=${usuario.codigo})}" class="col-red js-exclusao-btn" title="Excluir" href="#" 
+														th:data-url="@{/usuarios/{codigo}(codigo=${usuario.codigo})}" th:data-objeto="${usuario.nome}">
+													<i class="material-icons btn-icon">delete</i>
+												EXCLUIR</a>
+	                                        </td>
+	                                    </tr>
+	                                    <tr th:if="${pagina.vazia}">
+	                                    	<td colspan="4">A pesquisa não retornou nenhum resultado.</td>
+	                                    </tr>
+	                                </tbody>
+	                            </table>
+	                            <th:block th:replace="fragments/Paginacao :: paginacao"></th:block>
+	                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
         </div>
     </section>
 

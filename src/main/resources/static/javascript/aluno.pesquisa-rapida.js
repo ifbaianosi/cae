@@ -109,6 +109,8 @@ NGTICAE.PesquisaAluno = (function(){
 			console.log('sucesso...', aluno);
 			console.log('aluno.nome: ', aluno.nome);
 			
+
+			$('#aluno').val(aluno.codigo);
 			$('.js-nome').text(aluno.nome);
 			$('.js-nome').val(aluno.matricula + ' - ' + aluno.nome);
 			$('.js-matricula').text(aluno.matricula);

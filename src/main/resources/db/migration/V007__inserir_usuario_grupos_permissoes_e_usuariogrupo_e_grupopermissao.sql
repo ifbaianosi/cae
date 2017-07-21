@@ -1,5 +1,5 @@
 INSERT INTO usuario (codigo, nome, email, senha, ativo) VALUES
-(1, 'CAE', 'cae@si.ifbaiano.edu.br', '$2a$10$5ct2yU3JsLkO40HDDYTjWuTNjMWxCG7XZfObfu0yXqoUgZII6VEce', true);
+(2, 'Angelo Francisco de S. Andrade', 'angelo.andrade@si.ifbaiano.edu.br', '$2a$10$5ct2yU3JsLkO40HDDYTjWuTNjMWxCG7XZfObfu0yXqoUgZII6VEce', true);
 
 INSERT INTO grupo (codigo, nome) VALUES
 (1, 'CAE'),
@@ -36,7 +36,7 @@ INSERT INTO permissao (codigo, nome) VALUES
 (23,'ROLE_EXCLUIR_ENCAMINHAMENTO');
 
 INSERT INTO usuario_grupo (codigo_usuario, codigo_grupo) VALUES 
-(1, 1);
+(2, 1);
 
 INSERT INTO grupo_permissao (codigo_grupo, codigo_permissao) VALUES 
 (1, 1),

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
+	
+<th:block th:fragment="pesquisaRapidaAlunoModal">
+	
+	<div class="modal fade  js-modal-pesquisa-aluno" id="modalPesquisaAluno" tabindex="-1" role="dialog">
+           <div class="modal-dialog modal-lg" role="document">
+               <div class="card">
+                        <div class="header">
+                            <h2>
+                                PESQUISA RÁPIDA DE ALUNOS
+                            </h2>
+                       		<a href="javascript:void(0);" class="header-dropdown m-r--5" data-dismiss="modal"><i class="material-icons">clear</i></a>
+                            
+                        </div>
+                        <div class="body">
+                        	<form id="formulario_responsavel">
+                        		<div class="row">
+                        			<div class="col-sm-12  js-mensagem-caracteres hide">
+	                        			<p class="bg-danger">
+		                            		Digite ao menos 3 caracteres para realizar a consulta.
+		                            	</p>
+	                            	</div>
+	                        		<div class="col-xs-12 col-sm-12 col-md-12">
+	                                    <label for="nome">Nome ou matrícula</label>
+	                                    <div class="form-group">
+	                                        <div class="form-line">
+	                                            <input type="text" id="nome" class="form-control  js-nomeOuMatricula-aluno-modal" placeholder="Digite o nome ou a matrícula do aluno" autocomplete="off" autofocus="autofocus">
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <!-- <div class="col-xs-12 col-sm-12 col-md-4">
+	                                    <label for="matricula">Matricula</label>
+	                                    <div class="form-group">
+	                                        <div class="form-line">
+	                                            <input type="text" id="matricula" class="form-control js-matricula-aluno-modal" placeholder="Pesquisar pela matricula">
+	                                        </div>
+	                                    </div>
+	                                </div> -->
+                        		</div>
+                        		<div class="row">
+                        			<div class="col-xs-12">
+                        				<button type="submit" class="btn waves-effect bg-teal  js-pesquisar-aluno" th:data-url="@{/alunos}">PESQUISAR</button>
+                        				<div class="preloader pl-size-xs pull-right hide">
+		                                    <div class="spinner-layer pl-teal">
+		                                        <div class="circle-clipper left">
+		                                            <div class="circle"></div>
+		                                        </div>
+		                                        <div class="circle-clipper right">
+		                                            <div class="circle"></div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+                        			</div>
+                        		</div>
+                        		<div class="row">
+                        			<div class="col-xs-12">
+                        				<div class="js-container-tabela-alunos"></div>
+                        			</div>
+                        		</div>
+		                	</form>
+                        </div>
+                    </div>
+           </div>
+       </div>
+		
+</th:block>
+
+</html>

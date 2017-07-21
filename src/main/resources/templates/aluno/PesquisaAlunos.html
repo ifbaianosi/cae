@@ -17,7 +17,17 @@
     <section class="content" layout:fragment="conteudo">
         <div class="container-fluid">
             <div class="block-header">
-                <h2>PESQUISAR ALUNOS</h2>
+            	<div class="row">
+            		<div class="col-md-3">
+            			<h2>PESQUISAR ALUNOS</h2>
+            		</div>
+            		<div class="col-md-9">
+		                <ol class="breadcrumb align-right" style="padding: 0px 0px;">
+		                    <li><a th:href="@{/}"><i class="material-icons">home</i> Início</a></li>
+		                    <li class="active"><i class="material-icons">school</i> Alunos</li>
+		                </ol>
+            		</div>
+            	</div>
             </div>
             <div class="card">
                 <div class="header">
@@ -39,7 +49,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-2">
-                                        <label for="matricula">Matricula</label>
+                                        <label for="matricula">Matrícula</label>
                                         <div class="form-group">
                                             <div class="form-line" th:classappend="${#fields.hasErrors('matricula')} ? 'focused error'">
                                                 <input type="text" id="matricula" class="form-control" placeholder="" th:field="*{matricula}">
@@ -155,7 +165,7 @@
 	                                    </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-3">
-                                    	<label for="saida">Saida do campus</label>
+                                    	<label for="saida">Saída do campus</label>
                                         <div class="form-group">
 		                                    <input type="checkbox" id="saida" class="chk-col-teal" name="saida" th:field="*{saida}">
                                              <label class="text-uppercase" for="saida">
@@ -164,30 +174,65 @@
 	                                    </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary waves-effect  js-submit">PESQUISAR</button>
+                                <button type="submit" class="btn bg-teal waves-effect  js-submit">PESQUISAR</button>
                                 <a th:href="@{/alunos}" class="btn btn-default waves-effect">LIMPAR</a>
                             </form>
+                        </div>
+                        <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>MATRÍCULA</th>
+                                        <th>NOME</th>
+                                        <th>CURSO</th>
+                                        <th>REGIME</th>
+                                        <th>STATUS</th>
+                                        <th class="text-center">AÇÕES</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="aluno : ${pagina.conteudo}">
+                                        <th scope="row" th:text="${aluno.matricula}">1</th>
+                                        <td th:text="${aluno.nome}">Mark</td>
+                                        <td th:text="${aluno.curso.nome}">Otto</td>
+                                        <td th:text="${aluno.regime.descricao}">@mdo</td>
+                                        <td>
+                                        	<span class="label" th:text="${aluno.status.descricao}" th:classappend="${aluno.status.cor}">FREQUENTAO</span>
+                                        </td>
+                                        <td class="text-right">
+                                        	<a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}" class="col-red"><i class="material-icons btn-icon">edit</i>Editar</a>
+                                         	<a sec:authorize-url="/alunos/detalhe" th:href="@{/alunos/detalhe?matricula={matricula}(matricula=${aluno.matricula})}" class="col-teal"><i class="material-icons btn-icon">history</i>Histórico</a>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="${pagina.vazia}">
+                                    	<td colspan="5">A pesquisa não retornou nenhum resultado.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <th:block th:replace="fragments/Paginacao :: paginacao"></th:block>
+                        </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card">
+            <!-- <div class="card">
                 <div class="body">
                 	<div class="row">
-                   		<!-- <div class="col-md-12">
+                   		<div class="col-md-12">
                     		<button type="button" class="btn btn-sm bg-teal waves-effect">ATUALIZAR SERIE</button>
-                   		</div> -->
+                   		</div>
                    		<div class="col-md-12">
                   		<div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>MATRICULA</th>
+                                        <th>MATRÍCULA</th>
                                         <th>NOME</th>
                                         <th>CURSO</th>
                                         <th>REGIME</th>
                                         <th>STATUS</th>
-                                        <th class="text-right">ACOES</th>
+                                        <th class="text-right">AÇÕES</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -214,7 +259,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 

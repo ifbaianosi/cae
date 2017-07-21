@@ -14,8 +14,19 @@
     <section class="content" layout:fragment="conteudo">
         <div class="container-fluid">
             <div class="block-header">
-                <h2 th:if="${aluno.novo}">CADASTRAR NOVO ALUNO</h2>
-				<h2 th:unless="${aluno.novo}" th:text="|EDITAR ALUNO ${aluno.nome}|">EDITAR ALUNO</h2>
+				<div class="row">
+            		<div class="col-md-3">
+            			<h2 th:if="${aluno.novo}">CADASTRAR NOVO ALUNO</h2>
+						<h2 th:unless="${aluno.novo}" th:text="|EDITAR ALUNO ${aluno.nome}|">EDITAR ALUNO</h2>
+            		</div>
+            		<div class="col-md-9">
+		                <ol class="breadcrumb align-right" style="padding: 0px 0px;">
+		                    <li><a th:href="@{/}"><i class="material-icons">home</i> Início</a></li>
+		                    <li><a th:href="@{/alunos}"><i class="material-icons">school</i> Alunos</a></li>
+		                    <li class="active"><i class="material-icons">add_circle_outline</i> Novo</li>
+		                </ol>
+            		</div>
+            	</div>
             </div>
             <div class="card">
                 <!--<div class="header">
@@ -38,8 +49,8 @@
 	                            </div>
 	                            
                                 <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-2">
-                                        <label for="matricula">Matricula</label>
+                                    <div class="col-xs-12 col-sm-6 col-md-2 trino-required">
+                                        <label for="matricula" class="control-label">Matrícula</label>
                                         <div class="form-group">
                                             <div class="form-line" th:classappend="${#fields.hasErrors('matricula')} ? 'focused error'">
                                                 <input type="text" id="matricula" class="form-control" placeholder="" th:field="*{matricula}">
@@ -47,8 +58,8 @@
                                             <label th:if="${#fields.hasErrors('matricula')}" th:errors="*{matricula}" class="error" for="matricula"></label>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4">
-                                        <label for="nome">Nome</label>
+                                    <div class="col-xs-12 col-sm-6 col-md-4 trino-required">
+                                        <label for="nome" class="control-label">Nome</label>
                                         <div class="form-group">
                                             <div class="form-line" th:classappend="${#fields.hasErrors('nome')} ? 'focused error'">
                                                 <input type="text" id="nome" class="form-control" placeholder="" th:field="*{nome}">
@@ -56,8 +67,8 @@
                                             <label th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" id="nome-error" class="error" for="nome"></label>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
-                                        <label for="regime">Regime</label>
+                                    <div class="col-xs-12 col-sm-6 col-md-3 trino-required">
+                                        <label for="regime" class="control-label">Regime</label>
                                         <div class="form-group">
 	                                        <select id="regime" class="form-control show-tick" th:field="*{regime}">
 	                                        	<option value="">selecione...</option>
@@ -66,8 +77,8 @@
 	                                        <label th:if="${#fields.hasErrors('regime')}" th:errors="*{regime}" class="error" for="regime"></label>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
-                                    	<label for="curso">Curso</label>
+                                    <div class="col-xs-12 col-sm-6 col-md-3 trino-required">
+                                    	<label for="curso" class="control-label">Curso</label>
                                         <div class="form-group">
 		                                    <select class="form-control show-tick" data-live-search="true" data-size="5" data-container="body" th:field="*{curso}">
 		                                    	<option value="">selecione...</option>
@@ -383,8 +394,8 @@
                         <div class="body">
                         	<form id="formulario_responsavel">
                                 <div class="row">
-                                    <div class="col-xs-12 col-sm-5">
-                                        <label for="">Grau de parentesco</label>
+                                    <div class="col-xs-12 col-sm-5 trino-required">
+                                        <label for="responsavel_parentesco" class="control-label">Grau de parentesco</label>
                                         <div class="form-group">
                                             <select id="responsavel_parentesco" class="form-control show-tick">
                                                 <option value="">selecione...</option>
@@ -392,24 +403,16 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-12">
-                                        <label for="responsavel_nome">Nome</label>
+                                    <div class="col-xs-12 col-sm-12 trino-required">
+                                        <label for="responsavel_nome" class="control-label">Nome</label>
                                         <div class="form-group">
                                             <div class="form-line">
                                                 <input type="text" id="responsavel_nome" class="form-control" placeholder="">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-12">
-                                        <label for="responsavel_email">E-mail</label>
-                                        <div class="form-group">
-                                            <div class="form-line">
-                                                <input type="text" id="responsavel_email" class="form-control" placeholder="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <label for="responsavel_contato">Contato 1</label>
+                                    <div class="col-xs-12 col-sm-6 trino-required">
+                                        <label for="responsavel_contato" class="control-label">Contato 1</label>
                                         <div class="input-group">
                                             <div class="form-line">
                                                 <input type="text" id="responsavel_contato" class="form-control mobile-phone-number js-phone-number" placeholder="">
@@ -426,6 +429,14 @@
                                             </div>
                                             <input type="checkbox" id="responsavel_whatsapp2" class="chk-col-teal">
                                             <label for="responsavel_whatsapp2">WhatsApp</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12">
+                                        <label for="responsavel_email">E-mail</label>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" id="responsavel_email" class="form-control" placeholder="">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-xs-12">

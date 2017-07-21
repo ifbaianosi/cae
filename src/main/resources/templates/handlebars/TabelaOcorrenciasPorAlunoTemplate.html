@@ -1,5 +1,5 @@
 <script id="tabelaOcorrenciasPorAluno" type="text/x-handlebars-template">
-<table id="tabelaOcorrencias" class="table table-hover" th:fragment="tabelaOcorrencias">
+<table id="tabelaOcorrencias" class="table table-striped table-hover table-bordered" th:fragment="tabelaOcorrencias">
      <thead>
          <tr>
          	 <th style="width: 20px;"></th>
@@ -7,7 +7,7 @@
              <th>LOCAL</th>
              <th>DESCRÇÃO</th>
              <th>AUTOR</th>
-             <th>ENCAMINHAMENTO</th>
+             <th class="text-center">ENCAMINHAMENTO</th>
          </tr>
      </thead>
      <tbody>
@@ -22,7 +22,7 @@
              		<td>{{local}}</td>
              		<td>{{descricao}}</td>
              		<td>{{usuario}}</td>
-             		<td>
+             		<td class="text-right">
 						{{#if tipoEncaminhamento}}
 							<label class="label bg-primary" role="button" tabindex="0" data-placement="top" data-toggle="popover" data-trigger="focus"
                                         									 title="{{tipoEncaminhamento}}" 

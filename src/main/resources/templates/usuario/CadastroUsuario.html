@@ -16,8 +16,8 @@
     <section class="content" layout:fragment="conteudo">
         <div class="container-fluid">
             <div class="block-header">
-                <h2 th:if="${usuario.novo}">CADASTRAR NOVO USUARIO</h2>
-				<h2 class="text-uppercase" th:unless="${usuario.novo}" th:text="|EDITAR USUARIO ${usuario.nome}|">EDITAR USUARIO</h2>
+                <h2 th:if="${usuario.novo}">CADASTRAR NOVO USUÁRIO</h2>
+				<h2 class="text-uppercase" th:unless="${usuario.novo}" th:text="|EDITAR USUÁRIO ${usuario.nome}|">EDITAR USUÁRIO</h2>
             </div>
             <div class="card">
                 <div class="header">
@@ -41,8 +41,8 @@
 	                                <div class="col-md-12">
 			                            <h2 class="card-inside-title col-teal">IDENTIFICAÇÃO DO USUÁRIO</h2>
 			                        </div>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <label for="nome">Nome</label>
+                                    <div class="col-xs-12 col-sm-6 trino-required">
+                                        <label for="nome" class="control-label">Nome</label>
                                         <div class="form-group">
                                             <div class="form-line" th:classappend="${#fields.hasErrors('nome')} ? 'focused error'">
                                                 <input type="text" id="nome" class="form-control" placeholder="" th:field="*{nome}">
@@ -50,8 +50,8 @@
                                             <label th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="error" for="nome"></label>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
-                                        <label for="email">E-mail</label>
+                                    <div class="col-xs-12 col-sm-6 col-md-3 trino-required">
+                                        <label for="email" class="control-label">E-mail</label>
                                         <div class="form-group">
                                             <div class="form-line" th:classappend="${#fields.hasErrors('email')} ? 'focused error'">
                                                 <input type="text" id="email" class="form-control" placeholder="" th:field="*{email}">
@@ -72,9 +72,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
-                                        <label for="senha">Senha</label>
+                                <div class="row" th:if="${usuario.novo}">
+                                    <div class="col-xs-12 col-sm-6 col-md-3 trino-required">
+                                        <label for="senha" class="control-label">Senha</label>
                                         <div class="form-group">
                                             <div class="form-line" th:classappend="${#fields.hasErrors('senha')} ? 'focused error'">
                                                 <input type="password" id="senha" class="form-control" placeholder="" th:field="*{senha}">
@@ -82,8 +82,8 @@
                                             <label th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}" id="senha-error" class="error" for="senha"></label>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
-                                        <label for="confirmacaoSenha">Confirmação da senha</label>
+                                    <div class="col-xs-12 col-sm-6 col-md-3 trino-required">
+                                        <label for="confirmacaoSenha" class="control-label">Confirmação da senha</label>
                                         <div class="form-group">
                                             <div class="form-line" th:classappend="${#fields.hasErrors('confirmacaoSenha')} ? 'focused error'">
                                                 <input type="password" id="confirmacaoSenha" class="form-control" placeholder="" th:field="*{confirmacaoSenha}">
@@ -97,13 +97,13 @@
 			                            <h2 class="card-inside-title col-teal">PERFIL DO USUÁRIO</h2>
                                         <!-- <button type="button" class="btn btn-xs bg-teal waves-effect" data-toggle="modal" data-target="#defaultModal"><i class="material-icons btn-icon">add_circle_outline</i>CRIAR</button> -->
 			                        </div>
-			                        <div class="col-xs-12">
-			                        	<label for="grupos">Selecione o perfil</label>
+			                        <div class="col-xs-12 trino-required">
+			                        	<label for="grupos" class="control-label">Selecione o perfil</label>
                                         <div class="form-group">
                                             <div class="form-line" th:classappend="${#fields.hasErrors('grupos')} ? 'focused error'">
                                                 <th:block th:each="grupo : ${grupos}">
 		                                        	<div class="checkbox-inline"> 
-								    					<input type="checkbox" th:value="${grupo.codigo}" class="chk-col-teal" th:field="*{grupos}">
+								    					<input type="radio" th:value="${grupo.codigo}" class="with-gap chk-col-teal" th:field="*{grupos}">
 		                                            	<label class="text-uppercase" th:for="${#ids.prev('grupos')}" th:text="${grupo.nome}">CAE</label>
 							    					</div>
 	                                        	</th:block>

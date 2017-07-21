@@ -10,11 +10,13 @@ NGTICAE.Modal = {
 			$('#modalEncaminhamento').on('shown.bs.modal', this.carregar);
 			$('#modalEncaminhamento').on('hide.bs.modal', this.finalizar);
 		},
+		aluno,
 		
 		abrir: function(event){
 			var codigoOcorrencia = $(event.currentTarget).data('codigo');
 			console.log('codigoOcorrenciaClicada:', codigoOcorrencia);
 			NGTICAE.Modal.ocorrencia = codigoOcorrencia;
+			NGTICAE.Modal.aluno = $(event.currentTarget).data('nome');
 			$('#modalEncaminhamento').modal('show');
 		},
 		
@@ -35,7 +37,8 @@ NGTICAE.Modal = {
 					$('.js-data-ocorrencia').text(ocorrencia.dataOcorrido);
 					$('.js-local-ocorrencia').text(ocorrencia.local);
 					$('.js-descricao-ocorrencia').text(ocorrencia.descricao);
-					$('.js-nome-aluno').text($('#nomeAluno').text());
+					var nomeAluno = $('#nomeAluno').text().length > 0 ? $('#nomeAluno').text() : NGTICAE.Modal.aluno;
+					$('.js-nome-aluno').text(nomeAluno);
 					
 					//alert('test');
 					

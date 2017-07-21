@@ -88,6 +88,10 @@ $(function() {
 	 
 	// Enable Bootstrap popover
 	 $('[data-toggle="popover"]').popover();
+	 
+	 $('.js-info-box-click').click(function(){
+		 //alert('teste');
+	 });
 	
 });
 

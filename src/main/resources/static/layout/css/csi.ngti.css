@@ -1,4 +1,14 @@
 
+/*
+######################
+# UTILIDADES
+######################
+*/
+.trino-required > .control-label:after {
+	content: "*";
+}
+
+
 /** DETALHES **/
 
 .container.container-alt {

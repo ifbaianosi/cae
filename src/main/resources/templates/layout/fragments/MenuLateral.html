@@ -34,11 +34,11 @@
             <!-- Menu -->
             <div class="menu">
                 <ul class="list">
-                    <li class="header">CADASTROS BASICOS</li>
+                    <li class="header">CADASTROS BÁSICOS</li>
                     <li class="active">
                         <a th:href="@{/}">
                             <i class="material-icons">home</i>
-                            <span>INICIO</span>
+                            <span>INÍCIO</span>
                         </a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_MENU_ALUNOS')">
@@ -62,7 +62,7 @@
                     <li sec:authorize="hasRole('ROLE_MENU_USUARIOS')">
                         <a class="menu-toggle waves-effect waves-block">
                             <i class="material-icons">security</i>
-                            <span>USUARIOS</span>
+                            <span>USUÁRIO</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
                             <li sec:authorize-url="/usuarios/novo">
@@ -80,8 +80,8 @@
                     <li sec:authorize="hasRole('ROLE_MENU_REGISTROS')"  class="header">REGISTROS</li>
                     <li sec:authorize="hasRole('ROLE_MENU_OCORRENCIAS')">
                         <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
-                            <i class="material-icons">notifications</i>
-                            <span>OCORRENCIA</span>
+                            <i class="material-icons">assignment</i>
+                            <span>OCORRÊNCIA</span>
                         </a>
                         <ul class="ml-menu" style="display: none;">
                             <li sec:authorize-url="/ocorrencias/nova">
@@ -112,7 +112,7 @@
                     &copy; 2017 <a href="javascript:void(0);">IF BAIANO - SANTA INÊS - NGTI</a>.
                 </div>
                 <div class="version">
-                    <b>Versao: </b> 1.0.0
+                    <b>Versão: </b> 1.0.0
                 </div>
             </div>
             <!-- #Footer -->

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
+	
+<th:block th:fragment="cadastroEncaminhamentoModal">
+	
+	<div class="modal fade  js-modal-encaminhamento" id="modalEncaminhamento" tabindex="-1" role="dialog">
+           <div class="modal-dialog modal-lg" role="document">
+               <div class="card">
+                        <div class="header">
+                            <h2>
+                                EMITIR ENCAMINHAMENTO
+                            </h2>
+                       		<a href="javascript:void(0);" class="header-dropdown m-r--5" data-dismiss="modal"><i class="material-icons">clear</i></a>
+                        </div>
+                        <div class="body">
+                        	<div id="preloader" class="row hide">
+                        		<div class="col-xs-12">
+		                        	<div class="preloader pl-size-xs">
+		                                <div class="spinner-layer pl-teal">
+		                                    <div class="circle-clipper left">
+		                                        <div class="circle"></div>
+		                                    </div>
+		                                    <div class="circle-clipper right">
+		                                        <div class="circle"></div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                         </div>
+			                 </div>
+			                 <div class="row hide js-card-ocorrencia">
+		                        <div class="col-md-12">
+			                        <div class="col-md-12 bg-warning">
+			                            <h2 class="card-inside-title col-teal">DADOS DA OCORRÊNCIA</h2>
+		                        		<dl class="horizontal">
+			                              <dt>ALUNO</dt>
+										  <dd class="js-nome-aluno">Nome do aluno</dd>
+										  <dt>DATA</dt>
+										  <dd class="js-data-ocorrencia">15/04/2017</dd>
+										  <dt>LOCAL</dt>
+										  <dd class="js-local-ocorrencia">Pavilhao administrativo</dd>
+										  <dt>DESCRIÇÃO</dt>
+										  <dd class="js-descricao-ocorrencia">é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado.</dd>
+										</dl>
+			                        </div>
+		                        </div>
+		                    </div>
+		                    <div class="row hide js-card-formulario-encaminhamento">
+		                    	<div class="col-md-12" style="margin-bottom: 0px;">
+		                    		<h2 class="card-inside-title col-teal">FORMULÁRIO ENCAMINHAMENTO</h2>
+		                    		<form id="">
+		                        		<input id="ocorrencia" type="hidden" name="ocorrencia">
+		                        		<div class="row">
+			                        		<div class="col-xs-12 col-sm-6 col-md-4 trino-required">
+		                                        <label for="tipoEncaminhamento" class="control-label">Tipo do encaminhamento</label>
+		                                        <div class="form-group">
+		                                        	<select id="tipoEncaminhamento" class="form-control show-tick">
+			                                        	<option value="">selecione...</option>
+			                                            <option th:each="tipo : ${tipoEncaminhamento}" th:value="${tipo}" th:text="${tipo.descricao}">SUSPENSAO</option>
+			                                        </select>                                           
+		                                        </div>
+		                                    </div>
+		                               </div>
+		                               <div class="row">
+			                                <div class="col-xs-12">
+			                                <label for="descricao" class="control-label">Descrição da medida disciplinar</label>
+			                                    <div class="form-group">
+			                                        <div class="form-line">
+			                                            <textarea id="descricao" rows="4" class="form-control no-resize  js-encaminhamento-descricao" placeholder="Digite aqui a descrição da medida disciplinar ao aluno..."></textarea>
+			                                        </div>
+			                                    </div>
+			                                </div>
+		                        		</div>
+		                        		<div class="row">
+		                        			<div class="col-xs-12">
+		                        				<button type="submit" class="btn waves-effect bg-teal  js-salvar-encaminhamento" th:data-url="@{/encaminhamento}">SALVAR</button>
+		                        				<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+		                        				<div class="preloader pl-size-xs pull-right hide">
+				                                    <div class="spinner-layer pl-teal">
+				                                        <div class="circle-clipper left">
+				                                            <div class="circle"></div>
+				                                        </div>
+				                                        <div class="circle-clipper right">
+				                                            <div class="circle"></div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+		                        			</div>
+		                        		</div>
+			                		</form>
+		                    	</div>
+		                    </div>
+		                    <!-- <fieldset class="hide js-card-formulario-encaminhamento">
+		                    	<legend>TIPO DO ENCAMINHAMENTO</legend>
+	                        	<form id="">
+	                        		<input id="ocorrencia" type="hidden" name="ocorrencia">
+	                        		<div class="row">
+		                        		<div class="col-xs-12 col-sm-6 col-md-4 trino-required">
+	                                        <label for="tipoEncaminhamento" class="control-label">Tipo do encaminhamento</label>
+	                                        <div class="form-group">
+	                                        	<select id="tipoEncaminhamento" class="form-control show-tick">
+		                                        	<option value="">selecione...</option>
+		                                            <option th:each="tipo : ${tipoEncaminhamento}" th:value="${tipo}" th:text="${tipo.descricao}">SUSPENSAO</option>
+		                                        </select>                                           
+	                                        </div>
+	                                    </div>
+	                               </div>
+	                               <div class="row">
+		                                <div class="col-xs-12">
+		                                    <div class="form-group">
+		                                        <div class="form-line">
+		                                            <textarea rows="4" class="form-control no-resize  js-encaminhamento-descricao" placeholder="Digite aqui a descrição da medida disciplinar ao aluno..."></textarea>
+		                                        </div>
+		                                    </div>
+		                                </div>
+	                        		</div>
+	                        		<div class="row">
+	                        			<div class="col-xs-12">
+	                        				<button type="submit" class="btn waves-effect bg-teal  js-salvar-encaminhamento" th:data-url="@{/encaminhamento}">SALVAR</button>
+	                        				<div class="preloader pl-size-xs pull-right hide">
+			                                    <div class="spinner-layer pl-teal">
+			                                        <div class="circle-clipper left">
+			                                            <div class="circle"></div>
+			                                        </div>
+			                                        <div class="circle-clipper right">
+			                                            <div class="circle"></div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+	                        			</div>
+	                        		</div>
+			                	</form>
+		                    </fieldset> -->
+                        </div>
+                    </div>
+           </div>
+       </div>
+		
+</th:block>
+
+</html>
