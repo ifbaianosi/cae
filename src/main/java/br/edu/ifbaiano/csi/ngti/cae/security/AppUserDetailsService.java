@@ -29,6 +29,10 @@ public class AppUserDetailsService implements UserDetailsService {
 		//TODO: obter o usuario apenas pelo email, apos retornar verificar se está ativo ou inativo e enviar mensagem ao usuario na tela
 		Optional<Usuario> usuarioOptional = usuarios.porEmailEAtivo(email);
 		Usuario usuario = usuarioOptional.orElseThrow(() -> new UsernameNotFoundException("Usuário e/ou senha incorretos"));
+		
+		//retorna o usuario com os perfis associados
+		usuario = usuarios.buscarComGrupos(usuario.getCodigo());
+		
 		return new UsuarioSistema(usuario, getPermissoes(usuario));
 	}
 	
