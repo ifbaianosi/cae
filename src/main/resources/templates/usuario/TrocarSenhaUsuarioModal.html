@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
+	
+<th:block th:fragment="trocarSenhaUsuarioModal">
+	
+	<div class="modal fade  js-modal-trocar-senha-usuario" id="modalTrocarSenhaUsuario" tabindex="-1" role="dialog">
+           <div class="modal-dialog" role="document">
+               <div class="card">
+                        <div class="header">
+                            <h2>
+                                TROCAR SENHA
+                            </h2>
+                       		<a href="javascript:void(0);" class="header-dropdown m-r--5" data-dismiss="modal"><i class="material-icons">clear</i></a>
+                            
+                        </div>
+                        <div class="body">
+                        	<form>
+                        		<div class="row">
+                        			<div class="col-sm-12  js-mensagem hide">
+	                        			<p class="bg-danger js-texto-mensagem">
+		                            		Digite ao menos 3 caracteres para realizar a consulta.
+		                            	</p>
+	                            	</div>
+	                        		<div class="col-xs-12 col-sm-12 col-md-12">
+	                                    <label for="senhaAtual">Senha atual</label>
+	                                    <div class="form-group">
+	                                        <div class="form-line">
+	                                            <input type="password" id="senhaAtual" class="form-control  js-senha-atual">
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                        		<div class="col-xs-12 col-sm-12 col-md-12">
+	                                    <label for="novaSenha">Nova senha</label>
+	                                    <div class="form-group">
+	                                        <div class="form-line">
+	                                            <input type="password" id="novaSenha" class="form-control  js-nova-senha">
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                        		<div class="col-xs-12 col-sm-12 col-md-12">
+	                                    <label for="repitaSenha">Confirmar a nova senha</label>
+	                                    <div class="form-group">
+	                                        <div class="form-line">
+	                                            <input type="password" id="repitaSenha" class="form-control  js-repita-senha">
+	                                        </div>
+	                                    </div>
+	                                </div>
+                        		</div>
+                        		<div class="row">
+                        			<div class="col-xs-12">
+                        				<button type="submit" class="btn waves-effect bg-teal  js-alterar-senha" th:data-url="@{/usuarios}">ALTERAR</button>
+                        				<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+                        				<div class="preloader pl-size-xs pull-right hide">
+		                                    <div class="spinner-layer pl-teal">
+		                                        <div class="circle-clipper left">
+		                                            <div class="circle"></div>
+		                                        </div>
+		                                        <div class="circle-clipper right">
+		                                            <div class="circle"></div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+                        			</div>
+                        		</div>
+		                	</form>
+                        </div>
+                    </div>
+           </div>
+       </div>
+		
+</th:block>
+
+</html>

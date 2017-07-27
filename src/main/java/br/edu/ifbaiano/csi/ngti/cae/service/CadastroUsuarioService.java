@@ -64,6 +64,12 @@ public class CadastroUsuarioService {
 			throw new ImpossivelExcluirEntidadeException("Desculpe, mas não foi possivel excluir o usuario.");
 		}
 	}
+
+
+	@Transactional
+	public void trocarSenha(Usuario usuario) {
+		usuarios.save(usuario);
+	}
 	
 	
 	

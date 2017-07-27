@@ -53,7 +53,6 @@ public class Usuario extends Entidade {
 	
 	private Boolean ativo;
 	
-	/*@NotNull(message="Data nascimento é obrigatório")*/
 	@Column(name="data_nascimento")
 	private LocalDate dataNascimento;
 	
