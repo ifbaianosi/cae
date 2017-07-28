@@ -41,7 +41,7 @@ import br.edu.ifbaiano.csi.ngti.cae.service.CadastroUsuarioService;
 import br.edu.ifbaiano.csi.ngti.cae.service.StatusUsuario;
 import br.edu.ifbaiano.csi.ngti.cae.service.exception.ImpossivelExcluirEntidadeException;
 import br.edu.ifbaiano.csi.ngti.cae.service.exception.SenhaObrigatoriaUsuarioException;
-import br.edu.ifbaiano.csi.ngti.cae.service.exception.UsuarioEmailJaCadastradoException;
+import br.edu.ifbaiano.csi.ngti.cae.service.exception.EmailUsuarioJaCadastradoException;
 
 @Controller
 @RequestMapping("/usuarios")
@@ -84,7 +84,7 @@ public class UsuariosController {
 		
 		try {
 			cadastroUsuarioService.salvar(usuario);
-		} catch (UsuarioEmailJaCadastradoException e) {
+		} catch (EmailUsuarioJaCadastradoException e) {
 			result.rejectValue("email", e.getMessage(), e.getMessage());
 			return novo(usuario);
 		} catch (SenhaObrigatoriaUsuarioException e) {

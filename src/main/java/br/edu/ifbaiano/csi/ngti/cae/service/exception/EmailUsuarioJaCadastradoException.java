@@ -1,10 +1,10 @@
 package br.edu.ifbaiano.csi.ngti.cae.service.exception;
 
-public class UsuarioEmailJaCadastradoException extends RuntimeException{
+public class EmailUsuarioJaCadastradoException extends RuntimeException{
 
 	private static final long serialVersionUID = -2498043077332672709L;
 
-	public UsuarioEmailJaCadastradoException(String message) {
+	public EmailUsuarioJaCadastradoException(String message) {
 		super(message);
 	}
 }

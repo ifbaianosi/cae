@@ -1,5 +1,6 @@
 package br.edu.ifbaiano.csi.ngti.cae.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -8,6 +9,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -29,9 +33,13 @@ import br.edu.ifbaiano.csi.ngti.cae.validation.AtributoConfirmacao;
 @Entity
 @Table(name="usuario")
 @DynamicUpdate
-public class Usuario extends Entidade {
+public class Usuario implements Serializable{
 
 	private static final long serialVersionUID = -1704912817129220803L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codigo;
 
 	@NotBlank(message="Nome é obrigatório")
 	@Size(max=50, message="O nome deve conter no máximo {max} caracteres")
@@ -51,7 +59,7 @@ public class Usuario extends Entidade {
 	@Transient
 	private UsuarioStatus status;
 	
-	private Boolean ativo;
+	private Boolean ativo = true;
 	
 	@Column(name="data_nascimento")
 	private LocalDate dataNascimento;
@@ -71,6 +79,12 @@ public class Usuario extends Entidade {
 	@PreUpdate
 	private void preUpdate() {
 		this.confirmacaoSenha = senha;
+	}
+	public Long getCodigo() {
+		return codigo;
+	}
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getNome() {
@@ -127,6 +141,41 @@ public class Usuario extends Entidade {
 	
 	public UsuarioStatus getAtivoOuInativo(){
 		return ativo == true ? UsuarioStatus.Ativo : UsuarioStatus.Inativo;
+	}
+	
+	public boolean isNovo(){
+		return codigo == null;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		return true;
 	}
 	
 }

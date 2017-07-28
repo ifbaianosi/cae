@@ -77,7 +77,7 @@
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
-	                                    <tr th:each="usuario : ${pagina.conteudo}">
+	                                    <tr th:each="usuario : ${pagina.conteudo}" th:if="${usuario.codigo > 1}">
 		                                    <td style="width: 20px;">
 		                                    	<div th:if="${#authentication.principal.usuario.codigo != usuario.codigo}">
 							         	 			<input type="checkbox" th:id="|ID_${usuario.codigo}|" class="chk-col-teal  js-checkbox" th:data-codigo="${usuario.codigo}">

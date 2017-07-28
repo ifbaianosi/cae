@@ -12,9 +12,9 @@ import org.springframework.util.StringUtils;
 
 import br.edu.ifbaiano.csi.ngti.cae.model.Usuario;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Usuarios;
+import br.edu.ifbaiano.csi.ngti.cae.service.exception.EmailUsuarioJaCadastradoException;
 import br.edu.ifbaiano.csi.ngti.cae.service.exception.ImpossivelExcluirEntidadeException;
 import br.edu.ifbaiano.csi.ngti.cae.service.exception.SenhaObrigatoriaUsuarioException;
-import br.edu.ifbaiano.csi.ngti.cae.service.exception.UsuarioEmailJaCadastradoException;
 
 @Service
 public class CadastroUsuarioService {
@@ -29,23 +29,23 @@ public class CadastroUsuarioService {
 	public void salvar(Usuario usuario) {
 		Optional<Usuario> usuarioExistente = usuarios.findByEmailIgnoreCase(usuario.getEmail());
 		if (usuarioExistente.isPresent() && !usuarioExistente.get().equals(usuario)) {
-			throw new UsuarioEmailJaCadastradoException("E-mail já cadastrado");
+			throw new EmailUsuarioJaCadastradoException("E-mail já cadastrado");
 		}
 		
 		if (usuario.isNovo() && StringUtils.isEmpty(usuario.getSenha())) {
 			throw new SenhaObrigatoriaUsuarioException("Senha é obrigatória para novo usuário");
 		}
 		
-		if (usuario.isNovo() || !StringUtils.isEmpty(usuario.getSenha())) {
-			usuario.setSenha(this.passwordEncoder.encode(usuario.getSenha()));
-		} else if (StringUtils.isEmpty(usuario.getSenha())) {
-			usuario.setSenha(usuarioExistente.get().getSenha());
+		if (usuario.isNovo() || !StringUtils.isEmpty(usuario.getSenha())) {//novo usuario ou senha preenchida
+			usuario.setSenha(this.passwordEncoder.encode(usuario.getSenha()));//encodar a senha para salvar no banco de dados
+		} else if (StringUtils.isEmpty(usuario.getSenha())) {//se o usuario não conter uma senha ou for uma edição de usuario existente
+			usuario.setSenha(usuarios.getOne(usuario.getCodigo()).getSenha());
 		}
 		usuario.setConfirmacaoSenha(usuario.getSenha());
 		
-		if (!usuario.isNovo() && usuario.getAtivo() == null) {
+		/*if (!usuario.isNovo() && usuario.getAtivo() == null) {
 			usuario.setAtivo(usuarioExistente.get().getAtivo());
-		}
+		}*/
 		
 		usuarios.save(usuario);
 	}

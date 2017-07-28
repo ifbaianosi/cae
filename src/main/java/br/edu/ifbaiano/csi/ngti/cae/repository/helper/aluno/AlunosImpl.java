@@ -84,7 +84,7 @@ public class AlunosImpl implements AlunosQueries {
 		if(filtro != null){
 			//FILTRO MATRICULA
 			if(!StringUtils.isEmpty(filtro.getMatricula()))//se o filtro matricula não estiver vazio
-				criteria.add(Restrictions.ilike("matricula", filtro.getMatricula(), MatchMode.START));
+				criteria.add(Restrictions.like("matricula", filtro.getMatricula(), MatchMode.START));
 			
 			//FILTRO NOME
 			if(!StringUtils.isEmpty(filtro.getNome()))
@@ -127,7 +127,7 @@ public class AlunosImpl implements AlunosQueries {
 				criteria.add(Restrictions.eq("status", filtro.getStatus()));
 			
 			//FILTRO PERMISSÃO DE SAIDA DO CAMPUS
-			if(filtro.getSaida() != null)
+			if(filtro.getSaida() != null && filtro.getSaida() == true)
 				criteria.add(Restrictions.eq("saida", filtro.getSaida()));
 		}
 	}
@@ -138,7 +138,9 @@ public class AlunosImpl implements AlunosQueries {
 		criteria.setProjection(Projections.rowCount());
 		return (Long)criteria.uniqueResult();
 	}
-
-
+	
+	/*private boolean filtrarPorSaida(AlunoFilter filtro){
+		return filtro.getSaida() == true || filtro.getSaida() == false
+	}*/
 	
 }
