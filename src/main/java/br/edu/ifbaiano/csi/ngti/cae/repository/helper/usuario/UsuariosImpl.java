@@ -86,11 +86,6 @@ public class UsuariosImpl implements UsuariosQueries {
 			//FILTRO EMAIL
 			if(!StringUtils.isEmpty(filtro.getEmail()))
 				criteria.add(Restrictions.ilike("email", filtro.getEmail(), MatchMode.START));
-			
-			//FILTRO DATA NASCIMENTO
-			if(filtro.getDataNascimento() != null)
-				criteria.add(Restrictions.eq("dataNascimento", filtro.getDataNascimento()));
-			
 		}
 	}
 

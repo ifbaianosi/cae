@@ -31,19 +31,20 @@ public class Ocorrencia extends Entidade{
 	@Column(name="data_registro")
 	private LocalDateTime dataRegistro;
 	
-	@NotNull(message="A data do ocorrido e obrigatoria")
+	@NotNull(message="A data da ocorrência é obrigatória")
 	@Column(name="data_ocorrido")
 	private LocalDateTime dataOcorrido;
 	
-	@NotBlank(message="A descricao e obrigatoria")
-	@Size(max=254, message="A descricao deve conter no maximo {max} caracteres")
+	@NotBlank(message="A descrição é obrigatória")
+	@Size(max=500, message="A descrição deve conter no máximo {max} caracteres")
 	private String descricao;
 	
+	@NotBlank(message="O local da ocorrência é obrigatório")
 	@Column(name="local_ocorrencia")
-	@Size(max=200, message="A descricao deve conter no maximo {max} caracteres")
+	@Size(max=200, message="A descricao deve conter no máximo {max} caracteres")
 	private String local;
 	
-	@NotNull(message="O aluno e obrigatorio")
+	@NotNull(message="O aluno é obrigatório")
 	@ManyToOne
 	@JoinColumn(name="codigo_aluno")
 	private Aluno aluno;

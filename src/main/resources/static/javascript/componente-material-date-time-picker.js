@@ -17,6 +17,14 @@ $(function(){
         clearText: 'LIMPAR' 
     });*/
 	
-	$('.datepicker').bootstrapMaterialDatePicker({ weekStart : 0, time: false });
+	$('.datepicker').bootstrapMaterialDatePicker({ 
+		weekStart: 0, 
+		time: false,
+		format: 'DD/MM/YYYY',
+        lang: 'pt',
+        clearButton: true,
+        cancelText: 'CANCELAR',
+        clearText: 'LIMPAR' 
+	});
 });
 

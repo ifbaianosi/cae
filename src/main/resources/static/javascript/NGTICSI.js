@@ -89,9 +89,13 @@ $(function() {
 	// Enable Bootstrap popover
 	 $('[data-toggle="popover"]').popover();
 	 
-	 $('.js-info-box-click').click(function(){
-		 //alert('teste');
+	 $('.js-info-box-click').click(function(event){
+		 var url = $(event.currentTarget).data('url');
+		 console.log('click no info box', url);
+		 window.location.href = url;
 	 });
+	 
+	 $('.js-info-box-click-tab li:eq(1) a').tab('show');
 	
 });
 

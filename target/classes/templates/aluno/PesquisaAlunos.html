@@ -10,6 +10,9 @@
     
     <!-- Customização de componentes NGTI -->
     <link th:href="@{/layout/css/customizacao.componentes.css}" rel="stylesheet">
+
+    <!-- Bootstrap Material Datetime Picker Css -->
+    <link th:href="@{/layout/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css}" rel="stylesheet" />
 </head>
 
 <body>
@@ -18,12 +21,12 @@
         <div class="container-fluid">
             <div class="block-header">
             	<div class="row">
-            		<div class="col-md-3">
+            		<div class="col-md-8">
             			<h2>PESQUISAR ALUNOS</h2>
             		</div>
-            		<div class="col-md-9">
+            		<div class="col-md-4">
 		                <ol class="breadcrumb align-right" style="padding: 0px 0px;">
-		                    <li><a th:href="@{/}"><i class="material-icons">home</i> Início</a></li>
+		                    <li><a th:href="@{/}" class="js-tooltip" title="Página inicial"><i class="material-icons">home</i> Início</a></li>
 		                    <li class="active"><i class="material-icons">school</i> Alunos</li>
 		                </ol>
             		</div>
@@ -96,7 +99,7 @@
                                                 <i class="material-icons">date_range</i>
                                             </span>
                                             <div class="form-line" th:classappend="${#fields.hasErrors('dataNascimento')} ? 'focused error'">
-                                                <input type="text" class="form-control js-date" readonly="readonly" placeholder="" th:field="*{dataNascimento}">
+                                                <input type="text" class="form-control datepicker" readonly="readonly" placeholder="" th:field="*{dataNascimento}">
                                             </div>
                                             <label th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}" class="error" for="dataNascimento"></label>
                                         </div>
@@ -193,12 +196,12 @@
                                 </thead>
                                 <tbody>
                                     <tr th:each="aluno : ${pagina.conteudo}">
-                                        <th scope="row" th:text="${aluno.matricula}">1</th>
-                                        <td th:text="${aluno.nome}">Mark</td>
-                                        <td th:text="${aluno.curso.nome}">Otto</td>
-                                        <td th:text="${aluno.regime.descricao}">@mdo</td>
+                                        <td th:text="${aluno.matricula}">17115</td>
+                                        <td th:text="${aluno.nome}">Nome do Aluno</td>
+                                        <td th:text="${aluno.curso.nome}">Curso</td>
+                                        <td th:text="${aluno.regime.descricao}">Aluno Interno</td>
                                         <td>
-                                        	<span class="label" th:text="${aluno.status.descricao}" th:classappend="${aluno.status.cor}">FREQUENTAO</span>
+                                        	<span class="label" th:text="${aluno.status.descricao}" th:classappend="${aluno.status.cor}">FREQUENTANDOO</span>
                                         </td>
                                         <td class="text-right">
                                         	<a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}" class="col-red"><i class="material-icons btn-icon">edit</i>Editar</a>
@@ -264,6 +267,13 @@
     </section>
 
    <th:block layout:fragment="javascript-extra">
+   		
+  		 <!-- Moment Plugin Js -->
+	    <script th:src="@{/layout/plugins/momentjs/moment.js}"></script>
+   		
+	    <!-- Bootstrap Material Datetime Picker Plugin Js -->
+	    <script th:src="@{/layout/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js}"></script>
+	    <script th:src="@{/javascript/componente-material-date-time-picker.js}"></script>
    </th:block>
 </body>
 

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Inicio</title>
+    <!-- Favicon-->
+    <link rel="icon" th:href="@{/layout/images/favicon.ico}" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap Core Css -->
+    <link th:href="@{/layout/plugins/bootstrap/css/bootstrap.css}" rel="stylesheet">
+
+    <!-- Bootstrap Select Css -->
+    <link th:href="@{/layout/plugins/bootstrap-select/css/bootstrap-select.css}" rel="stylesheet" />
+
+    <!-- Waves Effect Css -->
+    <link th:href="@{/layout/plugins/node-waves/waves.css}" rel="stylesheet" />
+
+    <!-- Animation Css -->
+    <link th:href="@{/layout/plugins/animate-css/animate.css}" rel="stylesheet" />
+
+    <!-- Bootstrap datepicker Css -->
+    <link th:href="@{/javascript/vendors/plugins/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css}" rel="stylesheet" />
+
+    <!-- Custom Css -->
+    <link th:href="@{/layout/css/style.css}" rel="stylesheet">
+
+    <!-- Custom NGTI -->
+    <link th:href="@{/layout/css/csi.ngti.css}" rel="stylesheet">
+
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link th:href="@{/layout/css/themes/theme-teal.min.css}" rel="stylesheet" />
+</head>
+
+<body class="theme-teal">
+	
+    
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+    <!-- #END# Overlay For Sidebars -->
+    
+    
+    
+    <!-- CABECALHO DA APLICAÇÃO -->
+    <div th:replace="layout/fragments/Cabecalho :: cabecalho"></div>
+    
+    <!-- MENU LATERAL DA APLICAÇÃO -->
+    <div th:replace="layout/fragments/MenuLateral :: menuLateral"></div>
+    
+    <!-- CONTEUDO PRINCIPAL DA APLICAÇÃO -->
+    <section class="content" layout:fragment="conteudo"></section>
+    
+    
+
+	<!-- REQUIRED JS SCRIPTS -->
+
+    <!-- Jquery Core Js -->
+    <script th:src="@{/layout/plugins/jquery/jquery.min.js}"></script>
+
+    <!-- Bootstrap Core Js -->
+    <script th:src="@{/layout/plugins/bootstrap/js/bootstrap.js}"></script>
+
+    <!-- Select Plugin Js -->
+    <script th:src="@{/layout/plugins/bootstrap-select/js/bootstrap-select.js}"></script>
+
+    <!-- Slimscroll Plugin Js -->
+    <script th:src="@{/layout/plugins/jquery-slimscroll/jquery.slimscroll.js}"></script>
+
+    <!-- Waves Effect Plugin Js -->
+    <script th:src="@{/layout/plugins/node-waves/waves.js}"></script>
+
+    <!-- Jquery CountTo Plugin Js -->
+    <script th:src="@{/layout/plugins/jquery-countto/jquery.countTo.js}"></script>
+
+    <!-- JQuery Mask plugin JS -->
+    <script th:src="@{/javascript/vendors/plugins/jquery-mask-plugin/jquery.mask.min.js}"></script>
+
+    <!-- Bootstrap datepicker plugin JS -->
+    <script th:src="@{/javascript/vendors/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js}"></script>
+
+    <!-- JS NGTICSI-->
+    <script th:src="@{/javascript/NGTICSI.js}"></script>
+    
+    <!-- Custom Js -->
+    <script th:src="@{/layout/js/cae.js}"></script>
+
+    <!-- Custom Js -->
+    <script th:src="@{/layout/js/admin.js}"></script>
+
+    <!-- Demo Js -->
+    <script th:src="@{/layout/js/demo.js}"></script>
+    
+    <!-- notificações -->
+	<script th:src="@{/javascript/vendors/plugins/alertify/alertify.js}"></script>
+	<script th:src="@{/javascript/vendors/plugins/bootstrap-notify/bootstrap-notify.min.js}"></script>
+	<script th:src="@{/javascript/notificacoes-push.js}"></script>
+
+    <!-- TRINO - trocar senha modal -->
+	<script th:src="@{/javascript/usuario.trocar-senha.js}"></script>
+    
+    <th:block layout:fragment="javascript-extra"></th:block>
+</body>
+
+</html>

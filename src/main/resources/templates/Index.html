@@ -15,11 +15,18 @@
             <div class="block-header">
                 <h2>INÍCIO</h2>
             </div>
-
+            
+            <!-- MENSAGEM ACESSO COM SUCESSO -->
+			<!-- <div class="alert bg-cyan alert-dismissible fade in" role="alert" th:if="${not #strings.isEmpty(loginSucesso)}" th:fragment="alert">
+                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="material-icons">clear</i></button>
+                   <span><span>OLÁ</span> <span th:text="${#authentication.principal.usuario.nome}">GLAUBER</span><strong> !</strong> SEU PERFIL DE ACESSO PERMITE UTILIZAR O SISTEMA COMO <span>ASSISTENTE DE ALUNOS</span></span>
+            </div> -->
+			
             <!-- Widgets -->
             <div class="row clearfix">
                 <div class="col-sm-6 col-xs-12">
-                    <div class="info-box bg-pink hover-expand-effect">
+                    <div class="info-box bg-pink hover-expand-effect" 
+                    		th:classappend="${#authorization.expression('hasRole(''ROLE_MENU_ALUNOS'')')} ?  js-info-box-click"  th:data-url="@{/alunos}">
                         <div class="icon">
                             <i class="material-icons">school</i>
                         </div>
@@ -30,9 +37,10 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <div class="info-box bg-cyan hover-expand-effect">
+                    <div class="info-box bg-cyan hover-expand-effect" 
+                    		th:classappend="${#authorization.expression('hasRole(''ROLE_MENU_OCORRENCIAS'')')} ?  js-info-box-click" th:data-url="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}">
                         <div class="icon">
-                            <i class="material-icons">notifications</i>
+                            <i class="material-icons">assignment</i>
                         </div>
                         <div class="content">
                             <div class="text">OCORRÊNCIAS</div>
@@ -64,11 +72,12 @@
                 </div>-->
             </div>
             
-            <!-- <div class="row">
-            	<div class="col-md-12">
+            <div class="row">
+            	<!-- <div class="col-md-12">
 	            	<img class="img-responsive" alt="logo-trino" th:src="@{/layout/images/trino-bg.png}">
-            	</div>
-            </div> -->
+            	</div> -->
+            </div>
+            
             <!-- #END# Widgets -->
             <!-- CPU Usage -->
             

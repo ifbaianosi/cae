@@ -22,12 +22,18 @@
             <div class="container container-alt">
             	<div class="row">
 	            	<div class="block-header">
-		                <h2>HISTÓRICO DO ALUNO</h2>
-		                
-						<div class="callout callout-warnning alert alert-warnning alert-dismissable fade in" th:if="${not #strings.isEmpty(warnning)}">
-					      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-					        <i class="material-icons">add</i> <span th:text="${warnning}"></span>
-					    </div>
+		                <div class="row">
+		            		<div class="col-md-6">
+				                <h2>HISTÓRICO DO ALUNO</h2>
+		            		</div>
+		            		<div class="col-md-6">
+				                <ol class="breadcrumb align-right" style="padding: 0px 0px;">
+				                    <li><a th:href="@{/}" class="js-tooltip" title="Página inicial"><i class="material-icons">home</i> Início</a></li>
+				                    <li><a th:href="@{/alunos}" class="js-tooltip" title="Pesquisar aluno"><i class="material-icons">school</i> Alunos</a></li>
+				                    <li class="active"><i class="material-icons">history</i> Histórico</li>
+				                </ol>
+		            		</div>
+		            	</div>
 		                
 		            </div>
 	            	<div class="card" th:if="${aluno} != null">
@@ -87,7 +93,7 @@
 			                                	<div role="tabpanel" class="tab-pane fade in active" id="geral">
 			                                        <div class="row">
 										                <div class="col-xs-12">
-										                    <div class="info-box-3 hover-expand-effect js-info-box-click" style="margin-bottom: 0px;">
+										                    <div class="info-box-3 hover-expand-effect js-info-box-click-tab" style="margin-bottom: 0px;">
 										                        <div class="icon">
 										                            <i class="material-icons col-blue">assignment</i>
 										                        </div>

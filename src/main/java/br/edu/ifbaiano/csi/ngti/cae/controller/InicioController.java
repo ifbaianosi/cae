@@ -24,7 +24,7 @@ public class InicioController {
 	
 	@GetMapping
 	public ModelAndView index(){
-		ModelAndView mv = new ModelAndView("Home");
+		ModelAndView mv = new ModelAndView("Index");
 		mv.addObject("quantidadeOcorrencias", ocorrencias.count());
 		mv.addObject("quantidadeAlunos", alunos.count());
 		

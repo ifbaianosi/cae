@@ -2,7 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org">
 	
-<div class="well">Para realizar uma ocorrência preencha corretamente o formulário abaixo e clique em salvar.</div>	
 <form id="formularioNovaOcorrencia" class="js-formulario" th:action="@{/ocorrencias/nova}" method="POST" th:object="${ocorrencia}" th:fragment="formularioNovaOcorrencia">
 		<!-- <div th:if="${ocorrencia.aluno.serieTurma} == null">
 			<div class="well">Impossível adicionar registro de ocorrencia. O cadastro do aluno está incompleto, clique <a th:href="@{/alunos/codigodoaluno}">aqui</a> para completar o cadastro.</div>
@@ -177,8 +176,8 @@
                                    </div>
                                 </div>
 		                        <div class="row">
-		                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-		                                <label for="dataOcorrido">Data Ocorrência</label>
+		                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 trino-required">
+		                                <label for="dataOcorrido" class="control-label">Data Ocorrência</label>
 		                                <div class="input-group">
 		                                    <span class="input-group-addon">
 		                                        <i class="material-icons">date_range</i>
@@ -191,8 +190,8 @@
 		                            </div>
 		                         </div>
 		                         <div class="row">   
-		                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
-		                                <label for="descricao">Descrição</label>
+		                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8 trino-required">
+		                                <label for="descricao" class="control-label">Descrição</label>
 		                                <div class="form-group">
 		                                    <div class="form-line" th:classappend="${#fields.hasErrors('descricao')} ? 'focused error'">
 		                                        <textarea rows="2" class="form-control no-resize  js-descricao" placeholder="Digite aqui a descrição da ocorrência..." th:field="*{descricao}"></textarea>
@@ -202,8 +201,8 @@
 		                            </div>
 		                        </div>
 		                        <div class="row">
-		                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
-		                                <label for="local">Local da ocorrência</label>
+		                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8 trino-required">
+		                                <label for="local" class="control-label">Local da ocorrência</label>
 		                                <div class="form-group">
 		                                    <div class="form-line" th:classappend="${#fields.hasErrors('local')} ? 'focused error'">
 		                                        <input type="text" class="form-control  js-local" placeholder="" th:field="*{local}">

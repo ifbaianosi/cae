@@ -16,8 +16,21 @@
     <section class="content" layout:fragment="conteudo">
         <div class="container-fluid">
             <div class="block-header">
-                <h2 th:if="${ocorrencia.novo}">REGISTRAR NOVA OCORRÊNCIA</h2>
-				<h2 th:unless="${ocorrencia.novo}" th:text="|EDITAR OCORRENCIA ${ocorrencia.codigo}|">EDITAR OCORRÊNCIA</h2>
+				<div class="row">
+            		<div class="col-md-6">
+            			<h2 th:if="${ocorrencia.novo}">REGISTRAR NOVA OCORRÊNCIA</h2>
+						<h2 th:unless="${ocorrencia.novo}" th:text="|EDITAR OCORRÊNCIA ${ocorrencia.codigo}|">EDITAR OCORRÊNCIA</h2>
+            		</div>
+            		<div class="col-md-6">
+		                <ol class="breadcrumb align-right" style="padding: 0px 0px;">
+		                    <li><a th:href="@{/}" class="js-tooltip" title="Página inicial"><i class="material-icons">home</i> Início</a></li>
+		                    <li><a th:href="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}"
+		                    		class="js-tooltip" title="Pesquisar ocorrência"><i class="material-icons">assignment</i> Ocorrências</a></li>
+		                    <li class="active" th:if="${ocorrencia.novo}"><i class="material-icons">add_circle_outline</i> Nova</li>
+		                    <li class="active" th:unless="${ocorrencia.novo}"><i class="material-icons">edit</i> Editar</li>
+		                </ol>
+            		</div>
+            	</div>
             </div>
             <div class="card">
                 <!-- <div class="header">

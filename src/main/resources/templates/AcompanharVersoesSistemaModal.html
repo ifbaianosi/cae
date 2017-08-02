@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
+	
+<th:block th:fragment="versoesSistemaModal">
+	
+	<div class="modal fade  js-modal-versoes-sistema" id="modalVersoesSistema" tabindex="-1" role="dialog">
+           <div class="modal-dialog modal-lg" role="document">
+               <div class="card">
+                        <div class="header">
+                            <h2>
+                                TRINO
+                                <small>Lista de funcionalidades adicionadas ao sistema a cada versão.</small>
+                            </h2>
+                       		<a href="javascript:void(0);" class="header-dropdown m-r--5" data-dismiss="modal"><i class="material-icons">clear</i></a>
+                            
+                        </div>
+                        <div class="body">
+                        	<div class="row clearfix">
+                                <div class="col-xs-12 ol-sm-12 col-md-12 col-lg-12">
+                                    <div class="panel-group full-body" id="accordion_1" role="tablist" aria-multiselectable="true">
+                                        <div class="panel">
+                                            <div class="panel-heading" role="tab" id="headingOne_3">
+                                                <h4 class="panel-title">
+                                                    <a role="button" data-toggle="collapse" href="#collapseOne_3" aria-expanded="true" aria-controls="collapseOne_3">
+                                                        Versão 1.1.1 <span class="badge bg-cyan">Atualizações</span>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseOne_3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne_3">
+                                                <div class="panel-body">
+                                                    <ul class="list-group">
+						                                <li class="list-group-item">Implementação da barra de navegação no sistema <span class="badge bg-pink">Novo</span></li>
+						                                <li class="list-group-item">Implementação da página de erro 500 customizada  <span class="badge bg-pink">Novo</span></li>
+						                                <li class="list-group-item">Padronização do componente de data  <span class="badge bg-cyan">Atualização</span></li>
+						                                <li class="list-group-item">Implementação do link na página inicial nos componentes Total de alunos e Total de ocorrências  <span class="badge bg-cyan">Atualização</span></li>
+						                                <li class="list-group-item">Alteração da quantidade de caracteres do campo descrição da ocorrência  <span class="badge bg-cyan">Atualização</span></li>
+						                            </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel">
+                                            <div class="panel-heading" role="tab" id="headingOne_2">
+                                                <h4 class="panel-title">
+                                                    <a role="button" data-toggle="collapse" href="#collapseOne_2" aria-expanded="true" aria-controls="collapseOne_2">
+                                                        Versão 1.0.1 <span class="badge bg-orange">Correções</span>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseOne_2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne_2">
+                                                <div class="panel-body">
+                                                    <ul class="list-group">
+						                                <li class="list-group-item">Correção da pesquisa do aluno<span class="badge bg-orange">Correção</span></li>
+						                                <li class="list-group-item">Correção da edição do usuário<span class="badge bg-orange">Correção</span></li>
+						                            </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel">
+                                            <div class="panel-heading" role="tab" id="headingOne_1">
+                                                <h4 class="panel-title">
+                                                    <a role="button" data-toggle="collapse" href="#collapseOne_1" aria-expanded="true" aria-controls="collapseOne_1">
+                                                        Versão 1.0.0
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseOne_1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne_1">
+                                                <div class="panel-body">
+                                                    <ul class="list-group">
+						                                <li class="list-group-item">Cadastro, pesquisa e alteração de alunos</li>
+						                                <li class="list-group-item">Cadastro dos responsáveis do aluno</li>
+						                                <li class="list-group-item">Cadastro, pesquisa e alteração de usuários </li>
+						                                <li class="list-group-item">Ativar e Desativar acesso do usuário ao sistema </li>
+						                                <li class="list-group-item">Trocar a senha do usuário </li>
+						                                <li class="list-group-item">Registro de ocorrências</li>
+						                                <li class="list-group-item">Edição de um registro de ocorrência permitido apenas ao usuário com permissão para editar</li>
+						                                <li class="list-group-item">Filtro de ocorrências por período</li>
+						                                <li class="list-group-item">Adicionar encaminhamento ao registro de ocorrência</li>
+						                                <li class="list-group-item">Vários perfis de usuários, com permissões específicas</li>
+						                                <li class="list-group-item">Permitir a consulta de dados dos alunos pelos vigilantes</li>
+						                            </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+           </div>
+       </div>
+		
+</th:block>
+
+</html>

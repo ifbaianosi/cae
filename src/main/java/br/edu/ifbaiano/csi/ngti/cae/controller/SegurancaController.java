@@ -23,4 +23,14 @@ public class SegurancaController {
 	public String acessoNegado() {
 		return "403";
 	}
+	
+	/*@GetMapping("/404")
+	public String paginaNaoEncontrada() {
+		return "404";
+	}*/
+	
+	@GetMapping("/500")
+	public String erroServidor() {
+		return "500";
+	}
 }

@@ -161,7 +161,6 @@ public class AlunosController {
 	
 	@GetMapping("/{codigo}")
 	public ModelAndView editar(@PathVariable("codigo") Aluno aluno){
-		System.out.println("codigo do aluno: "+ aluno.getCodigo());
 		aluno.setResponsaveisDoAluno(responsaveisAluno.findByAluno(aluno));
 		return novo(aluno);
 	}

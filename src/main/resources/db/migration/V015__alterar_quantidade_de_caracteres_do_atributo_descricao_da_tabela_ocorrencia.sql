@@ -1,0 +1,2 @@
+ALTER TABLE ocorrencia
+	MODIFY descricao VARCHAR(500) NOT NULL;

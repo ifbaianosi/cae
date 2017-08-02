@@ -2,10 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="'layout/LayoutPadrao'">
+	layout:decorator="'layout/LayoutSimples'">
 
 <head>
-    <title>Trino - 403-Acesso Negado</title>
+    <title>Trino - 500-Erro no Servidor</title>
 </head>
 
 <body>
@@ -13,11 +13,11 @@
     <section class="content"  layout:fragment="conteudo">
         <div class="container-fluid">
             <div class="block-header">
-                <h2>ACESSO NEGADO</h2>
+                <h2>FALHA INTERNA NO SERVIDOR</h2>
             </div>
 			<div class="four-zero-four-container">
-		        <div class="error-code">403</div>
-		        <div class="error-message">Desculpe, mas suas credenciais não permitem acessar o conteúdo requisitado.</div>
+		        <div class="error-code">500</div>
+		        <div class="error-message">Desculpe, detectamos uma falha interna no servidor que pode ser causado por um erro de programação ou alguma entrada incorreta por parte do usuário.</div>
 		        <div class="button-place">
 		            <a th:href="@{/}" class="btn btn-default btn-lg waves-effect">VOLTAR AO INÍCIO</a>
 		        </div>
