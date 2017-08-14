@@ -42,16 +42,14 @@
                             	
                             	<input type="hidden" th:field="*{aluno}">
                                 <div class="row">
-                                    <!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-7">
-                                        <label for="aluno">Aluno</label>
-                                        <div class="form-group">
-                                            <div class="form-line">
-                                                <input type="text" id="aluno" class="form-control" placeholder="" th:field="*{aluno}">
-                                            </div>
-                                        </div>
-                                    </div> -->
                                     <div class="col-xs-12 col-sm-12 col-md-4">
 		                                <label for="aluno">Aluno</label>
+	                                        <!-- <div class="form-group">
+	                                            <div class="form-line">
+	                                                <input type="text" id="autocomplete-input-aluno" th:data-url="@{/alunos/por?nomeOuMatricula=}" class="form-control" placeholder="Pesquisar por nome ou matrícula">
+	                                                <input type="hidden" th:field="*{aluno}">
+	                                            </div>
+	                                        </div> -->
 		                                <div class="input-group">
 		                                    <span class="input-group-addon">
 		                                        <a href="javascript:void(0);" class="btn btn-xs waves-effect" data-toggle="modal" data-target="#modalPesquisaAluno"><i class="material-icons">search</i></a>
@@ -62,45 +60,107 @@
 		                                </div>
 		                            </div>
                                     <div class="col-xs-12 col-sm-6 col-md-4">
-                                        <label for="dataOcorrido">Data da ocorrência</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="material-icons">date_range</i>
-                                            </span>
-                                            <div class="form-line">
-                                                <input type="text" class="form-control datepicker" placeholder="" th:field="*{dataOcorrido}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4">
-                                        <label for="dataOcorridoAte">Até</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="material-icons">date_range</i>
-                                            </span>
-                                            <div class="form-line">
-                                                <input type="text" class="form-control datepicker" placeholder="" th:field="*{dataOcorridoAte}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-4">
-                                        <label for="local">Local</label>
+                                    	<label for="curso">Curso</label>
                                         <div class="form-group">
-                                            <div class="form-line">
-                                                <input type="text" id="local" class="form-control" placeholder="" th:field="*{local}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4">
-                                    	<label for="usuario">Autor</label>
-                                        <div class="form-group">
-		                                    <select class="form-control show-tick" data-live-search="true" data-size="5" data-container="body" th:field="*{usuario}">
-		                                    	<option value="" th:if="${usuarios.size() > 1}">todos...</option>
-											    <option th:each="usuario : ${usuarios}" th:value="${usuario.codigo}" th:text="${usuario.primeiroNomeEmail}">glauber.matos</option>
+		                                    <select class="form-control show-tick" data-live-search="true" data-size="5" data-container="body" th:field="*{curso}">
+		                                    	<option value="">todos...</option>
+											    <option th:each="curso : ${cursos}" th:value="${curso.codigo}" th:text="${curso.nome}">Agropecuaria</option>
 											</select>                                           
+	                                        <label th:if="${#fields.hasErrors('curso')}" th:errors="*{curso}" class="error" for="curso"></label>
 	                                    </div>
                                     </div>
-                                </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-4">
+                                    	<label for="serieTurma">Serie/Turma</label>
+                                        <div class="form-group">
+		                                    <select class="form-control show-tick" data-live-search="true" data-size="5" data-container="body" th:field="*{serieTurma}">
+		                                    	<option value="">todos...</option>
+											    <option th:each="serie : ${series}" th:value="${serie}" th:text="${serie.descricao}">1º ano A</option>
+											</select>
+	                                        <label th:if="${#fields.hasErrors('serieTurma')}" th:errors="*{serieTurma}" class="error" for="serieTurma"></label>
+	                                    </div>
+                                    </div>
+                                    </div>
+                                    <div class="row">
+	                                    <div class="col-xs-12 col-sm-12 col-md-4">
+	                                        <label for="local">Local</label>
+	                                        <div class="form-group">
+	                                            <div class="form-line">
+	                                                <input type="text" class="form-control" placeholder="" th:field="*{local}">
+	                                            </div>
+	                                        </div>
+	                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-4">
+                                    	<label for="alojamento">Alojamento</label>
+	                                    <div class="form-group">
+                                            <select class="form-control show-tick" data-container="body" th:field="*{alojamento}">
+		                                    	<option value="">selecione...</option>
+											    <option th:each="alojamento : ${alojamentos}" th:value="${alojamento}" th:text="${alojamento.descricao}">Alojamento Masculino</option>
+											</select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-4">
+                                        <label for="apartamento">N° Apartamento</label>
+                                        <div class="form-group">
+                                            <select class="form-control show-tick" data-live-search="true" data-size="5" data-container="body" th:field="*{apartamento}">
+		                                    	<option value="">selecione...</option>
+		                                    	<option value="1">1</option>
+		                                    	<option value="2">2</option>
+		                                    	<option value="3">3</option>
+		                                    	<option value="4">4</option>
+		                                    	<option value="5">5</option>
+		                                    	<option value="6">6</option>
+		                                    	<option value="7">7</option>
+		                                    	<option value="8">8</option>
+		                                    	<option value="9">9</option>
+		                                    	<option value="10">10</option>
+		                                    	<option value="11">11</option>
+		                                    	<option value="12">12</option>
+		                                    	<option value="13">13</option>
+		                                    	<option value="14">14</option>
+		                                    	<option value="15">15</option>
+											</select>
+                                        </div>
+                                    </div>
+                                	</div>
+                                    <div class="row">
+	                                    <div class="col-xs-12 col-sm-6 col-md-4">
+	                                        <label for="dataOcorrido">Data da ocorrência</label>
+	                                        <div class="input-group">
+	                                            <span class="input-group-addon">
+	                                                <i class="material-icons">date_range</i>
+	                                            </span>
+	                                            <div class="form-line">
+	                                                <input type="text" class="form-control datepicker" placeholder="" th:field="*{dataOcorrido}">
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                    <div class="col-xs-12 col-sm-6 col-md-4">
+	                                        <label for="dataOcorridoAte">Até</label>
+	                                        <div class="input-group">
+	                                            <span class="input-group-addon">
+	                                                <i class="material-icons">date_range</i>
+	                                            </span>
+	                                            <div class="form-line">
+	                                                <input type="text" class="form-control datepicker" placeholder="" th:field="*{dataOcorridoAte}">
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                    <div class="col-xs-12 col-sm-6 col-md-4">
+	                                    	<label for="usuario">Autor</label>
+	                                        <div class="input-group">
+	                                        	<span class="input-group-addon">
+	                                                <i class="material-icons">security</i>
+	                                            </span>
+	                                            <div class="form-line">
+			                                    <select class="form-control show-tick" data-live-search="true" data-size="5" data-container="body" th:field="*{usuario}">
+			                                    	<option value="" th:if="${usuarios.size() > 1}">todos...</option>
+												    <option th:each="usuario : ${usuarios}" th:value="${usuario.codigo}" th:text="${usuario.primeiroNomeEmail}">glauber.matos</option>
+												</select>  
+												</div>                                         
+		                                    </div>
+	                                    </div>
+	                                </div>
+                                    
                                 <button type="submit" class="btn bg-teal waves-effect  js-submit">PESQUISAR</button>
                                 <a th:href="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}" class="btn btn-default waves-effect">LIMPAR</a>
                             </form>
@@ -124,7 +184,7 @@
                                 	<tr th:each="ocorrencia : ${pagina.conteudo}">
 	                                        <td th:text="${ocorrencia.dataOcorridoFormatada}">1</td>
 	                                        <td th:text="${ocorrencia.aluno.nome}">Otto</td>
-	                                        <td th:text="${ocorrencia.local}">Otto</td>
+	                                        <td th:text="${ocorrencia.local}" class="text-uppercase">Otto</td>
 	                                        <td th:text="${ocorrencia.descricao}">Descricao da ocorrencia</td>
 	                                        <td th:text="${ocorrencia.usuario.primeiroNomeEmail}">Otto</td>
 	                                        <td>
@@ -139,7 +199,7 @@
 	       											<button class="btn btn-xs bg-teal waves-effect js-encaminhar-ocorrencia" 
 	       													th:data-codigo="${ocorrencia.codigo}" 
 	       													th:data-nome="${ocorrencia.aluno.nome}">
-	       												<i class="material-icons btn-icon">call_made</i>
+	       												<i class="material-icons btn-icon">open_in_new</i>
 	       												EMITIR
 	       											</button>
 												</th:block>
@@ -182,6 +242,7 @@
    		<script th:src="@{/javascript/atualizar-tabela-ocorrencias.js}"></script>
 	    <script th:src="@{/javascript/aluno.pesquisa-rapida.js}"></script>
    		<script th:src="@{/javascript/detalhe-aluno.gerenciar-encaminhamento.js}"></script>
+	    <script th:src="@{/javascript/autocomplete.js}"></script>
 	    
    		<th:block th:replace="handlebars/TabelaPesquisaAlunoTemplate"></th:block>
 	    

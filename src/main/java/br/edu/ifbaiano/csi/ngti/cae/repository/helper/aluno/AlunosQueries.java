@@ -15,4 +15,5 @@ public interface AlunosQueries {
 	public Page<Aluno> filtrar(AlunoFilter alunoFilter, Pageable pageable);
 	public List<Aluno> porNomeOuMatricula(String nomeOuMatricula);
 	public Optional<AlunoDTO> porMatricula(String matricula);
+	public List<Aluno> filtroAdicionarNaOcorrencia(AlunoFilter alunoFilter);
 }

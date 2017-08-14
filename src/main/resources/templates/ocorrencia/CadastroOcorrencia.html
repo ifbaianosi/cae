@@ -46,7 +46,7 @@
             </div>
         </div>
         
-        <th:block th:replace="aluno/PesquisaRapidaAlunoModal"></th:block>
+        <th:block th:replace="aluno/AdicionarAlunoNaOcorrenciaModal"></th:block>
         
     </section>
 
@@ -60,10 +60,12 @@
 	    <script th:src="@{/javascript/componente-material-date-time-picker.js}"></script>
 	    
    		<script th:src="@{/javascript/vendors/plugins/handlebars/handlebars-v4.0.10.js}"></script>
-	    <script th:src="@{/javascript/aluno.pesquisa-rapida.js}"></script>
+	    <script th:src="@{/javascript/autocomplete.js}"></script>
+	    <script th:src="@{/javascript/aluno.adicionar-na-ocorrencia.js}"></script>
 	    
-   		<th:block th:replace="handlebars/TabelaPesquisaAlunoTemplate"></th:block>
+   		<th:block th:replace="handlebars/TabelaAdicionarAlunosOcorrenciaTemplate"></th:block>
    		<th:block th:replace="handlebars/PanelResponsavelTemplate"></th:block>
+   		<th:block th:replace="handlebars/CardAlunoTemplate"></th:block>
    </th:block>
 </body>
 

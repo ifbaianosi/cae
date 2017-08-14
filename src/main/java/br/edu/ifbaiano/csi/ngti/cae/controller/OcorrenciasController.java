@@ -2,6 +2,7 @@ package br.edu.ifbaiano.csi.ngti.cae.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatus.Series;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,21 +23,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifbaiano.csi.ngti.cae.controller.page.PageWrapper;
 import br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO;
+import br.edu.ifbaiano.csi.ngti.cae.model.Alojamento;
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
+import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
 import br.edu.ifbaiano.csi.ngti.cae.model.TipoEncaminhamento;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Alunos;
+import br.edu.ifbaiano.csi.ngti.cae.repository.Cursos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Ocorrencias;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Usuarios;
+import br.edu.ifbaiano.csi.ngti.cae.repository.filter.AlunoFilter;
 import br.edu.ifbaiano.csi.ngti.cae.repository.filter.OcorrenciaFilter;
 import br.edu.ifbaiano.csi.ngti.cae.security.UsuarioSistema;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroOcorrenciaService;
+import br.edu.ifbaiano.csi.ngti.cae.service.exception.AlunoNumeroMatriculaJaCadastradoException;
+import br.edu.ifbaiano.csi.ngti.cae.session.ListaAlunosSession;
 
 @Controller
 @RequestMapping("/ocorrencias")
@@ -52,6 +62,12 @@ public class OcorrenciasController {
 	@Autowired
 	private Usuarios usuarios;
 	
+	@Autowired
+	private Cursos cursos;
+	
+	@Autowired
+	private ListaAlunosSession listaAlunosSession;
+	
 	@GetMapping
 	public ModelAndView pesquisar(OcorrenciaFilter ocorrenciaFilter, @PageableDefault(size=10) Pageable pageable, HttpServletRequest httpServletRequest, @AuthenticationPrincipal UsuarioSistema usuarioSistema){
 		ModelAndView mv = new ModelAndView("ocorrencia/PesquisaOcorrencias");
@@ -62,6 +78,9 @@ public class OcorrenciasController {
 		mv.addObject("pagina", paginaWrapper);
 		mv.addObject("usuarios", usuarios.findByAtivoTrue());
 		mv.addObject("tipoEncaminhamento", TipoEncaminhamento.values());
+		mv.addObject("cursos", cursos.findAll());
+		mv.addObject("series", SerieTurma.values());
+		mv.addObject("alojamentos", Alojamento.values());
 		
 		return mv;
 	}
@@ -77,14 +96,25 @@ public class OcorrenciasController {
 		Long [] codigos = {usuarioSistema.getUsuario().getCodigo()};
 		mv.addObject("usuarios", usuarios.findByCodigoIn(codigos));
 		mv.addObject("tipoEncaminhamento", TipoEncaminhamento.values());
+		mv.addObject("cursos", cursos.findAll());
+		mv.addObject("series", SerieTurma.values());
+		mv.addObject("alojamentos", Alojamento.values());
 		
 		return mv;
 	}
 	
 	@GetMapping(value="/nova")
 	public ModelAndView nova(Ocorrencia ocorrencia){
-		ModelAndView mv = new ModelAndView("ocorrencia/CadastroOcorrencia"); 
+		ModelAndView mv = new ModelAndView("ocorrencia/CadastroOcorrencia");
+		
+		if (ocorrencia.getUuid() == null){
+			ocorrencia.setUuid(UUID.randomUUID().toString());
+		}
+		
 		mv.addObject("ocorrencia", ocorrencia);
+		mv.addObject("cursos", cursos.findAll());
+		mv.addObject("alojamentos", Alojamento.values());
+		mv.addObject("series", SerieTurma.values());
 		
 		return mv;
 	}
@@ -108,7 +138,7 @@ public class OcorrenciasController {
 		if(result.hasErrors()){
 			return ResponseEntity.badRequest().build();
 		}
-		cadastroOcorrenciaService.salvar(ocorrencia);
+		cadastroOcorrenciaService.salvarAjax(ocorrencia);
 		
 		return ResponseEntity.ok().body(HttpStatus.CREATED);
 	}
@@ -119,13 +149,33 @@ public class OcorrenciasController {
 		ocorrencia.setUsuario(usuarioSistema.getUsuario());
 		
 		if(result.hasErrors()){
-			System.out.println("erro no bean ocorrencia!!!");return nova(ocorrencia);}
+			System.out.println("erro no bean ocorrencia!!!");
+			return nova(ocorrencia);
+		}
+		
+		if(ocorrencia.isNovo() && listaAlunosSession.totalAlunos(ocorrencia.getUuid()) == 0){
+			System.out.println("Ao menos uma aluno deve ser selecionado");
+			result.rejectValue("aluno", "Ao menos uma aluno deve ser selecionado", "Ao menos uma aluno deve ser selecionado");
+			return nova(ocorrencia);
+		}
 		
 		cadastroOcorrenciaService.salvar(ocorrencia);
+		
 			
 		attributs.addFlashAttribute("mensagemSucesso", "Ocorrencia salva com sucesso");
 		
 		return new ModelAndView("redirect:/ocorrencias/nova");
+	}
+	
+	@GetMapping(value="/locais", produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<String> getLocais(@RequestParam("local") String local){
+		System.out.println("ocorrencias/locais ---> getLocais ");
+		
+		//TODO: teste apagar
+		List<String> locais = ocorrencias.getLocais(local);
+		System.out.println("locais: "+locais.size());
+		
+		return locais;
 	}
 	
 	@GetMapping(value="/aluno/{codigoaluno}")

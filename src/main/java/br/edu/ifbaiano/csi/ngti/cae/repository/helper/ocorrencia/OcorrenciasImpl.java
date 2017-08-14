@@ -47,7 +47,7 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 		paginacaoUtil.preparar(criteria, pageable);
 		
 		//SETA ORDENACAO
-		criteria.addOrder(Order.desc("dataRegistro"));
+		criteria.addOrder(Order.desc("dataOcorrido"));
 		
 		//ADICIONA O FILTRO A CRITERIA DO HIBERNATE
 		adicionarFiltro(filtro, criteria);
@@ -143,6 +143,15 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 				.getSingleResult();
 	}
 
+	@Override
+	public List<String> getLocais(String local) {
+		String jpql = "SELECT DISTINCT o.local "
+				+ "FROM Ocorrencia o "
+				+ "WHERE lower(o.local) like lower(:local) ";
+		return manager.createQuery(jpql, String.class)
+				.setParameter("local", "%"+ local +"%")
+				.getResultList();
+	}
 
 	/**
 	 * ADICIONA UM FILTRO A PESQUISA 
@@ -152,6 +161,7 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 	 */
 	private void adicionarFiltro(OcorrenciaFilter filtro, Criteria criteria) {
 		if(filtro != null){
+			criteria.createAlias("aluno", "a", JoinType.INNER_JOIN);
 			//FILTRO LOCAL
 			if(!StringUtils.isEmpty(filtro.getLocal()))
 				criteria.add(Restrictions.ilike("local", filtro.getLocal(), MatchMode.ANYWHERE));
@@ -175,6 +185,28 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 			//FILTRO USUARIO
 			if(filtro.getUsuario() != null && filtro.getUsuario().getCodigo() != null)
 				criteria.add(Restrictions.eq("usuario", filtro.getUsuario()));
+			
+			//FILTRO CURSO
+			if(filtro.getCurso() != null && filtro.getCurso().getCodigo() != null){
+				criteria.createAlias("a.curso", "c", JoinType.INNER_JOIN);
+				criteria.add(Restrictions.eq("a.curso", filtro.getCurso()));
+			}
+			
+			//FILTRO SERIE TURMA
+			if(filtro.getSerieTurma() != null){
+				criteria.add(Restrictions.eq("a.serieTurma", filtro.getSerieTurma()));
+			}
+			
+			//FILTRO ALOJAMENTO
+			if(filtro.getAlojamento() != null){
+				criteria.add(Restrictions.eq("a.alojamento", filtro.getAlojamento()));
+			}
+			
+			//FILTRO ALOJAMENTO APARTAMENTO
+			if(filtro.getApartamento() != null){
+				criteria.add(Restrictions.eq("a.apartamento", filtro.getApartamento()));
+			}
+
 		}
 	}
 
@@ -184,6 +216,7 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 		criteria.setProjection(Projections.rowCount());
 		return (Long)criteria.uniqueResult();
 	}
+
 
 
 }

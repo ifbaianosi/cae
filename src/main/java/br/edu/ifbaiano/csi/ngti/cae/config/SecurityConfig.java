@@ -42,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers("/alunos").hasRole("PESQUISAR_ALUNO")
 			.antMatchers("/alunos/novo").hasRole("NOVO_ALUNO")
 			.antMatchers("/alunos/detalhe").hasRole("CONSULTAR_HISTORICO_ALUNO")
+			.antMatchers("/alunos/adicionar").hasRole("CONSULTAR_DADOS_ALUNO") // configurar a permissão de forma correta para essa url
 			
 			.antMatchers("/alunos/por").hasRole("CONSULTAR_DADOS_ALUNO")
 			.antMatchers("/alunos/por-matricula").hasRole("CONSULTAR_DADOS_ALUNO")

@@ -17,4 +17,5 @@ public interface OcorrenciasQueries {
 	public Page<Ocorrencia> filtrar(OcorrenciaFilter ocorrenciaFilter, Pageable pageable);
 	public List<Ocorrencia> buscarComEncaminhamentos(Aluno aluno);
 	public Ocorrencia buscarComEncaminhamentosPorCodigo(Long codigoOcorrencia);
+	public List<String> getLocais(String local);
 }

@@ -4,15 +4,15 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-    <meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>Inicio</title>
     <!-- Favicon-->
-    <link rel="icon" th:href="@{/layout/images/favicon.ico}" type="image/x-icon">
+    <link rel="icon" th:href="@{/layout/images/Trino.ico}" type="image/x-icon">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <link th:href="@{/layout/fonts/roboto.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/layout/css/material-icons/icon.css}" rel="stylesheet" type="text/css">
 
     <!-- Bootstrap Core Css -->
     <link th:href="@{/layout/plugins/bootstrap/css/bootstrap.css}" rel="stylesheet">
@@ -25,7 +25,10 @@
 
     <!-- Animation Css -->
     <link th:href="@{/layout/plugins/animate-css/animate.css}" rel="stylesheet" />
-
+    
+    <!-- jQuery easy-autocomplete -->
+    <link th:href="@{/layout/plugins/jquery-easy-autocomplete/easy-autocomplete.min.css}" rel="stylesheet" />
+    
     <!-- Bootstrap datepicker Css -->
     <link th:href="@{/javascript/vendors/plugins/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css}" rel="stylesheet" />
 
@@ -124,6 +127,9 @@
 
     <!-- TRINO - trocar senha modal -->
 	<script th:src="@{/javascript/usuario.trocar-senha.js}"></script>
+    
+    <!-- jQuery easy-autocomplete -->
+	<script th:src="@{/layout/plugins/jquery-easy-autocomplete/jquery.easy-autocomplete.min.js}"></script>
     
     <th:block layout:fragment="javascript-extra"></th:block>
 </body>

@@ -1,0 +1,35 @@
+<script id="tabelaAdicionarAlunoOcorrencia" type="text/x-handlebars-template">
+<div class="row col-md-12 align-left">
+	<button type="button" class="btn btn-xs bg-teal waves-effect js-selecionar" th:data-url="@{/alunos}">SELECIONAR</button>
+</div>
+<table id="tabelaAlunos" class="table table-striped table-hover table-bordered">
+     <thead>
+         <tr>
+         	 <th>
+				<input type="checkbox" id="todos" class="chk-col-teal  js-selecionar-todos">
+           		<label for="todos"></label>
+			</th>
+             <th>NOME</th>
+             <th>MATRICULA</th>
+             <th>CURSO</th>
+         </tr>
+     </thead>
+     <tbody>
+		{{#if .}}
+			{{#each .}}
+         		<tr>
+         	 		<td>
+         	 			<input type="checkbox" id="ID_{{codigo}}" class="chk-col-teal js-checkbox" data-codigo="{{codigo}}" data-nome-aluno="{{nome}}" data-matricula="{{matricula}}" data-curso="{{curso.nome}}">
+                		<label for="ID_{{codigo}}"></label>
+             		</td>
+             		<td>{{nome}}</td>
+             		<td>{{matricula}}</td>
+             		<td>{{curso.sigla}}</td>
+         		</tr>
+			{{/each}}
+		{{else}}
+			<tr><td colspan="3">A pesquisa não retornou nenhum registro.<td><tr>
+		{{/if}}
+     </tbody>
+ </table>                    
+</script>

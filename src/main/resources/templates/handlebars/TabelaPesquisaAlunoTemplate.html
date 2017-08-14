@@ -1,5 +1,5 @@
 <script id="tabelaPesquisaAluno" type="text/x-handlebars-template">
-<table id="tabelaAlunos" class="table table-hover" th:fragment="tabelaAlunos">
+<table id="tabelaAlunos" class="table table-striped table-hover table-bordered" th:fragment="tabelaAlunos">
      <thead>
          <tr>
          	 <th></th>
@@ -18,7 +18,7 @@
              		</td>
              		<td>{{nome}}</td>
              		<td>{{matricula}}</td>
-             		<td>{{curso.nome}}</td>
+             		<td>{{curso.sigla}}</td>
          		</tr>
 			{{/each}}
 		{{else}}

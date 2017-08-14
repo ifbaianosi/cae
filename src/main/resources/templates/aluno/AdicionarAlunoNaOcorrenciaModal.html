@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
+	
+<th:block th:fragment="adicionarAlunoNaOcorrenciaModal">
+	
+	<div class="modal fade  js-modal-adicionar-aluno-ocorrencia" id="adicionarAlunoNaOcorrenciaModal" tabindex="-1" role="dialog">
+           <div class="modal-dialog modal-lg" role="document">
+               <div class="card">
+                        <div class="header">
+                            <h2>
+                                SELECIONAR ALUNO(S)
+                            </h2>
+                       		<a href="javascript:void(0);" class="header-dropdown m-r--5" data-dismiss="modal"><i class="material-icons">clear</i></a>
+                            
+                        </div>
+                        <div class="body">
+                        	<form id="formulario_responsavel">
+                        		<div class="row">
+                        			<div class="col-sm-12  js-mensagem-caracteres hide">
+	                        			<p class="bg-danger">
+		                            		Digite ao menos 3 caracteres para realizar a consulta.
+		                            	</p>
+	                            	</div>
+	                        		<!-- <div class="col-xs-12 col-sm-12 col-md-6">
+	                                    <label for="nome">Nome ou matrícula</label>
+	                                    <div class="form-group">
+	                                        <div class="form-line">
+	                                            <input type="text" id="nome" class="form-control  js-nomeOuMatricula-aluno-modal" placeholder="Digite o nome ou a matrícula do aluno" autocomplete="off" autofocus="autofocus">
+	                                        </div>
+	                                    </div>
+	                                </div> -->
+	                                <div class="col-xs-12 col-sm-12 col-md-6">
+	                                    <label for="nome">Nome</label>
+	                                    <div class="form-group">
+	                                        <div class="form-line">
+	                                            <input type="text" id="nome" class="form-control  js-nome-aluno-modal" autocomplete="off" autofocus="autofocus">
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <div class="col-xs-12 col-sm-12 col-md-6">
+	                                    <label for="matricula">Matrícula</label>
+	                                    <div class="form-group">
+	                                        <div class="form-line">
+	                                            <input type="text" id="matricula" class="form-control  js-matricula-aluno-modal" autocomplete="off" autofocus="autofocus">
+	                                        </div>
+	                                    </div>
+	                                </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                    	<label for="curso">Curso</label>
+                                        <div class="form-group">
+		                                    <select class="form-control show-tick" id="curso" data-live-search="true" data-size="5" data-container="body">
+		                                    	<option value="">todos...</option>
+											    <option th:each="curso : ${cursos}" th:value="${curso.codigo}" th:text="${curso.nome}">Agropecuaria</option>
+											</select>                                           
+	                                    </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                    	<label for="serieTurma">Serie/Turma</label>
+                                        <div class="form-group">
+		                                    <select class="form-control show-tick" id="serieTurma" data-live-search="true" data-size="5" data-container="body">
+		                                    	<option value="">todos...</option>
+											    <option th:each="serie : ${series}" th:value="${serie}" th:text="${serie.descricao}">1º ano A</option>
+											</select>
+	                                    </div>
+                                    </div>
+	                                <div class="col-xs-12 col-sm-6 col-md-6">
+                                    	<label for="alojamento">Alojamento</label>
+	                                    <div class="form-group">
+                                            <select class="form-control show-tick" id="alojamento" data-container="body">
+		                                    	<option value="">selecione...</option>
+											    <option th:each="alojamento : ${alojamentos}" th:value="${alojamento}" th:text="${alojamento.descricao}">Alojamento Masculino</option>
+											</select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                        <label for="apartamento">N° Apartamento</label>
+                                        <div class="form-group">
+                                            <select class="form-control show-tick" id="apartamento" data-live-search="true" data-size="5" data-container="body">
+		                                    	<option value="">selecione...</option>
+		                                    	<option value="1">1</option>
+		                                    	<option value="2">2</option>
+		                                    	<option value="3">3</option>
+		                                    	<option value="4">4</option>
+		                                    	<option value="5">5</option>
+		                                    	<option value="6">6</option>
+		                                    	<option value="7">7</option>
+		                                    	<option value="8">8</option>
+		                                    	<option value="9">9</option>
+		                                    	<option value="10">10</option>
+		                                    	<option value="11">11</option>
+		                                    	<option value="12">12</option>
+		                                    	<option value="13">13</option>
+		                                    	<option value="14">14</option>
+		                                    	<option value="15">15</option>
+											</select>
+                                        </div>
+                                    </div>
+                        		</div>
+                        		<div class="row">
+                        			<div class="col-xs-12">
+                        				<button type="submit" class="btn waves-effect bg-teal  js-pesquisar-aluno" th:data-url="@{/alunos}">PESQUISAR</button>
+                        				<div class="preloader pl-size-xs pull-right hide">
+		                                    <div class="spinner-layer pl-teal">
+		                                        <div class="circle-clipper left">
+		                                            <div class="circle"></div>
+		                                        </div>
+		                                        <div class="circle-clipper right">
+		                                            <div class="circle"></div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+                        			</div>
+                        		</div>
+                        		<div class="row">
+                        			<div class="col-xs-12">
+                        				<div class="js-container-tabela-alunos"></div>
+                        			</div>
+                        		</div>
+		                	</form>
+                        </div>
+                    </div>
+           </div>
+       </div>
+		
+</th:block>
+
+</html>

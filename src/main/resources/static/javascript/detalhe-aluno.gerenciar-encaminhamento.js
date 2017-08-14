@@ -4,13 +4,13 @@ var NGTICAE = NGTICAE || {};
 //		MODAL
 //==================================================================================================================
 NGTICAE.Modal = {
-		ocorrencia,
+		ocorrencia: '',
 		iniciar: function(){
 			$('.js-encaminhar-ocorrencia').on('click', this.abrir);
 			$('#modalEncaminhamento').on('shown.bs.modal', this.carregar);
 			$('#modalEncaminhamento').on('hide.bs.modal', this.finalizar);
 		},
-		aluno,
+		aluno: '',
 		
 		abrir: function(event){
 			var codigoOcorrencia = $(event.currentTarget).data('codigo');

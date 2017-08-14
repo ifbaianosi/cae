@@ -40,7 +40,7 @@ public class CadastroAlunoService {
 			//verifica se já existe um aluno cadastrado com a matricula informada
 			Optional<Aluno> alunoOptional = alunos.findByMatricula(aluno.getMatricula());
 			if(alunoOptional.isPresent())
-				throw new AlunoNumeroMatriculaJaCadastradoException("Já existe um aluno cadastrado com o numero da matriucla informado");
+				throw new AlunoNumeroMatriculaJaCadastradoException("Já existe um aluno cadastrado com o número da matricula informado");
 		}
 		
 		//Salvar o aluno...
@@ -99,14 +99,4 @@ public class CadastroAlunoService {
 		
 		tabelasResponsaveisSession.excluirTodosOsResponsaveis(uuid);
 	}
-
-	/*@Transactional
-	public void excluir(Aluno aluno) {
-		try {
-			alunos.delete(aluno);
-			alunos.flush();
-		} catch (PersistenceException e) {
-			throw new ImpossivelExcluirEntidadeException("Impossível apagar aluno. Já existe matrículas efetuadas.");
-		}
-	}*/
 }

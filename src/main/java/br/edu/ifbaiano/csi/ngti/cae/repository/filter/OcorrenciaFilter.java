@@ -2,7 +2,10 @@ package br.edu.ifbaiano.csi.ngti.cae.repository.filter;
 
 import java.time.LocalDate;
 
+import br.edu.ifbaiano.csi.ngti.cae.model.Alojamento;
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
+import br.edu.ifbaiano.csi.ngti.cae.model.Curso;
+import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
 import br.edu.ifbaiano.csi.ngti.cae.model.Usuario;
 
 public class OcorrenciaFilter {
@@ -12,6 +15,10 @@ public class OcorrenciaFilter {
 	private String local;
 	private Aluno aluno;
 	private Usuario usuario;
+	private Curso curso;
+	private SerieTurma serieTurma;
+	private Alojamento alojamento;
+	private Integer apartamento;
 	
 	public LocalDate getDataOcorrido() {
 		return dataOcorrido;
@@ -42,6 +49,30 @@ public class OcorrenciaFilter {
 	}
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	public Curso getCurso() {
+		return curso;
+	}
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
+	public SerieTurma getSerieTurma() {
+		return serieTurma;
+	}
+	public void setSerieTurma(SerieTurma serieTurma) {
+		this.serieTurma = serieTurma;
+	}
+	public Alojamento getAlojamento() {
+		return alojamento;
+	}
+	public void setAlojamento(Alojamento alojamento) {
+		this.alojamento = alojamento;
+	}
+	public Integer getApartamento() {
+		return apartamento;
+	}
+	public void setApartamento(Integer apartamento) {
+		this.apartamento = apartamento;
 	}
 	
 }

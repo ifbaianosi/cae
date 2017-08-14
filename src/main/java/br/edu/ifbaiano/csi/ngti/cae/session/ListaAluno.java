@@ -5,13 +5,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-import br.edu.ifbaiano.csi.ngti.cae.model.Responsavel;
-import br.edu.ifbaiano.csi.ngti.cae.model.ResponsavelSession;
+import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 
 public class ListaAluno {
 
 	private String uuid;
-	private List<ResponsavelSession> responsavelSession = new ArrayList<ResponsavelSession>();
+	private List<Aluno> listaAlunosSession = new ArrayList<Aluno>();
 	
 	public ListaAluno() {}
 	
@@ -19,50 +18,42 @@ public class ListaAluno {
 		this.uuid = uuid;
 	}
 	
-	public void adicionarResponsavel(List<Responsavel> responsaveis){
-		for(Responsavel responsavel : responsaveis){
+	public void adicionarAluno(List<Aluno> alunos){
+		
+		for(Aluno aluno : alunos){
 			
-			Optional<ResponsavelSession> responsavelSessionOptional = buscarPorResponsavel(responsavel);
-			ResponsavelSession responsavelSesseion = null;
+			Optional<Aluno> alunoOptional = buscarPorAluno(aluno);
 			
-			if (!responsavelSessionOptional.isPresent()){
-				responsavelSesseion = new ResponsavelSession();
-				responsavel.setIdentificador(responsavel.getContato()
-																.trim()
-																.replace("(", "")
-																.replace(")", "")
-																.replace(" ", "")
-																.replace("-", ""));
-				responsavelSesseion.setResponsavel(responsavel);
-				responsavelSession.add(0, responsavelSesseion);
+			if (!alunoOptional.isPresent()){
+				listaAlunosSession.add(0, aluno);
 			}
 			
 		}
 	}
 	
-	public void excluirResponsavel(Responsavel responsavel){
-		int indice = IntStream.range(0, responsavelSession.size())
-				.filter(i -> responsavelSession.get(i).getResponsavel().getContato().equals(responsavel.getContato()))
+	public void excluirAluno(Aluno aluno){
+		int indice = IntStream.range(0, listaAlunosSession.size())
+				.filter(i -> listaAlunosSession.get(i).getCodigo().equals(aluno.getCodigo()))
 				.findAny().getAsInt();
 		
-		responsavelSession.remove(indice);
+		listaAlunosSession.remove(indice);
 	}
 	
-	public void excluirTodosResponsaveis(){
-		responsavelSession.clear();
+	public void excluirTodosAlunos(){
+		listaAlunosSession.clear();
 	}
 	
-	public int totalResponsaveis(){
-		return responsavelSession.size();
+	public int totalAlunos(){
+		return listaAlunosSession.size();
 	}
 	
-	public List<ResponsavelSession> getResponsavels(){
-		return responsavelSession;
+	public List<Aluno> getAlunos(){
+		return listaAlunosSession;
 	}
 	
-	public Optional<ResponsavelSession> buscarPorResponsavel(Responsavel responsavel){
-		return responsavelSession.stream()
-				.filter(i -> i.getResponsavel().getContato().equals(responsavel.getContato()))
+	public Optional<Aluno> buscarPorAluno(Aluno aluno){
+		return listaAlunosSession.stream()
+				.filter(i -> i.getCodigo() == (aluno.getCodigo()))
 				.findAny();
 	}
 	

@@ -1,0 +1,27 @@
+<script id="cardAlunoTemplate" type="text/x-handlebars-template">
+ {{#if .}}
+	<div class="col-xs-12">
+		<button type="button" class="btn btn-xs bg-pink waves-effect js-remover-todos">
+			<i class="material-icons btn-icon">delete_sweep</i>
+				REMOVER TODOS
+		</button>
+	</div>
+	{{#each .}}
+		<div class="col-xs-12 col-sm-6 col-md-4">
+			<div class="bg-warning m-b-15">
+				<input type="hidden" name="alunos" value="{{codigo}}">
+				<div><span class="overflow text-uppercase js-tooltip" title="{{nome}}">{{nome}}</span></div>
+				<div><strong class="">{{matricula}}</strong></div>
+				<div><span class="">{{curso.sigla}}</span></div>
+				<div><span class="">{{regime}}</span><span class="pull-right text-uppercase js-tooltip js-remover-aluno" style="cursor: pointer;" data-codigo="{{codigo}}" title="Remover aluno">x</span></div>
+			</div>
+		</div>
+	{{/each}}
+	{{else}}
+		<div class="col-xs-12 col-sm-12 col-md-6">
+			<p class="bg-warning">
+				Identifique o(s) aluno(s) para registrar a ocorrência.
+			</p>
+		</div>
+	{{/if}}
+</script>

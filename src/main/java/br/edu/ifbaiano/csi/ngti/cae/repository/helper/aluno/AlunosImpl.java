@@ -46,6 +46,18 @@ public class AlunosImpl implements AlunosQueries {
 		return new PageImpl<>(criteria.list(), pageable, total(filtro));
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly = true)
+	@Override
+	public List<Aluno> filtroAdicionarNaOcorrencia(AlunoFilter filtro) {
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(Aluno.class);
+		
+		//ADICIONA O FILTRO A CRITERIA DO HIBERNATE
+		adicionarFiltro(filtro, criteria);
+		
+		return criteria.list();
+	}
+	
 	@Override
 	public List<Aluno> porNomeOuMatricula(String nomeOuMatricula) {
 		String jpql = "SELECT a "
