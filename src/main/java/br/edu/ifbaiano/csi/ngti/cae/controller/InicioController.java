@@ -27,6 +27,9 @@ public class InicioController {
 		ModelAndView mv = new ModelAndView("Index");
 		mv.addObject("quantidadeOcorrencias", ocorrencias.count());
 		mv.addObject("quantidadeAlunos", alunos.count());
+		mv.addObject("ocorrenciasPorLocal", ocorrencias.totalOcorrenciasPorLocal());
+		mv.addObject("ocorrenciasPorUsuario", ocorrencias.totalOcorrenciasPorUsuario());
+		mv.addObject("ocorrenciasPorAluno", ocorrencias.totalOcorrenciasPorAluno());
 		
 		return mv;
 	}

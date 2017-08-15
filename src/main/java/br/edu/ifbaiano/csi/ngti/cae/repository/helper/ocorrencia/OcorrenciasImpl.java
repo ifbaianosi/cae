@@ -22,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO;
+import br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciasPorLocal;
+import br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciasPorUsuario;
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
 import br.edu.ifbaiano.csi.ngti.cae.repository.filter.OcorrenciaFilter;
@@ -151,6 +153,24 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 		return manager.createQuery(jpql, String.class)
 				.setParameter("local", "%"+ local +"%")
 				.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<OcorrenciasPorLocal> totalOcorrenciasPorLocal() {
+		return manager.createNamedQuery("TotalOcorrencias.PorLocal").getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<OcorrenciasPorUsuario> totalOcorrenciasPorUsuario() {
+		return manager.createNamedQuery("TotalOcorrencias.PorUsuario").getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<OcorrenciasPorUsuario> totalOcorrenciasPorAluno() {
+		return manager.createNamedQuery("TotalOcorrencias.PorAluno").getResultList();
 	}
 
 	/**
