@@ -23,13 +23,13 @@ public class Responsavel extends Entidade{
 	@NotBlank(message="O número para contato é obrigatório")
 	@Size(max=20, message="O número para contato deve conter no máximo {max} caracteres")
 	private String contato;
-	
-	private Boolean contato_whatsapp;
-	
+
 	@Size(max=20, message="O número para contato deve conter no máximo {max} caracteres")
 	private String contato2;
 	
-	private Boolean contato_whatsapp2;
+	private Boolean contato_whatsapp;
+	
+	private Boolean contato2_whatsapp;
 	
 	@Email(message="Email inválido")
 	@Size(max=80, message="O email deve conter no máximo {max} caracteres")
@@ -45,6 +45,8 @@ public class Responsavel extends Entidade{
 	
 	@Transient
 	private String identificador;
+	
+	
 
 	public String getNome() {
 		return nome;
@@ -89,15 +91,15 @@ public class Responsavel extends Entidade{
 	public void setContato2(String contato2) {
 		this.contato2 = contato2;
 	}
-
-	public void setContato_whatsapp2(Boolean contato_whatsapp2) {
-		this.contato_whatsapp2 = contato_whatsapp2;
-	}
-
-	public Boolean getContato_whatsapp2() {
-		return contato_whatsapp2;
-	}
 	
+	public Boolean getContato2_whatsapp() {
+		return contato2_whatsapp;
+	}
+
+	public void setContato2_whatsapp(Boolean contato2_whatsapp) {
+		this.contato2_whatsapp = contato2_whatsapp;
+	}
+
 	public String getEmail() {
 		return email;
 	}

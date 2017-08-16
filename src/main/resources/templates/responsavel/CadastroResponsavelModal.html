@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
+	
+<th:block th:fragment="cadastroResponsavelModal">
+	
+	<div class="modal fade  js-modal-cadastro-responsavel" id="defaultModal" tabindex="-1" role="dialog">
+           <div class="modal-dialog" role="document">
+               <div class="card">
+                        <div class="header">
+                            <h2>
+                                ADICIONAR RESPONSÁVEL
+                            </h2>
+                       		<a href="javascript:void(0);" class="header-dropdown m-r--5" data-dismiss="modal"><i class="material-icons">clear</i></a>
+                            
+                        </div>
+                        <div class="body">
+                        	<p class="bg-warning m-b-20">
+	                         	(*) Campos obrigatórios.
+	                         </p>
+                        	<form id="formulario_responsavel">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-5 trino-required">
+                                        <label for="responsavel_parentesco" class="control-label">Grau de parentesco</label>
+                                        <div class="form-group">
+                                            <select id="responsavel_parentesco" class="form-control show-tick">
+                                                <option value="">selecione...</option>
+                                                <option th:each="parentesco : ${parentescos}" th:value="${parentesco}" th:text="${parentesco.descricao}">Pai</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 trino-required">
+                                        <label for="responsavel_nome" class="control-label">Nome</label>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" id="responsavel_nome" class="form-control" placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 trino-required">
+                                        <label for="responsavel_contato" class="control-label">Contato 1</label>
+                                        <div class="input-group">
+                                            <div class="form-line">
+                                                <input type="text" id="responsavel_contato" class="form-control mobile-phone-number js-phone-number" placeholder="">
+                                            </div>
+                                            <input type="checkbox" id="responsavel_whatsapp" class="chk-col-teal">
+                                            <label for="responsavel_whatsapp">WhatsApp</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <label for="responsavel_contato2">Contato 2</label>
+                                        <div class="input-group">
+                                            <div class="form-line">
+                                                <input type="text" id="responsavel_contato2" class="form-control mobile-phone-number js-phone-number" placeholder="">
+                                            </div>
+                                            <input type="checkbox" id="responsavel_whatsapp2" class="chk-col-teal">
+                                            <label for="responsavel_whatsapp2">WhatsApp</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12">
+                                        <label for="responsavel_email">E-mail</label>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" id="responsavel_email" class="form-control" placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <button type="button" class="btn btn-link waves-effect bg-teal  js-adicionar-responsavel" th:data-url="@{/responsaveis}">OK</button>
+                      		            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+                                    </div>
+                                </div>
+		                	</form>
+                        </div>
+                        <!-- <div class="modal-footer" style="border-top: 1px solid #e5e5e5;">
+                        	<button type="button" class="btn btn-link waves-effect bg-teal">SALVAR</button>
+                       		<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">FECHAR</button>
+					    </div> -->
+                    </div>
+           </div>
+       </div>
+		
+</th:block>
+
+</html>

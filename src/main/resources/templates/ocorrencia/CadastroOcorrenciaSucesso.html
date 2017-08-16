@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/LayoutPadrao'">
+
+<head>
+    <title>Sucesso</title>
+</head>
+
+<body>
+	
+    <section class="content" layout:fragment="conteudo">
+        <div class="container-fluid">
+            <div class="block-header">
+				<div class="row">
+            		<div class="col-md-6">
+            			<h2>REGISTRADO COM SUCESSO</h2>
+            		</div>
+            		<div class="col-md-6">
+		                <ol class="breadcrumb align-right" style="padding: 0px 0px;">
+		                    <li><a th:href="@{/}" class="js-tooltip" title="Página inicial"><i class="material-icons">home</i> Início</a></li>
+		                    <li><a th:href="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}"
+		                    		class="js-tooltip" title="Pesquisar ocorrência"><i class="material-icons">assignment</i> Ocorrências</a>
+		                    </li>
+		                    <li><a th:href="@{/ocorrencias/nova}" class="js-tooltip" title="Registrar nova ocorrência"><i class="material-icons">add_circle_outline</i> Nova</a></li>
+		                </ol>
+            		</div>
+            	</div>
+            </div>
+            <div class="card">
+                <!-- <div class="header">
+                    <button type="button" class="btn bg-teal waves-effect"><i class="material-icons">search</i>PESQUISAR</button>
+                </div> -->
+                <div class="body"> <!--  card-padding-->
+                    <div class="row">
+                        <div class="col-md-12">
+                        	<h2 class="card-inside-title col-teal">OCORRÊNCIA REGISTRADA COM SUCESSO!</h2>
+                        </div>
+                        <div class="col-md-12">
+                        	<a th:href="@{/ocorrencias/nova}" class='btn btn-lg bg-teal'>
+                                 <i class="material-icons">add_circle_outline</i> REGISTRAR NOVA OCORRÊNCIA
+                             </a> 
+                             <a class='btn btn-lg bg-teal' th:href="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}">
+		                    	<i class="material-icons">assignment</i> RETORNAR PARA A PESQUISA
+		                    </a>
+		                    <a th:href="@{/}" class="btn btn-lg bg-teal">
+		                    	<i class="material-icons">home</i> RETORNAR PARA O INÍCIO
+		                    </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+
+   <th:block layout:fragment="javascript-extra">
+   </th:block>
+</body>
+
+</html>

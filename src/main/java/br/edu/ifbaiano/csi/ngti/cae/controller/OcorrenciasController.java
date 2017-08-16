@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatus.Series;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -39,11 +39,9 @@ import br.edu.ifbaiano.csi.ngti.cae.repository.Alunos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Cursos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Ocorrencias;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Usuarios;
-import br.edu.ifbaiano.csi.ngti.cae.repository.filter.AlunoFilter;
 import br.edu.ifbaiano.csi.ngti.cae.repository.filter.OcorrenciaFilter;
 import br.edu.ifbaiano.csi.ngti.cae.security.UsuarioSistema;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroOcorrenciaService;
-import br.edu.ifbaiano.csi.ngti.cae.service.exception.AlunoNumeroMatriculaJaCadastradoException;
 import br.edu.ifbaiano.csi.ngti.cae.session.ListaAlunosSession;
 
 @Controller
@@ -164,7 +162,13 @@ public class OcorrenciasController {
 			
 		attributs.addFlashAttribute("mensagemSucesso", "Ocorrencia salva com sucesso");
 		
-		return new ModelAndView("redirect:/ocorrencias/nova");
+		/*return new ModelAndView("redirect:/ocorrencias/nova");*/
+		return new ModelAndView("redirect:/ocorrencias/nova/sucesso");
+	}
+	
+	@GetMapping(value="/nova/sucesso")
+	public ModelAndView salvoComSucesso(){
+		return new ModelAndView("ocorrencia/CadastroOcorrenciaSucesso");
 	}
 	
 	@GetMapping(value="/locais", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -208,9 +212,8 @@ public class OcorrenciasController {
 		try {
 			cadastroOcorrenciaService.excluir(codigos);
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Não foi possível escluir! "+e.getMessage());
+			return ResponseEntity.badRequest().body("Não foi possível excluir! "+e.getMessage());
 		}
-		
 		return ResponseEntity.ok().build();
 	}
 

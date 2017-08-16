@@ -9,9 +9,9 @@ NGTICAE.DialogoExcluir = (function() {
 	DialogoExcluir.prototype.iniciar = function() {
 		this.exclusaoBtn.on('click', onExcluirClicado.bind(this));
 		
-		/*if (window.location.search.indexOf('excluido') > -1) {
+		if (window.location.search.indexOf('excluido') > -1) {
 			swal('Pronto!', 'Excluído com sucesso!', 'success');
-		}*/
+		}
 	}
 	
 	function onExcluirClicado(evento) {
@@ -22,19 +22,19 @@ NGTICAE.DialogoExcluir = (function() {
 		
 		console.log('Tem certeza? Excluir "' + objeto + '"? Você não poderá recuperar depois.');
 		
-		alertify.confirm('Tem certeza? Excluir "' + objeto + '"? Você não poderá recuperar depois.', onExcluirConfirmado.bind(this, url), function() {
+		/*alertify.confirm('Tem certeza? Excluir "' + objeto + '"? Você não poderá recuperar depois.', onExcluirConfirmado.bind(this, url), function() {
 		    // user clicked "cancel"
 			console.log('Não, Cancelar exclusão!');
-		});
+		});*/
 		
-		/*swal({
+		swal({
 			title: 'Tem certeza?',
 			text: 'Excluir "' + objeto + '"? Você não poderá recuperar depois.',
 			showCancelButton: true,
 			confirmButtonColor: '#DD6B55',
 			confirmButtonText: 'Sim, exclua agora!',
 			closeOnConfirm: false
-		}, onExcluirConfirmado.bind(this, url));*/
+		}, onExcluirConfirmado.bind(this, url));
 	}
 	
 	function onExcluirConfirmado(url) {
@@ -48,19 +48,19 @@ NGTICAE.DialogoExcluir = (function() {
 	
 	function onExcluidoSucesso() {
 		console.log('Atualizar página...');
-		window.location.reload(true);
+		/*window.location.reload(true);*/
 		
-		/*var urlAtual = window.location.href;
+		var urlAtual = window.location.href;
 		var separador = urlAtual.indexOf('?') > -1 ? '&' : '?';
 		var novaUrl = urlAtual.indexOf('excluido') > -1 ? urlAtual : urlAtual + separador + 'excluido';
 		
-		window.location = novaUrl;*/
+		window.location = novaUrl;
 	}
 	
 	function onErroExcluir(e) {
 		console.log('erro', e.responseText);
-		NGTICAE.Notificacao.mostrar("Ops", e.responseText, "danger");
-		/*swal('Oops!', e.responseText, 'error');*/
+		/*NGTICAE.Notificacao.mostrar("Ops", e.responseText, "danger");*/
+		swal('Oops!', e.responseText, 'error');
 	}
 	
 	return DialogoExcluir;

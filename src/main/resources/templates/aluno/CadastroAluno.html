@@ -267,8 +267,8 @@
                                             <div class="body">
                                                 <div class="row">
 			                                    		<div class="col-md-12">
-				                                    		<button type="button" class="btn btn-xs bg-teal waves-effect" data-toggle="modal" data-target="#defaultModal"><i class="material-icons btn-icon">add_circle_outline</i>ADICIONAR</button>
-					                                    	<button type="button" class="btn btn-xs bg-pink waves-effect js-remover-todos" disabled="disabled"><i class="material-icons btn-icon">delete_sweep</i>REMOVER TODOS</button>
+				                                    		<button type="button" class="btn btn-xs bg-teal waves-effect" data-toggle="modal" data-target="#defaultModal"><i class="material-icons btn-icon">add_circle_outline</i>ADICIONAR RESPONSÁVEL</button>
+					                                    	<!-- <button type="button" class="btn btn-xs bg-pink waves-effect js-remover-todos" th:if="${aluno.responsaveisDoAluno} == null" disabled="disabled"><i class="material-icons btn-icon">delete_sweep</i>REMOVER TODOS</button> -->
 			                                    		</div>
                                                 </div>
 		                                        <div class="js-container-tabela-responsaveis">
@@ -288,7 +288,7 @@
 															    		<div th:id="|collapseThree_${responsavelAluno.responsavel.codigo}|" class="panel-collapse collapse" role="tabpanel" th:aria-labelledby="|headingThree_${responsavelAluno.responsavel.codigo}|">
 															        		<div class="panel-body">
 																				<div class="row">
-															                         <div class="col-xs-12 col-sm-12">
+															                         <div class="col-xs-12 col-sm-6">
 															                             <p>
 															                                PARENTESCO: <span th:text="${responsavelAluno.parentesco}"></span>
 															                             </p>
@@ -299,21 +299,21 @@
 															                                CONTATO 2: <span th:text="${responsavelAluno.responsavel.contato2}"></span>
 															                             </p>
 															                         </div>
-															                         <!-- <div class="col-xs-12 col-sm-6 text-right">
-															                              <a href='javascript:void(0);'>
+															                         <div class="col-xs-12 col-sm-6 text-right">
+															                              <!-- <a href='javascript:void(0);' class="js-editar-responsavel" th:data-url="@{/responsaveis/{codigo}(codigo=${responsavelAluno.responsavel.codigo})}">
 															                                  <i class='material-icons col-teal btn-icon'>mode_edit</i> EDITAR
-															                              </a>
-															                              <a href='javascript:void(0);' class='js-remover' data-contato='{{responsavel.contato}}'>
+															                              </a> -->
+															                              <a href='javascript:void(0);' class='js-exclusao-btn' th:data-objeto="${responsavelAluno.responsavel.nome}" th:data-url="@{/responsaveis/{codigo}(codigo=${responsavelAluno.codigo})}" data-contato='{{responsavel.contato}}'>
 															                                  <i class='material-icons col-pink btn-icon'>delete</i> REMOVER
 															                              </a>
-															                         </div> -->
+															                         </div>
 															                      </div>
 															        		</div>
 															    		</div>
 																	</div>
 															</div>
 				                                	</th:block>
-				                                    <span th:unless="${aluno.responsaveisDoAluno} != null">O aluno ainda não possui responsáveis cadastrados no sistema.</span>
+				                                    <span th:unless="${aluno.responsaveisDoAluno} != null">O aluno não possui responsáveis cadastrados no sistema.</span>
 		                                    	</div>
 		                                        <label th:if="${#fields.hasErrors('temResponsavel')}" th:errors="*{temResponsavel}" id="nome-error" class="error"></label>
 		                                	<!-- <div class="table-responsive">
@@ -385,89 +385,21 @@
                 </div>
             </div>
         </div>
-		<div class="modal fade  js-modal-cadastro-responsavel" id="defaultModal" tabindex="-1" role="dialog">
-           <div class="modal-dialog" role="document">
-               <div class="card">
-                        <div class="header">
-                            <h2>
-                                ADICIONAR RESPONSÁVEL
-                            </h2>
-                       		<a href="javascript:void(0);" class="header-dropdown m-r--5" data-dismiss="modal"><i class="material-icons">clear</i></a>
-                            
-                        </div>
-                        <div class="body">
-                        	<form id="formulario_responsavel">
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-5 trino-required">
-                                        <label for="responsavel_parentesco" class="control-label">Grau de parentesco</label>
-                                        <div class="form-group">
-                                            <select id="responsavel_parentesco" class="form-control show-tick">
-                                                <option value="">selecione...</option>
-                                                <option th:each="parentesco : ${parentescos}" th:value="${parentesco}" th:text="${parentesco.descricao}">Pai</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 trino-required">
-                                        <label for="responsavel_nome" class="control-label">Nome</label>
-                                        <div class="form-group">
-                                            <div class="form-line">
-                                                <input type="text" id="responsavel_nome" class="form-control" placeholder="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 trino-required">
-                                        <label for="responsavel_contato" class="control-label">Contato 1</label>
-                                        <div class="input-group">
-                                            <div class="form-line">
-                                                <input type="text" id="responsavel_contato" class="form-control mobile-phone-number js-phone-number" placeholder="">
-                                            </div>
-                                            <input type="checkbox" id="responsavel_whatsapp" class="chk-col-teal">
-                                            <label for="responsavel_whatsapp">WhatsApp</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <label for="responsavel_contato2">Contato 2</label>
-                                        <div class="input-group">
-                                            <div class="form-line">
-                                                <input type="text" id="responsavel_contato2" class="form-control mobile-phone-number js-phone-number" placeholder="">
-                                            </div>
-                                            <input type="checkbox" id="responsavel_whatsapp2" class="chk-col-teal">
-                                            <label for="responsavel_whatsapp2">WhatsApp</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12">
-                                        <label for="responsavel_email">E-mail</label>
-                                        <div class="form-group">
-                                            <div class="form-line">
-                                                <input type="text" id="responsavel_email" class="form-control" placeholder="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12">
-                                        <button type="button" class="btn btn-link waves-effect bg-teal  js-adicionar-responsavel" th:data-url="@{/responsaveis}">OK</button>
-                      		            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
-                                    </div>
-                                </div>
-		                	</form>
-                        </div>
-                        <!-- <div class="modal-footer" style="border-top: 1px solid #e5e5e5;">
-                        	<button type="button" class="btn btn-link waves-effect bg-teal">SALVAR</button>
-                       		<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">FECHAR</button>
-					    </div> -->
-                    </div>
-           </div>
-       </div>
+		
+        <th:block th:replace="responsavel/CadastroResponsavelModal"></th:block>
+        
     </section>
 
    <th:block layout:fragment="javascript-extra">
 	    <!-- notificações -->
-   		<script th:src="@{/javascript/vendors/plugins/alertify/alertify.js}"></script>
+   		<!-- <script th:src="@{/javascript/vendors/plugins/alertify/alertify.js}"></script>
    		<script th:src="@{/javascript/vendors/plugins/bootstrap-notify/bootstrap-notify.min.js}"></script>
-   		<script th:src="@{/javascript/notificacoes-push.js}"></script>
+   		<script th:src="@{/javascript/notificacoes-push.js}"></script> -->
+   		<script th:src="@{/javascript/trino.excluir-objeto.js}"></script>
    		
   		 <!-- Moment Plugin Js -->
 	    <script th:src="@{/layout/plugins/momentjs/moment.js}"></script>
-   		
+	    
 	    <!-- Bootstrap Material Datetime Picker Plugin Js -->
 	    <script th:src="@{/layout/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js}"></script>
 	    <script th:src="@{/javascript/componente-material-date-time-picker.js}"></script>

@@ -28,6 +28,9 @@ public class ResponsaveisController {
 	@Autowired
 	private TabelasResponsaveisSession tabelasResponsaveisSession;
 	
+	@Autowired
+	private CadastroResponsavelService cadastroResponsavelService;
+	
 	@PostMapping(value="/adicionar", consumes=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<?> adicionarResponsavel(@RequestBody @Valid Responsavel responsavel, BindingResult result){
 		
@@ -76,4 +79,17 @@ public class ResponsaveisController {
 		
 		return ResponseEntity.ok(tabelasResponsaveisSession.getResponsaveis(uuid));
 	} 
+	
+	 
+	@DeleteMapping(value="/{codigo}")
+	public @ResponseBody ResponseEntity<?> excluir(@PathVariable("codigo") Long codigo){
+		
+		try {
+			cadastroResponsavelService.excluir(codigo);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body("Não foi possível escluir! "+e.getMessage());
+		}
+		
+		return ResponseEntity.ok().build();
+	}
 }

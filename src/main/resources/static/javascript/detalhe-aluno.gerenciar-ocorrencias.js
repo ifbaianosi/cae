@@ -148,8 +148,8 @@ NGTICAE.ExcluirOcorrencia = function(){
 	}
 	
 	function onErroAoExcluir(erro){
-		console.log('Erro ao tentar excluir!');
-		NGTICAE.Notificacao.mostrar("Ops!", erro, "danger");
+		console.log('Erro ao tentar excluir!', erro);
+		NGTICAE.Notificacao.mostrar("Ops!", erro.responseText, "danger");
 	}
 	
 	return ExcluirOcorrencia;
