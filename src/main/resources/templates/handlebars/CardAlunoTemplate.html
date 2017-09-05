@@ -9,7 +9,7 @@
 	{{#each .}}
 		<div class="col-xs-12 col-sm-6 col-md-4">
 			<div class="bg-warning m-b-15">
-				<input type="hidden" name="alunos" value="{{codigo}}">
+				<input type="hidden" id="alunos{{codigo}}" name="alunos" value="{{codigo}}">
 				<div><span class="overflow text-uppercase js-tooltip" title="{{nome}}">{{nome}}</span></div>
 				<div><strong class="">{{matricula}}</strong></div>
 				<div><span class="">{{curso.sigla}}</span></div>
@@ -20,7 +20,7 @@
 	{{else}}
 		<div class="col-xs-12 col-sm-12 col-md-6">
 			<p class="bg-warning">
-				Identifique o(s) aluno(s) para registrar a ocorrência.
+				Adicione aluno(s) para registrar a(s) ocorrência(s).
 			</p>
 		</div>
 	{{/if}}

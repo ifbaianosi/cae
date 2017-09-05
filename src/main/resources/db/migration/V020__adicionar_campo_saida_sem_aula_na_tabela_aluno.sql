@@ -1,0 +1,1 @@
+ALTER TABLE  aluno ADD  saida_sem_aula TINYINT NULL AFTER  saida;

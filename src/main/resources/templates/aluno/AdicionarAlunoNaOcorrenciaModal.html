@@ -42,7 +42,7 @@
 	                                    <label for="matricula">Matrícula</label>
 	                                    <div class="form-group">
 	                                        <div class="form-line">
-	                                            <input type="text" id="matricula" class="form-control  js-matricula-aluno-modal" autocomplete="off" autofocus="autofocus">
+	                                            <input type="text" id="matricula_" class="form-control  js-matricula-aluno-modal" autocomplete="off" autofocus="autofocus">
 	                                        </div>
 	                                    </div>
 	                                </div>
@@ -99,7 +99,9 @@
                         		</div>
                         		<div class="row">
                         			<div class="col-xs-12">
+                        			
                         				<button type="submit" class="btn waves-effect bg-teal  js-pesquisar-aluno" th:data-url="@{/alunos}">PESQUISAR</button>
+                        				
                         				<div class="preloader pl-size-xs pull-right hide">
 		                                    <div class="spinner-layer pl-teal">
 		                                        <div class="circle-clipper left">

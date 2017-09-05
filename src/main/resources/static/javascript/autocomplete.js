@@ -48,7 +48,7 @@ NGTICAE.AutocompleteAluno = {
 			var options = {
 					url: function(paremetro) {
 						return input.data('url') + paremetro;
-					}.bind(this),
+					},
 					/*url: input.data('url'),*/
 					getValue: "nome",
 					minCharNumber: 3,
@@ -60,6 +60,11 @@ NGTICAE.AutocompleteAluno = {
 						maxNumberOfElements: 8,
 						match: {
 							enabled: true
+						},
+						onChooseEvent: function(){
+							var alunoSelecionado = input.getSelectedItemData();
+							console.log('aluno selecionado: ', alunoSelecionado);
+							$('#aluno').val(alunoSelecionado.codigo);
 						}
 					}
 				};
@@ -67,6 +72,10 @@ NGTICAE.AutocompleteAluno = {
 		 	input.easyAutocomplete(options);
 		 	$('.easy-autocomplete').css( "width", "100%" );
 			
+		},
+		onItemSelecionado: function(input){
+			var alunoSelecionado = input.getSelectedItemData();
+			console.log('aluno selecionado: ', alunoSelecionado);
 		}
 }
 

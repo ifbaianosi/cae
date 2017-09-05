@@ -19,15 +19,11 @@ public class ListaAluno {
 	}
 	
 	public void adicionarAluno(List<Aluno> alunos){
-		
 		for(Aluno aluno : alunos){
-			
 			Optional<Aluno> alunoOptional = buscarPorAluno(aluno);
-			
 			if (!alunoOptional.isPresent()){
 				listaAlunosSession.add(0, aluno);
 			}
-			
 		}
 	}
 	

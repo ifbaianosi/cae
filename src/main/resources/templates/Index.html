@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <div class="info-box bg-cyan hover-expand-effect" 
+                    <div class="info-box bg-pink hover-expand-effect" 
                     		th:classappend="${#authorization.expression('hasRole(''ROLE_MENU_OCORRENCIAS'')')} ?  js-info-box-click" th:data-url="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}">
                         <div class="icon">
                             <i class="material-icons">assignment</i>
@@ -73,6 +73,78 @@
                 </div>-->
             </div>
             
+            <div class="row clearfix">
+            	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            		<div class="row">
+	            		<!-- Line Chart -->
+		                <div sec:authorize="hasRole('ROLE_VER_GRAFICO_OCORRENCIAS_MES')" class="col-xs-12">
+		                    <div class="card">
+		                        <div class="header">
+		                            <h2>OCORRÊNCIAS <small>Últimos 6 meses</small></h2>
+		                        </div>
+		                        <div class="body"><iframe class="chartjs-hidden-iframe" style="width: 100%; display: block; border: 0px; height: 0px; margin: 0px; position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px;"></iframe>
+		                            <canvas id="graficoOcorrenciasPorMes" height="262" width="524" style="display: block; width: 524px; height: 262px;"></canvas>
+		                        </div>
+		                    </div>
+		                </div>
+		                <!-- #END# Line Chart -->
+	                    <div sec:authorize="hasRole('ROLE_VER_OCORRENCIAS_POR_USUARIO')" class="col-xs-12">
+		                    <div class="card">
+		                    	<div class="header">
+		                            <h2>USUÁRIOS QUE MAIS REGISTROU OCORRÊNCIAS <small>Top 5</small></h2>
+		                        </div>
+		                        <div class="body">
+		                            <ul class="dashboard-stat-list" style="margin-top: 0px;">
+		                                <li th:each="totalOcorrencias : ${ocorrenciasPorUsuario}">
+		                                    <span class="col-teal" th:text="${totalOcorrencias.usuario}">USUARIO</span>
+		                                    <span class="pull-right col-teal"><b th:text="${totalOcorrencias.ocorrencias}">12</b> <small class="col-teal">OCORRÊNCIAS</small></span>
+		                                </li>
+		                            </ul>
+		                        </div>
+		                    </div>
+		                </div>
+            		</div>
+            	</div>
+            	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            		<div class="row">
+            			<div sec:authorize="hasRole('ROLE_VER_OCORRENCIAS_POR_LOCAL')" class="col-xs-12">
+		                    <div class="card">
+		                    	<div class="header">
+		                            <h2>LOCAIS COM MAIS OCORRÊCNIAS <small>Top 5</small></h2>
+		                        </div>
+		                        <div class="body">
+		                            <ul class="dashboard-stat-list" style="margin-top: 0px;">
+		                                <li th:each="totalOcorrencia : ${ocorrenciasPorLocal}">
+		                                    <span class="text-uppercase col-teal" th:text="${totalOcorrencia.local}">TODAY</span>
+		                                    <span class="pull-right col-teal"><b th:text="${totalOcorrencia.ocorrencias}">12</b> <small class="col-teal">OCORRÊNCIAS</small></span>
+		                                </li>
+		                            </ul>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div sec:authorize="hasRole('ROLE_VER_OCORRENCIAS_POR_ALUNO')" class="col-xs-12">
+		                    <div class="card">
+		                    	<div class="header">
+		                            <h2>ALUNOS COM MAIS OCORRÊNCIAS <small>Top 5</small></h2>
+		                        </div>
+		                        <div class="body">
+		                            <ul class="dashboard-stat-list" style="margin-top: 0px;">
+		                                <li th:each="totalOcorrencias : ${ocorrenciasPorAluno}">
+		                                    <span class="text-uppercase col-teal" th:text="${totalOcorrencias.aluno}">TODAY</span>
+		                                    <span class="pull-right col-teal"><b th:text="${totalOcorrencias.ocorrencias}">12</b> <small class="col-teal">OCORRÊNCIAS</small></span>
+		                                </li>
+		                            </ul>
+		                        </div>
+		                    </div>
+		                </div>
+            		</div>
+            	</div>
+                
+                
+                </div>
+                <!-- #END# Bar Chart -->
+            </div>
+            
             <!-- <div sec:authorize="hasRole('ROLE_VER_TOTAIS_OCORRENCIAS')" class="row clearfix">
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="card">
@@ -90,11 +162,11 @@
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="card">
                         <div class="body bg-teal">
-                            <div class="font-bold m-b--35">OCORRÊNCIAS POR ALUNO</div>
+                            <div class="font-bold m-b--35">OCORRÊNCIAS POR LOCAL</div>
                             <ul class="dashboard-stat-list">
-                                <li th:each="totalOcorrencias : ${ocorrenciasPorAluno}">
-                                    <span class="text-uppercase" th:text="${totalOcorrencias.aluno}">TODAY</span>
-                                    <span class="pull-right"><b th:text="${totalOcorrencias.ocorrencias}">12</b> <small>OCORRÊNCIAS</small></span>
+                                <li th:each="totalOcorrencia : ${ocorrenciasPorLocal}">
+                                    <span class="text-uppercase" th:text="${totalOcorrencia.local}">TODAY</span>
+                                    <span class="pull-right"><b th:text="${totalOcorrencia.ocorrencias}">12</b> <small>OCORRÊNCIAS</small></span>
                                 </li>
                             </ul>
                         </div>
@@ -103,11 +175,11 @@
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="card">
                         <div class="body bg-teal">
-                            <div class="font-bold m-b--35">OCORRÊNCIAS POR LOCAL</div>
+                            <div class="font-bold m-b--35">OCORRÊNCIAS POR ALUNO</div>
                             <ul class="dashboard-stat-list">
-                                <li th:each="totalOcorrencia : ${ocorrenciasPorLocal}">
-                                    <span class="text-uppercase" th:text="${totalOcorrencia.local}">TODAY</span>
-                                    <span class="pull-right"><b th:text="${totalOcorrencia.ocorrencias}">12</b> <small>OCORRÊNCIAS</small></span>
+                                <li th:each="totalOcorrencias : ${ocorrenciasPorAluno}">
+                                    <span class="text-uppercase" th:text="${totalOcorrencias.aluno}">TODAY</span>
+                                    <span class="pull-right"><b th:text="${totalOcorrencias.ocorrencias}">12</b> <small>OCORRÊNCIAS</small></span>
                                 </li>
                             </ul>
                         </div>
@@ -149,6 +221,11 @@
     </section>
 
    <th:block layout:fragment="javascript-extra">
+    <!-- ChartJS plugin-->
+	<script th:src="@{/layout/js/_colocar_na_pasta_plugins_Chart.bundle.min.js}"></script>
+	
+    <!-- Grafico ocorrencias-->
+	<script th:src="@{/javascript/grafico.ocorrencias.js}"></script>
    </th:block>
 </body>
 

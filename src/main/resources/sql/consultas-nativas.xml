@@ -16,7 +16,7 @@
 	
 	<named-native-query name="TotalOcorrencias.PorUsuario" result-set-mapping="totalOcorrenciasPorUsuarioMapping">
 		<query>
-			SELECT DISTINCT u.email as usuario, (SELECT COUNT(oc.codigo) FROM ocorrencia oc WHERE oc.codigo_usuario = u.codigo) as ocorrencias
+			SELECT DISTINCT SUBSTRING_INDEX(u.email, '@', 1) as usuario, (SELECT COUNT(oc.codigo) FROM ocorrencia oc WHERE oc.codigo_usuario = u.codigo) as ocorrencias
 				FROM ocorrencia o
 					INNER JOIN usuario u ON u.codigo = o.codigo_usuario 
 				ORDER BY ocorrencias DESC
@@ -27,14 +27,32 @@
 	
 	<named-native-query name="TotalOcorrencias.PorAluno" result-set-mapping="totalOcorrenciasPorAlunoMapping">
 		<query>
-			SELECT DISTINCT a.nome as aluno, (SELECT COUNT(oc.codigo) FROM ocorrencia oc WHERE oc.codigo_aluno = a.codigo) as ocorrencias
-				FROM ocorrencia o
-					INNER JOIN aluno a ON a.codigo = o.codigo_aluno 
+			SELECT DISTINCT a.nome AS aluno, (SELECT COUNT(*) FROM ocorrencia_aluno WHERE codigo_aluno = a.codigo) AS ocorrencias
+				FROM ocorrencia_aluno
+				INNER JOIN aluno a ON a.codigo = ocorrencia_aluno.codigo_aluno
 				ORDER BY ocorrencias DESC
-			
-				LIMIT 0 , 5;
+
+				LIMIT 0, 5
 	    </query>
 	</named-native-query>
+	
+	<named-native-query name="graficoOcorrencias.UltimosSeisMeses" result-set-mapping="graficoOcorrenciasMapping">
+		<query>
+			SELECT date_format(data_ocorrido, '%Y/%m') mes, count(*) total
+	  			FROM ocorrencia
+	  			WHERE data_ocorrido > DATE_SUB(NOW(), INTERVAL 6 MONTH)
+	
+				GROUP BY date_format(data_ocorrido, '%Y/%m')   
+				ORDER BY date_format(data_ocorrido, '%Y/%m') DESC
+	    </query>
+	</named-native-query>
+	
+	<sql-result-set-mapping name="graficoOcorrenciasMapping">
+		<constructor-result target-class="br.edu.ifbaiano.csi.ngti.cae.dto.GraficoOcorrenciasPorMes">
+			<column name="mes" class="java.lang.String"/>
+			<column name="total" class="java.lang.Integer"/>
+		</constructor-result>
+	</sql-result-set-mapping>
 	
 	<sql-result-set-mapping name="totalOcorrenciasPorLocalMapping">
 		<constructor-result target-class="br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciasPorLocal">
@@ -56,6 +74,7 @@
 			<column name="ocorrencias" class="java.lang.Integer"/>
 		</constructor-result>
 	</sql-result-set-mapping>
+	
 	
 </entity-mappings>
 

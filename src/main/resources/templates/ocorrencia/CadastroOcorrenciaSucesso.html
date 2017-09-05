@@ -35,7 +35,7 @@
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
                         <div class="col-md-12">
-                        	<h2 class="card-inside-title col-teal">OCORRÊNCIA REGISTRADA COM SUCESSO!</h2>
+                        	<h2 class="card-inside-title col-teal">OCORRÊNCIA SALVA COM SUCESSO!</h2>
                         </div>
                         <div class="col-md-12">
                         	<a th:href="@{/ocorrencias/nova}" class='btn btn-lg bg-teal'>
@@ -43,9 +43,6 @@
                              </a> 
                              <a class='btn btn-lg bg-teal' th:href="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}">
 		                    	<i class="material-icons">assignment</i> RETORNAR PARA A PESQUISA
-		                    </a>
-		                    <a th:href="@{/}" class="btn btn-lg bg-teal">
-		                    	<i class="material-icons">home</i> RETORNAR PARA O INÍCIO
 		                    </a>
                         </div>
                     </div>

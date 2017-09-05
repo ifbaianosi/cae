@@ -42,20 +42,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers("/alunos").hasRole("PESQUISAR_ALUNO")
 			.antMatchers("/alunos/novo").hasRole("NOVO_ALUNO")
 			.antMatchers("/alunos/detalhe").hasRole("CONSULTAR_HISTORICO_ALUNO")
-			.antMatchers("/alunos/adicionar").hasRole("CONSULTAR_DADOS_ALUNO") // configurar a permissão de forma correta para essa url
+			.antMatchers("/alunos/adicionar").hasRole("NOVA_OCORRENCIA")
 			
-			.antMatchers("/alunos/por").hasRole("CONSULTAR_DADOS_ALUNO")
-			.antMatchers("/alunos/por-matricula").hasRole("CONSULTAR_DADOS_ALUNO")
+			.antMatchers("/alunos/por").hasRole("PESQUISAR_ALUNO_POR_NOMEOUMATRICULA")
+			.antMatchers("/alunos/por-matricula").hasRole("PESQUISAR_ALUNO_POR_MATRICULA")
 			.antMatchers("/alunos/pesquisa").hasRole("CONSULTAR_DADOS_ALUNO")
 			
 			.antMatchers("/usuarios").hasRole("PESQUISAR_USUARIO")
 			.antMatchers("/usuarios/novo").hasRole("NOVO_USUARIO")
 			
-			.antMatchers("/ocorrencias").hasRole("PESQUISAR_OCORRENCIA")
+			.antMatchers("/ocorrencias/totalPorMes").hasRole("VER_GRAFICO_OCORRENCIAS_MES")
+			.antMatchers("/ocorrencias").hasRole("PESQUISAR_TODAS_OCORRENCIAS")
 			.antMatchers("/ocorrencias/nova").hasRole("NOVA_OCORRENCIA")
 			.antMatchers("/ocorrencias/autoria").hasRole("PESQUISAR_OCORRENCIAS_PROPRIA_AUTORIA")
 			.antMatchers("/ocorrencias/locais").hasRole("NOVA_OCORRENCIA")
 			.antMatchers("/ocorrencias/{\\d+}").hasRole("EDITAR_OCORRENCIA")
+
+			.antMatchers("/relatorios/ocorrenciasEmitidas").hasRole("RELATORIO_OCORRENCIAS")
+			.antMatchers("/relatorios/medidaDisciplinar/{\\d+}").hasRole("IMPRIMIR_MEDIDA_DISCIPLINAR")
 				
 				.anyRequest().authenticated()
 				.and()

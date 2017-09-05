@@ -98,7 +98,14 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="header">CONSULTAS</li>
+                    <li sec:authorize="hasRole('ROLE_MENU_RELATORIOS')" class="header">RELATORIOS</li>
+                    <li sec:authorize="hasRole('ROLE_RELATORIO_OCORRENCIAS')">
+                        <a th:href="@{/relatorios/ocorrenciasEmitidas}">
+                            <i class="material-icons">picture_as_pdf</i>
+                            <span>OCORRÊNCIAS</span>
+                        </a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_MENU_CONSULTAS')"  class="header">CONSULTAS</li>
                     <li sec:authorize-url="/alunos/pesquisa">
                         <a th:href="@{/alunos/pesquisa}">
                             <i class="material-icons">search</i>
@@ -114,7 +121,7 @@
                     &copy; 2017 <a href="javascript:void(0);">IF BAIANO - SANTA INÊS - NGTI</a>.
                 </div>
                 <div class="version">
-                    <a class="js-tooltip" href="javascript:void(0);" data-toggle="modal" data-target="#modalVersoesSistema" title="Atualizações do sistema"><b>Versão: </b> 1.2.2</a>
+                    <a class="js-tooltip" href="javascript:void(0);" data-toggle="modal" data-target="#modalVersoesSistema" title="Atualizações do sistema"><b>Versão: </b> 1.4.0</a>
                 </div>
             </div>
             <!-- #Footer -->

@@ -44,6 +44,11 @@ public class Aluno extends Entidade {
 	@ManyToOne
 	@JoinColumn(name="codigo_curso")
 	private Curso curso;
+	
+	@NotNull(message="Selecione a serie/turma")
+	@Enumerated(EnumType.STRING)
+	@Column(name="serie_turma")
+	private SerieTurma serieTurma;
 	//=====================================================================
 	
 	@Size(max=80, message="O nome social deve conter no máximo {max} caracteres")
@@ -74,10 +79,6 @@ public class Aluno extends Entidade {
 	private Sexo sexo;
 	
 
-	//@NotNull(message="Selecione a serie/turma")
-	@Enumerated(EnumType.STRING)
-	@Column(name="serie_turma")
-	private SerieTurma serieTurma;
 	
 	@Max(value=100, message="O número do apartamento deve ser no máximo até 100")
 	private Integer apartamento;
@@ -93,6 +94,9 @@ public class Aluno extends Entidade {
 	private Boolean whatsapp;
 	
 	private Boolean saida;//Saida do campus
+	
+	@Column(name="saida_sem_aula")
+	private Boolean saidaSemAula;//Saida do campus durante o periodo sem aula
 	
 	@Enumerated(EnumType.STRING)
 	private Status status;
@@ -232,11 +236,18 @@ public class Aluno extends Entidade {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+	public Boolean getSaidaSemAula() {
+		return saidaSemAula;
+	}
+	
+	public void setSaidaSemAula(Boolean saidaSemAula) {
+		this.saidaSemAula = saidaSemAula;
+	}
+	
 	public String getDataNascimentoFormatada() {
 		DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		return dataNascimento!=null ? dataNascimento.format(formater) : "";
 	}
-	
 
 	public boolean isCadastroCompleto(){
 		System.out.println("cadastroCompletoAluno: " + (serieTurma != null));

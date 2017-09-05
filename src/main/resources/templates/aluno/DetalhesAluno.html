@@ -132,12 +132,12 @@
 										            </div> -->
 			                                    	<div class="row">
 			                                    		<input type="hidden" id="url_nova_ocorrencia" th:data-url="@{/ocorrencias}" th:data-url-alunos="@{/alunos}"/>
-			                                    		<div sec:authorize-url="/ocorrencias/nova" class="col-md-12">
+			                                    		<!-- <div sec:authorize-url="/ocorrencias/nova" class="col-md-12">
 				                                    		<button type="button" class="btn btn-sm bg-teal waves-effect  js-nova-ocorrencia" th:disabled="${aluno.status != status.FREQUENTANDO}">NOVA</button>
 					                                    	<button type="button" class="btn btn-sm bg-teal waves-effect  js-editar-ocorrencia" disabled="disabled">EDITAR</button>
 					                                    	<button type="button" class="btn btn-sm bg-teal waves-effect  js-excluir-ocorrencias" disabled="disabled" th:data-url="@{/ocorrencias}">EXCLUIR</button>
 					                                    	<button type="button" class="btn btn-sm bg-deep-orange waves-effect  js-cancelar-ocorrencias hide">CANCELAR</button>
-			                                    		</div>
+			                                    		</div> -->
 			                                    		<div class="col-md-12">
 					                                        <div class="table-responsive js-container-ocorrencias">
 					                                            <!-- <th:block th:replace="ocorrencia/TabelaOcorrenciasPorAluno :: tabelaOcorrencias"></th:block> -->

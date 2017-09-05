@@ -142,8 +142,8 @@
                                             </div> -->
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
-                                    	<label for="serieTurma">Serie/Turma</label>
+                                    <div class="col-xs-12 col-sm-6 col-md-3 trino-required">
+                                    	<label for="serieTurma" class="control-label">Serie/Turma</label>
                                         <div class="form-group">
 		                                    <select class="form-control show-tick" data-live-search="true" data-size="5" data-container="body" th:field="*{serieTurma}">
 		                                    	<option value="">selecione...</option>
@@ -361,13 +361,13 @@
                                                         Saída do campus, para todos os fins.
                                                     </label>
                                                 </p>
-                                                <!-- <p>
-                                                    <input type="checkbox" id="atendimento" class="chk-col-teal" name="whatsapp" th:checked="${aluno.whatsapp}">
-                                                    <label for="atendimento">
-                                                        Atendimento médico, psicológico e odontológico, nesta instituição, ou fora desta, em casos emergênciais.
+                                                <p>
+                                                    <input type="checkbox" id="saidaSemAula" class="chk-col-teal" name="saidaSemAula" th:checked="${aluno.saidaSemAula}">
+                                                    <label for="saidaSemAula">
+                                                        Saída do campus, durante o expediente não havendo aulas.
                                                     </label>
                                                 </p>
-                                                <p>
+                                                <!-- <p>
                                                     <input type="checkbox" id="viagem" class="chk-col-teal" name="whatsapp" th:checked="${aluno.whatsapp}">
                                                     <label for="viagem">
                                                         Participação em viagens promovidas pela instituição, acompanhado do servidor do campus.

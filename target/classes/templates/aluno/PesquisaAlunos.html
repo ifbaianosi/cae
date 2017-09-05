@@ -170,10 +170,18 @@
                                     <div class="col-xs-12 col-sm-6 col-md-3">
                                     	<label for="saida">Saída do campus</label>
                                         <div class="form-group">
-		                                    <input type="checkbox" id="saida" class="chk-col-teal" name="saida" th:field="*{saida}">
-                                             <label class="text-uppercase" for="saida">
-                                                 Autorizado
-                                             </label>
+                                        	<div class="checkbox-inline"> 
+			                                    <input type="checkbox" id="saida" class="chk-col-teal" name="saida" th:field="*{saida}">
+	                                             <label class="text-uppercase js-tooltip" for="saida" title="Saída do campus para todos os fins">
+	                                                 Autorizado
+	                                             </label>
+                                              </div>
+                                              <div class="checkbox-inline">
+	                                             <input type="checkbox" id="saidaSemAula" class="chk-col-teal" th:field="*{saidaSemAula}">
+	                                             <label class="text-uppercase js-tooltip" for="saidaSemAula" title="Saída do campus, durante o expediente não havendo aulas">
+	                                                 Sem aula
+	                                             </label>
+                                             </div>
 	                                    </div>
                                     </div>
                                 </div>
@@ -197,15 +205,15 @@
                                 <tbody>
                                     <tr th:each="aluno : ${pagina.conteudo}">
                                         <td th:text="${aluno.matricula}">17115</td>
-                                        <td th:text="${aluno.nome}">Nome do Aluno</td>
+                                        <td class="text-uppercase" th:text="${aluno.nome}">Nome do Aluno</td>
                                         <td th:text="${aluno.curso.nome}">Curso</td>
                                         <td th:text="${aluno.regime.descricao}">Aluno Interno</td>
                                         <td>
                                         	<span class="label" th:text="${aluno.status.descricao}" th:classappend="${aluno.status.cor}">FREQUENTANDOO</span>
                                         </td>
-                                        <td class="text-right">
+                                        <td class="text-center">
                                         	<a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}" class="col-red"><i class="material-icons btn-icon">edit</i>Editar</a>
-                                         	<a sec:authorize-url="/alunos/detalhe" th:href="@{/alunos/detalhe?matricula={matricula}(matricula=${aluno.matricula})}" class="col-teal"><i class="material-icons btn-icon">history</i>Histórico</a>
+                                         	<!-- <a sec:authorize-url="/alunos/detalhe" th:href="@{/alunos/detalhe?matricula={matricula}(matricula=${aluno.matricula})}" class="col-teal"><i class="material-icons btn-icon">history</i>Histórico</a> -->
                                         </td>
                                     </tr>
                                     <tr th:if="${pagina.vazia}">

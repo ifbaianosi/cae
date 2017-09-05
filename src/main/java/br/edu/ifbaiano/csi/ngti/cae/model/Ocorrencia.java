@@ -53,12 +53,11 @@ public class Ocorrencia extends Entidade{
 	@JoinColumn(name="codigo_aluno")
 	private Aluno aluno;
 	
-	/*@NotNull(message="Adicione ao menos um aluno")*/
-	/*@Size(min=1, message="Selecione pelo menos um aluno")*/
+	@NotNull(message="Selecione pelo menos um aluno")
+	@Size(min=1, message="Selecione pelo menos um aluno")
 	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
-	@JoinTable(name="ocorrencia_aluno", joinColumns = @JoinColumn(name="codigo_aluno")
-								   , inverseJoinColumns = @JoinColumn(name="codigo_ocorrencia"))
-	@JsonIgnoreProperties
+	@JoinTable(name="ocorrencia_aluno", joinColumns = @JoinColumn(name="codigo_ocorrencia")
+								   , inverseJoinColumns = @JoinColumn(name="codigo_aluno"))
 	private List<Aluno> alunos;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -74,18 +73,14 @@ public class Ocorrencia extends Entidade{
 	
 	@Transient
 	private String uuid;
+	
+	//ocorrencia coletiva
+	@NotNull(message="Informe o tipo da ocorrência")
+	private Boolean coletiva = false; 
 
 	@PrePersist
 	public void prePersist(){
 		this.dataRegistro = LocalDateTime.now();
-		this.regime = aluno.getRegime().getDescricao();
-		setSerieDoAluno();
-	}
-	
-	private void setSerieDoAluno(){
-		if(aluno.getCurso().getTipoCurso() != TipoCurso.SUPERIOR){
-			this.serie = aluno.getSerieTurma().getDescricao();
-		}
 	}
 
 	public LocalDateTime getDataRegistro() {
@@ -176,6 +171,13 @@ public class Ocorrencia extends Entidade{
 		this.alunos = alunos;
 	}
 
+	public Boolean getColetiva() {
+		return coletiva;
+	}
+
+	public void setColetiva(Boolean coletiva) {
+		this.coletiva = coletiva;
+	}
 
 	@Transient
 	private DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -186,6 +188,28 @@ public class Ocorrencia extends Entidade{
 	
 	public String getDataRegistroFormatada() {
 		return dataRegistro.format(formater);
+	}
+	
+	public int getQuantidadeAlunos(){
+		return alunos.size();
+	}
+	
+	public String getDescricaoResumida(){
+		String descr = this.descricao;
+		if(this.descricao.length() > 80){
+			descr = this.descricao.substring(0, 80).concat("...");
+		}
+		
+		return descr;
+	}
+	
+	public String getLocalResumido(){
+		String lcl = this.local;
+		if(this.local.length() > 20){
+			lcl = this.local.substring(0, 20).concat("...");
+		}
+		
+		return lcl;
 	}
 	
 }

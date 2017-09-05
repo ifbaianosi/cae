@@ -46,46 +46,6 @@ public class AlunosImpl implements AlunosQueries {
 		return new PageImpl<>(criteria.list(), pageable, total(filtro));
 	}
 	
-	@SuppressWarnings("unchecked")
-	@Transactional(readOnly = true)
-	@Override
-	public List<Aluno> filtroAdicionarNaOcorrencia(AlunoFilter filtro) {
-		Criteria criteria = manager.unwrap(Session.class).createCriteria(Aluno.class);
-		
-		//ADICIONA O FILTRO A CRITERIA DO HIBERNATE
-		adicionarFiltro(filtro, criteria);
-		
-		return criteria.list();
-	}
-	
-	@Override
-	public List<Aluno> porNomeOuMatricula(String nomeOuMatricula) {
-		String jpql = "SELECT a "
-				+ "FROM Aluno a "
-				+ "WHERE lower(a.nome) like lower(:nomeOuMatricula) OR a.matricula like :nomeOuMatricula";
-		
-		List<Aluno> alunosFiltrados = manager.createQuery(jpql, Aluno.class)
-											.setParameter("nomeOuMatricula", nomeOuMatricula + "%")
-											.getResultList();
-
-		return alunosFiltrados;
-	}
-	
-	//NO MOMENTO NÃO ESTA SENDO USADO ESSE METODO, FOI USADO O PROPRIO METODO DO SPRING DATA JPA findByMatricula(matricula)
-	@Override
-	public Optional<AlunoDTO> porMatricula(String matricula) {
-		String jpql = "SELECT new br.edu.ifbaiano.csi.ngti.cae.dto.AlunoDTO(codigo, nome, matricula, serieTurma, sexo) "
-				+ "FROM Aluno a "
-				+ "WHERE a.matricula like :matricula";
-		
-		Optional<AlunoDTO> alunoFiltradoOptional = manager.createQuery(jpql, AlunoDTO.class)
-											.setParameter("matricula", matricula)
-											.getResultList().stream().findFirst();
-
-		return alunoFiltradoOptional;
-	}
-
-
 	/**
 	 * ADICIONA UM FILTRO A PESQUISA 
 	 * 
@@ -141,9 +101,13 @@ public class AlunosImpl implements AlunosQueries {
 			//FILTRO PERMISSÃO DE SAIDA DO CAMPUS
 			if(filtro.getSaida() != null && filtro.getSaida() == true)
 				criteria.add(Restrictions.eq("saida", filtro.getSaida()));
+			
+			//FILTRO PERMISSÃO DE SAIDA DO CAMPUS SEM AULA
+			if(filtro.getSaidaSemAula() != null && filtro.getSaidaSemAula() == true)
+				criteria.add(Restrictions.eq("saidaSemAula", filtro.getSaidaSemAula()));
 		}
 	}
-
+	
 	private Long total(AlunoFilter filtro) {
 		Criteria criteria = manager.unwrap(Session.class).createCriteria(Aluno.class);
 		adicionarFiltro(filtro, criteria);
@@ -151,8 +115,52 @@ public class AlunosImpl implements AlunosQueries {
 		return (Long)criteria.uniqueResult();
 	}
 	
+	
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly = true)
+	@Override
+	public List<Aluno> filtroAdicionarNaOcorrencia(AlunoFilter filtro) {
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(Aluno.class);
+		
+		//ADICIONA O FILTRO A CRITERIA DO HIBERNATE
+		adicionarFiltro(filtro, criteria);
+		
+		return criteria.list();
+	}
+	
+	@Override
+	public List<Aluno> porNomeOuMatricula(String nomeOuMatricula) {
+		String jpql = "SELECT a "
+				+ "FROM Aluno a "
+				+ "WHERE lower(a.nome) like lower(:nomeOuMatricula) OR a.matricula like :nomeOuMatricula";
+		
+		List<Aluno> alunosFiltrados = manager.createQuery(jpql, Aluno.class)
+											.setParameter("nomeOuMatricula", nomeOuMatricula + "%")
+											.getResultList();
+
+		return alunosFiltrados;
+	}
+	
+	//NO MOMENTO NÃO ESTA SENDO USADO ESSE METODO, FOI USADO O PROPRIO METODO DO SPRING DATA JPA findByMatricula(matricula)
+	@Override
+	public Optional<AlunoDTO> porMatricula(String matricula) {
+		String jpql = "SELECT new br.edu.ifbaiano.csi.ngti.cae.dto.AlunoDTO(codigo, nome, matricula, serieTurma, sexo) "
+				+ "FROM Aluno a "
+				+ "WHERE a.matricula like :matricula";
+		
+		Optional<AlunoDTO> alunoFiltradoOptional = manager.createQuery(jpql, AlunoDTO.class)
+											.setParameter("matricula", matricula)
+											.getResultList().stream().findFirst();
+
+		return alunoFiltradoOptional;
+	}
+
+
+	
 	/*private boolean filtrarPorSaida(AlunoFilter filtro){
 		return filtro.getSaida() == true || filtro.getSaida() == false
 	}*/
+	
+	
 	
 }

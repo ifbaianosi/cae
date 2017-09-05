@@ -34,11 +34,32 @@ NGTICAE.Modal = {
 				success: function(ocorrencia){
 					console.log('sucesso!', ocorrencia);
 					
+					$('.js-codigo-ocorrencia').text(ocorrencia.codigo);
+					$('.js-tipo-ocorrencia').text(ocorrencia.tipoOcorrencia)
 					$('.js-data-ocorrencia').text(ocorrencia.dataOcorrido);
 					$('.js-local-ocorrencia').text(ocorrencia.local);
 					$('.js-descricao-ocorrencia').text(ocorrencia.descricao);
 					var nomeAluno = $('#nomeAluno').text().length > 0 ? $('#nomeAluno').text() : NGTICAE.Modal.aluno;
-					$('.js-nome-aluno').text(nomeAluno);
+					
+					//TESTAR SE A OCORRENCIA È COLETIVA PARA MOSTRAR OS ALUNOS NA TELA !!!!!!!!!!!!!!!!!!!!
+					if(ocorrencia.tipoOcorrencia == "Coletiva"){
+						console.log('COLETIVA');
+						console.log('lista de alunos ->', ocorrencia.alunos);
+						var alunoNomes = "";
+						ocorrencia.alunos.forEach(function alunos(aluno, index) { 
+							alunoNomes += aluno.nome + ' - ';
+						}
+						);
+						
+						console.log('Nome dos alunos ->', alunoNomes);
+						
+						$('.js-nome-aluno').text(alunoNomes);
+						$('.js-quantidade-alunos').text(ocorrencia.alunos.length);
+					}else{
+						console.log('INDIVIDUAL');
+						$('.js-nome-aluno').text(ocorrencia.aluno);
+					}
+					
 					
 					//alert('test');
 					

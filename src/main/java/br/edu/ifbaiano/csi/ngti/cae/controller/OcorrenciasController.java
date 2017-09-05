@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifbaiano.csi.ngti.cae.controller.page.PageWrapper;
+import br.edu.ifbaiano.csi.ngti.cae.dto.GraficoOcorrenciasPorMes;
 import br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO;
 import br.edu.ifbaiano.csi.ngti.cae.model.Alojamento;
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
@@ -144,18 +145,20 @@ public class OcorrenciasController {
 	@PostMapping(value={ "/nova", "{\\d+}" })
 	public ModelAndView salvar(@Valid Ocorrencia ocorrencia, BindingResult result, @AuthenticationPrincipal UsuarioSistema usuarioSistema, RedirectAttributes attributs){
 		
-		ocorrencia.setUsuario(usuarioSistema.getUsuario());
+		if(ocorrencia.isNovo()){
+			ocorrencia.setUsuario(usuarioSistema.getUsuario());
+		}
 		
 		if(result.hasErrors()){
 			System.out.println("erro no bean ocorrencia!!!");
 			return nova(ocorrencia);
 		}
 		
-		if(ocorrencia.isNovo() && listaAlunosSession.totalAlunos(ocorrencia.getUuid()) == 0){
+		/*if(ocorrencia.isNovo() && listaAlunosSession.totalAlunos(ocorrencia.getUuid()) == 0){
 			System.out.println("Ao menos uma aluno deve ser selecionado");
 			result.rejectValue("aluno", "Ao menos uma aluno deve ser selecionado", "Ao menos uma aluno deve ser selecionado");
 			return nova(ocorrencia);
-		}
+		}*/
 		
 		cadastroOcorrenciaService.salvar(ocorrencia);
 		
@@ -203,7 +206,11 @@ public class OcorrenciasController {
 	@Secured(value="ROLE_NOVO_ENCAMINHAMENTO")
 	@GetMapping(value="/ver/{codigoocorrencia}")
 	public @ResponseBody OcorrenciaDTO getOcorrencia(@PathVariable("codigoocorrencia") Long codigo){
-		return ocorrencias.porCodigo(codigo);
+		Ocorrencia o = ocorrencias.porCodigo(codigo);
+		System.out.println("======>>>>>>>> Ocorerncia: "+o.getCodigo());
+		System.out.println("======>>>>>>>> Alunos: "+o.getAlunos().size());
+		OcorrenciaDTO ocorrenciaDTO = new OcorrenciaDTO(o);
+		return ocorrenciaDTO;
 	}
 	
 	@DeleteMapping(value="/{codigos}")
@@ -220,7 +227,32 @@ public class OcorrenciasController {
 	@GetMapping("/{codigo}")
 	public ModelAndView editar(@PathVariable("codigo") Ocorrencia ocorrencia){
 		System.out.println("codigo da ocorrencia: "+ ocorrencia.getCodigo());
-		ocorrencia = ocorrencias.buscarComEncaminhamentosPorCodigo(ocorrencia.getCodigo());
+		/*ocorrencia = ocorrencias.buscarComEncaminhamentosPorCodigo(ocorrencia.getCodigo());*/
+		ocorrencia = ocorrencias.buscarComAlunos(ocorrencia.getCodigo());
+		//TODO: teste de retorno dos alunos
+		System.out.println("-----------------------> alunos registrados na ocorrencia: "+ocorrencia.getAlunos().size());
 		return nova(ocorrencia);
+	}
+	
+	@GetMapping("/detalhes/{codigo}")
+	public ModelAndView verDetalhes(@PathVariable("codigo") Ocorrencia ocorrencia){
+		ModelAndView mv = new ModelAndView("ocorrencia/VerDetalhesCadastroOcorrencia");
+		
+		System.out.println("codigo da ocorrencia: "+ ocorrencia.getCodigo());
+		
+		/*ocorrencia = ocorrencias.buscarComEncaminhamentosPorCodigo(ocorrencia.getCodigo());*/
+		
+		ocorrencia = ocorrencias.buscarComAlunos(ocorrencia.getCodigo());
+		
+		//TODO: teste de retorno dos alunos
+		System.out.println("-----------------------> alunos registrados na ocorrencia: "+ocorrencia.getAlunos().size());
+		
+		mv.addObject(ocorrencia);
+		return mv;
+	}
+	
+	@GetMapping("/totalPorMes")
+	public @ResponseBody List<GraficoOcorrenciasPorMes> listarTotalOcorrenciasPorMes() {
+		return ocorrencias.totalPorMes();
 	}
 }

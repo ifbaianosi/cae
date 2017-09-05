@@ -3,6 +3,8 @@ package br.edu.ifbaiano.csi.ngti.cae.config;
 import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -22,6 +24,8 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView;
+import org.springframework.web.servlet.view.jasperreports.JasperReportsViewResolver;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
@@ -49,10 +53,23 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 	}
 	
 	@Bean
+	public ViewResolver jasperReportsViewResolver(DataSource dataSource){
+		JasperReportsViewResolver resolver = new JasperReportsViewResolver();
+		resolver.setPrefix("classpath:/relatorios/");
+		resolver.setSuffix(".jasper");
+		resolver.setViewNames("relatorio_*");
+		resolver.setViewClass(JasperReportsMultiFormatView.class);
+		resolver.setJdbcDataSource(dataSource);
+		resolver.setOrder(0);
+		return resolver;
+	}
+	
+	@Bean
 	public ViewResolver viewResolver() {
 		ThymeleafViewResolver resolver = new ThymeleafViewResolver();
 		resolver.setCharacterEncoding("UTF-8");
 		resolver.setTemplateEngine(templateEngine());
+		resolver.setOrder(1);
 		return resolver;
 	}
 	

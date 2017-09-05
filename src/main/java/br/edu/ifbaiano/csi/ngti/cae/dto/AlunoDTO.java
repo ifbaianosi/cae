@@ -1,5 +1,6 @@
 package br.edu.ifbaiano.csi.ngti.cae.dto;
 
+import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 import br.edu.ifbaiano.csi.ngti.cae.model.Curso;
 import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
 import br.edu.ifbaiano.csi.ngti.cae.model.Sexo;
@@ -16,6 +17,13 @@ public class AlunoDTO {
 	
 	
 	public AlunoDTO() {}
+	
+	public AlunoDTO(Aluno aluno) {
+		this.codigo = aluno.getCodigo();
+		this.nome = aluno.getNome();
+		this.matricula = aluno.getMatricula();
+		this.serieTurma = aluno.getSerieTurma().getDescricao();
+	}
 
 	public AlunoDTO(Long codigo, String nome, String matricula, SerieTurma serieTurma, Sexo sexo) {
 		this.codigo = codigo;

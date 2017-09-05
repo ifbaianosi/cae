@@ -37,12 +37,19 @@ NGTICAE.PesquisaAluno = (function(){
 		console.log('url: ', this.url);
 		
 		console.log('pesquisando...');
+		console.log('nome: ',$('#nome').val().trim());
+		console.log('matricula_: ',$('#matricula_').val().trim());
+		console.log('curso: ',$('#curso').val().trim());
+		console.log('serie: ',$('#serieTurma').val().trim());
+		console.log('alojamento: ',$('#alojamento').val().trim());
+		console.log('apartamento: ',$('#apartamento').val().trim());
+		
 		$.ajax({
 			url: this.url + '/filtrar',
 			method: 'GET',
 			data: {
 				nome: $('#nome').val().trim(),
-				matricula: $('#matricula').val().trim(),
+				matricula: $('#matricula_').val().trim(),
 				curso: $('#curso').val().trim(),
 				serieTurma: $('#serieTurma').val().trim(),
 				alojamento: $('#alojamento').val().trim(),
@@ -117,7 +124,10 @@ NGTICAE.PesquisaAluno = (function(){
 		});
 		
 		console.log('codigos', codigos);
-		console.log('url', this.url + '/adicionar');
+		console.log('codigo', codigos[0]);
+		/*console.log('url', this.url + '/adicionar');*/
+		
+		$('#aluno').val(codigos[0]);
 		
 		$.ajax({
 			url: this.url + '/adicionar',
@@ -126,7 +136,7 @@ NGTICAE.PesquisaAluno = (function(){
 				codigos: codigos,
 				uuid: $('#uuid').val()
 			},
-			beforeSend: function(){console.log('inicindo requisição', this.url + '/adicionar')},
+			beforeSend: function(){console.log('inicindo requisição')},
 			success: sucesso,
 			error: function(erro){console.log('erro',erro)}
 		});
@@ -201,7 +211,6 @@ NGTICAE.PesquisaAluno = (function(){
 		$('.js-matricula').val('');
 		$('#name-error').remove();
 		$('#divInput').removeClass('error');
-		
 
 		$('.js-remover-aluno').on('click', onRemoverAlunoDaLista.bind(this));
 		$('.js-remover-todos').on('click', onRemoverTodosAlunosDaLista.bind(this));

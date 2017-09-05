@@ -23,6 +23,7 @@ public class AlunoFilter {
 	private String nomeSocial;
 	private Status status;
 	private Boolean saida;
+	private Boolean saidaSemAula;
 	
 	public String getMatricula() {
 		return matricula;
@@ -95,6 +96,12 @@ public class AlunoFilter {
 	}
 	public void setSaida(Boolean saida) {
 		this.saida = saida;
+	}
+	public Boolean getSaidaSemAula() {
+		return saidaSemAula;
+	}
+	public void setSaidaSemAula(Boolean saidaSemAula) {
+		this.saidaSemAula = saidaSemAula;
 	}
 	
 }

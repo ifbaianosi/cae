@@ -1,5 +1,6 @@
 package br.edu.ifbaiano.csi.ngti.cae.repository.helper.ocorrencia;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -22,10 +23,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO;
+import br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciasPorAluno;
 import br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciasPorLocal;
+import br.edu.ifbaiano.csi.ngti.cae.dto.GraficoOcorrenciasPorMes;
 import br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciasPorUsuario;
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
+import br.edu.ifbaiano.csi.ngti.cae.model.Usuario;
 import br.edu.ifbaiano.csi.ngti.cae.repository.filter.OcorrenciaFilter;
 import br.edu.ifbaiano.csi.ngti.cae.repository.paginacao.PaginacaoUtil;
 
@@ -49,6 +53,7 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 		paginacaoUtil.preparar(criteria, pageable);
 		
 		//SETA ORDENACAO
+		criteria.addOrder(Order.desc("dataRegistro"));
 		criteria.addOrder(Order.desc("dataOcorrido"));
 		
 		//ADICIONA O FILTRO A CRITERIA DO HIBERNATE
@@ -57,6 +62,77 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 		criteria.createAlias("encaminhamentos", "e", JoinType.LEFT_OUTER_JOIN);
 		
 		return new PageImpl<>(criteria.list(), pageable, total(filtro));
+	}
+	
+
+
+	/**
+	 * ADICIONA UM FILTRO A PESQUISA 
+	 * 
+	 * @param filtro
+	 * @param pageable
+	 */
+	private void adicionarFiltro(OcorrenciaFilter filtro, Criteria criteria) {
+		if(filtro != null){
+			//criteria.createAlias("aluno", "a", JoinType.INNER_JOIN);
+			//FILTRO LOCAL
+			if(!StringUtils.isEmpty(filtro.getLocal()))
+				criteria.add(Restrictions.ilike("local", filtro.getLocal(), MatchMode.ANYWHERE));
+			
+			//FILTRO DATA OCORRIDO
+			if(filtro.getDataOcorrido() != null){
+				LocalDateTime desde = LocalDateTime.of(filtro.getDataOcorrido(), LocalTime.of(0, 0));
+				criteria.add(Restrictions.ge("dataOcorrido", desde));
+			}
+			
+			//FILTRO DATA OCORRIDO ATE
+			if (filtro.getDataOcorridoAte() != null) {
+				LocalDateTime ate = LocalDateTime.of(filtro.getDataOcorridoAte(), LocalTime.of(23, 59));
+				criteria.add(Restrictions.le("dataOcorrido", ate));
+			}
+			
+			//FILTRO ALUNO
+			if(filtro.getAluno() != null && filtro.getAluno().getCodigo() != null){
+				
+				Criteria alunosCriteria = criteria.createCriteria("alunos");
+				alunosCriteria.add(Restrictions.eq("codigo", filtro.getAluno().getCodigo()));
+				
+				System.out.println("-> codigo do aluno: "+filtro.getAluno().getCodigo());
+			}
+			
+			//FILTRO USUARIO
+			if(filtro.getUsuario() != null && filtro.getUsuario().getCodigo() != null)
+				criteria.add(Restrictions.eq("usuario", filtro.getUsuario()));
+			
+			/*//FILTRO CURSO
+			if(filtro.getCurso() != null && filtro.getCurso().getCodigo() != null){
+				criteria.createAlias("a.curso", "c", JoinType.INNER_JOIN);
+				criteria.add(Restrictions.eq("a.curso", filtro.getCurso()));
+			}*/
+			
+			/*//FILTRO SERIE TURMA
+			if(filtro.getSerieTurma() != null){
+				criteria.add(Restrictions.eq("a.serieTurma", filtro.getSerieTurma()));
+			}
+			
+			//FILTRO ALOJAMENTO
+			if(filtro.getAlojamento() != null){
+				criteria.add(Restrictions.eq("a.alojamento", filtro.getAlojamento()));
+			}
+			
+			//FILTRO ALOJAMENTO APARTAMENTO
+			if(filtro.getApartamento() != null){
+				criteria.add(Restrictions.eq("a.apartamento", filtro.getApartamento()));
+			}*/
+
+		}
+	}
+
+	private Long total(OcorrenciaFilter filtro) {
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(Ocorrencia.class);
+		adicionarFiltro(filtro, criteria);
+		criteria.setProjection(Projections.rowCount());
+		return (Long)criteria.uniqueResult();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -82,6 +158,17 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 		criteria.createAlias("encaminhamentos", "e", JoinType.LEFT_OUTER_JOIN);
 		criteria.add(Restrictions.eq("codigo", codigoOcorrencia));
 		criteria.addOrder(Order.desc("dataRegistro"));
+		return (Ocorrencia) criteria.uniqueResult();
+	}
+	
+	@Transactional(readOnly = true)
+	@Override
+	public Ocorrencia buscarComAlunos(Long codigo) {
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(Ocorrencia.class);
+		criteria.createAlias("usuario", "u", JoinType.LEFT_OUTER_JOIN);
+		criteria.createAlias("alunos", "a", JoinType.LEFT_OUTER_JOIN);
+		criteria.add(Restrictions.eq("codigo", codigo));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return (Ocorrencia) criteria.uniqueResult();
 	}
 	
@@ -133,16 +220,22 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 				.getResultList();
 	}
 
-
+	@Transactional(readOnly = true)
 	@Override
-	public OcorrenciaDTO porCodigo(Long codigo) {
-		String jpql = "SELECT new br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO(codigo, dataRegistro, dataOcorrido, local, descricao, serie, regime) "
+	public Ocorrencia porCodigo(Long codigo) {
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(Ocorrencia.class);
+		criteria.createAlias("usuario", "u", JoinType.LEFT_OUTER_JOIN);
+		criteria.createAlias("alunos", "a", JoinType.LEFT_OUTER_JOIN);
+		criteria.add(Restrictions.eq("codigo", codigo));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return (Ocorrencia) criteria.uniqueResult();
+		/*String jpql = "SELECT new br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO(codigo, dataRegistro, dataOcorrido, local, descricao, serie, regime) "
 				+ "FROM Ocorrencia o "
 				+ "WHERE o.codigo = :codigo";
 
 		return manager.createQuery(jpql, OcorrenciaDTO.class)
 				.setParameter("codigo", codigo)
-				.getSingleResult();
+				.getSingleResult();*/
 	}
 
 	@Override
@@ -169,72 +262,28 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<OcorrenciasPorUsuario> totalOcorrenciasPorAluno() {
+	public List<OcorrenciasPorAluno> totalOcorrenciasPorAluno() {
 		return manager.createNamedQuery("TotalOcorrencias.PorAluno").getResultList();
 	}
-
-	/**
-	 * ADICIONA UM FILTRO A PESQUISA 
-	 * 
-	 * @param filtro
-	 * @param pageable
-	 */
-	private void adicionarFiltro(OcorrenciaFilter filtro, Criteria criteria) {
-		if(filtro != null){
-			criteria.createAlias("aluno", "a", JoinType.INNER_JOIN);
-			//FILTRO LOCAL
-			if(!StringUtils.isEmpty(filtro.getLocal()))
-				criteria.add(Restrictions.ilike("local", filtro.getLocal(), MatchMode.ANYWHERE));
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<GraficoOcorrenciasPorMes> totalPorMes() {
+		List<GraficoOcorrenciasPorMes> ocorrenciasMes = manager.createNamedQuery("graficoOcorrencias.UltimosSeisMeses").getResultList();
+		
+		LocalDate hoje = LocalDate.now();
+		for (int i = 1; i <= 6; i++) {
+			String mesIdeal = String.format("%d/%02d", hoje.getYear(), hoje.getMonthValue());
 			
-			//FILTRO DATA OCORRIDO
-			if(filtro.getDataOcorrido() != null){
-				LocalDateTime desde = LocalDateTime.of(filtro.getDataOcorrido(), LocalTime.of(0, 0));
-				criteria.add(Restrictions.ge("dataOcorrido", desde));
+			boolean possuiMes = ocorrenciasMes.stream().filter(v -> v.getMes().equals(mesIdeal)).findAny().isPresent();
+			if (!possuiMes) {
+				ocorrenciasMes.add(i - 1, new GraficoOcorrenciasPorMes(mesIdeal, 0));
 			}
 			
-			//FILTRO DATA OCORRIDO ATE
-			if (filtro.getDataOcorridoAte() != null) {
-				LocalDateTime ate = LocalDateTime.of(filtro.getDataOcorridoAte(), LocalTime.of(23, 59));
-				criteria.add(Restrictions.le("dataOcorrido", ate));
-			}
-			
-			//FILTRO ALUNO
-			if(filtro.getAluno() != null && filtro.getAluno().getCodigo() != null)
-				criteria.add(Restrictions.eq("aluno", filtro.getAluno()));
-			
-			//FILTRO USUARIO
-			if(filtro.getUsuario() != null && filtro.getUsuario().getCodigo() != null)
-				criteria.add(Restrictions.eq("usuario", filtro.getUsuario()));
-			
-			//FILTRO CURSO
-			if(filtro.getCurso() != null && filtro.getCurso().getCodigo() != null){
-				criteria.createAlias("a.curso", "c", JoinType.INNER_JOIN);
-				criteria.add(Restrictions.eq("a.curso", filtro.getCurso()));
-			}
-			
-			//FILTRO SERIE TURMA
-			if(filtro.getSerieTurma() != null){
-				criteria.add(Restrictions.eq("a.serieTurma", filtro.getSerieTurma()));
-			}
-			
-			//FILTRO ALOJAMENTO
-			if(filtro.getAlojamento() != null){
-				criteria.add(Restrictions.eq("a.alojamento", filtro.getAlojamento()));
-			}
-			
-			//FILTRO ALOJAMENTO APARTAMENTO
-			if(filtro.getApartamento() != null){
-				criteria.add(Restrictions.eq("a.apartamento", filtro.getApartamento()));
-			}
-
+			hoje = hoje.minusMonths(1);
 		}
-	}
-
-	private Long total(OcorrenciaFilter filtro) {
-		Criteria criteria = manager.unwrap(Session.class).createCriteria(Ocorrencia.class);
-		adicionarFiltro(filtro, criteria);
-		criteria.setProjection(Projections.rowCount());
-		return (Long)criteria.uniqueResult();
+		
+		return ocorrenciasMes;
 	}
 
 
