@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.edu.ifbaiano.csi.ngti.cae.dto.PeriodoRelatorio;
+import br.edu.ifbaiano.csi.ngti.cae.dto.RelatorioOcorrencias;
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 import br.edu.ifbaiano.csi.ngti.cae.security.UsuarioSistema;
 
@@ -26,17 +26,17 @@ public class RelatorioController {
 	@GetMapping("/ocorrenciasEmitidas")
 	public ModelAndView relatorioOcorrenciasEmitidas(){
 		ModelAndView mv = new ModelAndView("relatorio/RelatorioOcorrencias");
-		mv.addObject("periodoRelatorio", new PeriodoRelatorio());
+		mv.addObject("relatorioOcorrencias", new RelatorioOcorrencias());
 		return mv;
 	}
 	
 	@PostMapping("/ocorrenciasEmitidas")
-	public ModelAndView gerarRelatorioOcorrenciasEmitidas(PeriodoRelatorio periodoRelatorio, @AuthenticationPrincipal UsuarioSistema usuarioSistema) {
+	public ModelAndView gerarRelatorioOcorrenciasEmitidas(RelatorioOcorrencias relatorioOcorrencias, @AuthenticationPrincipal UsuarioSistema usuarioSistema) {
 		Map<String, Object> parametros = new HashMap<>();
 		
-		Date dataInicio = Date.from(LocalDateTime.of(periodoRelatorio.getDataInicio(), LocalTime.of(0, 0, 0))
+		Date dataInicio = Date.from(LocalDateTime.of(relatorioOcorrencias.getDataInicio(), LocalTime.of(0, 0, 0))
 				.atZone(ZoneId.systemDefault()).toInstant());
-		Date dataFim = Date.from(LocalDateTime.of(periodoRelatorio.getDataFim(), LocalTime.of(23, 59, 59))
+		Date dataFim = Date.from(LocalDateTime.of(relatorioOcorrencias.getDataFim(), LocalTime.of(23, 59, 59))
 				.atZone(ZoneId.systemDefault()).toInstant());
 		
 		parametros.put("format", "pdf");
@@ -45,11 +45,19 @@ public class RelatorioController {
 		adicionarUsuarioLogadoNoRelatorio(usuarioSistema, parametros);
 		adicionarImagensAoRelatorio(parametros);
 		
+		//verifica se o usuario selecionou um aluno para gerar o relatorio contendo apenas as ocorrencias do aluno selecionado
+		if(relatorioOcorrencias.getAluno().getCodigo() != null){
+			System.out.println("codigo do aluno: " + relatorioOcorrencias.getAluno().getCodigo());
+			parametros.put("CODIGO_ALUNO", relatorioOcorrencias.getAluno().getCodigo());
+			return new ModelAndView("relatorio_ocorrencias_por_aluno", parametros);
+		}
+		
 		return new ModelAndView("relatorio_ocorrencias", parametros);
 	}
+
 	
 	@GetMapping("/medidaDisciplinar/{codigoocorrencia}")
-	public ModelAndView gerarImpressaoMedidaDisciplinar(@PathVariable("codigoocorrencia") Long codigo, PeriodoRelatorio periodoRelatorio, @AuthenticationPrincipal UsuarioSistema usuarioSistema) {
+	public ModelAndView gerarImpressaoMedidaDisciplinar(@PathVariable("codigoocorrencia") Long codigo, RelatorioOcorrencias periodoRelatorio, @AuthenticationPrincipal UsuarioSistema usuarioSistema) {
 		Map<String, Object> parametros = new HashMap<>();
 		
 		
@@ -70,5 +78,4 @@ public class RelatorioController {
 		parametros.put("BRASAO_REPUBLICA", "/relatorios/img/brasao.png");
 		parametros.put("LOGO_SISTEMA", "/relatorios/img/trino-logo.png");
 	}
-	
 }

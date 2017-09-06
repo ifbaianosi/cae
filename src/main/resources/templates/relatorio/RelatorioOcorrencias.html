@@ -35,35 +35,54 @@
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
                         <div class="col-md-12">
-                        	<div class="row">
-	                            <form th:action="@{/relatorios/ocorrenciasEmitidas}" method="POST" th:object="${periodoRelatorio}" target="_blank">
-		                            <div class="col-xs-12 col-sm-6 col-md-4">
-		                                <label for="dataOcorrido">Data da ocorrência</label>
-		                                <div class="input-group">
-		                                    <span class="input-group-addon">
-		                                        <i class="material-icons">date_range</i>
-		                                    </span>
-		                                    <div class="form-line">
-		                                        <input type="text" class="form-control datepicker" placeholder="" th:field="*{dataInicio}">
-		                                    </div>
-		                                </div>
+	                            <form th:action="@{/relatorios/ocorrenciasEmitidas}" method="POST" th:object="${relatorioOcorrencias}" target="_blank">
+		                        	<div class="row">
+			                            <div class="col-xs-12 col-sm-6 col-md-4">
+			                                <label for="dataOcorrido">Data da ocorrência</label>
+			                                <div class="input-group">
+			                                    <span class="input-group-addon">
+			                                        <i class="material-icons">date_range</i>
+			                                    </span>
+			                                    <div class="form-line">
+			                                        <input type="text" class="form-control datepicker" placeholder="" th:field="*{dataInicio}">
+			                                    </div>
+			                                </div>
+			                            </div>
+			                            <div class="col-xs-12 col-sm-6 col-md-4">
+			                                <label for="dataOcorridoAte">Até</label>
+			                                <div class="input-group">
+			                                    <span class="input-group-addon">
+			                                        <i class="material-icons">date_range</i>
+			                                    </span>
+			                                    <div class="form-line">
+			                                        <input type="text" class="form-control datepicker" placeholder="" th:field="*{dataFim}">
+			                                    </div>
+			                                </div>
+			                            </div>
 		                            </div>
-		                            <div class="col-xs-12 col-sm-6 col-md-4">
-		                                <label for="dataOcorridoAte">Até</label>
-		                                <div class="input-group">
-		                                    <span class="input-group-addon">
-		                                        <i class="material-icons">date_range</i>
-		                                    </span>
-		                                    <div class="form-line">
-		                                        <input type="text" class="form-control datepicker" placeholder="" th:field="*{dataFim}">
-		                                    </div>
-		                                </div>
+		                            <div class="row">
+			                            <div class="col-xs-12 col-sm-12 col-md-4">
+			                                <label for="aluno">Aluno</label>
+		                                        <div class="form-group">
+		                                            <div class="form-line">
+		                                                <input type="text" id="autocomplete-input-aluno" th:data-url="@{/alunos/por?nomeOuMatricula=}" class="form-control" placeholder="" th:field="*{aluno.nome}">
+		                                                <input type="hidden" th:field="*{aluno}">
+		                                            </div>
+		                                        </div>
+			                                <!-- <div class="input-group">
+			                                    <span class="input-group-addon">
+			                                        <a href="javascript:void(0);" class="btn btn-xs waves-effect" data-toggle="modal" data-target="#modalPesquisaAluno"><i class="material-icons">search</i></a>
+			                                    </span>
+			                                    <div id="divInput" class="form-line">
+			                                        <input type="text" id="aluno" class="form-control js-nome" placeholder="Clique no botão para pesquisar" readonly="readonly" th:field="*{aluno.nome}">
+			                                    </div>
+			                                </div> -->
+			                            </div>
 		                            </div>
-		                            <div class="col-xs-12">
+		                            <div class="row col-xs-12">
                                 		<button type="submit" class="btn bg-teal waves-effect">GERAR RELATÓRIO</button>
                                 	</div>
 	                            </form>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -81,7 +100,7 @@
 	    <script th:src="@{/layout/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js}"></script>
 	    <script th:src="@{/javascript/componente-material-date-time-picker.js}"></script>
 	    
-	    
+	    <script th:src="@{/javascript/autocomplete.js}"></script>
    </th:block>
 </body>
 

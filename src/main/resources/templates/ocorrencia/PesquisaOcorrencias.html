@@ -40,7 +40,6 @@
                             <form class="js-formulario" th:action="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}" 
                             							method="GET" th:object="${ocorrenciaFilter}">
                             	
-                            	<input type="hidden" th:field="*{aluno}">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-4">
 		                                <label for="aluno">Aluno</label>
