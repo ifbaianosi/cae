@@ -5,7 +5,7 @@
 	
 	<groupId>br.edu.ifbaiano.csi</groupId>
 	<artifactId>trino</artifactId>
-	<version>1.4.0-SNAPSHOT</version>
+	<version>1.5.0-SNAPSHOT</version>
 	
 	<packaging>war</packaging>
 	

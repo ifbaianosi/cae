@@ -1,5 +1,6 @@
 package br.edu.ifbaiano.csi.ngti.cae.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,14 +9,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
+import br.edu.ifbaiano.csi.ngti.cae.model.Notificacao;
 import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
 import br.edu.ifbaiano.csi.ngti.cae.model.TipoCurso;
+import br.edu.ifbaiano.csi.ngti.cae.model.TipoNotificacao;
+import br.edu.ifbaiano.csi.ngti.cae.model.Usuario;
+import br.edu.ifbaiano.csi.ngti.cae.model.UsuarioNotificacao;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Ocorrencias;
 import br.edu.ifbaiano.csi.ngti.cae.session.ListaAlunosSession;
 
 @Service
 public class CadastroOcorrenciaService {
-
+	
+	@Autowired
+	private CadastroNotificacaoService cadastroNotificacaoService;
+	
+	@Autowired
+	private CadastroUsuarioNotificacaoService cadastroUsuarioNotificacaoService;
+	
 	@Autowired
 	private Ocorrencias ocorrencias;
 	
@@ -23,12 +34,16 @@ public class CadastroOcorrenciaService {
 	private ListaAlunosSession listaAlunosSession;
 	
 	@Transactional
-	public void salvar(Ocorrencia ocorrencia){
+	public void salvar(Ocorrencia ocorrencia, Usuario usuarioLogado){
 		
+		
+		Ocorrencia o = null;
 		if(ocorrencia.isNovo()){
 			if(ocorrencia.getColetiva()){
 				//salva uma unica ocorrencia para todos os alunos selecionados
-				ocorrencias.save(ocorrencia);
+				o = ocorrencias.save(ocorrencia);
+				//Criar a notificação
+				criarNotificacao(o, TipoNotificacao.NOVA_OCORRENCIA, usuarioLogado);
 			} else {
 				//salva uma ocorrencia para cada um dos alunos selecionados
 				List<Aluno> alunosList = listaAlunosSession.getAlunos(ocorrencia.getUuid());
@@ -51,15 +66,37 @@ public class CadastroOcorrenciaService {
 					if(aluno.getCurso().getTipoCurso() != TipoCurso.SUPERIOR)
 						ocorr.setSerie(aluno.getSerieTurma().getDescricao());
 					
-					ocorrencias.save(ocorr);
+					o = ocorrencias.save(ocorr);
+					//Criar a notificação
+					criarNotificacao(o, TipoNotificacao.NOVA_OCORRENCIA, usuarioLogado);
 				}
 			}
 			listaAlunosSession.excluirTodosOsAlunos(ocorrencia.getUuid());
-		}else{
-			//atualizar o registro da ocorrencia
-			ocorrencias.save(ocorrencia);
+		}else{//atualizar o registro da ocorrencia
+			o = ocorrencias.save(ocorrencia);
+			//Criar a notificação
+			criarNotificacao(o, TipoNotificacao.ATUALIZACAO_OCORRENCIA, usuarioLogado);
 		}
+	}
 
+	private void criarNotificacao(Ocorrencia ocorrencia, TipoNotificacao tipoNotificacao, Usuario usuario) {
+		//Cria uma notificação para o registro da ocorrência
+		Notificacao notificacao = new Notificacao();
+		notificacao.setData(LocalDateTime.now());
+		notificacao.setDescricao(ocorrencia.getDescricaoResumida());
+		notificacao.setTipoNotificacao(tipoNotificacao);
+		notificacao.setUri("ocorrencias/detalhes/"+ocorrencia.getCodigo());
+		
+		Notificacao notificacaoGravada = cadastroNotificacaoService.salvar(notificacao);
+		
+		//Marca a notificação criada como visualizada para o usuario logado
+		UsuarioNotificacao usuarioNotificacao = new UsuarioNotificacao();
+		usuarioNotificacao.setDataVisualizacao(LocalDateTime.now());
+		usuarioNotificacao.setNotificacao(notificacaoGravada);
+		usuarioNotificacao.setUsuario(usuario);
+		
+		//Marca a notificação como visualizada pelo usuario logado
+		cadastroUsuarioNotificacaoService.salvar(usuarioNotificacao);
 	}
 	
 	@Transactional

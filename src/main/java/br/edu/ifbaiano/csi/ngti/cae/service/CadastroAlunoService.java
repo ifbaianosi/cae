@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 import br.edu.ifbaiano.csi.ngti.cae.model.Responsavel;
 import br.edu.ifbaiano.csi.ngti.cae.model.ResponsavelAluno;
-import br.edu.ifbaiano.csi.ngti.cae.model.ResponsavelAlunoID;
 import br.edu.ifbaiano.csi.ngti.cae.model.ResponsavelSession;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Alunos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Responsaveis;

@@ -1,11 +1,11 @@
 package br.edu.ifbaiano.csi.ngti.cae.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +33,21 @@ import br.edu.ifbaiano.csi.ngti.cae.dto.GraficoOcorrenciasPorMes;
 import br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO;
 import br.edu.ifbaiano.csi.ngti.cae.model.Alojamento;
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
+import br.edu.ifbaiano.csi.ngti.cae.model.Notificacao;
 import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
 import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
 import br.edu.ifbaiano.csi.ngti.cae.model.TipoEncaminhamento;
+import br.edu.ifbaiano.csi.ngti.cae.model.TipoNotificacao;
+import br.edu.ifbaiano.csi.ngti.cae.model.UsuarioNotificacao;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Alunos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Cursos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Ocorrencias;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Usuarios;
 import br.edu.ifbaiano.csi.ngti.cae.repository.filter.OcorrenciaFilter;
 import br.edu.ifbaiano.csi.ngti.cae.security.UsuarioSistema;
+import br.edu.ifbaiano.csi.ngti.cae.service.CadastroNotificacaoService;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroOcorrenciaService;
-import br.edu.ifbaiano.csi.ngti.cae.session.ListaAlunosSession;
+import br.edu.ifbaiano.csi.ngti.cae.service.CadastroUsuarioNotificacaoService;
 
 @Controller
 @RequestMapping("/ocorrencias")
@@ -63,9 +67,6 @@ public class OcorrenciasController {
 	
 	@Autowired
 	private Cursos cursos;
-	
-	@Autowired
-	private ListaAlunosSession listaAlunosSession;
 	
 	@GetMapping
 	public ModelAndView pesquisar(OcorrenciaFilter ocorrenciaFilter, @PageableDefault(size=10) Pageable pageable, HttpServletRequest httpServletRequest, @AuthenticationPrincipal UsuarioSistema usuarioSistema){
@@ -160,8 +161,7 @@ public class OcorrenciasController {
 			return nova(ocorrencia);
 		}*/
 		
-		cadastroOcorrenciaService.salvar(ocorrencia);
-		
+		cadastroOcorrenciaService.salvar(ocorrencia, usuarioSistema.getUsuario());
 			
 		attributs.addFlashAttribute("mensagemSucesso", "Ocorrencia salva com sucesso");
 		
@@ -237,17 +237,10 @@ public class OcorrenciasController {
 	@GetMapping("/detalhes/{codigo}")
 	public ModelAndView verDetalhes(@PathVariable("codigo") Ocorrencia ocorrencia){
 		ModelAndView mv = new ModelAndView("ocorrencia/VerDetalhesCadastroOcorrencia");
-		
-		System.out.println("codigo da ocorrencia: "+ ocorrencia.getCodigo());
-		
-		/*ocorrencia = ocorrencias.buscarComEncaminhamentosPorCodigo(ocorrencia.getCodigo());*/
-		
 		ocorrencia = ocorrencias.buscarComAlunos(ocorrencia.getCodigo());
-		
-		//TODO: teste de retorno dos alunos
-		System.out.println("-----------------------> alunos registrados na ocorrencia: "+ocorrencia.getAlunos().size());
-		
 		mv.addObject(ocorrencia);
+		mv.addObject("tipoEncaminhamento", TipoEncaminhamento.values());
+		
 		return mv;
 	}
 	

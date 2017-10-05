@@ -22,14 +22,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import br.edu.ifbaiano.csi.ngti.cae.dto.GraficoOcorrenciasPorMes;
 import br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO;
 import br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciasPorAluno;
 import br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciasPorLocal;
-import br.edu.ifbaiano.csi.ngti.cae.dto.GraficoOcorrenciasPorMes;
 import br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciasPorUsuario;
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
-import br.edu.ifbaiano.csi.ngti.cae.model.Usuario;
 import br.edu.ifbaiano.csi.ngti.cae.repository.filter.OcorrenciaFilter;
 import br.edu.ifbaiano.csi.ngti.cae.repository.paginacao.PaginacaoUtil;
 
@@ -60,6 +59,7 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 		adicionarFiltro(filtro, criteria);
 		criteria.createAlias("usuario", "u", JoinType.INNER_JOIN);
 		criteria.createAlias("encaminhamentos", "e", JoinType.LEFT_OUTER_JOIN);
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		
 		return new PageImpl<>(criteria.list(), pageable, total(filtro));
 	}

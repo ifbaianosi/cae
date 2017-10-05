@@ -15,7 +15,6 @@
 <body>
 	
     <section class="content" layout:fragment="conteudo">
-        <div class="container-fluid">
             <div class="block-header">
                 <div class="row">
             		<div class="col-md-8">
@@ -31,7 +30,10 @@
             </div>
             <div class="card">
                 <div class="header">
-                    <a th:href="@{/ocorrencias/nova}" type="button" class="btn bg-teal waves-effect">NOVA<span> OCORRÊNCIA</span></a>
+                	<h2>
+                        FORMULÁRIO DE PESQUISA
+                        <small>Combine os campos abaixo para filtrar registros de ocorrência.</small>
+                    </h2>
                 </div>
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
@@ -41,7 +43,7 @@
                             							method="GET" th:object="${ocorrenciaFilter}">
                             	
                                 <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-4">
+                                    <div class="col-xs-12 col-sm-12 col-md-6">
 		                                <label for="aluno">Aluno</label>
 	                                        <div class="form-group">
 	                                            <div class="form-line">
@@ -58,7 +60,7 @@
 		                                    </div>
 		                                </div> -->
 		                            </div>
-		                            <div class="col-xs-12 col-sm-6 col-md-4">
+		                            <div class="col-xs-12 col-sm-6 col-md-3">
                                         <label for="dataOcorrido">Data da ocorrência</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">
@@ -69,7 +71,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4">
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
                                         <label for="dataOcorridoAte">Até</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">
@@ -100,9 +102,7 @@
 	                                        <label th:if="${#fields.hasErrors('serieTurma')}" th:errors="*{serieTurma}" class="error" for="serieTurma"></label>
 	                                    </div>
                                     </div> -->
-                                    </div>
-                                    <div class="row">
-	                                    <div class="col-xs-12 col-sm-12 col-md-4">
+	                                    <div class="col-xs-12 col-sm-12 col-md-6">
 	                                        <label for="local">Local</label>
 	                                        <div class="form-group">
 	                                            <div class="form-line">
@@ -110,7 +110,7 @@
 	                                            </div>
 	                                        </div>
 	                                    </div>
-	                                    <div class="col-xs-12 col-sm-6 col-md-4" sec:authorize="hasRole('ROLE_PESQUISAR_TODAS_OCORRENCIAS')">
+	                                    <div class="col-xs-12 col-sm-6 col-md-3" sec:authorize="hasRole('ROLE_PESQUISAR_TODAS_OCORRENCIAS')">
 	                                    	<label for="usuario">Autor</label>
 	                                        <div class="input-group">
 	                                        	<span class="input-group-addon">
@@ -162,69 +162,92 @@
                                 <a th:href="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}" class="btn btn-default waves-effect">LIMPAR</a>
                             </form>
                         </div>
-                        <div class="col-md-12">
-                        <input type="hidden" id="url_nova_ocorrencia" th:data-url="@{/ocorrencias}" th:data-url-alunos="@{/alunos}"/>
-                  		<div class="table-responsive">
-                            <table class="table table-striped table-hover table-bordered">
-                                <thead>
-                                    <tr>
-                                    	<th scope="row">#</th>
-                                        <th>DATA</th>
-                                        <!-- <th>ALUNO</th> -->
-                                        <th>LOCAL</th>
-                                        <th>DESCRIÇÃO</th>
-                                        <th>AUTOR</th>
-                                        <th>ENCAMINHAMENTO</th>
-                                        <th sec:authorize="hasRole('ROLE_MENU_OCORRENCIAS')" class="text-center" style="min-width: 80px;">AÇÕES</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                	<tr th:each="ocorrencia : ${pagina.conteudo}">
-	                                        <td scope="row" th:text="${ocorrencia.codigo}">1</td>
-	                                        <td th:text="${ocorrencia.dataOcorridoFormatada}">10/07/2017</td>
-	                                        <!-- <td th:text="${ocorrencia.aluno.nome}">Otto</td> -->
-	                                        <td th:text="${ocorrencia.local}" class="text-uppercase">LOCAL DA OCORRENCIA</td>
-	                                        <td>
-	                                        	<a tabindex="0" role="button" data-toggle="popover" data-trigger="hover" data-placement="top" 
-	                                        	title="" th:data-content="${ocorrencia.descricao}">
-	                                        		<span th:text="${ocorrencia.descricaoResumida}"></span></a>
-	                                        </td>
-	                                        <td th:text="${ocorrencia.usuario.primeiroNomeEmail}">Otto</td>
-	                                        <td>
-	                                        	<th:block th:if="${ocorrencia.encaminhamentos.size()} > 0" th:each="encaminhamento : ${ocorrencia.encaminhamentos}">
-	                                        		<span class="label bg-teal" role="button" tabindex="0" data-placement="top" data-toggle="popover" data-trigger="focus"
-	                                        									 th:title="${encaminhamento.tipoEncaminhamento.descricao}" 
-	                                        									 th:data-content="${encaminhamento.descricao}">
-																	<span th:text="${encaminhamento.tipoEncaminhamento.descricao}" class="text-uppercase">ADVERTENCIA VERBAL</span>
-													</span>
-												</th:block>
-											</td>
-	                                        <td sec:authorize="hasRole('ROLE_MENU_OCORRENCIAS')" class="text-center" style="min-width: 80px;">
-												<th:block sec:authorize="hasRole('ROLE_NOVO_ENCAMINHAMENTO')" th:unless="${ocorrencia.encaminhamentos.size()} > 0"><!--   -->
-	       											<a href="javascript:void(0);" class="col-teal js-encaminhar-ocorrencia js-tooltip"  title="Emitir encaminhamento"
-	       													th:data-codigo="${ocorrencia.codigo}" 
-	       													th:data-nome="${ocorrencia.aluno.nome}">
-	       												<i class="material-icons btn-icon">open_in_new</i>
-	       											</a>
-												</th:block>
-		                                        <th:block sec:authorize="hasRole('ROLE_NOVO_ENCAMINHAMENTO')" th:if="${ocorrencia.encaminhamentos.size()} > 0">
-	       											<a th:href="@{/relatorios/medidaDisciplinar/{codigo}(codigo=${ocorrencia.codigo})}" target="_blank" class="col-teal js-tooltip" title="Imprimir"><i class="material-icons btn-icon">print</i></a>
-												</th:block>
-	                                        	<a th:href="@{/ocorrencias/detalhes/{codigo}(codigo=${ocorrencia.codigo})}" class="col-teal js-tooltip" title="Ver detalhes"><i class="material-icons btn-icon">remove_red_eye</i></a>
-	                                        </td>
-                                    </tr>
-                                    <tr th:if="${pagina.vazia}">
-                                    	<td colspan="7">A pesquisa não retornou nenhum resultado.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <th:block th:replace="fragments/Paginacao :: paginacao"></th:block>
-                        </div>
-                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                OCORRÊNCIAS
+                                <small>A pesquisa retornou <span th:text="${pagina.totalRegistros}"></span> resultados.</small>
+                            </h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a th:href="@{/ocorrencias/nova}" class="waves-effect waves-block">Nova ocorrência</a></li>
+                                        <li><a th:href="@{/ocorrencias}" class="waves-effect waves-block">Atualizar</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <input type="hidden" id="url_nova_ocorrencia" th:data-url="@{/ocorrencias}" th:data-url-alunos="@{/alunos}"/>
+                        <div class="body">
+                        	<div class="row col-xs-12">
+	                        	<a th:href="@{/ocorrencias/nova}" type="button" class="btn bg-teal waves-effect">NOVA<span> OCORRÊNCIA</span></a>
+                        	</div>
+                        	<div class="row">
+	                        	<div class=" col-xs-12 table-responsive">
+		                            <table class="table table-striped table-hover">
+		                                <thead>
+		                                    <tr>
+		                                        <th scope="row">#</th>
+		                                        <th>DATA</th>
+		                                        <!-- <th>ALUNO</th> -->
+		                                        <th>LOCAL</th>
+		                                        <th>DESCRIÇÃO</th>
+		                                        <th>AUTOR</th>
+		                                        <th>ENCAMINHAMENTO</th>
+		                                        <th sec:authorize="hasRole('ROLE_MENU_OCORRENCIAS')" class="text-center" style="min-width: 80px;">AÇÕES</th>
+		                                    </tr>
+		                                </thead>
+		                                <tbody>
+		                                    <tr th:each="ocorrencia : ${pagina.conteudo}">
+			                                        <td scope="row" th:text="${ocorrencia.codigo}">1</td>
+			                                        <td th:text="${ocorrencia.dataOcorridoFormatada}">10/07/2017</td>
+			                                        <!-- <td th:text="${ocorrencia.aluno.nome}">Otto</td> -->
+			                                        <td th:text="${ocorrencia.local}" class="text-uppercase">LOCAL DA OCORRENCIA</td>
+			                                        <td>
+			                                        	<a tabindex="0" role="button" data-toggle="popover" data-trigger="hover" data-placement="top" 
+			                                        	title="" th:data-content="${ocorrencia.descricao}">
+			                                        		<span th:text="${ocorrencia.descricaoResumida}"></span></a>
+			                                        </td>
+			                                        <td th:text="${ocorrencia.usuario.primeiroNomeEmail}">Otto</td>
+			                                        <td>
+			                                        	<th:block th:if="${ocorrencia.encaminhamentos.size()} > 0" th:each="encaminhamento : ${ocorrencia.encaminhamentos}">
+			                                        		<span class="label bg-teal" role="button" tabindex="0" data-placement="top" data-toggle="popover" data-trigger="focus"
+			                                        									 th:title="${encaminhamento.tipoEncaminhamento.descricao}" 
+			                                        									 th:data-content="${encaminhamento.descricao}">
+																			<span th:text="${encaminhamento.tipoEncaminhamento.descricao}" class="text-uppercase">ADVERTENCIA VERBAL</span>
+															</span>
+														</th:block>
+													</td>
+			                                        <td sec:authorize="hasRole('ROLE_MENU_OCORRENCIAS')" class="text-center" style="min-width: 80px;">
+														<!-- <th:block sec:authorize="hasRole('ROLE_NOVO_ENCAMINHAMENTO')" th:unless="${ocorrencia.encaminhamentos.size()} > 0"> 
+			       											<a href="javascript:void(0);" class="col-teal js-encaminhar-ocorrencia js-tooltip"  title="Emitir encaminhamento"
+			       													th:data-codigo="${ocorrencia.codigo}" 
+			       													th:data-nome="${ocorrencia.aluno.nome}">
+			       												<i class="material-icons btn-icon">open_in_new</i>
+			       											</a>
+														</th:block> -->
+				                                        <th:block sec:authorize="hasRole('ROLE_NOVO_ENCAMINHAMENTO')" th:if="${ocorrencia.encaminhamentos.size()} > 0">
+			       											<a th:href="@{/relatorios/medidaDisciplinar/{codigo}(codigo=${ocorrencia.codigo})}" target="_blank" class="col-teal js-tooltip" title="Imprimir"><i class="material-icons btn-icon">print</i></a>
+														</th:block>
+			                                        	<a th:href="@{/ocorrencias/detalhes/{codigo}(codigo=${ocorrencia.codigo})}" class="col-teal js-tooltip" title="Ver detalhes"><i class="material-icons btn-icon">settings</i></a>
+			                                        </td>
+		                                    </tr>
+		                                    <tr th:if="${pagina.vazia}">
+		                                    	<td colspan="7">A pesquisa não retornou nenhum resultado.</td>
+		                                    </tr>
+		                                </tbody>
+		                            </table>
+		                            <th:block th:replace="fragments/Paginacao :: paginacao"></th:block>
+	                        	</div>
+                        	</div>
+                        </div>
+                    </div>
         
         <th:block th:replace="aluno/PesquisaRapidaAlunoModal"></th:block>
         <th:block th:replace="encaminhamento/CadastroEncaminhamentoModal"></th:block>

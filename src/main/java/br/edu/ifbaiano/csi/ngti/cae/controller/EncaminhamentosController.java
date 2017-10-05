@@ -4,18 +4,14 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.edu.ifbaiano.csi.ngti.cae.model.Encaminhamento;
-import br.edu.ifbaiano.csi.ngti.cae.repository.Encaminhamentos;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroEncaminhamentoService;
-import br.edu.ifbaiano.csi.ngti.cae.service.CadastroOcorrenciaService;
 
 @Controller
 @RequestMapping("/encaminhamento")

@@ -22,6 +22,10 @@ public class PageWrapper<T> {
 		this.uriBuilder = UriComponentsBuilder.fromHttpUrl(httpUrl);
 	}
 	
+	public Long getTotalRegistros(){
+		return page.getTotalElements();
+	}
+	
 	public List<T> getConteudo(){
 		return page.getContent();
 	}

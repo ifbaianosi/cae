@@ -18,7 +18,6 @@
 <body>
 	
     <section class="content" layout:fragment="conteudo">
-        <div class="container-fluid">
             <div class="block-header">
             	<div class="row">
             		<div class="col-md-8">
@@ -34,7 +33,10 @@
             </div>
             <div class="card">
                 <div class="header">
-                    <a th:href="@{/alunos/novo}" type="button" class="btn bg-teal waves-effect">NOVO ALUNO</a>
+                	<h2>
+                        FORMULÁRIO DE PESQUISA
+                        <small>Combine os campos abaixo para filtrar alunos.</small>
+                    </h2>
                 </div>
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
@@ -42,7 +44,7 @@
                             <form class="js-formulario" th:action="@{/alunos}" method="GET" th:object="${alunoFilter}">
                             
                                 <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-3">
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
                                         <label for="nome">Nome</label>
                                         <div class="form-group">
                                             <div class="form-line">
@@ -51,69 +53,13 @@
                                             <label th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" id="nome-error" class="error" for="nome"></label>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-2">
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
                                         <label for="matricula">Matrícula</label>
                                         <div class="form-group">
                                             <div class="form-line" th:classappend="${#fields.hasErrors('matricula')} ? 'focused error'">
                                                 <input type="text" id="matricula" class="form-control" placeholder="" th:field="*{matricula}">
                                             </div>                                            
                                             <label th:if="${#fields.hasErrors('matricula')}" th:errors="*{matricula}" class="error" for="matricula"></label>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
-                                    	<label for="alojamento">Alojamento</label>
-	                                    <div class="form-group">
-                                            <select class="form-control show-tick" data-container="body" th:field="*{alojamento}">
-		                                    	<option value="">selecione...</option>
-											    <option th:each="alojamento : ${alojamentos}" th:value="${alojamento}" th:text="${alojamento.descricao}">Alojamento Masculino</option>
-											</select>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-2">
-                                        <label for="apartamento">N° Apartamento</label>
-                                        <div class="form-group">
-                                            <select class="form-control show-tick" data-live-search="true" data-size="5" data-container="body" th:field="*{apartamento}">
-		                                    	<option value="">selecione...</option>
-		                                    	<option value="1">1</option>
-		                                    	<option value="2">2</option>
-		                                    	<option value="3">3</option>
-		                                    	<option value="4">4</option>
-		                                    	<option value="5">5</option>
-		                                    	<option value="6">6</option>
-		                                    	<option value="7">7</option>
-		                                    	<option value="8">8</option>
-		                                    	<option value="9">9</option>
-		                                    	<option value="10">10</option>
-		                                    	<option value="11">11</option>
-		                                    	<option value="12">12</option>
-		                                    	<option value="13">13</option>
-		                                    	<option value="14">14</option>
-		                                    	<option value="15">15</option>
-											</select>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-2">
-                                        <label for="dataNascimento">Data Nascimento</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="material-icons">date_range</i>
-                                            </span>
-                                            <div class="form-line" th:classappend="${#fields.hasErrors('dataNascimento')} ? 'focused error'">
-                                                <input type="text" class="form-control datepicker" readonly="readonly" placeholder="" th:field="*{dataNascimento}">
-                                            </div>
-                                            <label th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}" class="error" for="dataNascimento"></label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                	<div class="col-xs-12 col-sm-6 col-md-3">
-                                        <label for="sexo">Sexo</label>
-                                        <div class="form-group"  th:classappend="${#fields.hasErrors('sexo')} ? 'focused error'">
-                                        	<th:block th:each="sexo : ${sexo}">
-	                                            <input type="radio" th:value="${sexo}" th:field="*{sexo}" class="with-gap">
-	                                            <label th:for="${#ids.prev('sexo')}" th:text="${sexo.descricao}">Masculino</label>
-                                        	</th:block>                                            
-                                            <label th:if="${#fields.hasErrors('sexo')}" th:errors="*{sexo}" class="error" for="sexo"></label>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-3">
@@ -136,6 +82,62 @@
 	                                        <label th:if="${#fields.hasErrors('curso')}" th:errors="*{curso}" class="error" for="curso"></label>
 	                                    </div>
                                     </div>
+                                  </div>
+                                  <div class="row">
+                                	<div class="col-xs-12 col-sm-6 col-md-3">
+                                        <label for="sexo">Sexo</label>
+                                        <div class="form-group"  th:classappend="${#fields.hasErrors('sexo')} ? 'focused error'">
+                                        	<th:block th:each="sexo : ${sexo}">
+	                                            <input type="radio" th:value="${sexo}" th:field="*{sexo}" class="with-gap">
+	                                            <label th:for="${#ids.prev('sexo')}" th:text="${sexo.descricao}">Masculino</label>
+                                        	</th:block>                                            
+                                            <label th:if="${#fields.hasErrors('sexo')}" th:errors="*{sexo}" class="error" for="sexo"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                    	<label for="alojamento">Alojamento</label>
+	                                    <div class="form-group">
+                                            <select class="form-control show-tick" data-container="body" th:field="*{alojamento}">
+		                                    	<option value="">selecione...</option>
+											    <option th:each="alojamento : ${alojamentos}" th:value="${alojamento}" th:text="${alojamento.descricao}">Alojamento Masculino</option>
+											</select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                        <label for="apartamento">N° Apartamento</label>
+                                        <div class="form-group">
+                                            <select class="form-control show-tick" data-live-search="true" data-size="5" data-container="body" th:field="*{apartamento}">
+		                                    	<option value="">selecione...</option>
+		                                    	<option value="1">1</option>
+		                                    	<option value="2">2</option>
+		                                    	<option value="3">3</option>
+		                                    	<option value="4">4</option>
+		                                    	<option value="5">5</option>
+		                                    	<option value="6">6</option>
+		                                    	<option value="7">7</option>
+		                                    	<option value="8">8</option>
+		                                    	<option value="9">9</option>
+		                                    	<option value="10">10</option>
+		                                    	<option value="11">11</option>
+		                                    	<option value="12">12</option>
+		                                    	<option value="13">13</option>
+		                                    	<option value="14">14</option>
+		                                    	<option value="15">15</option>
+											</select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                        <label for="dataNascimento">Data Nascimento</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">date_range</i>
+                                            </span>
+                                            <div class="form-line" th:classappend="${#fields.hasErrors('dataNascimento')} ? 'focused error'">
+                                                <input type="text" class="form-control datepicker" readonly="readonly" placeholder="" th:field="*{dataNascimento}">
+                                            </div>
+                                            <label th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}" class="error" for="dataNascimento"></label>
+                                        </div>
+                                    </div>
                                     <div class="col-xs-12 col-sm-6 col-md-3">
                                     	<label for="serieTurma">Serie/Turma</label>
                                         <div class="form-group">
@@ -146,9 +148,7 @@
 	                                        <label th:if="${#fields.hasErrors('serieTurma')}" th:errors="*{serieTurma}" class="error" for="serieTurma"></label>
 	                                    </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                	<div class="col-xs-12 col-sm-6 col-md-4">
+                                	<div class="col-xs-12 col-sm-6 col-md-3">
                                         <label for="nomeSocial">Nome Social</label>
                                         <div class="form-group">
                                             <div class="form-line" th:classappend="${#fields.hasErrors('nomeSocial')} ? 'focused error'">
@@ -189,89 +189,68 @@
                                 <a th:href="@{/alunos}" class="btn btn-default waves-effect">LIMPAR</a>
                             </form>
                         </div>
-                        <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>MATRÍCULA</th>
-                                        <th>NOME</th>
-                                        <th>CURSO</th>
-                                        <th>REGIME</th>
-                                        <th>STATUS</th>
-                                        <th class="text-center">AÇÕES</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="aluno : ${pagina.conteudo}">
-                                        <td th:text="${aluno.matricula}">17115</td>
-                                        <td class="text-uppercase" th:text="${aluno.nome}">Nome do Aluno</td>
-                                        <td th:text="${aluno.curso.nome}">Curso</td>
-                                        <td th:text="${aluno.regime.descricao}">Aluno Interno</td>
-                                        <td>
-                                        	<span class="label" th:text="${aluno.status.descricao}" th:classappend="${aluno.status.cor}">FREQUENTANDOO</span>
-                                        </td>
-                                        <td class="text-center">
-                                        	<a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}" class="col-red"><i class="material-icons btn-icon">edit</i>Editar</a>
-                                         	<!-- <a sec:authorize-url="/alunos/detalhe" th:href="@{/alunos/detalhe?matricula={matricula}(matricula=${aluno.matricula})}" class="col-teal"><i class="material-icons btn-icon">history</i>Histórico</a> -->
-                                        </td>
-                                    </tr>
-                                    <tr th:if="${pagina.vazia}">
-                                    	<td colspan="6">A pesquisa não retornou nenhum resultado.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <th:block th:replace="fragments/Paginacao :: paginacao"></th:block>
-                        </div>
-                        </div>
                     </div>
                 </div>
             </div>
-            <!-- <div class="card">
-                <div class="body">
-                	<div class="row">
-                   		<div class="col-md-12">
-                    		<button type="button" class="btn btn-sm bg-teal waves-effect">ATUALIZAR SERIE</button>
-                   		</div>
-                   		<div class="col-md-12">
-                  		<div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>MATRÍCULA</th>
-                                        <th>NOME</th>
-                                        <th>CURSO</th>
-                                        <th>REGIME</th>
-                                        <th>STATUS</th>
-                                        <th class="text-right">AÇÕES</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="aluno : ${pagina.conteudo}">
-                                        <th scope="row" th:text="${aluno.matricula}">1</th>
-                                        <td th:text="${aluno.nome}">Mark</td>
-                                        <td th:text="${aluno.curso.nome}">Otto</td>
-                                        <td th:text="${aluno.regime.descricao}">@mdo</td>
-                                        <td>
-                                        	<span class="label" th:text="${aluno.status.descricao}" th:classappend="${aluno.status.cor}">FREQUENTAO</span>
-                                        </td>
-                                        <td class="text-right">
-                                        	<a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}" class="col-red"><i class="material-icons btn-icon">edit</i>Editar</a>
-                                         	<a sec:authorize-url="/alunos/detalhe" th:href="@{/alunos/detalhe?matricula={matricula}(matricula=${aluno.matricula})}" class="col-teal"><i class="material-icons btn-icon">history</i>Historico</a>
-                                        </td>
-                                    </tr>
-                                    <tr th:if="${pagina.vazia}">
-                                    	<td colspan="5">A pesquisa não retornou nenhum resultado.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <th:block th:replace="fragments/Paginacao :: paginacao"></th:block>
+            <div class="card">
+                        <div class="header">
+                            <h2>
+                                ALUNOS
+                                <small>A pesquisa retornou <span th:text="${pagina.totalRegistros}"></span> resultados.</small>
+                            </h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a th:href="@{/alunos/novo}" class="waves-effect waves-block">Novo aluno</a></li>
+                                        <li><a th:href="@{/alunos}" class="waves-effect waves-block">Atualizar</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </div>
+                        <div class="body">
+                        	<div class="row col-xs-12">
+                    			<a th:href="@{/alunos/novo}" type="button" class="btn bg-teal waves-effect">NOVO ALUNO</a>
+                        	</div>
+                        	<div class="row">
+	                        	<div class=" col-xs-12 table-responsive">
+	                            <table class="table table-striped table-hover">
+	                                <thead>
+	                                    <tr>
+	                                        <th style="width: 40px;">MATRÍCULA</th>
+	                                        <th>NOME</th>
+	                                        <th>CURSO</th>
+	                                        <th>REGIME</th>
+	                                        <th>STATUS</th>
+	                                        <th class="text-center">AÇÕES</th>
+	                                    </tr>
+	                                </thead>
+	                                <tbody>
+	                                    <tr th:each="aluno : ${pagina.conteudo}">
+	                                        <td style="width: 40px;" th:text="${aluno.matricula}">17115</td>
+	                                        <td class="text-uppercase" th:text="${aluno.nome}">Nome do Aluno</td>
+	                                        <td th:text="${aluno.curso.nome}">Curso</td>
+	                                        <td th:text="${aluno.regime.descricao}">Aluno Interno</td>
+	                                        <td>
+	                                        	<span class="label" th:text="${aluno.status.descricao}" th:classappend="${aluno.status.cor}">FREQUENTANDOO</span>
+	                                        </td>
+	                                        <td class="text-center">
+	                                        	<a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}" class="col-red"><i class="material-icons btn-icon">edit</i>Editar</a>
+	                                         	<!-- <a sec:authorize-url="/alunos/detalhe" th:href="@{/alunos/detalhe?matricula={matricula}(matricula=${aluno.matricula})}" class="col-teal"><i class="material-icons btn-icon">history</i>Histórico</a> -->
+	                                        </td>
+	                                    </tr>
+	                                    <tr th:if="${pagina.vazia}">
+	                                    	<td colspan="6">A pesquisa não retornou nenhum resultado.</td>
+	                                    </tr>
+	                                </tbody>
+	                            </table>
+	                            <th:block th:replace="fragments/Paginacao :: paginacao"></th:block>
+                        	</div>
+                        	</div>
                         </div>
                     </div>
-                </div>
-            </div> -->
-        </div>
     </section>
 
    <th:block layout:fragment="javascript-extra">

@@ -15,7 +15,6 @@
 <body>
 	
     <section class="content" layout:fragment="conteudo">
-        <div class="container-fluid">
             <div class="block-header">
 				<div class="row">
             		<div class="col-md-6">
@@ -33,14 +32,14 @@
             	</div>
             </div>
             <div class="card">
-                <!--<div class="header">
-                    <a th:href="@{/alunos}" type="button" class="btn bg-teal waves-effect">PESQUISAR</a>
-                </div>-->
+                <div class="header">
+                	<h2>
+                        FORMULÁRIO CADASTRO DE ALUNO
+                        <small>Os campos marcados com <code>(*)</code> requer preenchimento obrigatório.</small>
+                    </h2>
+                </div>
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
-                        <div class="col-md-12">
-                            <h2 class="card-inside-title col-teal">IDENTIFICAÇÃO DO ALUNO</h2>
-                        </div>
                         <div class="col-md-12">
                             <form class="js-formulario" th:object="${aluno}" th:action="${aluno.novo} ? @{/alunos/novo} : @{/alunos/{codigo}(codigo=${aluno.codigo})}" method="POST">
                             	<input type="hidden" th:field="*{codigo}">
@@ -53,8 +52,8 @@
 	                            </div>
 	                            
                                 <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-2 trino-required">
-                                        <label for="matricula" class="control-label">Matrícula</label>
+                                    <div class="col-xs-12 col-sm-6 col-md-2">
+                                        <label for="matricula" class="control-label">Matrícula <code>*</code></label>
                                         <div class="form-group">
                                             <div class="form-line" th:classappend="${#fields.hasErrors('matricula')} ? 'focused error'">
                                                 <input type="text" id="matricula" class="form-control" placeholder="" th:field="*{matricula}">
@@ -93,9 +92,6 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <h2 class="card-inside-title col-teal">DADOS COMPLEMENTARES</h2>
-                                    </div>
                                     <div class="col-xs-12 col-sm-6 col-md-3">
                                         <label for="sexo">Sexo</label>
                                         <div class="form-group"  th:classappend="${#fields.hasErrors('sexo')} ? 'focused error'">
@@ -200,7 +196,7 @@
                                             <label for="whatsapp">SIM</label>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-6">
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
                                         <label for="nomeSocial">Nome Social</label>
                                         <div class="form-group">
                                             <div class="form-line" th:classappend="${#fields.hasErrors('nomeSocial')} ? 'focused error'">
@@ -260,7 +256,9 @@
                                         </div>
                                     </div>
                                </div> -->
-                               <div class="row">
+                               
+                               
+                               <!-- <div class="row">
                                 	<div class="col-xs-12 col-sm-6">
                                 		<h2 class="card-inside-title col-teal">DADOS DOS RESPONSÁVEIS</h2>
                                         <div class="card" style="background-color:#e9e9e9;">
@@ -268,7 +266,7 @@
                                                 <div class="row">
 			                                    		<div class="col-md-12">
 				                                    		<button type="button" class="btn btn-xs bg-teal waves-effect" data-toggle="modal" data-target="#defaultModal"><i class="material-icons btn-icon">add_circle_outline</i>ADICIONAR RESPONSÁVEL</button>
-					                                    	<!-- <button type="button" class="btn btn-xs bg-pink waves-effect js-remover-todos" th:if="${aluno.responsaveisDoAluno} == null" disabled="disabled"><i class="material-icons btn-icon">delete_sweep</i>REMOVER TODOS</button> -->
+					                                    	<button type="button" class="btn btn-xs bg-pink waves-effect js-remover-todos" th:if="${aluno.responsaveisDoAluno} == null" disabled="disabled"><i class="material-icons btn-icon">delete_sweep</i>REMOVER TODOS</button>
 			                                    		</div>
                                                 </div>
 		                                        <div class="js-container-tabela-responsaveis">
@@ -300,9 +298,9 @@
 															                             </p>
 															                         </div>
 															                         <div class="col-xs-12 col-sm-6 text-right">
-															                              <!-- <a href='javascript:void(0);' class="js-editar-responsavel" th:data-url="@{/responsaveis/{codigo}(codigo=${responsavelAluno.responsavel.codigo})}">
+															                              <a href='javascript:void(0);' class="js-editar-responsavel" th:data-url="@{/responsaveis/{codigo}(codigo=${responsavelAluno.responsavel.codigo})}">
 															                                  <i class='material-icons col-teal btn-icon'>mode_edit</i> EDITAR
-															                              </a> -->
+															                              </a>
 															                              <a href='javascript:void(0);' class='js-exclusao-btn' th:data-objeto="${responsavelAluno.responsavel.nome}" th:data-url="@{/responsaveis/{codigo}(codigo=${responsavelAluno.codigo})}" data-contato='{{responsavel.contato}}'>
 															                                  <i class='material-icons col-pink btn-icon'>delete</i> REMOVER
 															                              </a>
@@ -316,7 +314,7 @@
 				                                    <span th:unless="${aluno.responsaveisDoAluno} != null">O aluno não possui responsáveis cadastrados no sistema.</span>
 		                                    	</div>
 		                                        <label th:if="${#fields.hasErrors('temResponsavel')}" th:errors="*{temResponsavel}" id="nome-error" class="error"></label>
-		                                	<!-- <div class="table-responsive">
+		                                	<div class="table-responsive">
 	                                			<div class="form-group">
 						                            <table class="table table-hover table-bordered  js-tabela-responsaveis">
 						                                <thead>
@@ -347,7 +345,7 @@
 						                            </table>
 		                                            <label th:if="${#fields.hasErrors('temResponsavel')}" th:errors="*{temResponsavel}" id="nome-error" class="error"></label>
 		                        				</div>
-		                        			</div> -->
+		                        			</div>
                                             </div>
                                         </div>
                                 	</div>
@@ -367,15 +365,44 @@
                                                         Saída do campus, durante o expediente não havendo aulas.
                                                     </label>
                                                 </p>
-                                                <!-- <p>
+                                                <p>
                                                     <input type="checkbox" id="viagem" class="chk-col-teal" name="whatsapp" th:checked="${aluno.whatsapp}">
                                                     <label for="viagem">
                                                         Participação em viagens promovidas pela instituição, acompanhado do servidor do campus.
                                                     </label>
-                                                </p> -->
+                                                </p>
                                             </div> 
                                         </div>
                                     </div>
+                               </div> -->
+                               <div class="row">
+					               <div class="header">
+					                   <h2>
+					                       AUTORIZAÇÕES
+					                       <small>Marque as autorizações permitidas ao aluno.</small>
+					                   </h2>
+					               </div>
+					               <input type="hidden" id="url_nova_ocorrencia" th:data-url="@{/ocorrencias}" th:data-url-alunos="@{/alunos}"/>
+					               <div class="body">
+					               <p>
+					                   <input type="checkbox" id="sair" class="chk-col-teal" name="saida" th:checked="${aluno.saida}">
+					                   <label for="sair">
+					                       Saída do campus, para todos os fins.
+					                   </label>
+					               </p>
+					               <p>
+					                   <input type="checkbox" id="saidaSemAula" class="chk-col-teal" name="saidaSemAula" th:checked="${aluno.saidaSemAula}">
+					                   <label for="saidaSemAula">
+					                       Saída do campus, durante o expediente não havendo aulas.
+					                   </label>
+					               </p>
+					               <!-- <p>
+					                   <input type="checkbox" id="viagem" class="chk-col-teal" name="whatsapp" th:checked="${aluno.whatsapp}">
+					                   <label for="viagem">
+					                       Participação em viagens promovidas pela instituição, acompanhado do servidor do campus.
+					                   </label>
+					               </p> -->
+					               </div>
                                </div>
                                 <button sec:authorize="hasRole('ROLE_SALVAR_OCORRENCIA')" type="submit" class="btn bg-teal m-t-15 waves-effect  js-submit">SALVAR</button>
                         		<input type="hidden" id="uuid" th:value="${uuid}" name="uuid">
@@ -383,8 +410,115 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div>     
+            <div class="card" th:unless="${aluno.novo}">
+                <div class="header">
+                    <h2>
+                        RESPONSÁVEIS
+                        <small>Adicione e gerencie os responsáveis do aluno.</small>
+                    </h2>
+                    <ul class="header-dropdown m-r--5">
+                        <li class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">more_vert</i>
+                            </a>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a th:href="@{/ocorrencias/nova}" class="waves-effect waves-block">Nova ocorrência</a></li>
+                                <li><a th:href="@{/ocorrencias}" class="waves-effect waves-block">Atualizar</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <input type="hidden" id="url_nova_ocorrencia" th:data-url="@{/ocorrencias}" th:data-url-alunos="@{/alunos}"/>
+                <div class="body">
+                	<div class="row">
+                   		<div class="col-md-12">
+                    		<button type="button" class="btn bg-teal waves-effect" data-toggle="modal" data-target="#defaultModal">ADICIONAR RESPONSÁVEL</button>
+                     		<!-- <button type="button" class="btn btn-xs bg-pink waves-effect js-remover-todos" th:if="${aluno.responsaveisDoAluno} == null" disabled="disabled"><i class="material-icons btn-icon">delete_sweep</i>REMOVER TODOS</button> -->
+                   		</div>
+                   </div>
+                   <div class="js-container-tabela-responsaveis">
+                   		<th:block th:if="${aluno.responsaveisDoAluno} != null">
+                    		<!-- <div class="table-responsive"> -->
+                      			<div class="form-group">
+		                       		<table class="table table-striped table-hover table-bordered  js-tabela-responsaveis">
+		                           		<thead>
+		                               		<tr>
+			                                   	<th>NOME</th>
+			                                   	<th>CONTATOS</th>
+			                                   	<th>PARENTESCO</th>
+			                                   	<th>EMAIL</th>
+			                                   	<th style="width: 200px">AÇÕES</th>
+		                               		</tr>
+		                           		</thead>
+		                           		<tbody class="js-tabela-responsaveis-body">
+				                           	<th:block th:if="${aluno.responsaveisDoAluno} != null">
+				                            	<tr th:each="responsavelAluno : ${aluno.responsaveisDoAluno}">
+				                            		<td class="text-uppercase" th:text="${responsavelAluno.responsavel.nome}">Nome</td>
+				                                    <td style="min-width: 60px" th:text="${responsavelAluno.responsavel.contato}">Contato</td>
+				                                    <td class="text-uppercase" style="width: 50px;" th:text="${responsavelAluno.parentesco.descricao}">Parentesco</td>
+				                                    <td th:text="${responsavelAluno.responsavel.email}">Email</td>
+				                                    <td style="width: 200px">
+				                                    	<a href='javascript:void(0);' class='js-tooltip col-blue js-editar-responsavel' title="Editar" th:data-url="@{/responsaveis/{codigo}(codigo=${responsavelAluno.responsavel.codigo})}">
+							                                  <i class='material-icons col-blue btn-icon'>edit</i> EDITAR
+							                            </a>
+				                              			<a href='javascript:void(0);' class='js-exclusao-btn js-tooltip col-pink' title="Excluir" th:data-objeto="${responsavelAluno.responsavel.nome}" th:data-url="@{/responsaveis/{codigo}(codigo=${responsavelAluno.codigo})}" data-contato='{{responsavel.contato}}'>
+							                                  <i class='material-icons col-pink btn-icon'>delete</i> REMOVER
+							                            </a>
+			                              			</td>
+				                            	</tr>
+				                           	</th:block>
+		                               		<tr th:unless="${aluno.responsaveisDoAluno} != null"><td colspan="4" class="col-orange">Voce ainda nao adicionou responsaveis</td></tr>
+		                           		</tbody>
+		                       		</table>
+                                   	<!-- <label th:if="${#fields.hasErrors('temResponsavel')}" th:errors="*{temResponsavel}" id="nome-error" class="error"></label> -->
+		               			<!-- </div> -->
+		               		</div>
+                    		
+                    		
+                    		<!-- <div class="panel-group full-body" id="accordion_19" role="tablist" aria-multiselectable="true" th:fragment="tabelaResponsaveis">
+
+								<div class="panel" th:each="responsavelAluno : ${aluno.responsaveisDoAluno}">
+  									<div class="panel-heading" role="tab" th:id="${responsavelAluno.responsavel.codigo}">
+      									<h4 class="panel-title">
+          									<a class="collapsed" role="button" data-toggle="collapse" th:href="|#collapseThree_${responsavelAluno.responsavel.codigo}|" 
+          										aria-expanded="false" th:aria-controls="|collapseThree_${responsavelAluno.responsavel.codigo}|" th:text="${responsavelAluno.responsavel.nome}">
+              									{{responsavel.nome}}
+          									</a>
+      									</h4>
+  									</div>
+							  		<div th:id="|collapseThree_${responsavelAluno.responsavel.codigo}|" class="panel-collapse collapse" role="tabpanel" th:aria-labelledby="|headingThree_${responsavelAluno.responsavel.codigo}|">
+							      		<div class="panel-body">
+											<div class="row">
+							                       <div class="col-xs-12 col-sm-6">
+							                           <p>
+							                              PARENTESCO: <span th:text="${responsavelAluno.parentesco}"></span>
+							                           </p>
+							                           <p>
+							                              CONTATO 1: <span th:text="${responsavelAluno.responsavel.contato}"></span>
+							                           </p>
+							                           <p>
+							                              CONTATO 2: <span th:text="${responsavelAluno.responsavel.contato2}"></span>
+							                           </p>
+							                       </div>
+							                       <div class="col-xs-12 col-sm-6 text-right">
+							                            <a href='javascript:void(0);' class="js-editar-responsavel" th:data-url="@{/responsaveis/{codigo}(codigo=${responsavelAluno.responsavel.codigo})}">
+							                        <i class='material-icons col-teal btn-icon'>mode_edit</i> EDITAR
+							                    </a>
+							                              <a href='javascript:void(0);' class='js-exclusao-btn' th:data-objeto="${responsavelAluno.responsavel.nome}" th:data-url="@{/responsaveis/{codigo}(codigo=${responsavelAluno.codigo})}" data-contato='{{responsavel.contato}}'>
+							                                  <i class='material-icons col-pink btn-icon'>delete</i> REMOVER
+							                              </a>
+							                         </div>
+							                      </div>
+							        		</div>
+							    		</div>
+									</div>
+							</div> -->
+                     	</th:block>
+                         <span th:unless="${aluno.responsaveisDoAluno} != null">O aluno não possui responsáveis cadastrados no sistema.</span>
+                       	</div>
+                </div>
+           </div>
 		
         <th:block th:replace="responsavel/CadastroResponsavelModal"></th:block>
         

@@ -6,11 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
-import br.edu.ifbaiano.csi.ngti.cae.model.Encaminhamento;
 import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
-import br.edu.ifbaiano.csi.ngti.cae.model.Regime;
-import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
-import br.edu.ifbaiano.csi.ngti.cae.model.Usuario;
 
 public class OcorrenciaDTO {
 

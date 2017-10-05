@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -137,6 +138,13 @@
     
     <!-- jQuery easy-autocomplete -->
 	<script th:src="@{/layout/plugins/jquery-easy-autocomplete/jquery.easy-autocomplete.min.js}"></script>
+	    
+	    <th:block sec:authorize="hasRole('ROLE_PESQUISAR_TODAS_OCORRENCIAS')">
+	   		<script th:src="@{/javascript/vendors/plugins/handlebars/handlebars-v4.0.10.js}"></script>
+	    	<!-- JS Notificações do Sistema-->
+	    	<script th:src="@{/javascript/notificacoes.js}"></script>
+		    <th:block th:replace="handlebars/NotificacoesTamplate"></th:block>
+	    </th:block>
     
     <th:block layout:fragment="javascript-extra"></th:block>
 </body>

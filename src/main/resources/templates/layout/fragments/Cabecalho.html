@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	
 	<body>
 	
@@ -33,39 +34,39 @@
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Call Search -->
-                    <li sec:authorize-url="/alunos/detalhe"><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
+                    <!-- <li sec:authorize-url="/alunos/detalhe"><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li> -->
                     
                     <!-- #END# Call Search -->
                     <!-- Notifications -->
-                    <!-- <li class="dropdown">
+                    <li sec:authorize="hasRole('ROLE_PESQUISAR_TODAS_OCORRENCIAS')" id="url-notificacoes" th:data-url="@{/notificacoes}" class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
                             <i class="material-icons">notifications</i>
-                            <span class="label-count">7</span>
+                            <span class="label-count bg-pink js-notificacao-qty">0</span>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu js-url" th:data-url="@{/}">
                             <li class="header">NOTIFICAÇÕES</li>
                             <li class="body">
-                                <ul class="menu">
-                                    <li>
-                                        <a href="javascript:void(0);">
+                                <ul class="menu js-container-notificacoes">
+                                    <!-- <li th:each="notificacao : ${notificacoes}">
+                                        <a th:href="@{${notificacao.uri}}" th:title="${notificacao.descricao}">
                                             <div class="icon-circle bg-light-green">
                                                 <i class="material-icons">notifications</i>
                                             </div>
                                             <div class="menu-info">
-                                                <h4>Alojamento feminino</h4>
+                                                <h4 th:text="${notificacao.tipoNotificacao}">Alojamento feminino</h4>
                                                 <p>
-                                                    <i class="material-icons">access_time</i> há 14 min
+                                                    <i class="material-icons">access_time</i> <span th:text="${notificacao.data}"></span>
                                                 </p>
                                             </div>
                                         </a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </li>
                             <li class="footer">
-                                <a th:href="@{/ocorrencias}">VER TODAS AS OCORRENCIAS</a>
+                                <!-- <a th:href="@{/ocorrencias}">VER TODAS AS OCORRENCIAS</a> -->
                             </li>
                         </ul>
-                    </li> -->
+                    </li>
                     <!-- #END# Notifications -->
                     <!-- Tasks -->
                     
@@ -79,6 +80,9 @@
     </nav>
     <!-- #Top Bar -->
     </div>
+    
+    <th:block layout:fragment="javascript-extra">
+    </th:block>
     
 	</body>	
 	</html>

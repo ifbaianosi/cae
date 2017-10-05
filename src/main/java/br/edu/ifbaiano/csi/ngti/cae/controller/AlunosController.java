@@ -1,6 +1,5 @@
 package br.edu.ifbaiano.csi.ngti.cae.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -11,19 +10,15 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,7 +30,6 @@ import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 import br.edu.ifbaiano.csi.ngti.cae.model.GrauParentesco;
 import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
 import br.edu.ifbaiano.csi.ngti.cae.model.Regime;
-import br.edu.ifbaiano.csi.ngti.cae.model.Responsavel;
 import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
 import br.edu.ifbaiano.csi.ngti.cae.model.Sexo;
 import br.edu.ifbaiano.csi.ngti.cae.model.Status;
@@ -45,11 +39,9 @@ import br.edu.ifbaiano.csi.ngti.cae.repository.Cursos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Ocorrencias;
 import br.edu.ifbaiano.csi.ngti.cae.repository.ResponsavelAlunos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.filter.AlunoFilter;
-import br.edu.ifbaiano.csi.ngti.cae.security.UsuarioSistema;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroAlunoService;
 import br.edu.ifbaiano.csi.ngti.cae.service.exception.AlunoNumeroMatriculaJaCadastradoException;
 import br.edu.ifbaiano.csi.ngti.cae.session.ListaAlunosSession;
-import br.edu.ifbaiano.csi.ngti.cae.session.TabelasResponsaveisSession;
 
 @Controller
 @RequestMapping("/alunos")
@@ -80,70 +72,41 @@ public class AlunosController {
 	 * 
 	 * @param codigosAlunos Long[]
 	 * @param uuid String
-	 * @return List<Alunos>
+	 * @return List<Aluno>
 	 */
 	@PostMapping(value="/adicionar")
 	public @ResponseBody ResponseEntity<?> adicionarAluno(@RequestParam("codigos[]") List<Long> codigos, @RequestParam("uuid") String uuid){
-		System.out.println("entrou no metodo adicionar alunos--->");
-		System.out.println("codigos--->"+codigos.size());
-		List<Aluno> alunosList = new ArrayList<>();
-		
-		for(Long codigo: codigos){
-			alunosList.add(alunos.findOne(codigo));
-		}
-		
-		listaAlunosSession.adicionarAluno(uuid, alunosList);
-		
-		//TODO: logs
-		System.out.println("------------> uuid: "+uuid);
-		System.out.println("/adicionar -> quantidade de alunos: "+listaAlunosSession.totalAlunos(uuid));
-		
+		listaAlunosSession.adicionarAluno(uuid, alunos.findByCodigoIn(codigos));
 		return ResponseEntity.ok(listaAlunosSession.getAlunos(uuid));
 	}
 	
+	/**
+	 *	Recupera da sessao do usuario a lista de alunos selecionados para o registro da ocorrencia
+	 *	@param uuid String
+	 *	@return List<Aluno> alunos
+	 */
 	@GetMapping(value="/listar")
 	public @ResponseBody ResponseEntity<?> listarAlunos(@RequestParam("uuid") String uuid){
-
 		//TODO: logs
 		System.out.println("------------> uuid: "+uuid);
 		System.out.println("/listar -> quantidade de slunos: "+listaAlunosSession.totalAlunos(uuid));
-		
-		//TODO: TESTE
-		/*List<Aluno> alunosList = new ArrayList<>();
-		alunosList.add(alunos.getOne(12L));
-		listaAlunosSession.adicionarAluno("1", alunosList);*/
 		
 		return ResponseEntity.ok(listaAlunosSession.getAlunos(uuid));
 	}
 	
 	@DeleteMapping(value="/remover-todos/{uuid}")
 	public @ResponseBody ResponseEntity<?> removerTodosAlunos(@PathVariable("uuid") String uuid){
-		
-		//TODO: logs
-		System.out.println("------------> uuid: "+uuid);
-		System.out.println("/remover-todos -> quantidade de alunos: "+listaAlunosSession.totalAlunos(uuid));
-		
 		listaAlunosSession.excluirTodosOsAlunos(uuid);
-		
-		//TODO: logs
-		System.out.println("/remover-todos -> quantidade de alunos: "+listaAlunosSession.totalAlunos(uuid));
-		
 		return ResponseEntity.ok(listaAlunosSession.getAlunos(uuid));
 	} 
+	
+	
 	
 	@DeleteMapping(value="/remover/{uuid}/{codigo}")
 	public @ResponseBody ResponseEntity<?> removerAluno(@PathVariable("uuid") String uuid, @PathVariable("codigo") Long codigo){
 		Aluno aluno = new Aluno();
 		aluno.setCodigo(codigo);
-		
-		//TODO: logs
-		System.out.println("/remover antes-> quantidade de alunos: "+listaAlunosSession.totalAlunos(uuid));
-		
 		listaAlunosSession.excluirAluno(uuid, aluno);
-		
-		//TODO: logs
-		System.out.println("/remover depois de excluir-> quantidade de alunos: "+listaAlunosSession.totalAlunos(uuid));
-		
 		return ResponseEntity.ok(listaAlunosSession.getAlunos(uuid));
 	} 
 	

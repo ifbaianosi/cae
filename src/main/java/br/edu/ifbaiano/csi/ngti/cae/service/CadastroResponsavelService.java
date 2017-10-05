@@ -1,16 +1,12 @@
 package br.edu.ifbaiano.csi.ngti.cae.service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
 import br.edu.ifbaiano.csi.ngti.cae.model.Responsavel;
-import br.edu.ifbaiano.csi.ngti.cae.model.ResponsavelSession;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Responsaveis;
 import br.edu.ifbaiano.csi.ngti.cae.repository.ResponsavelAlunos;
 

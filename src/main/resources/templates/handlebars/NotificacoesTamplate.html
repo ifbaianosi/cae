@@ -1,0 +1,23 @@
+<script id="notificacoesTamplate" type="text/x-handlebars-template">
+{{#if .}}
+	{{#each .}}
+
+<li title="{{descricao}}">
+	<a href="javascript:void(0);" data-codigo="{{codigo}}" class="js-notificacao">
+		<div class="icon-circle bg-teal">
+			<i class="material-icons">assignment</i>
+		</div>
+		<div class="menu-info">
+			<h4>{{tipoNotificacao}}</h4>
+			<p>
+				<i class="material-icons">access_time</i> <span>{{tempo}}</span>
+			</p>
+		</div>
+	</a>
+</li>
+
+	{{/each}}
+{{else}}
+
+{{/if}}
+</script>

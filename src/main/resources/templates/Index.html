@@ -17,16 +17,10 @@
                 <h2>INÍCIO</h2>
             </div>
             
-            <!-- MENSAGEM ACESSO COM SUCESSO -->
-			<!-- <div class="alert bg-cyan alert-dismissible fade in" role="alert" th:if="${not #strings.isEmpty(loginSucesso)}" th:fragment="alert">
-                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="material-icons">clear</i></button>
-                   <span><span>OLÁ</span> <span th:text="${#authentication.principal.usuario.nome}">GLAUBER</span><strong> !</strong> SEU PERFIL DE ACESSO PERMITE UTILIZAR O SISTEMA COMO <span>ASSISTENTE DE ALUNOS</span></span>
-            </div> -->
-			
             <!-- Widgets -->
             <div class="row clearfix">
-                <div class="col-sm-6 col-xs-12">
-                    <div class="info-box bg-pink hover-expand-effect" 
+                <div class="col-sm-4 col-xs-12">
+                    <div class="info-box bg-light-green hover-expand-effect" 
                     		th:classappend="${#authorization.expression('hasRole(''ROLE_MENU_ALUNOS'')')} ?  js-info-box-click"  th:data-url="@{/alunos}">
                         <div class="icon">
                             <i class="material-icons">school</i>
@@ -37,8 +31,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <div class="info-box bg-pink hover-expand-effect" 
+                <div class="col-sm-4 col-xs-12">
+                    <div class="info-box bg-light-green hover-expand-effect" 
                     		th:classappend="${#authorization.expression('hasRole(''ROLE_MENU_OCORRENCIAS'')')} ?  js-info-box-click" th:data-url="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}">
                         <div class="icon">
                             <i class="material-icons">assignment</i>
@@ -49,18 +43,18 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box bg-light-green hover-expand-effect">
+                <div class="col-sm-4 col-xs-12">
+                    <div class="info-box bg-light-green">
                         <div class="icon">
-                            <i class="material-icons">forum</i>
+                            <i class="material-icons">open_in_new</i>
                         </div>
                         <div class="content">
-                            <div class="text">NEW COMMENTS</div>
-                            <div class="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20"></div>
+                            <div class="text">ENCAMINHAMENTOS</div>
+                            <div class="number" th:text="${quantidadeEncaminhamentos}">2</div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <!--<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                     <div class="info-box bg-orange hover-expand-effect">
                         <div class="icon">
                             <i class="material-icons">person_add</i>
@@ -110,7 +104,7 @@
             			<div sec:authorize="hasRole('ROLE_VER_OCORRENCIAS_POR_LOCAL')" class="col-xs-12">
 		                    <div class="card">
 		                    	<div class="header">
-		                            <h2>LOCAIS COM MAIS OCORRÊCNIAS <small>Top 5</small></h2>
+		                            <h2>LOCAIS COM MAIS OCORRÊNCIAS <small>Top 5</small></h2>
 		                        </div>
 		                        <div class="body">
 		                            <ul class="dashboard-stat-list" style="margin-top: 0px;">
@@ -217,7 +211,6 @@
                 
                 <!-- #END# Browser Usage -->
             </div>
-        </div>
     </section>
 
    <th:block layout:fragment="javascript-extra">

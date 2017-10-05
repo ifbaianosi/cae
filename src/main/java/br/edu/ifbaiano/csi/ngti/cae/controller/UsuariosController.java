@@ -12,11 +12,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +28,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifbaiano.csi.ngti.cae.controller.page.PageWrapper;
-import br.edu.ifbaiano.csi.ngti.cae.model.Encaminhamento;
 import br.edu.ifbaiano.csi.ngti.cae.model.SenhaUsuario;
 import br.edu.ifbaiano.csi.ngti.cae.model.Usuario;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Grupos;
@@ -39,9 +36,9 @@ import br.edu.ifbaiano.csi.ngti.cae.repository.filter.UsuarioFilter;
 import br.edu.ifbaiano.csi.ngti.cae.security.UsuarioSistema;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroUsuarioService;
 import br.edu.ifbaiano.csi.ngti.cae.service.StatusUsuario;
+import br.edu.ifbaiano.csi.ngti.cae.service.exception.EmailUsuarioJaCadastradoException;
 import br.edu.ifbaiano.csi.ngti.cae.service.exception.ImpossivelExcluirEntidadeException;
 import br.edu.ifbaiano.csi.ngti.cae.service.exception.SenhaObrigatoriaUsuarioException;
-import br.edu.ifbaiano.csi.ngti.cae.service.exception.EmailUsuarioJaCadastradoException;
 
 @Controller
 @RequestMapping("/usuarios")

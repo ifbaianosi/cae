@@ -10,14 +10,12 @@
                         <div class="header">
                             <h2>
                                 ADICIONAR RESPONSÁVEL
+                        		<small>Os campos marcados com <code>(*)</code> requer preenchimento obrigatório.</small>
                             </h2>
                        		<a href="javascript:void(0);" class="header-dropdown m-r--5" data-dismiss="modal"><i class="material-icons">clear</i></a>
                             
                         </div>
                         <div class="body">
-                        	<p class="bg-warning m-b-20">
-	                         	(*) Campos obrigatórios.
-	                         </p>
                         	<form id="formulario_responsavel">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-5 trino-required">
@@ -66,7 +64,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-12">
-                                        <button type="button" class="btn btn-link waves-effect bg-teal  js-adicionar-responsavel" th:data-url="@{/responsaveis}">OK</button>
+                                        <button type="button" class="btn btn-link waves-effect bg-teal  js-adicionar-responsavel" th:data-url="@{/responsaveis}">SALVAR</button>
                       		            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
                                     </div>
                                 </div>

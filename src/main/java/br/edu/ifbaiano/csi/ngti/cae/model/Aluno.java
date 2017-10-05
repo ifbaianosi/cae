@@ -23,11 +23,11 @@ import org.springframework.util.StringUtils;
 
 @Entity
 @Table(name="aluno")
-public class Aluno extends Entidade {
+public class Aluno extends Entidade implements Paciente {
 
 	private static final long serialVersionUID = 2970810779587217348L;
 
-	// CAMPOS OBRIGATORIOS PARA CADASTRO RAPIDO ===========================
+	// CAMPOS OBRIGATORIOS PARA CADASTRO RAPIDO =========================
 	@NotBlank(message="A matricula é obrigatória")
 	@Size(max=7, message="A matricula deve conter no máximo {max} números")
 	private String matricula;
@@ -49,7 +49,7 @@ public class Aluno extends Entidade {
 	@Enumerated(EnumType.STRING)
 	@Column(name="serie_turma")
 	private SerieTurma serieTurma;
-	//=====================================================================
+	//====================================================================
 	
 	@Size(max=80, message="O nome social deve conter no máximo {max} caracteres")
 	@Column(name="nome_social")

@@ -2,7 +2,6 @@ package br.edu.ifbaiano.csi.ngti.cae.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -22,8 +21,6 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.NotBlank;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="ocorrencia")
@@ -80,7 +77,8 @@ public class Ocorrencia extends Entidade{
 
 	@PrePersist
 	public void prePersist(){
-		this.dataRegistro = LocalDateTime.now();
+		if(this.dataRegistro == null)
+			this.dataRegistro = LocalDateTime.now();
 	}
 
 	public LocalDateTime getDataRegistro() {
