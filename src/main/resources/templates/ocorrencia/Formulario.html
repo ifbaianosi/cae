@@ -1,356 +1,194 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<form id="formularioNovaOcorrencia" class="js-formulario"
+	th:action="@{/ocorrencias/nova}" method="POST"
+	th:object="${ocorrencia}" th:fragment="formularioNovaOcorrencia">
 	
-<form id="formularioNovaOcorrencia" class="js-formulario" th:action="@{/ocorrencias/nova}" method="POST" th:object="${ocorrencia}" th:fragment="formularioNovaOcorrencia">
-		<!-- <div th:if="${ocorrencia.aluno.serieTurma} == null">
-			<div class="well">Impossível adicionar registro de ocorrencia. O cadastro do aluno está incompleto, clique <a th:href="@{/alunos/codigodoaluno}">aqui</a> para completar o cadastro.</div>
-		</div> -->
-		<!-- <div th:unless="${ocorrencia.aluno.serieTurma} == null"> -->
-					<!-- MENSAGEM SUCESSO -->
-					<div class="alert bg-teal alert-dismissible fade in" role="alert" th:if="${not #strings.isEmpty(mensagemSucesso)}" th:fragment="alert">
-                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="material-icons">clear</i></button>
-                         <span th:text="${mensagemSucesso}"></span>
-                     </div>
-                     	<input type="hidden" th:field="*{uuid}">
-                    	<input type="hidden" th:field="*{codigo}">
-						<input type="hidden" th:field="*{aluno}">
-                    	<input type="hidden" th:field="*{regime}">
-                    	<input type="hidden" th:field="*{serie}">
-					<th:block th:unless="${ocorrencia.novo}"> 
-						<input type="hidden" th:field="*{alunos}">
-						<input type="hidden" th:field="*{coletiva}">
-                    	<input type="hidden" th:field="*{usuario}">
-                    	<input type="hidden" th:field="*{dataRegistro}">
-					</th:block>
-                        <!-- <input type="hidden" th:field="*{encaminhamentos}"> -->
-                    	
-                         <!-- <div class="row" th:if="${ocorrencia.aluno} == null">
-                            <div class="col-xs-12 col-sm-12 col-md-4">
-                                <label for="aluno">Aluno</label>
-                                <div class="form-group">
-                                    <div class="form-line" th:classappend="${#fields.hasErrors('aluno')} ? 'focused error'">
-                                        <input type="text" class="form-control" placeholder="" th:field="*{aluno}">
-                                    </div>
-                                    <label th:if="${#fields.hasErrors('aluno')}" th:errors="*{aluno}" id="nome-error" class="error" for="aluno"></label>
-                                </div>
-                            </div>
-                         </div> -->
-                         
-                         <div class="row" th:if="${ocorrencia.novo}"> <!-- th:if="${ocorrencia.alunos.size() == 0}" -->
-	                    	<!-- <div class="col-xs-12 js-aluno">
-	                    		<div class="row">
-		                            <div class="col-xs-12 col-sm-12 col-md-5">
-		                                <div class="">
-			                                <label for="aluno">Aluno</label>
-			                                <div class="input-group">
-			                                    <span class="input-group-addon">
-			                                        <a href="javascript:void(0);" class="btn btn-xs waves-effect" data-toggle="modal" data-target="#adicionarAlunoNaOcorrenciaModal"><i class="material-icons">search</i></a>
-			                                        <a href="javascript:void(0);" class="btn btn-xs waves-effect"><i class="material-icons">add</i></a>
-			                                    </span>
-			                                    <div id="divInput" class="form-line">
-			                                        <input type="text" id="aluno" class="form-control js-matricula" placeholder="Digite a matrícula do aluno" autofocus>
-			                                    </div>
-			                                    <span class="input-group-addon">
-			                                        <button class="btn bg-teal btn-xs waves-effect js-validar-numero-matricula"><i class="material-icons btn-icon">send</i>CONSULTAR</button>
-			                                    </span>
-			                                    <div class="preloader pl-size-xs pull-right hide">
-				                                    <div class="spinner-layer pl-teal">
-				                                        <div class="circle-clipper left">
-				                                            <div class="circle"></div>
-				                                        </div>
-				                                        <div class="circle-clipper right">
-				                                            <div class="circle"></div>
-				                                        </div>
-				                                    </div>
-				                                </div>
-			                                </div>
-		                                </div>
-		                            </div>
-		                            <div class="col-xs-12 col-sm-12 col-md-7 js-aluno">
-		                            	<p class="bg-warning">
-		                            		Digite a matrícula do aluno e clique em <small class="label col-teal"><i class="material-icons btn-icon">send</i> CONSULTAR</small> para abrir o formulário de ocorrência<br>ou clique no botão <small class="label col-teal"><i class="material-icons btn-icon">search</i></small> para abrir a janela de pesquisa rápida de alunos.
-		                            	</p>
-		                            </div>
-	                    		</div>
-	                    	</div> -->
-	                            <!-- <div class="card js-card-aluno hide">
-				                        <div class="body"> -->
-				                        	<div class="js-card-aluno"><!-- hide -->
-				                        		<div class="">
-				                        				<div id="alterarAluno" class="">
-						                        			<div class="">
-						                        				<a href="javascript:void(0);" class="btn btn-sm waves-effect bg-teal" 
-						                        						data-toggle="modal" data-target="#modalPesquisaAluno" title="Alterar aluno">
-						                        					<i class="material-icons btn-icon">search</i>
-						                        					ALTERAR ALUNO
-						                        				</a>
-						                        			</div>
-						                        		</div>
-						                        		<div class="">
-						                        			<div class="row col-xs-12">
-							                        			<div class="col-xs-12 col-sm-6">
-							                                        <h2 class="card-inside-title col-teal">TIPO DA OCORRÊNCIA</h2>
-							                                        	<div class="form-line">
-								                                            <input type="radio" id="individual" value="false" th:field="*{coletiva}" class="with-gap">
-								                                            <label for="individual" class="text-uppercase">Individual</label>
-								                                            
-								                                            <input type="radio" id="conjunta" value="true" th:field="*{coletiva}" class="with-gap">
-								                                            <label for="conjunta" class="text-uppercase">Coletiva</label>
-							                                            	
-							                                            	<label th:if="${#fields.hasErrors('coletiva')}" th:errors="*{coletiva}" class="error" for="coletiva"></label>
-							                                        	</div>
-							                                    </div>
-						                        			</div>
-					                        				<div class="col-xs-12 col-sm-12 col-md-6">
-					                        					<h2 class="card-inside-title col-teal">IDENTIFICAÇÃO DO(S) ALUNO(S)</h2>
-									                            <!-- <div class="row col-xs-12 col-sm-12 col-md-7 js-aluno">
-									                            	<p class="bg-warning">
-									                            		Digite a matrícula do aluno e clique em <small class="label col-teal"><i class="material-icons btn-icon">send</i> CONSULTAR</small> para abrir o formulário de ocorrência<br>ou clique no botão <small class="label col-teal"><i class="material-icons btn-icon">search</i></small> para abrir a janela de pesquisa rápida de alunos.
-									                            	</p>
-									                            </div> -->
-								                                <label for="aluno">Aluno</label>
-								                                <div class="input-group">
-								                                    <span class="input-group-addon">
-								                                        <a href="javascript:void(0);" class="btn btn-xs waves-effect" data-toggle="modal" data-target="#adicionarAlunoNaOcorrenciaModal"><i class="material-icons">search</i></a>
-								                                        <!-- <a href="javascript:void(0);" class="btn btn-xs waves-effect"><i class="material-icons">add</i></a> -->
-								                                    </span>
-								                                    
-								                                    <div id="divInput" class="form-line">
-								                                        <input type="text" id="matricula" class="form-control js-matricula" placeholder="Digite a matrícula do aluno">
-								                                    </div>
-		                                    						<label th:if="${#fields.hasErrors('alunos')}" th:errors="*{alunos}" id="alunos-error" class="error" for="aluno"></label>
-		                                    						
-								                                    <span class="input-group-addon">
-								                                        <button class="btn bg-teal btn-xs waves-effect js-validar-numero-matricula"><i class="material-icons btn-icon">send</i> ADICIONAR</button>
-								                                    </span>
-								                                    <div class="preloader pl-size-xs pull-right hide">
-									                                    <div class="spinner-layer pl-teal">
-									                                        <div class="circle-clipper left">
-									                                            <div class="circle"></div>
-									                                        </div>
-									                                        <div class="circle-clipper right">
-									                                            <div class="circle"></div>
-									                                        </div>
-									                                    </div>
-									                                </div>
-								                                </div>
-								                            </div>
-					                        				<div class="row">
-						                        				<div id="container_card_aluno" class="col-xs-12">
-						                        				</div>
-					                        				</div>
-					                        				
-								                            <!-- <div class="col-xs-12 col-sm-6">
-						                                                <p>
-						                                                    <input type="checkbox" id="coletiva" class="chk-col-teal" name="coletiva" th:checked="${ocorrencia.coletiva}">
-						                                                    <label for="coletiva" class="js-tooltip" title="Uma ocorrência coletiva, registra uma única ocorrência para todos os alunos selecionados, caso deseja registrar uma ocorrência para cada aluno dexixa desmarcado este campo">
-						                                                        Coletiva
-						                                                    </label>
-						                                                </p>
-						                                    </div> -->
-						                        		</div>
-				                        		</div>
-				                        	</div>
-				                        <!-- </div>
-				                    </div> -->
-	                         </div>
-                         
-                         
-                         
-                         <!-- <div class="row" th:if="${ocorrencia.aluno} == null">
-                            <div class="col-xs-12 col-sm-12 col-md-4">
-                                <div class="js-aluno">
-	                                <label for="aluno">Aluno</label>
-	                                <div class="input-group">
-	                                    <span class="input-group-addon">
-	                                        <a href="javascript:void(0);" class="btn btn-xs waves-effect" data-toggle="modal" data-target="#modalPesquisaAluno"><i class="material-icons">search</i></a>
-	                                    </span>
-	                                    <div id="divInput" class="form-line">
-	                                        <input type="text" id="aluno" class="form-control js-matricula" placeholder="Digite a matricula do aluno" autofocus>
-	                                    </div>
-	                                    <span class="input-group-addon">
-	                                        <button class="btn btn-dafault btn-xs waves-effect js-validar-numero-matricula"><i class="material-icons">send</i></button>
-	                                    </span>
-	                                    <div class="preloader pl-size-xs pull-right hide">
-		                                    <div class="spinner-layer pl-teal">
-		                                        <div class="circle-clipper left">
-		                                            <div class="circle"></div>
-		                                        </div>
-		                                        <div class="circle-clipper right">
-		                                            <div class="circle"></div>
-		                                        </div>
-		                                    </div>
-		                                </div>
-	                                </div>
-                                </div>
-                                <div class="card js-card-aluno hide">
-			                        <div class="body">
-			                        	<div class="row js-card-aluno m-t-15 m-b-20 hide">
-			                        		<div class="col-xs-10" style="margin-bottom: 0;">
-					                            <div><span class="col-teal js-nome">Glauber de Oliveira Matos</span></div>
-					                            <div><strong class="js-matricula">2035280</strong></div>
-					                            <span class="js-curso">Tecnico em Informática</span>
-			                        		</div>
-			                        		<div class="col-xs-2">
-			                        			<div class="align-right"><a href="javascript:void(0);" class="btn-xs btn-link waves-effect js-remover" title="Remover">x</a></div>
-			                        		</div>
-			                        	</div>
-			                        </div>
-			                    </div>
-                            </div>
-                         </div> -->
-                         
-                       
-                         <p class="bg-warning js-mensagem-cadastro-incompleto hide">
-                         	Impossível adicionar registro de ocorrência. O cadastro do aluno está incompleto, clique 
-                         	<a class="col-teal js-link-completar-cadastro">aqui</a> para completar o cadastro.
-                         </p>
-                         
-	                         <div class="js-restante-formulario"> <!-- th:classappend="${ocorrencia.aluno} == null ? 'hide'" -->
-                                <div class="row" th:if="${ocorrencia.novo} == false">
-	                            	<div class="col-md-12">
-                                        <h2 class="card-inside-title col-teal">INFORMAÇÕES DE REGISTRO</h2>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-4">
-                                       <label for="coletiva">Tipo da ocorrência</label>
-                                       <div class="input-group">
-                                           <div class="form-line">
-                                               <span class="text-uppercase" th:text="${ocorrencia.coletiva == true ? 'Coletiva' : 'Individual'}"></span>
-                                           </div>
-                                       </div>
-                                   </div>
-		                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                       <label for="autor">Registrado por</label>
-                                       <div class="input-group">
-                                           <span class="input-group-addon">
-                                               <i class="material-icons">security</i>
-                                           </span>
-                                           <div class="form-line">
-                                               <span class="js-autor" th:text="${ocorrencia.usuario.primeiroNomeEmail}"></span>
-                                           </div>
-                                       </div>
-                                   </div>
-                                   <div class="col-xs-12 col-sm-6 col-md-4">
-                                       <label for="autor">Data do registro</label>
-                                       <div class="input-group">
-                                           <span class="input-group-addon">
-                                               <i class="material-icons">date_range</i>
-                                           </span>
-                                           <div class="form-line">
-                                               <span class="js-dataRegistro" th:text="${ocorrencia.dataRegistroFormatada}"></span>
-                                           </div>
-                                       </div>
-                                   </div>
-                                   <div class="col-xs-12">
-                                   	   <h2 class="card-inside-title col-teal">IDENTIFICAÇÃO DO(S) ALUNO(S)</h2>
-	                                   <div class="table-responsive">
-											<table id="tabelaAlunosSelecionados" class="table table-striped table-hover table-bordered">
-										     <thead>
-										         <tr>
-										             <th style="width: 40px;">MATRICULA</th>
-										             <th>NOME</th>
-										             <th>CURSO</th>
-										             <th>REGIME</th>
-										         </tr>
-										     </thead>
-										     <tbody>
-								         		<tr th:each="aluno : ${ocorrencia.alunos}">
-								         	 		<td style="width: 40px;" th:text="${aluno.matricula}">{{matricula}}</td>
-								             		<td th:text="${aluno.nome}" class="text-uppercase">{{nome}}</td>
-								             		<td th:text="${aluno.curso.sigla}">{{curso.sigla}}</td>
-								             		<td th:text="${aluno.regime.descricao}">{{regime}}</td>
-								         		</tr>
-										     </tbody>
-											</table>
-										</div>
-	                                   
-	                                   <!-- <div class="row">
-		                                   <th:block th:if="${ocorrencia.coletiva}">
-			                                   
-			                                   <div class="col-xs-12">
-				                                   <a class="m-b-10" role="button" data-toggle="collapse" href="#collapseAlunos" aria-expanded="false" aria-controls="collapseAlunos">
-													  <span th:text="|Quantidade de alunos: ${ocorrencia.quantidadeAlunos}|">Quantidade de alunos 12</span> <i class="material-icons btn-icon">keyboard_arrow_down</i>
-													</a>													
-													<div class="collapse" id="collapseAlunos">
-													  <div class="well">
-													  		<div class="row">
-							                                   <div class="col-xs-12 col-sm-6 col-md-4" th:each="aluno : ${ocorrencia.alunos}">
-																	<div class="bg-warning m-b-15">
-																		<input type="hidden" th:id="|alunos${aluno.codigo}|" name="alunos" value="${aluno.codigo}">
-																		<div><span class="text-uppercase" th:text="${aluno.nome}">Nome do aluno</span></div>
-																		<div><strong th:text="${aluno.matricula}">{{matricula}}</strong></div>
-																		<div><span th:text="${aluno.curso.nome}">{{curso.nome}}</span></div>
-																		<div><span th:text="${aluno.regime}">{{regime}}</span></div>
-																		<div><span class="label bg-blue-grey" th:text="${aluno.status}">{{status}}</span></div>
-																	</div>
-																</div>
-															</div>
-													  </div>
-													</div>
-			                                   </div>
-											</th:block>
-											<th:block th:unless="${ocorrencia.coletiva}">
-			                                   <div class="col-xs-12 col-sm-6 col-md-4">
-													<div class="bg-warning m-b-15">
-														<div><span class="text-uppercase" th:text="${ocorrencia.aluno.nome}">Nome do aluno</span></div>
-														<div><strong th:text="${ocorrencia.aluno.matricula}">{{matricula}}</strong></div>
-														<div><span th:text="${ocorrencia.aluno.curso.nome}">{{curso.nome}}</span></div>
-														<div><span th:text="${ocorrencia.aluno.regime}">{{regime}}</span></div>
-														<div><span class="label bg-blue-grey" th:text="${ocorrencia.aluno.status}">{{status}}</span></div>
-													</div>
-												</div>
-											</th:block>
-		                               </div> -->
+	<!-- MENSAGEM SUCESSO -->
+	<div class="alert bg-teal alert-dismissible fade in" role="alert"
+		th:if="${not #strings.isEmpty(mensagemSucesso)}" th:fragment="alert">
+		<button type="button" class="close" data-dismiss="alert"
+			aria-label="Close">
+			<i class="material-icons">clear</i>
+		</button>
+		<span th:text="${mensagemSucesso}"></span>
+	</div>
+	
+	<input type="hidden" th:field="*{uuid}"> <input type="hidden" th:field="*{codigo}"> 
+	<input type="hidden" th:field="*{aluno}">
+	<input type="hidden" th:field="*{regime}"> 
+	<input type="hidden" th:field="*{serie}">
+	
+	<th:block th:unless="${ocorrencia.novo}">
+		<input type="hidden" th:field="*{alunos}">
+		<input type="hidden" th:field="*{coletiva}">
+		<input type="hidden" th:field="*{usuario}">
+		<input type="hidden" th:field="*{dataRegistro}">
+	</th:block>
+	
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-6">
+			<div class="row" th:if="${ocorrencia.novo}">
+				<div class="col-xs-12 col-sm-6 trino-required">
+					<label for="coletiva" class="control-label">Tipo da ocorrência</label>
+						<div class="form-line">
+							
+							<input type="radio" id="individual" value="false" th:field="*{coletiva}" class="with-gap"> 
+							<label for="individual" class="text-uppercase">Individual</label> 
+							
+							<input type="radio" id="conjunta" value="true" th:field="*{coletiva}" class="with-gap"> 
+							<label for="conjunta" class="text-uppercase">Coletiva</label> 
+							
+							<label th:if="${#fields.hasErrors('coletiva')}" th:errors="*{coletiva}" class="error" for="coletiva"></label>
+							
+						</div>
+				</div>
+			</div>
+			<div class="row" th:if="${ocorrencia.novo} == false">
+				<div class="col-xs-12 col-sm-6 col-md-4">
+					<label for="coletiva" class="control-label">Tipo da ocorrência</label>
+					<div class="input-group">
+						<div class="form-line">
+							<span class="text-uppercase"
+								th:text="${ocorrencia.coletiva == true ? 'Coletiva' : 'Individual'}"></span>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4">
+					<label for="autor">Registrado por</label>
+					<div class="input-group">
+						<span class="input-group-addon"> <i class="material-icons">security</i>
+						</span>
+						<div class="form-line">
+							<span class="js-autor"
+								th:text="${ocorrencia.usuario.primeiroNomeEmail}"></span>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 ">
+					<label for="autor">Data do registro</label>
+					<div class="input-group">
+						<span class="input-group-addon"> <i class="material-icons">date_range</i>
+						</span>
+						<div class="form-line">
+							<span class="js-dataRegistro"
+								th:text="${ocorrencia.dataRegistroFormatada}"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 trino-required">
+					<label for="dataOcorrido" class="control-label">Data Ocorrência</label>
+					<div class="input-group">
+						<span class="input-group-addon"> <i class="material-icons">date_range</i></span>
+						<div class="form-line" th:classappend="${#fields.hasErrors('dataOcorrido')} ? 'focused error'">
+							<input type="text" class="datetimepicker form-control  js-dataOcorrencia" placeholder="" th:field="*{dataOcorrido}">
+						</div>
+						<label th:if="${#fields.hasErrors('dataOcorrido')}" th:errors="*{dataOcorrido}" class="error" for="dataOcorrido"></label>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 trino-required">
+					<label for="local" class="control-label">Local da ocorrência</label>
+					<div class="form-group">
+						<div class="form-line"
+							th:classappend="${#fields.hasErrors('local')} ? 'focused error'">
+							<input type="text" id="autocomplete-input"
+								class="form-control  js-local" placeholder="" autocomplete="off"
+								th:field="*{local}" th:data-url="@{/ocorrencias/locais?local=}">
+						</div>
+						<label th:if="${#fields.hasErrors('local')}" th:errors="*{local}"
+							id="nome-error" class="error" for="local"></label>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 trino-required">
+					<label for="descricao" class="control-label">Descrição</label>
+					<div class="form-group">
+						<div class="form-line"
+							th:classappend="${#fields.hasErrors('descricao')} ? 'focused error'">
+							<textarea rows="5" class="form-control no-resize  js-descricao"
+								placeholder="Digite aqui a descrição da ocorrência..."
+								th:field="*{descricao}"></textarea>
+						</div>
+						<label th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}" id="nome-error" class="error" for="descricao"></label>
+					</div>
+				</div>
+			</div>
+		<div class="row col-xs-12">
+			<button type="submit" class="btn bg-teal waves-effect  js-submit">SALVAR</button>
+            <a th:href="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}" class="btn btn-default waves-effect">CANCELAR</a>
+			<!-- <a th:href="${ocorrencia.novo} ? @{/ocorrencias} : @{/ocorrencias/detalhes/{codigo}(codigo=${ocorrencia.codigo})}" class="btn m-t-10 waves-effect">CANCELAR</a> -->
+		</div>
+		</div>
+		
+		<div class="col-xs-12 col-sm-12 col-md-6">
+			<div class="row" th:if="${ocorrencia.novo}">
+				<div class="col-xs-12 trino-required">
+					<label for="aluno"class="control-label">Aluno(s)</label>
+					<div class="form-group">
+						<div class="input-group">
+							<div id="divInput" class="form-line" th:classappend="${#fields.hasErrors('alunos')} ? 'focused error'">
+								<input type="text" id="matricula" class="form-control js-matricula" placeholder="Digite a matrícula do aluno">
+							</div>
+							<label th:if="${#fields.hasErrors('alunos')}" th:errors="*{alunos}" id="alunos-error" class="error" for="matricula"></label>		
+							<a href="javascript:void(0);" class="btn btn-xs waves-effect js-validar-numero-matricula">
+								<i class="material-icons">send</i> ADICIONAR
+							</a>
+							<span class="text-right">
+								<a href="javascript:void(0);" class="btn btn-xs waves-effect js-tooltip" title="Pesquisar alunos" data-toggle="modal" data-target="#adicionarAlunoNaOcorrenciaModal">
+									<i class="material-icons">search</i> PESQUISAR
+								</a>
+							</span>
+					
+							<div class="preloader pl-size-xs pull-right hide">
+								<div class="spinner-layer pl-teal">
+									<div class="circle-clipper left">
+										<div class="circle"></div>
 									</div>
-                                </div>
-                                <div class="row">
-	                            	<div class="col-md-12">
-                                        <h2 class="card-inside-title col-teal" th:if="${ocorrencia.novo}">FORMULÁRIO DE REGISTRO DE OCORRÊNCIA</h2>
-                                        <h2 class="card-inside-title col-teal" th:unless="${ocorrencia.novo}">INFORMAÇÕES DA OCORRÊNCIA</h2>
-                                    </div>
-                                </div>
-		                        <div class="row">
-		                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 trino-required">
-		                                <label for="dataOcorrido" class="control-label">Data Ocorrência</label>
-		                                <div class="input-group">
-		                                    <span class="input-group-addon">
-		                                        <i class="material-icons">date_range</i>
-		                                    </span>
-		                                    <div class="form-line" th:classappend="${#fields.hasErrors('dataOcorrido')} ? 'focused error'">
-		                                        <input type="text" class="datetimepicker form-control  js-dataOcorrencia" placeholder="" th:field="*{dataOcorrido}">
-		                                    </div>
-		                                    <label th:if="${#fields.hasErrors('dataOcorrido')}" th:errors="*{dataOcorrido}" class="error" for="dataOcorrido"></label>
-		                                </div>
-		                            </div>
-		                         </div>
-		                        <div class="row">
-		                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 trino-required">
-		                                <label for="local" class="control-label">Local da ocorrência</label>
-		                                <div class="form-group">
-		                                    <div class="form-line" th:classappend="${#fields.hasErrors('local')} ? 'focused error'">
-		                                        <input type="text" id="autocomplete-input" class="form-control  js-local" placeholder="" autocomplete="off" th:field="*{local}" th:data-url="@{/ocorrencias/locais?local=}">
-		                                    </div>
-		                                    <label th:if="${#fields.hasErrors('local')}" th:errors="*{local}" id="nome-error" class="error" for="local"></label>
-		                                </div>
-		                            </div>
-		                         </div>
-		                         <div class="row">   
-		                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8 trino-required">
-		                                <label for="descricao" class="control-label">Descrição</label>
-		                                <div class="form-group">
-		                                    <div class="form-line" th:classappend="${#fields.hasErrors('descricao')} ? 'focused error'">
-		                                        <textarea rows="5" class="form-control no-resize  js-descricao" placeholder="Digite aqui a descrição da ocorrência..." th:field="*{descricao}"></textarea>
-		                                    </div>
-		                                    <label th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}" id="nome-error" class="error" for="descricao"></label>
-		                                </div>
-		                            </div>
-		                        </div>
-		                        <button type="submit" class="btn bg-teal m-t-10 waves-effect  js-submit">SALVAR</button>
-		                        <a th:href="${ocorrencia.novo} ? @{/ocorrencias} : @{/ocorrencias/detalhes/{codigo}(codigo=${ocorrencia.codigo})}" class="btn m-t-10 waves-effect">CANCELAR</a>
-	                         </div>
-                         
-		<!-- </div> -->                           	
-                    </form>
-                    
+									<div class="circle-clipper right">
+										<div class="circle"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="container_card_aluno" class="col-xs-12"></div>
+				<!-- <div class="row">
+					<div id="container_card_aluno" class="col-xs-12"></div>
+				</div> -->
+			</div>
+			<div class="row" th:if="${ocorrencia.novo} == false">
+				<div class="col-xs-12">
+					<label for="" class="control-label">Aluno(s)</label>
+					<div class="table-responsive">
+						<table id="tabelaAlunosSelecionados"
+							class="table table-striped table-hover table-bordered">
+							<thead>
+								<tr>
+									<th style="width: 40px;">MATRÍCULA</th>
+									<th>NOME</th>
+									<th>CURSO</th>
+									<th>REGIME</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="aluno : ${ocorrencia.alunos}">
+									<td style="width: 40px;" th:text="${aluno.matricula}">{{matricula}}</td>
+									<td th:text="${aluno.nome}" class="text-uppercase">{{nome}}</td>
+									<td th:text="${aluno.curso.sigla}">{{curso.sigla}}</td>
+									<td th:text="${aluno.regime.descricao}">{{regime}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
 </html>

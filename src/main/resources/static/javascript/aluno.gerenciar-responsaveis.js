@@ -27,38 +27,188 @@ NGTICAE.GerenciarResponsaveis = (function(){
 		this.containerResponsaveis = $('.js-container-tabela-responsaveis');
 		this.htmlTabelaResponsaveis = $('#tabelaResponsaveisTemplate').html();
 		this.template = Handlebars.compile(this.htmlTabelaResponsaveis);
+		
+		//PESQUISA RESPONSAVEL
+		this.containerPesquisa = $('.js-conteiner-pesquisa');
+		this.inputPesquisa = $('.js-input-pesquisa');
+		this.urlPesquisaResponsaveisPorNome = this.inputPesquisa.data('url');
 	}
 	
+	
 	GerenciarResponsaveis.prototype.iniciar = function(){
+		//FUNÇÃO PESQUISA
+		this.inputPesquisa.on('keyup paste', pesquisarResponsavel.bind(this));
+		
 		this.adicionarBtn.on('click', onAdicionarResponsavel.bind(this));
 		this.removerTodosBtn.on('click', onRemoverTodosResponsaveis.bind(this));
 		this.modal.on('hide.bs.modal', onFecharModal);
+		$('.js-exclusao-btn').on('click', onRemoverResponsavel);
+		$('.js-novo-responsavel').on('click', onFormNovoResponsavel);
+		$('.js-voltar-pesquisa').on('click', onIniciarPesquisa);
+		$('.js-cadastrar-novo-responsavel').on('click', onCadastrarNovoResponsavel.bind(this));
+		$('.js-retornar-pesquisa').on('click', onHabilitaPesquisa);
+		$('.js-editar-parentesco').on('click', onEditarParentesco);
+	}
+	
+	function pesquisarResponsavel(){
+		var parametro = this.inputPesquisa.val();
+		var containerTabelaResponsaveis = $('.js-container-responsaveis');
+		var containerMensagens = $('.js-mensagem');
+		
+		if(parametro){
+			console.log('pesquisar');
+			containerTabelaResponsaveis.removeClass('hide');
+			containerMensagens.addClass('hide');
+			
+			var retorno = $.ajax({
+				url: this.urlPesquisaResponsaveisPorNome + parametro,
+				method: 'GET'
+			});
+			
+			retorno.done(function(dados){
+				var htmlTabela = $('#tabelaResponsaveisTemplate').html();
+				var template = Handlebars.compile(htmlTabela);
+				
+				var table = template(dados);
+				containerTabelaResponsaveis.html(table);
+				
+				$('.js-selecionar-responsavel').on('click', onSelecionarResponsavel);
+				$('.js-novo-responsavel').on('click', onFormNovoResponsavel);
+			});
+		}else{
+			console.log('não deve pesquisar');
+			containerTabelaResponsaveis.addClass('hide');
+			containerTabelaResponsaveis.html('');
+			containerMensagens.removeClass('hide');
+		}
+	}
+	
+	function onSelecionarResponsavel(event){
+		var codigo = $(event.currentTarget).data('codigo');
+		var nome = $(event.currentTarget).data('nome');
+		console.log('responsavel selecionado: ', nome);
+		
+		$('.js-conteiner-pesquisa').addClass('hide');
+		$('.js-container-responsaveis').addClass('hide');
+		
+		var containerFormParentesco = $('.js-container-form-parentesco');
+		
+		$('.js-nome-responsavel').text(nome);
+		$('.js-codigo-responsavel').val(codigo);
+		
+		var codigoAluno = $('.js-modal-responsavel').data('aluno');
+		var nomeAluno = $('.js-modal-responsavel').data('nome-aluno');
+		
+		$('.js-nome-aluno').text(nomeAluno);
+		$('.js-codigo-aluno').val(codigoAluno);
+		
+		containerFormParentesco.removeClass('hide');
+	}
+	
+	function onIniciarPesquisa(){
+		onHabilitaPesquisa();
+		$('.js-mensagem').removeClass('hide');
+	}
+	
+	function onHabilitaPesquisa(){
+		$('.js-codigo-responsavel').val('');
+		$('.js-codigo-aluno').val('');
+		$('.js-conteiner-pesquisa').removeClass('hide');
+		$('.js-container-responsaveis').removeClass('hide');
+		$('.js-container-form-parentesco').addClass('hide');
+		$('.js-container-novo-responsavel').addClass('hide');
+		$('.js-mensagem').addClass('hide');
+	}
+	
+	function onEditarParentesco(){
+		var codigo = $(event.currentTarget).data('codigo');
+		$('#responsavelAluno').val(codigo);
+		
+		var codigoResponsavel = $(event.currentTarget).data('codigo-responsavel');
+		var nome = $(event.currentTarget).data('nome');
+		$('.js-nome-responsavel').text(nome);
+		$('.js-codigo-responsavel').val(codigoResponsavel);
+		
+		var parentesco = $(event.currentTarget).data('parentesco');
+		console.log(parentesco);
+		$('#responsavel_parentesco').val(parentesco);
+		
+		var codigoAluno = $('.js-modal-responsavel').data('aluno');
+		var nomeAluno = $('.js-modal-responsavel').data('nome-aluno');
+		$('.js-nome-aluno').text(nomeAluno);
+		$('.js-codigo-aluno').val(codigoAluno);
+		
+		$('.js-conteiner-pesquisa').addClass('hide');
+		$('.js-container-responsaveis').addClass('hide');
+		$('.js-container-form-parentesco').removeClass('hide');
+		$('.js-container-novo-responsavel').addClass('hide');
+		$('.js-mensagem').addClass('hide');
+	}
+	
+	function onFormNovoResponsavel(){
+		$('.js-conteiner-pesquisa').addClass('hide');
+		$('.js-container-responsaveis').addClass('hide');
+		$('.js-container-form-parentesco').addClass('hide');
+		$('.js-mensagem').addClass('hide');
+		
+		$('.js-container-novo-responsavel').removeClass('hide');
+	}
+	
+	function onKeyUp(){
+		// volta para selecionar o elemento pai
+		var $elementoPai = $('.bs-searchbox');
+		console.log("$elementoPai", $elementoPai);
+		
+		// procura dentro do elemento pai o elemento [name="plano"]
+		var $elemento = $elementoPai.find('.form-control'[3]);
+		console.log("$elemento", $elemento);
+		
+		console.log("digitou!", $elemento.val());
 	}
 	
 	/* ADICIONAR */
 	function onAdicionarResponsavel(){
 		console.log('adicionar responsavel - validar campos!');
+		console.log('aluno: ', $('.js-codigo-aluno').val());
+		console.log('responsavel: ', $('.js-codigo-responsavel').val());
+		console.log('parentesco: ', this.grauParentescoSelect.val());
 		
 		$.ajax({
-			url: this.urlResponsaveis + '/adicionar', // /responsaveis/adicionar
+			url: this.urlResponsaveis + '/adicionar',
 			method: 'POST',
 			contentType: 'application/json',
 			data: JSON.stringify({
-				parentesco: this.grauParentescoSelect.val(),
-				nome: this.nomeResponsavelInput.val(),
-				contato: this.contatoResponsavelInput.val(),
-				contato_whatsapp: this.whatsappResponsavelCheckBox.val() == 'on' ? 'true' : 'false',
-				contato2: this.contato2Input.val(),
-				contato_whatsapp2: this.whatsapp2CheckBox.val() == 'on' ? 'true' : 'false',
-				email: this.email.val(),
-				uuid: this.uuid
+				codigo: $('#responsavelAluno').val(),
+				aluno: {codigo: $('.js-codigo-aluno').val()},
+				responsavel: {codigo: $('.js-codigo-responsavel').val()},
+				parentesco: this.grauParentescoSelect.val().length > 0 ? this.grauParentescoSelect.val() : null
 			}),
 			beforeSend: onIniciarRequisicao.bind(this),
 			error: onErroSalvandoResponsavel,
 			success: onAtualizarTabela.bind(this),
 			complete: onFinalizarRequisicao.bind(this)
 		});
-		console.log('--> uuid: '+this.uuid);
+	}
+	
+	function onCadastrarNovoResponsavel(){
+		console.log('cadastrando novo responsavel...');
+		$.ajax({
+			url: this.urlResponsaveis + '/novo', // /responsaveis : POST
+			method: 'POST',
+			contentType: 'application/json',
+			data: JSON.stringify({
+				nome: this.nomeResponsavelInput.val(),
+				contato: this.contatoResponsavelInput.val(),
+				contato2: this.contato2Input.val(),
+				contato_whatsapp: this.whatsappResponsavelCheckBox.val() == 'on' ? 'true' : 'false',
+				contato2_whatsapp: this.whatsapp2CheckBox.val() == 'on' ? 'true' : 'false',
+				email: this.email.val()
+			}),
+			beforeSend: onIniciarRequisicao.bind(this),
+			error: onErroSalvandoResponsavel,
+			success: onSalvoComSucesso.bind(this),
+			complete: onFinalizarRequisicao.bind(this)
+		});
 	}
 	
 	/* REMOVER TODOS */
@@ -75,6 +225,20 @@ NGTICAE.GerenciarResponsaveis = (function(){
 		});
 	}
 	
+	function onRemoverResponsavel(evento){
+		console.log('remover responsavel...');
+		var urlRemoverResponsavel = $(evento.currentTarget).data('url');
+		
+		console.log('remover responsavel:', urlRemoverResponsavel);
+		
+		/*$.ajax({
+			url: $('.js-adicionar-responsavel').data('url') + '/remover/' + $('#uuid').val() +'/' + contato,
+			method: 'DELETE',
+			success: onAtualizarTabela.bind(this),
+			error: onErroExcluindoResponsaveis
+		});*/
+	}
+	
 	
 	/* FUNCOES PARA ADICIONAR RESPONSAVEL*/
 	function onIniciarRequisicao(){
@@ -82,20 +246,21 @@ NGTICAE.GerenciarResponsaveis = (function(){
 	}
 	
 	function onErroSalvandoResponsavel(erro){
-		console.log('Erro ao adicionar o responsavel: ', erro);
-		NGTICAE.Notificacao.mostrar("Ops!", "Preencha os campos obrigatórios", "danger", $('.js-modal-cadastro-responsavel'));
+		console.log('Ops!! erro: ', erro);
+		NGTICAE.Notificacao.mostrar("Ops!</br>", erro.responseText, "danger", $('.js-modal-cadastro-responsavel'));
 	}
 	
-	function onAtualizarTabela(responsaveis) {
+	function onAtualizarTabela() {
 		console.log('lista de responsaveis atualizada...');
-		console.log(responsaveis);
-		console.log('testando o contexto "this"',this.uuid);
+		window.location.reload();
+		/*window.location.replace("http://pt.stackoverflow.com");*/
+		/*console.log('testando o contexto "this"',this.uuid);
 		
 		var novatabela = this.template(responsaveis);
 		this.containerResponsaveis.html(novatabela);
 		
 		this.removerResponsavelBtn = $('.js-remover');
-		this.removerResponsavelBtn.on('click', onRemoverResponsavel.bind(this));
+		this.removerResponsavelBtn.on('click', onRemoverResponsavel.bind(this));*/
 		
 		/*if(responsaveis.length>0){
 			var tr = "";
@@ -128,8 +293,28 @@ NGTICAE.GerenciarResponsaveis = (function(){
 			this.tabelaResponsaveisBody.html('<tr><td colspan="4">Adicione ao menos um responsavel</td></tr>');
 		}*/
 		
-		this.modal.modal('hide');
-		this.removerTodosBtn.removeAttr("disabled");
+		/*this.modal.modal('hide');
+		this.removerTodosBtn.removeAttr("disabled");*/
+	}
+	
+	function onSalvoComSucesso(responsavel){
+		console.log('responsavel salvo com sucesso!...');
+		console.log('responsavel salvo', responsavel);
+		
+		$('.js-codigo-responsavel').val(responsavel.codigo);
+		$('.js-nome-responsavel').text(responsavel.nome);
+		
+		var codigoAluno = $('.js-modal-responsavel').data('aluno');
+		var nomeAluno = $('.js-modal-responsavel').data('nome-aluno');
+		
+		$('.js-nome-aluno').text(nomeAluno);
+		$('.js-codigo-aluno').val(codigoAluno);
+		
+		/*$('.js-conteiner-pesquisa').removeClass('hide');*/
+		/*$('.js-container-responsaveis').removeClass('hide');*/
+		$('.js-container-form-parentesco').removeClass('hide');
+		$('.js-container-novo-responsavel').addClass('hide');
+		$('.js-mensagem').addClass('hide');
 	}
 	
 	function onFinalizarRequisicao(){
@@ -148,23 +333,13 @@ NGTICAE.GerenciarResponsaveis = (function(){
 		this.removerResponsavelBtn.on('click', onRemoverResponsavel);
 	}
 	
-	function onRemoverResponsavel(evento){
-		console.log('remover responsavel...');
-		var contato = $(evento.currentTarget).data('contato');
-		
-		console.log('contato:', contato);
-		console.log($('.js-adicionar-responsavel').data('url') + '/remover/' + $('#uuid').val() +'/' + contato);
-		
-		$.ajax({
-			url: $('.js-adicionar-responsavel').data('url') + '/remover/' + $('#uuid').val() +'/' + contato,
-			method: 'DELETE',
-			success: onAtualizarTabela.bind(this),
-			error: onErroExcluindoResponsaveis
-		});
-	}
-	
 	function onFecharModal(){
 		limparFormulario();
+		$('.js-conteiner-pesquisa').removeClass('hide');
+		$('.js-container-responsaveis').addClass('hide');
+		$('.js-container-form-parentesco').addClass('hide');
+		$('.js-container-novo-responsavel').addClass('hide');
+		$('.js-mensagem').removeClass('hide');
 	}
 	
 	function limparFormulario(){

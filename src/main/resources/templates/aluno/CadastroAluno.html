@@ -19,7 +19,7 @@
 				<div class="row">
             		<div class="col-md-6">
             			<h2 th:if="${aluno.novo}">CADASTRAR NOVO ALUNO</h2>
-						<h2 th:unless="${aluno.novo}" th:text="|EDITAR ALUNO ${aluno.nome}|">EDITAR ALUNO</h2>
+						<h2 class="text-uppercase" th:unless="${aluno.novo}" th:text="|EDITAR ALUNO ${aluno.nome}|">EDITAR ALUNO</h2>
             		</div>
             		<div class="col-md-6">
 		                <ol class="breadcrumb align-right" style="padding: 0px 0px;">
@@ -393,7 +393,7 @@
 					               <p>
 					                   <input type="checkbox" id="saidaSemAula" class="chk-col-teal" name="saidaSemAula" th:checked="${aluno.saidaSemAula}">
 					                   <label for="saidaSemAula">
-					                       Saída do campus, durante o expediente não havendo aulas.
+					                       Saída do campus durante o expediente, não havendo aulas.
 					                   </label>
 					               </p>
 					               <!-- <p>
@@ -414,30 +414,46 @@
             <div class="card" th:unless="${aluno.novo}">
                 <div class="header">
                     <h2>
-                        RESPONSÁVEIS
+                        RESPONSÁVEIS DO ALUNO
                         <small>Adicione e gerencie os responsáveis do aluno.</small>
                     </h2>
                     <ul class="header-dropdown m-r--5">
                         <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        	<a href="javascript:void(0);" class="waves-effect col-teal js-modal-responsavel" 
+                    				data-toggle="modal" data-target="#defaultModal" th:data-aluno="${aluno.codigo}" 
+                    				th:data-nome-aluno="${aluno.nome}">
+                       			<i class="material-icons col-teal btn-icon">add</i> 
+                       			ADICIONAR RESPONSÁVEL
+                       		</a>
+                            <!-- <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">more_vert</i>
                             </a>
                             <ul class="dropdown-menu pull-right">
                                 <li><a th:href="@{/ocorrencias/nova}" class="waves-effect waves-block">Nova ocorrência</a></li>
                                 <li><a th:href="@{/ocorrencias}" class="waves-effect waves-block">Atualizar</a></li>
-                            </ul>
+                            </ul> -->
                         </li>
                     </ul>
                 </div>
                 <input type="hidden" id="url_nova_ocorrencia" th:data-url="@{/ocorrencias}" th:data-url-alunos="@{/alunos}"/>
                 <div class="body">
-                	<div class="row">
+                	<!-- <div class="row">
                    		<div class="col-md-12">
-                    		<button type="button" class="btn bg-teal waves-effect" data-toggle="modal" data-target="#defaultModal">ADICIONAR RESPONSÁVEL</button>
-                     		<!-- <button type="button" class="btn btn-xs bg-pink waves-effect js-remover-todos" th:if="${aluno.responsaveisDoAluno} == null" disabled="disabled"><i class="material-icons btn-icon">delete_sweep</i>REMOVER TODOS</button> -->
+                   			<a href="javascript:void(0);" class="waves-effect col-teal js-modal-responsavel" 
+                    				data-toggle="modal" data-target="#defaultModal" th:data-aluno="${aluno.codigo}" 
+                    				th:data-nome-aluno="${aluno.nome}">
+                       			<i class="material-icons btn-icon">add</i> 
+                       			ADICIONAR RESPONSÁVEL
+                       		</a>
+                    		<button type="button" class="btn bg-teal waves-effect js-modal-responsavel" 
+                    				data-toggle="modal" data-target="#defaultModal" th:data-aluno="${aluno.codigo}" 
+                    				th:data-nome-aluno="${aluno.nome}">
+                    			ADICIONAR RESPONSÁVEL
+                    		</button>
+                     		<button type="button" class="btn btn-xs bg-pink waves-effect js-remover-todos" th:if="${aluno.responsaveisDoAluno} == null" disabled="disabled"><i class="material-icons btn-icon">delete_sweep</i>REMOVER TODOS</button>
                    		</div>
-                   </div>
-                   <div class="js-container-tabela-responsaveis">
+                   </div> -->
+                   <div class="table-responsive js-container-tabela-responsaveis">
                    		<th:block th:if="${aluno.responsaveisDoAluno} != null">
                     		<!-- <div class="table-responsive"> -->
                       			<div class="form-group">
@@ -448,27 +464,36 @@
 			                                   	<th>CONTATOS</th>
 			                                   	<th>PARENTESCO</th>
 			                                   	<th>EMAIL</th>
-			                                   	<th style="width: 200px">AÇÕES</th>
+			                                   	<th>AÇÕES</th>
 		                               		</tr>
 		                           		</thead>
 		                           		<tbody class="js-tabela-responsaveis-body">
-				                           	<th:block th:if="${aluno.responsaveisDoAluno} != null">
+				                           	<th:block th:if="${aluno.responsaveisDoAluno.size() > 0}">
 				                            	<tr th:each="responsavelAluno : ${aluno.responsaveisDoAluno}">
 				                            		<td class="text-uppercase" th:text="${responsavelAluno.responsavel.nome}">Nome</td>
 				                                    <td style="min-width: 60px" th:text="${responsavelAluno.responsavel.contato}">Contato</td>
 				                                    <td class="text-uppercase" style="width: 50px;" th:text="${responsavelAluno.parentesco.descricao}">Parentesco</td>
 				                                    <td th:text="${responsavelAluno.responsavel.email}">Email</td>
-				                                    <td style="width: 200px">
-				                                    	<a href='javascript:void(0);' class='js-tooltip col-blue js-editar-responsavel' title="Editar" th:data-url="@{/responsaveis/{codigo}(codigo=${responsavelAluno.responsavel.codigo})}">
-							                                  <i class='material-icons col-blue btn-icon'>edit</i> EDITAR
+				                                    <td style="width: 100px">
+				                                    	<!-- <a href='javascript:void(0);' class='js-tooltip col-teal js-' title="Ver detalhes" th:data-url="@{/responsaveis/{codigo}(codigo=${responsavelAluno.responsavel.codigo})}">
+							                                  <i class='material-icons btn-icon'>settings</i>
+							                            </a> -->
+				                                    	<a href='javascript:void(0);' class='js-editar-parentesco js-tooltip col-blue' title="Editar parentesco"
+                    											data-toggle="modal" data-target="#defaultModal" th:data-codigo="${responsavelAluno.codigo}" th:data-parentesco="${responsavelAluno.parentesco}"
+                    											th:data-codigo-responsavel="${responsavelAluno.responsavel.codigo}" th:data-nome="${responsavelAluno.responsavel.nome}">
+							                                  <i class='material-icons btn-icon'>edit</i>
+							                                  
 							                            </a>
-				                              			<a href='javascript:void(0);' class='js-exclusao-btn js-tooltip col-pink' title="Excluir" th:data-objeto="${responsavelAluno.responsavel.nome}" th:data-url="@{/responsaveis/{codigo}(codigo=${responsavelAluno.codigo})}" data-contato='{{responsavel.contato}}'>
-							                                  <i class='material-icons col-pink btn-icon'>delete</i> REMOVER
+				                              			<a href='javascript:void(0);' class='js-exclusao-btn js-tooltip col-pink' title="Remover responsável" 
+				                              					th:data-objeto="${responsavelAluno.responsavel.nome}"
+				                              					th:data-url="@{/responsaveis/{codigo}(codigo=${responsavelAluno.codigo})}">
+							                                  <i class='material-icons btn-icon'>delete</i> 
+							                                
 							                            </a>
 			                              			</td>
 				                            	</tr>
 				                           	</th:block>
-		                               		<tr th:unless="${aluno.responsaveisDoAluno} != null"><td colspan="4" class="col-orange">Voce ainda nao adicionou responsaveis</td></tr>
+		                               		<tr th:unless="${aluno.responsaveisDoAluno.size() > 0}"><td colspan="5">Aluno não possui responsáveis cadastrados :(</td></tr>
 		                           		</tbody>
 		                       		</table>
                                    	<!-- <label th:if="${#fields.hasErrors('temResponsavel')}" th:errors="*{temResponsavel}" id="nome-error" class="error"></label> -->
@@ -538,9 +563,14 @@
 	    <script th:src="@{/layout/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js}"></script>
 	    <script th:src="@{/javascript/componente-material-date-time-picker.js}"></script>
    		
-   		<script th:src="@{/javascript/aluno.gerenciar-responsaveis.js}"></script>
    		
    		<script th:src="@{/javascript/vendors/plugins/handlebars/handlebars-v4.0.10.js}"></script>
+   		
+   		
+   		<!-- Pesquisar responsavel usando autocomplete -->
+	    <script th:src="@{/javascript/autocomplete.js}"></script>
+	    
+   		<script th:src="@{/javascript/aluno.gerenciar-responsaveis.js}"></script>
    		
    		<th:block th:replace="handlebars/TabelaResponsaveisTemplate"></th:block>
    </th:block>

@@ -35,7 +35,6 @@ public class Responsavel extends Entidade{
 	@Size(max=80, message="O email deve conter no máximo {max} caracteres")
 	private String email;
 	
-	@NotNull(message="Selecione o grau de parentesco")
 	@Enumerated(EnumType.STRING)
 	@Transient
 	private GrauParentesco parentesco;

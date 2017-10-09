@@ -15,7 +15,6 @@
 <body>
 	
     <section class="content" layout:fragment="conteudo">
-        <div class="container-fluid">
             <div class="block-header">
 				<div class="row">
             		<div class="col-md-6">
@@ -32,168 +31,130 @@
             	</div>
             </div>
             <div class="card">
-                <!-- <div class="header">
-                    <button type="button" class="btn bg-teal waves-effect"><i class="material-icons">search</i>PESQUISAR</button>
-                </div> -->
+                <div class="header">
+                    <h2>
+                        DETALHES DA OCORRÊNCIA
+                        <small>Informações sobre o registro da ocorrência.</small>
+                    </h2>
+                </div>
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
                         <div class="col-md-12">
                         	<div th:object="${ocorrencia}">
-                                <div class="row" th:if="${ocorrencia.novo} == false">
-	                            	<div class="col-md-12">
-                                        <h2 class="card-inside-title col-teal">INFORMAÇÕES DE REGISTRO</h2>
-                                    </div>
-		                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                       <label for="autor">Registrado por</label>
-                                       <div class="input-group">
-                                           <span class="input-group-addon">
-                                               <i class="material-icons">security</i>
-                                           </span>
-                                           <div class="form-line">
-                                               <span class="js-autor" th:text="${ocorrencia.usuario.primeiroNomeEmail}"></span>
-                                           </div>
-                                       </div>
-                                   </div>
-                                   <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                       <label for="autor">Data do registro</label>
-                                       <div class="input-group">
-                                           <span class="input-group-addon">
-                                               <i class="material-icons">date_range</i>
-                                           </span>
-                                           <div class="form-line">
-                                               <span class="js-dataRegistro" th:text="${ocorrencia.dataRegistroFormatada}"></span>
-                                           </div>
-                                       </div>
-                                   </div>
-                                   <div class="col-xs-12">
-                                   	   <h2 class="card-inside-title col-teal">IDENTIFICAÇÃO DO(S) ALUNO(S)</h2>
-	                                   <div class="table-responsive">
-											<table id="tabelaAlunosSelecionados" class="table table-striped table-hover table-bordered">
-										     <thead>
-										         <tr>
-										             <th style="width: 40px;">MATRICULA</th>
-										             <th>NOME</th>
-										             <th>CURSO</th>
-										             <th>REGIME</th>
-										         </tr>
-										     </thead>
-										     <tbody>
-								         		<tr th:each="aluno : ${ocorrencia.alunos}">
-								         	 		<td style="width: 40px;" th:text="${aluno.matricula}">{{matricula}}</td>
-								             		<td th:text="${aluno.nome}" class="text-uppercase">{{nome}}</td>
-								             		<td th:text="${aluno.curso.sigla}">{{curso.sigla}}</td>
-								             		<td th:text="${aluno.regime.descricao}">{{regime}}</td>
-								         		</tr>
-										     </tbody>
-											</table>
-										</div>
-	                                   <!-- <div class="row">
-		                                   <th:block th:if="${ocorrencia.coletiva}">
-			                                   
-			                                   <div class="col-xs-12">
-				                                   <a class="m-b-10" role="button" data-toggle="collapse" href="#collapseAlunos" aria-expanded="false" aria-controls="collapseAlunos">
-													  <span th:text="|Alunos: ${ocorrencia.quantidadeAlunos}|">Quantidade de alunos 12</span> <i class="material-icons btn-icon">keyboard_arrow_down</i>
-													</a>													
-													<div class="collapse" id="collapseAlunos">
-													  		<div class="row">
-							                                   <div class="col-xs-12 col-sm-6 col-md-4" th:each="aluno : ${ocorrencia.alunos}">
-																	<div class="bg-warning m-b-15">
-																		<input type="hidden" th:id="|alunos${aluno.codigo}|" name="alunos" value="${aluno.codigo}">
-																		<div><span class="text-uppercase" th:text="${aluno.nome}">Nome do aluno</span></div>
-																		<div><strong th:text="${aluno.matricula}">{{matricula}}</strong></div>
-																		<div><span th:text="${aluno.curso.nome}">{{curso.nome}}</span></div>
-																		<div><span th:text="${aluno.regime}">{{regime}}</span></div>
-																		<div><span class="label bg-blue-grey" th:text="${aluno.status}">{{status}}</span></div>
-																	</div>
-																</div>
-															</div>
-													</div>
-			                                   </div>
-											</th:block>
-											<th:block th:unless="${ocorrencia.coletiva}">
-			                                   <div class="col-xs-12 col-sm-6 col-md-4">
-													<div class="bg-warning m-b-15">
-														<div><span class="text-uppercase" th:text="${ocorrencia.aluno.nome}">Nome do aluno</span></div>
-														<div><strong th:text="${ocorrencia.aluno.matricula}">{{matricula}}</strong></div>
-														<div><span th:text="${ocorrencia.aluno.curso.nome}">{{curso.nome}}</span></div>
-														<div><span th:text="${ocorrencia.aluno.regime}">{{regime}}</span></div>
-														<div><span class="label bg-blue-grey" th:text="${ocorrencia.aluno.status}">{{status}}</span></div>
+                                
+                                <!-- MENSAGEM SUCESSO -->
+								<div class="alert bg-teal alert-dismissible fade in"
+									role="alert" th:if="${not #strings.isEmpty(mensagemSucesso)}"
+									th:fragment="alert">
+									<button type="button" class="close" data-dismiss="alert"
+										aria-label="Close">
+										<i class="material-icons">clear</i>
+									</button>
+									<span th:text="${mensagemSucesso}"></span>
+								</div>
+
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-6">
+										<div class="row">
+											<div class="col-xs-12 col-sm-6 col-md-4">
+												<label for="coletiva">Tipo da ocorrência</label>
+												<div class="input-group">
+													<div class="form-line">
+														<span class="text-uppercase" th:text="${ocorrencia.coletiva == true ? 'Coletiva' : 'Individual'}"></span>
 													</div>
 												</div>
-											</th:block> 
-		                               </div>-->
+											</div>
+											<div class="col-xs-12 col-sm-6 col-md-4">
+												<label for="autor">Registrado por</label>
+												<div class="input-group">
+													<span class="input-group-addon"> <i
+														class="material-icons">security</i>
+													</span>
+													<div class="form-line">
+														<span class="js-autor" th:text="${ocorrencia.usuario.primeiroNomeEmail}"></span>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-12 col-sm-6 col-md-4 ">
+												<label for="autor">Data do registro</label>
+												<div class="input-group">
+													<span class="input-group-addon"> <i
+														class="material-icons">date_range</i>
+													</span>
+													<div class="form-line">
+														<span class="js-dataRegistro" th:text="${ocorrencia.dataRegistroFormatada}"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 trino-required">
+												<label for="dataOcorrido" class="control-label">Data ocorrência</label>
+												<div class="input-group">
+													<span class="input-group-addon"> <i
+														class="material-icons">date_range</i></span>
+													<div class="form-line">
+														<span th:text="${ocorrencia.dataOcorridoFormatada}"></span>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 trino-required">
+												<label for="local" class="control-label">Local da ocorrência</label>
+												<div class="form-group">
+													<div class="form-line">
+														<span th:text="${ocorrencia.local}"></span>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-12 col-sm-12 trino-required">
+												<label for="descricao" class="control-label">Descrição</label>
+												<div class="form-group">
+													<div class="form-line">
+														<span th:text="${ocorrencia.descricao}"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<input type="hidden" id="url_nova_ocorrencia" th:data-url="@{/ocorrencias}"/>
+		                        		<a sec:authorize="hasRole('ROLE_NOVO_ENCAMINHAMENTO')" class="btn bg-teal waves-effect js-encaminhar-ocorrencia" th:data-codigo="${ocorrencia.codigo}" >EMITIR ENCAMINHAMENTO</a>
+		                        		<a sec:authorize="hasRole('ROLE_EDITAR_OCORRENCIA')" th:href="@{/ocorrencias/{codigo}(codigo=${ocorrencia.codigo})}" class="btn waves-effect">EDITAR OCORRÊNCIA</a>
+		                        		<a th:href="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}" class="btn waves-effect">VOLTAR</a>
 									</div>
-                                   <div class="col-xs-12">
-                                   <div class="row">
-				                        <div class="col-md-12">
-				                            <h2 class="card-inside-title col-teal">DADOS DA OCORRÊNCIA</h2>
-					                        <div class="col-md-12 bg-warning">
-				                        		<dl class="dl-horizontal">
-				                        		  <dt>NÚMERO</dt>
-												  <dd th:text="${ocorrencia.codigo}">142</dd>
-				                        		  <dt>TIPO</dt>
-												  <dd class="text-uppercase" th:text="${ocorrencia.coletiva == true ? 'Coletiva' : 'Individual'}">Coletiva ou Individual</dd>
-												  <dt>DATA</dt>
-												  <dd th:text="${ocorrencia.dataOcorridoFormatada}">15/04/2017</dd>
-												  <dt>LOCAL</dt>
-												  <dd class="text-uppercase" th:text="${ocorrencia.local}">Pavilhao administrativo</dd>
-												  <dt>DESCRIÇÃO</dt>
-												  <dd th:text="${ocorrencia.descricao}">é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado.</dd>
-												</dl>
-					                        </div>
-				                        </div>
-				                    </div>
-                                   </div>
-                                   
-                                </div>
-                                <!-- <div class="row">
-	                            	<div class="col-md-12">
-                                        <h2 class="card-inside-title col-teal" th:unless="${ocorrencia.novo}">INFORMAÇÕES DA OCORRÊNCIA</h2>
-                                    </div>
-                                </div>
-		                        <div class="row">
-		                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 trino-required">
-		                                <label for="dataOcorrido" class="control-label">Data Ocorrência</label>
-		                                <div class="input-group">
-		                                    <span class="input-group-addon">
-		                                        <i class="material-icons">date_range</i>
-		                                    </span>
-		                                    <div class="form-line">
-                                               <span class="js-autor" th:text="${ocorrencia.dataOcorridoFormatada}"></span>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                         </div>
-		                        <div class="row">
-		                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 trino-required">
-		                                <label for="local" class="control-label">Local da ocorrência</label>
-		                                <div class="form-group">
-		                                    <div class="form-line">
-                                               <span class="js-autor" th:text="${ocorrencia.local}"></span>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                         </div>
-		                         <div class="row">   
-		                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8 trino-required">
-		                                <label for="descricao" class="control-label">Descrição</label>
-		                                <div class="form-group">
-		                                    <div class="form-line">
-                                               <span class="js-autor" th:text="${ocorrencia.descricao}"></span>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                        </div> -->
-                        		<input type="hidden" id="url_nova_ocorrencia" th:data-url="@{/ocorrencias}"/>
-		                        <a sec:authorize="hasRole('ROLE_NOVO_ENCAMINHAMENTO')" class="btn bg-teal waves-effect js-encaminhar-ocorrencia" th:data-codigo="${ocorrencia.codigo}" >EMITIR ENCAMINHAMENTO</a>
-		                        <a sec:authorize="hasRole('ROLE_EDITAR_OCORRENCIA')" th:href="@{/ocorrencias/{codigo}(codigo=${ocorrencia.codigo})}" class="btn waves-effect">EDITAR OCORRÊNCIA</a>
-		                        <a th:href="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}" class="btn waves-effect">VOLTAR</a>
+
+									<div class="col-xs-12 col-sm-12 col-md-6">
+										<div class="row">
+											<div class="col-xs-12">
+												<label for="">Aluno(s)</label>
+												<div class="table-responsive">
+													<table id="tabelaAlunosSelecionados"
+														class="table table-striped table-hover table-bordered">
+														<thead>
+															<tr>
+																<th style="width: 40px;">MATRICULA</th>
+																<th>NOME</th>
+																<th>CURSO</th>
+																<th>REGIME</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr th:each="aluno : ${ocorrencia.alunos}">
+																<td style="width: 40px;" th:text="${aluno.matricula}">{{matricula}}</td>
+																<td th:text="${aluno.nome}" class="text-uppercase">{{nome}}</td>
+																<td th:text="${aluno.curso.sigla}">{{curso.sigla}}</td>
+																<td th:text="${aluno.regime.descricao}">{{regime}}</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 	                         </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         
         <th:block th:replace="encaminhamento/CadastroEncaminhamentoModal"></th:block>
         

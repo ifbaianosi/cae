@@ -1,44 +1,31 @@
 <script id="tabelaResponsaveisTemplate" type="text/x-handlebars-template">
-<div class="panel-group full-body" id="accordion_19" role="tablist" aria-multiselectable="true" th:fragment="tabelaResponsaveis">
-{{#if .}}
-	{{#each .}}
-		<div class="panel">
-    		<div class="panel-heading" role="tab" id="{{responsavel.identificador}}">
-        		<h4 class="panel-title">
-            		<a class="collapsed" role="button" data-toggle="collapse" href="#collapseThree_{{responsavel.identificador}}" aria-expanded="false" aria-controls="collapseThree_{{responsavel.identificador}}">
-                		{{responsavel.nome}}
-            		</a>
-        		</h4>
-    		</div>
-    		<div id="collapseThree_{{responsavel.identificador}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree_{{responsavel.identificador}}">
-        		<div class="panel-body">
-					<div class="row">
-                         <div class="col-xs-12 col-sm-6">
-                             <p>
-                                PARENTESCO: {{responsavel.parentesco}}
-                             </p>
-                             <p>
-                                CONTATO 1: {{responsavel.contato}}
-                             </p>
-                             <p>
-                                CONTATO 2: {{responsavel.contato2}}
-                             </p>
-                         </div>
-                         <div class="col-xs-12 col-sm-6 text-right">
-                              <!--<a href='javascript:void(0);'>
-                                  <i class='material-icons col-teal btn-icon'>mode_edit</i> EDITAR
-                              </a> -->
-                              <a href='javascript:void(0);' class='js-remover' data-contato='{{responsavel.contato}}'>
-                                  <i class='material-icons col-pink btn-icon'>delete</i> REMOVER
-                              </a>
-                         </div>
-                      </div>
-        		</div>
-    		</div>
-		</div>
-	{{/each}}
- {{else}}
-	<div>O aluno não possui responsáveis cadastrados no sistema.</div>
- {{/if}}
+
+<div class="table-responsive" th:fragment="tabelaResponsaveis">
+	<table class="table table-striped table-hover table-bordered  js-tabela-responsaveis">
+		<thead>
+			<tr>
+				<th>NOME</th>
+				<th>CONTATOS</th>
+				<th>AÇÕES</th>
+			</tr>
+		</thead>
+		<tbody class="js-tabela-responsaveis-body">
+		{{#if .}}
+			{{#each .}}
+			<tr>
+				<td class="text-uppercase">{{nome}}</td>
+				<td>{{contato}}</td>
+				<td style="width: 135px">
+					<a href='javascript:void(0);' class='waves-effect js-tooltip col-teal js-selecionar-responsavel' title="Selecionar" data-codigo="{{codigo}}" data-nome="{{nome}}">
+						<i class="material-icons btn-icon">check</i> SELECIONAR
+					</a>
+				</td>
+			</tr>
+			{{/each}}
+ 		{{else}}
+			<tr><td colspan="4" class="col-orange">A pesquisa não retornou resultados</td></tr>
+ 		{{/if}}
+		</tbody>
+	</table>
 </div>
 </script>

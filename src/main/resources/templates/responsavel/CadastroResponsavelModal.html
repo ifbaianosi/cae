@@ -5,7 +5,7 @@
 <th:block th:fragment="cadastroResponsavelModal">
 	
 	<div class="modal fade  js-modal-cadastro-responsavel" id="defaultModal" tabindex="-1" role="dialog">
-           <div class="modal-dialog" role="document">
+           <div class="modal-dialog modal-lg" role="document">
                <div class="card">
                         <div class="header">
                             <h2>
@@ -17,9 +17,44 @@
                         </div>
                         <div class="body">
                         	<form id="formulario_responsavel">
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-5 trino-required">
-                                        <label for="responsavel_parentesco" class="control-label">Grau de parentesco</label>
+                        		<div class="row js-conteiner-pesquisa">
+                        			<div class="col-xs-12">
+                                        <label for="responsavel_nome" class="control-label">Nome</label>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" id="" class="form-control js-input-pesquisa" placeholder="" autocomplete="off" th:data-url="@{/responsaveis?nome=}">
+                                            </div>
+                                        </div>
+                                       	<div class="js-mensagem">
+                                        	<div class="text-center"><i class="material-icons">arrow_upward</i></div>
+                                        	<div class="text-center">PESQUISE PELO NOME DO RESPONSÁVEL</div>
+                                        	<div class="text-center">ou</div>
+                                       	</div>
+                                       	<div class="text-center">
+                                       		<a href="javascript:void(0);" class="waves-effect col-teal js-novo-responsavel">
+                                       			<i class="material-icons btn-icon">add</i> 
+                                       			CADASTRAR NOVO
+                                       		</a>
+                                       	</div>
+                                        <div class="js-container-responsaveis">
+                                        	
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row js-container-form-parentesco hide">
+                                	<input type="hidden" id="responsavelAluno">
+                                	<div class="col-xs-12 col-sm-12 col-md-5">
+                                		<label class="control-label">Responsável</label>
+                                        <div class="form-group">
+                                            <div class="form-line">
+		                                		<p class="text-uppercase js-nome-responsavel"></p>
+		                                		<input type="hidden" class="js-codigo-responsavel">
+                                            </div>
+	                                        <a href="javascript:void(0);" class="waves-effect col-teal js-retornar-pesquisa"><i class="material-icons btn-icon">edit</i> ALTERAR</a>
+                                        </div>
+                                	</div>
+                                	<div class="col-xs-12 col-sm-12 col-md-2 bg-warning trino-required">
+                                        <label for="responsavel_parentesco" class="control-label">Parentesco</label>
                                         <div class="form-group">
                                             <select id="responsavel_parentesco" class="form-control show-tick">
                                                 <option value="">selecione...</option>
@@ -27,6 +62,26 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-5">
+                                    	<label class="control-label">Aluno</label>
+                                        <div class="form-group">
+                                            <div class="form-line">
+		                                		<p class="text-uppercase js-nome-aluno"></p>
+		                                		<input type="hidden" class="js-codigo-aluno">
+                                            </div>
+                                        </div>
+                                	</div>
+                                	<div class="col-xs-12">
+                                        <button type="button" class="btn btn-link waves-effect bg-teal js-adicionar-responsavel" th:data-url="@{/responsaveis}">SALVAR</button>
+                      		            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+                                    </div>
+                                </div>
+                                <div class="row js-container-novo-responsavel hide">
+                                	<!-- <div class="col-xs-12 js-container-erro-message hide">
+	                                	<div class="bg-danger js-erro-message">
+	                                		<p>O nome é obrigatório</p>
+	                                	</div>
+                                	</div> -->
                                     <div class="col-xs-12 col-sm-12 trino-required">
                                         <label for="responsavel_nome" class="control-label">Nome</label>
                                         <div class="form-group">
@@ -63,9 +118,18 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- <div class="col-xs-12 col-sm-6 trino-required">
+                                        <label for="responsavel_parentesco" class="control-label">Grau de parentesco com o aluno</label>
+                                        <div class="form-group">
+                                            <select id="responsavel_parentesco" class="form-control show-tick">
+                                                <option value="">selecione...</option>
+                                                <option th:each="parentesco : ${parentescos}" th:value="${parentesco}" th:text="${parentesco.descricao}">Pai</option>
+                                            </select>
+                                        </div>
+                                    </div> -->
                                     <div class="col-xs-12">
-                                        <button type="button" class="btn btn-link waves-effect bg-teal  js-adicionar-responsavel" th:data-url="@{/responsaveis}">SALVAR</button>
-                      		            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+                                        <button type="button" class="btn btn-link waves-effect bg-teal  js-cadastrar-novo-responsavel" th:data-url="@{/responsaveis}">SALVAR</button>
+                      		            <button type="button" class="btn-link waves-effect js-voltar-pesquisa">VOLTAR</button>
                                     </div>
                                 </div>
 		                	</form>

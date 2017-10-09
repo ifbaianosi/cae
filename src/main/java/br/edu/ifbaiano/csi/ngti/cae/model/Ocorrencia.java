@@ -50,7 +50,7 @@ public class Ocorrencia extends Entidade{
 	@JoinColumn(name="codigo_aluno")
 	private Aluno aluno;
 	
-	@NotNull(message="Selecione pelo menos um aluno")
+	@NotNull(message="Adicione ao menos um aluno")
 	@Size(min=1, message="Selecione pelo menos um aluno")
 	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	@JoinTable(name="ocorrencia_aluno", joinColumns = @JoinColumn(name="codigo_ocorrencia")

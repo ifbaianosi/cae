@@ -43,11 +43,19 @@
                             							method="GET" th:object="${ocorrenciaFilter}">
                             	
                                 <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-6">
-		                                <label for="aluno">Aluno</label>
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                        <label for="numero">N° da ocorrência</label>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" id="numero" class="form-control" placeholder="" th:field="*{numero}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+		                                <label for="autocomplete-input-aluno">Aluno</label>
 	                                        <div class="form-group">
 	                                            <div class="form-line">
-	                                                <input type="text" id="autocomplete-input-aluno" th:data-url="@{/alunos/por?nomeOuMatricula=}" class="form-control" placeholder="" th:field="*{aluno.nome}">
+	                                                <input type="text" id="autocomplete-input-aluno" th:data-url="@{/alunos/por?nomeOuMatricula=}" class="form-control" placeholder="" th:field="*{aluno.nome}" autocomplete="off">
 	                                                <input type="hidden" th:field="*{aluno}">
 	                                            </div>
 	                                        </div>
@@ -102,7 +110,7 @@
 	                                        <label th:if="${#fields.hasErrors('serieTurma')}" th:errors="*{serieTurma}" class="error" for="serieTurma"></label>
 	                                    </div>
                                     </div> -->
-	                                    <div class="col-xs-12 col-sm-12 col-md-6">
+	                                    <div class="col-xs-12 col-sm-6 col-md-3">
 	                                        <label for="local">Local</label>
 	                                        <div class="form-group">
 	                                            <div class="form-line">
@@ -173,6 +181,7 @@
                             </h2>
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
+	                        		<a th:href="@{/ocorrencias/nova}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">add</i> NOVA OCORRÊNCIA</a>
                                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                         <i class="material-icons">more_vert</i>
                                     </a>
@@ -185,9 +194,9 @@
                         </div>
                         <input type="hidden" id="url_nova_ocorrencia" th:data-url="@{/ocorrencias}" th:data-url-alunos="@{/alunos}"/>
                         <div class="body">
-                        	<div class="row col-xs-12">
-	                        	<a th:href="@{/ocorrencias/nova}" type="button" class="btn bg-teal waves-effect">NOVA<span> OCORRÊNCIA</span></a>
-                        	</div>
+                        	<!-- <div class="row col-xs-12">
+	                        	<a th:href="@{/ocorrencias/nova}" type="button" class="btn bg-teal waves-effect">NOVA OCORRÊNCIA</a>
+                        	</div> -->
                         	<div class="row">
 	                        	<div class=" col-xs-12 table-responsive">
 		                            <table class="table table-striped table-hover">
@@ -235,7 +244,7 @@
 				                                        <th:block sec:authorize="hasRole('ROLE_NOVO_ENCAMINHAMENTO')" th:if="${ocorrencia.encaminhamentos.size()} > 0">
 			       											<a th:href="@{/relatorios/medidaDisciplinar/{codigo}(codigo=${ocorrencia.codigo})}" target="_blank" class="col-teal js-tooltip" title="Imprimir"><i class="material-icons btn-icon">print</i></a>
 														</th:block>
-			                                        	<a th:href="@{/ocorrencias/detalhes/{codigo}(codigo=${ocorrencia.codigo})}" class="col-teal js-tooltip" title="Ver detalhes"><i class="material-icons btn-icon">settings</i></a>
+			                                        	<a th:href="@{/ocorrencias/detalhes/{codigo}(codigo=${ocorrencia.codigo})}" class="col-teal js-tooltip" title="Ver detalhes"><i class="material-icons btn-icon">settings</i> Detalhes</a>
 			                                        </td>
 		                                    </tr>
 		                                    <tr th:if="${pagina.vazia}">

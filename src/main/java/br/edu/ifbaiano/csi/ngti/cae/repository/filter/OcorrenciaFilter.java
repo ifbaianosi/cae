@@ -10,6 +10,7 @@ import br.edu.ifbaiano.csi.ngti.cae.model.Usuario;
 
 public class OcorrenciaFilter {
 
+	private Long numero;
 	private LocalDate dataOcorrido;
 	private LocalDate dataOcorridoAte;
 	private String local;
@@ -20,6 +21,12 @@ public class OcorrenciaFilter {
 	private Alojamento alojamento;
 	private Integer apartamento;
 	
+	public Long getNumero() {
+		return numero;
+	}
+	public void setNumero(Long numero) {
+		this.numero = numero;
+	}
 	public LocalDate getDataOcorrido() {
 		return dataOcorrido;
 	}

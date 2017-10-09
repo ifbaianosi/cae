@@ -14,7 +14,6 @@
 <body>
 	
     <section class="content" layout:fragment="conteudo">
-        <div class="container-fluid">
             <div class="block-header">
 				<div class="row">
             		<div class="col-md-6">
@@ -33,9 +32,12 @@
             	</div>
             </div>
             <div class="card">
-                <!-- <div class="header">
-                    <button type="button" class="btn bg-teal waves-effect"><i class="material-icons">search</i>PESQUISAR</button>
-                </div> -->
+            	<div class="header">
+                    <h2>
+                        FORMULÁRIO REGISTRO DE OCORRÊNCIA
+                        <small>Os campos marcados com <code>(*)</code> requer preenchimento obrigatório.</small>
+                    </h2>
+                </div>
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
                         <div class="col-md-12">
@@ -44,7 +46,6 @@
                     </div>
                 </div>
             </div>
-        </div>
         
         <th:block th:replace="aluno/AdicionarAlunoNaOcorrenciaModal"></th:block>
         

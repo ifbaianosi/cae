@@ -75,6 +75,10 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 	private void adicionarFiltro(OcorrenciaFilter filtro, Criteria criteria) {
 		if(filtro != null){
 			//criteria.createAlias("aluno", "a", JoinType.INNER_JOIN);
+			//FILTRO CODIGO
+			if(filtro.getNumero() != null)
+				criteria.add(Restrictions.eq("codigo", filtro.getNumero()));
+			
 			//FILTRO LOCAL
 			if(!StringUtils.isEmpty(filtro.getLocal()))
 				criteria.add(Restrictions.ilike("local", filtro.getLocal(), MatchMode.ANYWHERE));

@@ -30,6 +30,8 @@ import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 import br.edu.ifbaiano.csi.ngti.cae.model.GrauParentesco;
 import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
 import br.edu.ifbaiano.csi.ngti.cae.model.Regime;
+import br.edu.ifbaiano.csi.ngti.cae.model.Responsavel;
+import br.edu.ifbaiano.csi.ngti.cae.model.ResponsavelAluno;
 import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
 import br.edu.ifbaiano.csi.ngti.cae.model.Sexo;
 import br.edu.ifbaiano.csi.ngti.cae.model.Status;
@@ -37,9 +39,11 @@ import br.edu.ifbaiano.csi.ngti.cae.model.TipoEncaminhamento;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Alunos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Cursos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Ocorrencias;
+import br.edu.ifbaiano.csi.ngti.cae.repository.Responsaveis;
 import br.edu.ifbaiano.csi.ngti.cae.repository.ResponsavelAlunos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.filter.AlunoFilter;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroAlunoService;
+import br.edu.ifbaiano.csi.ngti.cae.service.CadastroResponsavelAlunoService;
 import br.edu.ifbaiano.csi.ngti.cae.service.exception.AlunoNumeroMatriculaJaCadastradoException;
 import br.edu.ifbaiano.csi.ngti.cae.session.ListaAlunosSession;
 
@@ -209,9 +213,24 @@ public class AlunosController {
 		return mv;
 	}
 	
+	@Autowired
+	private CadastroResponsavelAlunoService cadastroResponsavelAlunoService;
+	
 	@GetMapping("/{codigo}")
 	public ModelAndView editar(@PathVariable("codigo") Aluno aluno){
 		aluno.setResponsaveisDoAluno(responsaveisAluno.findByAluno(aluno));
+		
+		/*ResponsavelAluno responsavelAluno = new ResponsavelAluno();
+		Aluno alunoo = new Aluno();
+		alunoo.setCodigo(531L);
+		responsavelAluno.setAluno(alunoo);
+		Responsavel responsavel = new Responsavel();
+		responsavel.setCodigo(2L);
+		responsavelAluno.setResponsavel(responsavel);
+		responsavelAluno.setParentesco(GrauParentesco.PADASTRO);
+		
+		cadastroResponsavelAlunoService.salvar(responsavelAluno);*/
+		
 		return novo(aluno);
 	}
 	

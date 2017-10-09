@@ -110,7 +110,8 @@ public class Aluno extends Entidade implements Paciente {
 	
 	@PrePersist
 	public void prePersist(){
-		status = Status.FREQUENTANDO;
+		if(this.isNovo())
+			status = Status.FREQUENTANDO;
 	}
 	
 	public String getMatricula() {

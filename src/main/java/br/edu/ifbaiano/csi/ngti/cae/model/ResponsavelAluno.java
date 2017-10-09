@@ -6,6 +6,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="responsavel_aluno")
@@ -16,14 +17,17 @@ public class ResponsavelAluno extends Entidade{
 	/*@EmbeddedId
 	private ResponsavelAlunoID id;*/
 	
+	@NotNull(message="O aluno é obrigatório")
 	@ManyToOne
 	@JoinColumn(name="codigo_aluno")
 	private Aluno aluno;
-	
+
+	@NotNull(message="O responsável é obrigatório")
 	@ManyToOne
 	@JoinColumn(name="codigo_responsavel")
 	private Responsavel responsavel;
 	
+	@NotNull(message="O grau de parentesco é obrigatório")
 	@Enumerated(EnumType.STRING)
 	private GrauParentesco parentesco;
 

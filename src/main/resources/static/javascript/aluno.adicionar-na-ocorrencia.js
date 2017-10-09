@@ -23,6 +23,7 @@ NGTICAE.PesquisaAluno = (function(){
 	PesquisaAluno.prototype.iniciar = function(){
 		this.pesquisarBtn.on('click', onPesquisarClicado.bind(this));
 		this.validarMatriculaBtn.on('click', onValidarMatriculaBtnClicado.bind(this));
+		this.validarMatriculaBtn.on('keypress', onValidarMatriculaBtnClicado.bind(this));
 		this.remover.on('click', onRemoverAluno.bind(this));
 		$('#adicionarAlunoNaOcorrenciaModal').on('hidden.bs.modal', fecharJanela);
 		listarAlunosDaOcorrencia();
@@ -159,7 +160,13 @@ NGTICAE.PesquisaAluno = (function(){
 	}
 	
 	function onValidarMatriculaBtnClicado(event){
+		
 		event.preventDefault();
+		
+		if(event.wich == 13 || event.keyCode == 13){
+			event.preventDefault();
+			console.log('teste passou por aqui!!!');
+		}
 		
 		console.log('Fazer a pesquisa pela matricula informada...');
 		console.log('matricula: ', this.matriculaInput.val().trim());

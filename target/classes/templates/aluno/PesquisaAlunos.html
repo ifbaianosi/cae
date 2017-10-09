@@ -200,6 +200,7 @@
                             </h2>
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
+                    				<a th:href="@{/alunos/novo}" class="waves-effect col-teal "><i class="material-icons col-teal btn-icon">add</i> NOVO ALUNO</a>
                                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                         <i class="material-icons">more_vert</i>
                                     </a>
@@ -211,9 +212,9 @@
                             </ul>
                         </div>
                         <div class="body">
-                        	<div class="row col-xs-12">
+                        	<!-- <div class="row col-xs-12">
                     			<a th:href="@{/alunos/novo}" type="button" class="btn bg-teal waves-effect">NOVO ALUNO</a>
-                        	</div>
+                        	</div> -->
                         	<div class="row">
 	                        	<div class=" col-xs-12 table-responsive">
 	                            <table class="table table-striped table-hover">
@@ -237,7 +238,7 @@
 	                                        	<span class="label" th:text="${aluno.status.descricao}" th:classappend="${aluno.status.cor}">FREQUENTANDOO</span>
 	                                        </td>
 	                                        <td class="text-center">
-	                                        	<a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}" class="col-red"><i class="material-icons btn-icon">edit</i>Editar</a>
+	                                        	<a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}" class="col-blue"><i class="material-icons btn-icon">edit</i>Editar</a>
 	                                         	<!-- <a sec:authorize-url="/alunos/detalhe" th:href="@{/alunos/detalhe?matricula={matricula}(matricula=${aluno.matricula})}" class="col-teal"><i class="material-icons btn-icon">history</i>Histórico</a> -->
 	                                        </td>
 	                                    </tr>

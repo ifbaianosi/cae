@@ -20,7 +20,7 @@
             <!-- Widgets -->
             <div class="row clearfix">
                 <div class="col-sm-4 col-xs-12">
-                    <div class="info-box bg-light-green hover-expand-effect" 
+                    <div class="info-box bg-pink hover-expand-effect" 
                     		th:classappend="${#authorization.expression('hasRole(''ROLE_MENU_ALUNOS'')')} ?  js-info-box-click"  th:data-url="@{/alunos}">
                         <div class="icon">
                             <i class="material-icons">school</i>
@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="col-sm-4 col-xs-12">
-                    <div class="info-box bg-light-green hover-expand-effect" 
+                    <div class="info-box bg-pink hover-expand-effect" 
                     		th:classappend="${#authorization.expression('hasRole(''ROLE_MENU_OCORRENCIAS'')')} ?  js-info-box-click" th:data-url="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}">
                         <div class="icon">
                             <i class="material-icons">assignment</i>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="col-sm-4 col-xs-12">
-                    <div class="info-box bg-light-green">
+                    <div class="info-box bg-pink">
                         <div class="icon">
                             <i class="material-icons">open_in_new</i>
                         </div>
@@ -85,7 +85,7 @@
 	                    <div sec:authorize="hasRole('ROLE_VER_OCORRENCIAS_POR_USUARIO')" class="col-xs-12">
 		                    <div class="card">
 		                    	<div class="header">
-		                            <h2>USUÁRIOS QUE MAIS REGISTROU OCORRÊNCIAS <small>Top 5</small></h2>
+		                            <h2>OCORRÊNCIAS POR USUÁRIOS<small>Top 5</small></h2>
 		                        </div>
 		                        <div class="body">
 		                            <ul class="dashboard-stat-list" style="margin-top: 0px;">
@@ -104,7 +104,7 @@
             			<div sec:authorize="hasRole('ROLE_VER_OCORRENCIAS_POR_LOCAL')" class="col-xs-12">
 		                    <div class="card">
 		                    	<div class="header">
-		                            <h2>LOCAIS COM MAIS OCORRÊNCIAS <small>Top 5</small></h2>
+		                            <h2>OCORRÊNCIAS POR LOCAL<small>Top 5</small></h2>
 		                        </div>
 		                        <div class="body">
 		                            <ul class="dashboard-stat-list" style="margin-top: 0px;">
@@ -119,7 +119,7 @@
 		                <div sec:authorize="hasRole('ROLE_VER_OCORRENCIAS_POR_ALUNO')" class="col-xs-12">
 		                    <div class="card">
 		                    	<div class="header">
-		                            <h2>ALUNOS COM MAIS OCORRÊNCIAS <small>Top 5</small></h2>
+		                            <h2>OCORRÊNCIAS POR ALUNO<small>Top 5</small></h2>
 		                        </div>
 		                        <div class="body">
 		                            <ul class="dashboard-stat-list" style="margin-top: 0px;">

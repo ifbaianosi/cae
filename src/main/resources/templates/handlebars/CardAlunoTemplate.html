@@ -1,13 +1,11 @@
 <script id="cardAlunoTemplate" type="text/x-handlebars-template">
 
 {{#if .}}
-<div class="col-xs-12">
-	<button type="button" class="btn btn-xs bg-pink waves-effect js-remover-todos">
+<div class="">
+<a class="col-pink waves-effect js-remover-todos" href="javascript:void(0);">
 		<i class="material-icons btn-icon">delete_sweep</i>
 		REMOVER TODOS
-	</button>
-</div>
-<div class="col-xs-12">
+	</a>
 <div class="table-responsive">
 <table id="tabelaAlunosSelecionados" class="table table-striped table-hover table-bordered">
      <thead>
@@ -39,11 +37,12 @@
 </div>
 </div>
 {{else}}
-	<div class="col-xs-12 col-sm-12 col-md-6">
-			<p class="bg-warning">
-				Adicione aluno(s) para registrar a(s) ocorrência(s).
-			</p>
-		</div>
+	<div class="js-mensagem">
+                                        	<div class="text-center"><i class="material-icons">arrow_upward</i></div>
+                                        	<div class="text-center">DIGITE A MATRÍCULA DO ALUNO E CLIQUE EM ADICIONAR</div>
+                                        	<div class="text-center">ou</div>
+                                        	<div class="text-center">CLIQUE EM PESQUISAR</div>
+                                       	</div>
 {{/if}}
 
 

@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.edu.ifbaiano.csi.ngti.cae.model.Responsavel;
+import br.edu.ifbaiano.csi.ngti.cae.model.Usuario;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Responsaveis;
 import br.edu.ifbaiano.csi.ngti.cae.repository.ResponsavelAlunos;
+import br.edu.ifbaiano.csi.ngti.cae.service.exception.EmailUsuarioJaCadastradoException;
+import br.edu.ifbaiano.csi.ngti.cae.service.exception.ResponsavelJaCadastradoException;
 
 @Service
 public class CadastroResponsavelService {
@@ -20,12 +23,13 @@ public class CadastroResponsavelService {
 	private ResponsavelAlunos responsavelAlunos;
 
 	@Transactional
-	public void salvar(Responsavel responsavel){
-		if(responsavel.isNovo()){
-			Optional<Responsavel> responsavelOptional = responsaveis.findByNomeIgnoreCaseAndContato(responsavel.getNome(), responsavel.getContato());
-			if(!responsavelOptional.isPresent())
-				responsaveis.saveAndFlush(responsavel);
+	public Responsavel salvar(Responsavel responsavel){
+		Optional<Responsavel> responsavelExistente = responsaveis.findByNomeIgnoreCaseAndContato(responsavel.getNome(), responsavel.getContato());
+		if (responsavelExistente.isPresent() && !responsavelExistente.get().equals(responsavel)) {
+			throw new ResponsavelJaCadastradoException("Já existe um responsável cadastrado com o nome e contato informado.");
 		}
+		
+		return responsaveis.save(responsavel);
 	}
 
 	/*

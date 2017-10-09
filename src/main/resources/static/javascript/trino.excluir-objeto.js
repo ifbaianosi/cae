@@ -9,8 +9,8 @@ NGTICAE.DialogoExcluir = (function() {
 	DialogoExcluir.prototype.iniciar = function() {
 		this.exclusaoBtn.on('click', onExcluirClicado.bind(this));
 		
-		if (window.location.search.indexOf('excluido') > -1) {
-			swal('Pronto!', 'Excluído com sucesso!', 'success');
+		if (window.location.search.indexOf('sucesso') > -1) {
+			swal('Pronto!', 'Concluído  com sucesso!', 'success');
 		}
 	}
 	
@@ -52,7 +52,7 @@ NGTICAE.DialogoExcluir = (function() {
 		
 		var urlAtual = window.location.href;
 		var separador = urlAtual.indexOf('?') > -1 ? '&' : '?';
-		var novaUrl = urlAtual.indexOf('excluido') > -1 ? urlAtual : urlAtual + separador + 'excluido';
+		var novaUrl = urlAtual.indexOf('sucesso') > -1 ? urlAtual : urlAtual + separador + 'sucesso';
 		
 		window.location = novaUrl;
 	}
