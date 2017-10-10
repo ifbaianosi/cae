@@ -25,6 +25,7 @@
 		                    <li><a th:href="@{/}" class="js-tooltip" title="Página inicial"><i class="material-icons">home</i> Início</a></li>
 		                    <li><a th:href="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}"
 		                    		class="js-tooltip" title="Pesquisar ocorrência"><i class="material-icons">assignment</i> Ocorrências</a></li>
+		                    <li th:unless="${ocorrencia.novo}"><a th:href="@{/ocorrencias/detalhes/{codigo}(codigo=${ocorrencia.codigo})}" class="js-tooltip" title="Detalhes da ocorrência"><i class="material-icons">settings</i> Detalhes</a></li>
 		                    <li class="active" th:if="${ocorrencia.novo}"><i class="material-icons">add_circle_outline</i> Nova</li>
 		                    <li class="active" th:unless="${ocorrencia.novo}"><i class="material-icons">edit</i> Editar</li>
 		                </ol>

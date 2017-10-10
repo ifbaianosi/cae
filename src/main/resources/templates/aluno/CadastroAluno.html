@@ -31,7 +31,16 @@
             		</div>
             	</div>
             </div>
-            <div class="card">
+
+		<!-- MENSAGEM SUCESSO -->
+		<div class="alert bg-teal alert-dismissible fade in" role="alert" th:if="${not #strings.isEmpty(mensagemSucesso)}" th:fragment="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<i class="material-icons">clear</i>
+			</button>
+			<span th:text="${mensagemSucesso}"></span>
+		</div>
+
+		<div class="card">
                 <div class="header">
                 	<h2>
                         FORMULÁRIO CADASTRO DE ALUNO
@@ -44,12 +53,6 @@
                             <form class="js-formulario" th:object="${aluno}" th:action="${aluno.novo} ? @{/alunos/novo} : @{/alunos/{codigo}(codigo=${aluno.codigo})}" method="POST">
                             	<input type="hidden" th:field="*{codigo}">
                             	<input type="hidden" th:field="*{status}">
-                            	
-                            	<!-- MENSAGEM SUCESSO -->
-								<div class="alert bg-teal alert-dismissible fade in" role="alert" th:if="${not #strings.isEmpty(mensagemSucesso)}" th:fragment="alert">
-	                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="material-icons">clear</i></button>
-	                                <span th:text="${mensagemSucesso}"></span>
-	                            </div>
 	                            
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-6 col-md-2">
