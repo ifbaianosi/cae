@@ -1,15 +1,19 @@
 package br.edu.ifbaiano.csi.ngti.cae.controller;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import javax.xml.ws.http.HTTPBinding;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -19,13 +23,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.edu.ifbaiano.csi.ngti.cae.controller.page.PageWrapper;
+import br.edu.ifbaiano.csi.ngti.cae.model.Alojamento;
+import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
 import br.edu.ifbaiano.csi.ngti.cae.model.Responsavel;
 import br.edu.ifbaiano.csi.ngti.cae.model.ResponsavelAluno;
+import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Responsaveis;
-import br.edu.ifbaiano.csi.ngti.cae.repository.ResponsavelAlunos;
+import br.edu.ifbaiano.csi.ngti.cae.repository.filter.ResponsavelFilter;
+import br.edu.ifbaiano.csi.ngti.cae.security.UsuarioSistema;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroResponsavelAlunoService;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroResponsavelService;
 import br.edu.ifbaiano.csi.ngti.cae.service.exception.ResponsavelJaCadastradoException;
@@ -48,11 +58,21 @@ public class ResponsaveisController {
 	private CadastroResponsavelAlunoService cadastroResponsavelAlunoService;
 	
 	@GetMapping
-	public @ResponseBody ResponseEntity<?> responsaveisPorNome(@RequestParam("nome") String nome){
-		return ResponseEntity.ok(responsaveis.findByNomeStartsWithIgnoreCase(nome));
+	public ModelAndView pesquisar(ResponsavelFilter responsavelFilter, @PageableDefault(size=10) Pageable pageable, HttpServletRequest httpServletRequest){
+		ModelAndView mv = new ModelAndView("responsavel/PesquisaResponsaveis");
+		PageWrapper<Responsavel> paginaWrapper = new PageWrapper<>(responsaveis.filtrar(responsavelFilter, pageable), httpServletRequest);
+		mv.addObject("pagina", paginaWrapper);
+		return mv;
 	}
 	
-	@PostMapping(value="/novo", consumes=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value="/novo")
+	public ModelAndView novo(Responsavel responsavel){
+		ModelAndView mv = new ModelAndView("responsavel/CadastroResponsavel");
+		mv.addObject("responsavel", responsavel);
+		return mv;
+	}
+	
+	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<?> salvarResponsavel(@RequestBody @Valid Responsavel responsavel, BindingResult result){
 		
 		if(result.hasErrors()){
@@ -69,6 +89,33 @@ public class ResponsaveisController {
 		
 		return ResponseEntity.ok(responsavelGravado);
 	}
+	
+	@PostMapping(value={ "/novo", "{\\d+}" })
+	public ModelAndView salvar(@Valid Responsavel responsavel, BindingResult result, RedirectAttributes attributs){
+		
+		if(result.hasErrors()){
+			return novo(responsavel);
+		}
+		
+		try {
+			cadastroResponsavelService.salvar(responsavel);
+		} catch (ResponsavelJaCadastradoException e) {
+			result.rejectValue("nome", e.getMessage(), e.getMessage());
+			return novo(responsavel);
+		}
+			
+		attributs.addFlashAttribute("mensagemSucesso", "Responsável salvo com sucesso");
+		
+		return new ModelAndView("redirect:/responsaveis/novo");
+	}
+	
+	@GetMapping(value="/por-nome/{nome}")//verificar a pesquisa que esta quebrada pois alterei a url de acesso ao metodo
+	public @ResponseBody ResponseEntity<?> responsaveisPorNome(@PathVariable("nome") String nome){
+		List<Responsavel> responsaveisList = null;
+		responsaveisList = responsaveis.findByNomeStartsWithIgnoreCase(nome);
+		return ResponseEntity.ok(responsaveisList);
+	}
+	
 
 	private StringBuilder formatarErros(BindingResult result) {
 		StringBuilder sb = new StringBuilder();
@@ -141,6 +188,15 @@ public class ResponsaveisController {
 	} 
 	
 	 
+	@GetMapping(value="/{codigo}")
+	public ModelAndView editar(@PathVariable("codigo") Long codigo){
+		Optional<Responsavel> responsavelOpt = responsaveis.porCodigo(codigo);
+		if(responsavelOpt.isPresent())
+			return novo(responsavelOpt.get());
+		
+		return novo(new Responsavel());
+	}
+	
 	@DeleteMapping(value="/{codigo}")
 	public @ResponseBody ResponseEntity<?> excluir(@PathVariable("codigo") Long codigo){
 		

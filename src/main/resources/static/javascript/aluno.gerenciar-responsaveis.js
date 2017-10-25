@@ -61,7 +61,7 @@ NGTICAE.GerenciarResponsaveis = (function(){
 			containerMensagens.addClass('hide');
 			
 			var retorno = $.ajax({
-				url: this.urlPesquisaResponsaveisPorNome + parametro,
+				url: this.urlPesquisaResponsaveisPorNome + '/' + parametro,
 				method: 'GET'
 			});
 			
@@ -193,7 +193,7 @@ NGTICAE.GerenciarResponsaveis = (function(){
 	function onCadastrarNovoResponsavel(){
 		console.log('cadastrando novo responsavel...');
 		$.ajax({
-			url: this.urlResponsaveis + '/novo', // /responsaveis : POST
+			url: this.urlResponsaveis, // /responsaveis : POST
 			method: 'POST',
 			contentType: 'application/json',
 			data: JSON.stringify({

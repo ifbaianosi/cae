@@ -12,13 +12,16 @@
 <body>
 	
     <section class="content"  layout:fragment="conteudo">
-            <div class="block-header">
-                <h2>INÍCIO</h2>
-            </div>
-            
+            <div class="row">
+           		<div class="col-xs-12">
+	                <ol class="breadcrumb" style="padding: 0px 0px;">
+	                    <li class="active"><i class="material-icons">home</i> Início</li>
+	                </ol>
+           		</div>
+           	</div>
             <!-- Widgets -->
-            <div class="row clearfix">
-                <div class="col-sm-4 col-xs-12">
+            <div class="row clearfix" sec:authorize="hasRole('ROLE_DASHBOARD_NUMEROS_DO_SISTEMA')">
+                <div class="col-sm-3 col-xs-12">
                     <div class="info-box bg-pink hover-expand-effect" 
                     		th:classappend="${#authorization.expression('hasRole(''ROLE_MENU_ALUNOS'')')} ?  js-info-box-click"  th:data-url="@{/alunos}">
                         <div class="icon">
@@ -30,7 +33,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4 col-xs-12">
+                <div class="col-sm-3 col-xs-12">
+                    <div class="info-box bg-pink hover-expand-effect" th:classappend="${#authorization.expression('hasRole(''ROLE_MENU_ALUNOS'')')} ?  js-info-box-click"  th:data-url="@{/responsaveis}"><!-- MUDAR A ROLE PARA RESPONSAVEIS -->
+                        <div class="icon">
+                            <i class="material-icons">supervisor_account</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">RESPONSÁVEIS</div>
+                            <div class="number" th:text="${quantidadeResponsaveis}">2</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-12">
                     <div class="info-box bg-pink hover-expand-effect" 
                     		th:classappend="${#authorization.expression('hasRole(''ROLE_MENU_OCORRENCIAS'')')} ?  js-info-box-click" th:data-url="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}">
                         <div class="icon">
@@ -42,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4 col-xs-12">
+                <div class="col-sm-3 col-xs-12">
                     <div class="info-box bg-pink">
                         <div class="icon">
                             <i class="material-icons">open_in_new</i>
@@ -53,18 +67,32 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box bg-orange hover-expand-effect">
-                        <div class="icon">
-                            <i class="material-icons">person_add</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">NEW VISITORS</div>
-                            <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20"></div>
-                        </div>
-                    </div>
-                </div>-->
             </div>
+            
+            <th:block th:if="${#authorization.expression('hasRole(''ROLE_DASHBOARD_NUMEROS_DO_SISTEMA'')')} == false">
+	            <div class="row clearfix">
+		            <div class="col-xs-12">
+		                    <div class="card">
+		                    	<div class="header">
+		                            <h2>BEM VINDO AO TRINO
+		                            <small>Funcionalidades disponíveis para o usuário</small></h2>
+		                        </div>
+		                        <div class="body">
+		                            <p class="lead">
+		                                Consultar dados do aluno
+		                            </p>
+		                            <p>
+		                                Essa funcionalidade permite pesquisar por aluno informando o nome ou a matrícula.
+		                            </p>
+		                            <p>
+		                                É possível visualizar todos os dados do aluno pesquisado, inclusive os responsáveis cadastrados para o aluno, com informações de contato e grau de parentesco.
+		                            </p>
+		                            <p>Para começar clique link Consulta Alunos no menu lateral.</p>
+		                        </div>
+		                    </div>
+		                </div>
+	            </div>
+            </th:block>
             
             <div class="row clearfix">
             	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">

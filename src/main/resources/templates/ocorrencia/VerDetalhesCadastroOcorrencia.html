@@ -15,27 +15,27 @@
 <body>
 	
     <section class="content" layout:fragment="conteudo">
-            <div class="block-header">
-				<div class="row">
-            		<div class="col-md-6">
-						<h2 th:text="|DETALHES DA OCORRÊNCIA Nº ${ocorrencia.codigo}|">DETALHES DA OCORRÊNCIA Nº</h2>
-            		</div>
-            		<div class="col-md-6">
-		                <ol class="breadcrumb align-right" style="padding: 0px 0px;">
-		                    <li><a th:href="@{/}" class="js-tooltip" title="Página inicial"><i class="material-icons">home</i> Início</a></li>
-		                    <li><a th:href="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}"
-		                    		class="js-tooltip" title="Pesquisar ocorrência"><i class="material-icons">assignment</i> Ocorrências</a></li>
-		                    <li class="active"><i class="material-icons">settings</i> Detalhes</li>
-		                </ol>
-            		</div>
-            	</div>
-            </div>
+			<div class="row">
+           		<div class="col-xs-12">
+	                <ol class="breadcrumb" style="padding: 0px 0px;">
+	                    <li><a th:href="@{/}" class="js-tooltip" title="Página inicial"><i class="material-icons">home</i> Início</a></li>
+	                    <li><a th:href="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}"
+	                    		class="js-tooltip" title="Pesquisar ocorrência"><i class="material-icons">assignment</i> Ocorrências</a></li>
+	                    <li class="active"><i class="material-icons">settings</i> Detalhes</li>
+	                </ol>
+           		</div>
+           	</div>
             <div class="card">
                 <div class="header">
                     <h2>
-                        DETALHES DA OCORRÊNCIA
-                        <small>Informações sobre o registro da ocorrência.</small>
+                        <th:block th:text="|DETALHES DA OCORRÊNCIA Nº ${ocorrencia.codigo}|">DETALHES DA OCORRÊNCIA Nº</th:block>
+                        <small>Gerêncie as informações da ocorrência.</small>
                     </h2>
+                    <ul class="header-dropdown m-r--5">
+                        <li class="dropdown">
+                 			<a th:href="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">search</i> PESQUISAR OCORRÊCNIAS</a>
+                        </li>
+                    </ul>
                 </div>
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
@@ -54,7 +54,13 @@
 								</div>
 
 								<div class="row">
+									<div class="col-xs-12">
+										<a sec:authorize="hasRole('ROLE_NOVO_ENCAMINHAMENTO')" class="btn btn-xs waves-effect js-encaminhar-ocorrencia" th:data-codigo="${ocorrencia.codigo}" >EMITIR ENCAMINHAMENTO</a>
+		                        		<a sec:authorize="hasRole('ROLE_EDITAR_OCORRENCIA')" th:href="@{/ocorrencias/{codigo}(codigo=${ocorrencia.codigo})}" class="btn btn-xs waves-effect">EDITAR OCORRÊNCIA</a>
+		                        		<!-- <a th:href="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}" class="btn btn-xs waves-effect">VOLTAR</a> -->
+									</div>
 									<div class="col-xs-12 col-sm-12 col-md-6">
+										
 										<div class="row">
 											<div class="col-xs-12 col-sm-6 col-md-4">
 												<label for="coletiva">Tipo da ocorrência</label>
@@ -116,9 +122,7 @@
 											</div>
 										</div>
 										<input type="hidden" id="url_nova_ocorrencia" th:data-url="@{/ocorrencias}"/>
-		                        		<a sec:authorize="hasRole('ROLE_NOVO_ENCAMINHAMENTO')" class="btn bg-teal waves-effect js-encaminhar-ocorrencia" th:data-codigo="${ocorrencia.codigo}" >EMITIR ENCAMINHAMENTO</a>
-		                        		<a sec:authorize="hasRole('ROLE_EDITAR_OCORRENCIA')" th:href="@{/ocorrencias/{codigo}(codigo=${ocorrencia.codigo})}" class="btn waves-effect">EDITAR OCORRÊNCIA</a>
-		                        		<a th:href="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}" class="btn waves-effect">VOLTAR</a>
+		                        		
 									</div>
 
 									<div class="col-xs-12 col-sm-12 col-md-6">

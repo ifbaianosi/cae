@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/LayoutPadrao'">
+
+<head>
+    <title th:text="${grupo.novo} ? 'Cadastrar grupo' : 'Editar grupo'">Cadastrar grupo</title>
+
+    <!-- Customização de componentes NGTI -->
+    <link th:href="@{/layout/css/customizacao.componentes.css}" rel="stylesheet">
+</head>
+
+<body>
+	
+    <section class="content" layout:fragment="conteudo">
+           	<div class="row">
+           		<div class="col-md-12">
+	                <ol class="breadcrumb" style="padding: 0px 0px;">
+	                    <li><a th:href="@{/}" class="js-tooltip" title="Página inicial"><i class="material-icons">home</i> Início</a></li>
+	                    <li><a th:href="@{/perfis}" class="js-tooltip" title="Pesquisar grupos"><i class="material-icons">verified_user</i> Perfis</a></li>
+	                    <li class="active" th:if="${grupo.novo}"><i class="material-icons">add_circle_outline</i> Novo</li>
+	                    <li class="active" th:unless="${grupo.novo}"><i class="material-icons">edit</i> Editar</li>
+	                </ol>
+           		</div>
+           	</div>
+            
+			<!-- MENSAGEM SUCESSO -->
+			<div class="alert bg-teal alert-dismissible fade in" role="alert" th:if="${not #strings.isEmpty(mensagemSucesso)}" th:fragment="alert">
+			    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="material-icons">clear</i></button>
+			    <span th:text="${mensagemSucesso}"></span>
+			</div>
+            
+            <div class="card">
+                <div class="header">
+                    <h2 class="text-uppercase">
+                    	<th:block th:if="${grupo.novo}">CADASTRAR NOVO GRUPO</th:block>
+						<th:block th:unless="${grupo.novo}" class="text-uppercase" th:text="|EDITAR GRUPO ${grupo.nome}|">EDITAR USUARIO</th:block>
+                        <small class="text-lowercase">Os campos marcados com <code>(*)</code> requer preenchimento obrigatório.</small>
+                    </h2>
+                    <ul class="header-dropdown m-r--5">
+                        <li class="dropdown">
+                 		<a th:href="@{/perfis}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">search</i> PESQUISAR GRUPOS</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="body"> <!--  card-padding-->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="js-formulario" th:object="${grupo}" th:action="${grupo.novo} ? @{/perfis/novo} : @{/perfis/{codigo}(codigo=${grupo.codigo})}" method="POST">
+                            	
+                            	<input type="hidden" th:field="*{codigo}">
+                            	<th:block th:unless="${grupo.novo}">
+	                            	<input type="hidden" th:field="*{permissoes}">
+                            	</th:block>
+	                            
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-4 trino-required">
+                                        <label for="nome" class="control-label">Nome</label>
+                                        <div class="form-group">
+                                            <div class="form-line" th:classappend="${#fields.hasErrors('nome')} ? 'focused error'">
+                                                <input type="text" id="nome" class="form-control" placeholder="" th:field="*{nome}">
+                                            </div>                                            
+                                            <label th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="error" for="nome"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 col-md-4 trino-required">
+                                        <label for="descricao" class="control-label">Descrição</label>
+                                        <div class="form-group">
+                                            <div class="form-line" th:classappend="${#fields.hasErrors('descricao')} ? 'focused error'">
+                                                <input type="text" id="descricao" class="form-control" placeholder="" th:field="*{descricao}">
+                                            </div>
+                                            <label th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}" id="descricao-error" class="error" for="descricao"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="btn bg-teal waves-effect  js-submit">SALVAR</button>
+                 				<a th:href="@{/perfis}" class="btn btn-default waves-effect">VOLTAR</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" th:unless="${grupo.novo}">
+                <div class="header">
+                    <h2>
+                        PERMISSÕES DE ACESSO
+                        <small>permissões de acesso do perfil.</small>
+                    </h2>
+                    <ul class="header-dropdown m-r--5">
+                        <li class="dropdown">
+                        	<a href="javascript:void(0);" class="waves-effect col-teal js-modal-" 
+                    				data-toggle="modal" data-target="#defaultModal" data-aluno="${aluno.codigo}" 
+                    				data-nome-aluno="${aluno.nome}">
+                       			<i class="material-icons col-teal btn-icon">add</i> 
+                       			ADICIONAR PERMISSÃO
+                       		</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="body">
+                   <div class="table-responsive">
+                   		<th:block th:if="${grupo.permissoes.size() > 0}">
+                      			<div class="form-group">
+		                       		<table class="table table-striped table-hover table-bordered">
+		                           		<thead>
+		                               		<tr>
+			                                   	<th>#</th>
+			                                   	<th>PERMISSÃO</th>
+			                                   	<th>DESCRIÇÃO</th>
+			                                   	<th>AÇÕES</th>
+		                               		</tr>
+		                           		</thead>
+		                           		<tbody class="">
+				                            	<tr th:each="permissao : ${grupo.permissoes}">
+				                            		<td th:text="${permissao.codigo}">codigo</td>
+				                            		<td class="text-uppercase" th:text="${permissao.nome}">permissão</td>
+				                            		<td class="text-uppercase">
+				                            		
+				                            		</td>
+				                                    <td style="width: 100px">
+				                                    	<a href='javascript:void(0);' class='js-editar-parentesco js-tooltip col-blue' title="Editar parentesco"
+                    											data-toggle="modal" data-target="#defaultModal" >
+							                                  <i class='material-icons btn-icon'>edit</i>
+							                                  
+							                            </a>
+				                              			<a href='javascript:void(0);' class='js-exclusao-btn js-tooltip col-pink' title="Remover aluno" 
+				                              					data-url="@{/responsaveis/{codigo}(codigo=${responsavelAluno.codigo})}"
+				                              					data-objeto="|remover ${responsavelAluno.aluno.nome}|">
+							                                  <i class='material-icons btn-icon'>delete</i> 
+							                                
+							                            </a>
+			                              			</td>
+				                            	</tr>
+		                           		</tbody>
+		                       		</table>
+		               		</div>
+                     	</th:block>
+                  		<th:block th:unless="${grupo.permissoes.size() > 0}"><p>Sem permissões cadastradas para o perfil</p></th:block>
+                    </div>
+                </div>
+           </div>
+    </section>
+
+   <th:block layout:fragment="javascript-extra">
+   </th:block>
+</body>
+
+</html>

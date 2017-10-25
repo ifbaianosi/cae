@@ -10,7 +10,7 @@
         <!-- Left Sidebar -->
         <aside id="leftsidebar" class="sidebar">
             <!-- User Info -->
-            <div class="user-info" style="height: auto;">
+            <div class="user-info">
                 <!-- <div class="image">
                     <img th:src="@{/layout/images/user.png}" width="48" height="48" alt="User" />
                 </div> -->
@@ -61,6 +61,24 @@
                             </li>
                         </ul>
                     </li>
+                    <li sec:authorize="hasRole('ROLE_MENU_ALUNOS')">
+                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
+                            <i class="material-icons">person</i>
+                            <span>RESPONSÁVEL</span>
+                        </a>
+                        <ul class="ml-menu" style="display: none;">
+                            <li>
+                                <a th:href="@{/responsaveis/novo}" class="waves-effect waves-block">
+                                    <span>CADASTRAR</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/responsaveis}" class="waves-effect waves-block">
+                                    <span>PESQUISAR</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li sec:authorize="hasRole('ROLE_MENU_USUARIOS')">
                         <a class="menu-toggle waves-effect waves-block">
                             <i class="material-icons">security</i>
@@ -74,6 +92,24 @@
                             </li>
                             <li sec:authorize-url="/usuarios">
                                 <a th:href="@{/usuarios}" class="waves-effect waves-block">
+                                    <span>PESQUISAR</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_MENU_USUARIOS')">
+                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
+                            <i class="material-icons">verified_user</i>
+                            <span>PERFIS</span>
+                        </a>
+                        <ul class="ml-menu" style="display: none;">
+                            <li>
+                                <a th:href="@{/perfis/novo}" class="waves-effect waves-block">
+                                    <span>CADASTRAR</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/perfis}" class="waves-effect waves-block">
                                     <span>PESQUISAR</span>
                                 </a>
                             </li>
@@ -108,7 +144,7 @@
                     <li sec:authorize="hasRole('ROLE_MENU_CONSULTAS')"  class="header">CONSULTAS</li>
                     <li sec:authorize-url="/alunos/pesquisa">
                         <a th:href="@{/alunos/pesquisa}">
-                            <i class="material-icons">search</i>
+                            <i class="material-icons">school</i>
                             <span>ALUNOS</span>
                         </a>
                     </li>

@@ -5,7 +5,7 @@
 	layout:decorator="'layout/LayoutPadrao'">
 
 <head>
-    <title>Pesquisar usuarios</title>
+    <title>Pesquisar perfis</title>
 </head>
 
 <body>
@@ -15,48 +15,38 @@
            		<div class="col-xs-12">
 	                <ol class="breadcrumb" style="padding: 0px 0px;">
 	                    <li><a th:href="@{/}" class="js-tooltip" title="Página inicial"><i class="material-icons">home</i> Início</a></li>
-	                    <li class="active"><i class="material-icons">security</i> Usuários</li>
+	                    <li class="active"><i class="material-icons">verified_user</i> Perfis</li>
 	                </ol>
            		</div>
            	</div>
             <div class="card">
                 <div class="header">
                     <h2>
-                        PESQUISAR USUÁRIOS
-                        <small>Combine os campos abaixo para filtrar registros de usuários.</small>
+                        PESQUISAR PERFIS
+                        <small>Combine os campos abaixo para filtrar registros de perfis de usuário.</small>
                     </h2>
                     <ul class="header-dropdown m-r--5">
                         <li class="dropdown">
-                 		<a th:href="@{/usuarios/novo}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">add</i> NOVO USUÁRIO</a>
+                 		<a th:href="@{/perfis/novo}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">add</i> NOVO PERFIL</a>
                         </li>
                     </ul>
                 </div>
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
                         <div class="col-md-12">
-                            <form class="js-formulario" th:action="@{/usuarios}" method="GET" th:object="${usuarioFilter}">
+                            <form class="js-formulario" th:action="@{/perfis}" method="GET" th:object="${grupoFilter}">
                                 <div class="row">
-                                	<div class="col-xs-12  col-sm-6 col-md-6">
+                                	<div class="col-xs-12">
                                         <label for="nome">Nome</label>
                                         <div class="form-group">
-                                            <div class="form-line" th:classappend="${#fields.hasErrors('nome')} ? 'focused error'">
+                                            <div class="form-line" >
                                                 <input type="text" id="nome" class="form-control" placeholder="" th:field="*{nome}">
                                             </div>                                            
-                                            <label th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="error" for="nome"></label>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <label for="email">E-mail</label>
-                                        <div class="form-group">
-                                            <div class="form-line" th:classappend="${#fields.hasErrors('email')} ? 'focused error'">
-                                                <input type="text" id="email" class="form-control" placeholder="" th:field="*{email}">
-                                            </div>
-                                            <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" id="email-error" class="error" for="email"></label>
                                         </div>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn bg-teal waves-effect  js-submit">PESQUISAR</button>
-                                <a th:href="@{/usuarios}" class="btn btn-default waves-effect">LIMPAR</a>
+                                <a th:href="@{/perfis}" class="btn btn-default waves-effect">LIMPAR</a>
                             </form>
                         </div>
                     </div>
@@ -65,47 +55,38 @@
             <div class="card">
 	            <div class="header">
 	                <h2>
-	                    USUÁRIOS
+	                    PERFIS
 	                    <small>A pesquisa retornou <span th:text="${pagina.totalRegistros}"></span> resultados.</small>
 	                </h2>
 	                <ul class="header-dropdown m-r--5">
 	                    <li class="dropdown">
-	     					<a th:href="@{/usuarios/novo}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">add</i> NOVO USUÁRIO</a>
+	     					<a th:href="@{/perfis/novo}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">add</i> NOVO PERFIL</a>
 	                    </li>
 	                </ul>
 	            </div>
                 <div class="body">
-                	<div class="row">
+                	<!-- <div class="row">
                 		<div class="col-md-12 align-left">
 		              		<button type="button" class="btn btn-xs bg-teal waves-effect js-status-btn disabled" th:data-status="ATIVAR" th:data-url="@{/usuarios/status}">ATIVAR</button>
 		              		<button type="button" class="btn btn-xs bg-teal waves-effect js-status-btn disabled" th:data-status="DESATIVAR" th:data-url="@{/usuarios/status}">DESATIVAR</button>
              			</div>
-                	</div>
+                	</div> -->
                 	<div class="row">
 	                 	<div class="col-xs-12 table-responsive">
 	                      <table class="table table-striped table-hover">
 	                          <thead>
 	                             <tr>
-	                                 <th></th>
 	                                 <th>NOME</th>
-	                                 <th>EMAIL</th>
-	                                 <th>STATUS</th>
+	                                 <th>DESCRIÇÃO</th>
 	                                 <th class="text-right">AÇÕES</th>
 	                             </tr>
 	                         </thead>
 	                         <tbody>
-	                             <tr th:each="usuario : ${pagina.conteudo}" th:if="${usuario.codigo > 1}">
-	                              	<td style="width: 20px;">
-	                              		<div th:if="${#authentication.principal.usuario.codigo != usuario.codigo}">
-	        	 							<input type="checkbox" th:id="|ID_${usuario.codigo}|" class="chk-col-teal  js-checkbox" th:data-codigo="${usuario.codigo}">
-	               							<label th:for="|ID_${usuario.codigo}|"></label>
-	              						</div>
-	           						</td>
-	                                 <td th:text="${usuario.nome}">nome do usuario</td>
-	                                 <td th:text="${usuario.email}">email@email.com</td>
-	                                 <td><span class="label" th:classappend="${usuario.ativoOuInativo.cor}" th:text="${usuario.ativoOuInativo}"></span></td>
+	                             <tr th:each="grupo : ${pagina.conteudo}">
+	                                 <td th:text="${grupo.nome}">Nome do grupo</td>
+	                                 <td th:text="${grupo.descricao}">Descrição</td>
 	                                 <td class="text-right">
-                                 		<a th:href="@{/usuarios/{codigo}(codigo=${usuario.codigo})}" class="col-teal"><i class="material-icons btn-icon">edit</i>EDITAR</a>
+                                 		<a th:href="@{/perfis/{codigo}(codigo=${grupo.codigo})}" class="col-teal"><i class="material-icons btn-icon">edit</i>EDITAR</a>
 	                                 	<!-- <a th:href="@{/usuarios/{codigo}(codigo=${usuario.codigo})}" class="col-red js-exclusao-btn" title="Excluir" href="#" 
 													th:data-url="@{/usuarios/{codigo}(codigo=${usuario.codigo})}" th:data-objeto="${usuario.nome}">
 												<i class="material-icons btn-icon">delete</i>
@@ -113,7 +94,7 @@
                                  	</td>
                              	</tr>
                              	<tr th:if="${pagina.vazia}">
-                             		<td colspan="5">A pesquisa não retornou nenhum resultado.</td>
+                             		<td colspan="3">A pesquisa não retornou nenhum resultado.</td>
                              	</tr>
                          	</tbody>
                       	</table>

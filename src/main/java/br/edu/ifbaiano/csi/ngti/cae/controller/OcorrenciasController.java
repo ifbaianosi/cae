@@ -1,6 +1,5 @@
 package br.edu.ifbaiano.csi.ngti.cae.controller;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -33,21 +32,16 @@ import br.edu.ifbaiano.csi.ngti.cae.dto.GraficoOcorrenciasPorMes;
 import br.edu.ifbaiano.csi.ngti.cae.dto.OcorrenciaDTO;
 import br.edu.ifbaiano.csi.ngti.cae.model.Alojamento;
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
-import br.edu.ifbaiano.csi.ngti.cae.model.Notificacao;
 import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
 import br.edu.ifbaiano.csi.ngti.cae.model.SerieTurma;
 import br.edu.ifbaiano.csi.ngti.cae.model.TipoEncaminhamento;
-import br.edu.ifbaiano.csi.ngti.cae.model.TipoNotificacao;
-import br.edu.ifbaiano.csi.ngti.cae.model.UsuarioNotificacao;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Alunos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Cursos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Ocorrencias;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Usuarios;
 import br.edu.ifbaiano.csi.ngti.cae.repository.filter.OcorrenciaFilter;
 import br.edu.ifbaiano.csi.ngti.cae.security.UsuarioSistema;
-import br.edu.ifbaiano.csi.ngti.cae.service.CadastroNotificacaoService;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroOcorrenciaService;
-import br.edu.ifbaiano.csi.ngti.cae.service.CadastroUsuarioNotificacaoService;
 
 @Controller
 @RequestMapping("/ocorrencias")
@@ -73,7 +67,6 @@ public class OcorrenciasController {
 		ModelAndView mv = new ModelAndView("ocorrencia/PesquisaOcorrencias");
 		
 		PageWrapper<Ocorrencia> paginaWrapper = new PageWrapper<>(ocorrencias.filtrar(ocorrenciaFilter, pageable), httpServletRequest);
-		
 		
 		mv.addObject("pagina", paginaWrapper);
 		mv.addObject("usuarios", usuarios.findByAtivoTrue());

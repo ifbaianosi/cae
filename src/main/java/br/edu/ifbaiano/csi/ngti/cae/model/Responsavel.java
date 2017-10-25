@@ -1,15 +1,20 @@
 package br.edu.ifbaiano.csi.ngti.cae.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="responsavel")
@@ -34,6 +39,10 @@ public class Responsavel extends Entidade{
 	@Email(message="Email inválido")
 	@Size(max=80, message="O email deve conter no máximo {max} caracteres")
 	private String email;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "responsavel", fetch=FetchType.LAZY)
+	private List<ResponsavelAluno> responsavelAlunos;
 	
 	@Enumerated(EnumType.STRING)
 	@Transient
@@ -107,6 +116,14 @@ public class Responsavel extends Entidade{
 		this.email = email;
 	}
 	
+	public List<ResponsavelAluno> getResponsavelAlunos() {
+		return responsavelAlunos;
+	}
+
+	public void setResponsavelAlunos(List<ResponsavelAluno> responsavelAlunos) {
+		this.responsavelAlunos = responsavelAlunos;
+	}
+
 	public String getIdentificador() {
 		return identificador;
 	}

@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Alunos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Encaminhamentos;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Ocorrencias;
+import br.edu.ifbaiano.csi.ngti.cae.repository.Responsaveis;
 import br.edu.ifbaiano.csi.ngti.cae.security.UsuarioSistema;
 
 
@@ -28,6 +29,9 @@ public class InicioController {
 	@Autowired
 	private Alunos alunos;
 	
+	@Autowired
+	private Responsaveis responsaveis;
+	
 	@GetMapping
 	public ModelAndView index(@AuthenticationPrincipal UsuarioSistema usuarioSistema){
 		ModelAndView mv = new ModelAndView("Index");
@@ -37,6 +41,7 @@ public class InicioController {
 		mv.addObject("ocorrenciasPorLocal", ocorrencias.totalOcorrenciasPorLocal());
 		mv.addObject("ocorrenciasPorUsuario", ocorrencias.totalOcorrenciasPorUsuario());
 		mv.addObject("ocorrenciasPorAluno", ocorrencias.totalOcorrenciasPorAluno());
+		mv.addObject("quantidadeResponsaveis", responsaveis.count());
 		
 		return mv;
 	}

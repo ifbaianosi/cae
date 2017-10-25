@@ -15,25 +15,25 @@
 <body>
 	
     <section class="content" layout:fragment="conteudo">
-            <div class="block-header">
-                <div class="row">
-            		<div class="col-md-8">
-            			<h2>PESQUISAR OCORRÊNCIAS</h2>
-            		</div>
-            		<div class="col-md-4">
-		                <ol class="breadcrumb align-right" style="padding: 0px 0px;">
-		                    <li><a th:href="@{/}" class="js-tooltip" title="Página inicial"><i class="material-icons">home</i> Início</a></li>
-		                    <li class="active"><i class="material-icons">assignment</i> Ocorrências</li>
-		                </ol>
-            		</div>
-            	</div>
-            </div>
+            <div class="row">
+           		<div class="col-xs-12">
+	                <ol class="breadcrumb" style="padding: 0px 0px;">
+	                    <li><a th:href="@{/}" class="js-tooltip" title="Página inicial"><i class="material-icons">home</i> Início</a></li>
+	                    <li class="active"><i class="material-icons">assignment</i> Ocorrências</li>
+	                </ol>
+           		</div>
+           	</div>
             <div class="card">
                 <div class="header">
                 	<h2>
-                        FORMULÁRIO DE PESQUISA
+                        PESQUISAR OCORRÊNCIAS
                         <small>Combine os campos abaixo para filtrar registros de ocorrência.</small>
                     </h2>
+                    <ul class="header-dropdown m-r--5">
+                        <li class="dropdown">
+                       		<a th:href="@{/ocorrencias/nova}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">add</i> NOVA OCORRÊNCIA</a>
+                        </li>
+                    </ul>
                 </div>
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
@@ -43,14 +43,6 @@
                             							method="GET" th:object="${ocorrenciaFilter}">
                             	
                                 <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
-                                        <label for="numero">N° da ocorrência</label>
-                                        <div class="form-group">
-                                            <div class="form-line">
-                                                <input type="text" id="numero" class="form-control" placeholder="" th:field="*{numero}">
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="col-xs-12 col-sm-6 col-md-3">
 		                                <label for="autocomplete-input-aluno">Aluno</label>
 	                                        <div class="form-group">
@@ -68,6 +60,14 @@
 		                                    </div>
 		                                </div> -->
 		                            </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3">
+                                        <label for="numero">N° da ocorrência</label>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" id="numero" class="form-control" placeholder="" th:field="*{numero}">
+                                            </div>
+                                        </div>
+                                    </div>
 		                            <div class="col-xs-12 col-sm-6 col-md-3">
                                         <label for="dataOcorrido">Data da ocorrência</label>
                                         <div class="input-group">
@@ -182,13 +182,6 @@
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
 	                        		<a th:href="@{/ocorrencias/nova}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">add</i> NOVA OCORRÊNCIA</a>
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">more_vert</i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li><a th:href="@{/ocorrencias/nova}" class="waves-effect waves-block">Nova ocorrência</a></li>
-                                        <li><a th:href="@{/ocorrencias}" class="waves-effect waves-block">Atualizar</a></li>
-                                    </ul>
                                 </li>
                             </ul>
                         </div>

@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/LayoutPadrao'">
+
+<head>
+    <title th:text="${responsavel.novo} ? 'Cadastrar responsável' : 'Editar responsável'">Titulo da janela</title>
+</head>
+
+<body>
+	
+    <section class="content" layout:fragment="conteudo">
+			<div class="row">
+           		<div class="col-xs-12">
+	                <ol class="breadcrumb" style="padding: 0px 0px;">
+	                    <li><a th:href="@{/}" class="js-tooltip" title="Página inicial"><i class="material-icons">home</i> Início</a></li>
+	                    <li><a th:href="@{/responsaveis}" class="js-tooltip" title="Pesquisar responsáveis"><i class="material-icons">person</i> Responsáveis</a></li>
+	                    <li class="active" th:if="${responsavel.novo}"><i class="material-icons">add_circle_outline</i> Novo</li>
+	                    <li class="active" th:unless="${responsavel.novo}"><i class="material-icons">edit</i> Editar</li>
+	                </ol>
+           		</div>
+           	</div>
+            
+            <!-- MENSAGEM SUCESSO -->
+			<div class="alert bg-teal alert-dismissible fade in" role="alert" th:if="${not #strings.isEmpty(mensagemSucesso)}" th:fragment="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<i class="material-icons">clear</i>
+				</button>
+				<span th:text="${mensagemSucesso}"></span>
+			</div>
+		
+            <div class="card">
+            	<div class="header">
+                    <h2 class="text-uppercase">
+                        <th:block th:if="${responsavel.novo}">CADASTRAR NOVO RESPONSÁVEL</th:block>
+						<th:block th:unless="${responsavel.novo}" th:text="|EDITAR RESPONSÁVEL ${responsavel.nome}|">EDITAR RESPONSAVEL</th:block>
+                        <small class="text-lowercase">Os campos marcados com <code>(*)</code> requer preenchimento obrigatório.</small>
+                    </h2>
+                    <ul class="header-dropdown m-r--5">
+                        <li class="dropdown">
+                 			<a th:href="@{/responsaveis}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">search</i> PESQUISAR RESPONSÁVEIS</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="body"> <!--  card-padding-->
+                    <div class="row">
+                    	<form th:action="${responsavel.novo} ? @{/responsaveis/novo} : @{/responsaveis/{codigo}(codigo=${responsavel.codigo})}" method="POST" th:object="${responsavel}">
+                    		
+                    		<input type="hidden" th:field="*{codigo}">
+	                        
+	                        <div class="col-xs-12 col-sm-12 trino-required">
+	                            <label for="responsavel_nome" class="control-label">Nome</label>
+	                            <div class="form-group">
+	                                <div class="form-line" th:classappend="${#fields.hasErrors('nome')} ? 'focused error'">
+	                                    <input type="text" id="responsavel_nome" class="form-control" placeholder="" th:field="*{nome}">
+	                                </div>
+                                    <label th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="error" for="nome"></label>
+	                            </div>
+	                        </div>
+	                        <div class="col-xs-12 col-sm-6 trino-required">
+	                            <label for="responsavel_contato" class="control-label">Contato 1</label>
+	                            <div class="input-group">
+	                                <div class="form-line" th:classappend="${#fields.hasErrors('contato')} ? 'focused error'">
+	                                    <input type="text" id="responsavel_contato" class="form-control mobile-phone-number js-phone-number" placeholder="" th:field="*{contato}">
+	                                </div>
+                                    <label th:if="${#fields.hasErrors('contato')}" th:errors="*{contato}" class="error" for="contato"></label>
+	                                <input type="checkbox" id="responsavel_whatsapp" class="chk-col-teal" name="contato_whatsapp" th:checked="${responsavel.contato_whatsapp}">
+	                                <label for="responsavel_whatsapp">WhatsApp</label>
+	                            </div>
+	                        </div>
+	                        <div class="col-xs-12 col-sm-6">
+	                            <label for="responsavel_contato2">Contato 2</label>
+	                            <div class="input-group">
+	                                <div class="form-line" th:classappend="${#fields.hasErrors('contato2')} ? 'focused error'">
+	                                    <input type="text" id="responsavel_contato2" class="form-control mobile-phone-number js-phone-number" placeholder="" th:field="*{contato2}">
+	                                </div>
+                                    <label th:if="${#fields.hasErrors('contato2')}" th:errors="*{contato2}" class="error" for="nome"></label>
+	                                <input type="checkbox" id="responsavel_whatsapp2" class="chk-col-teal" name="contato2_whatsapp" th:checked="${responsavel.contato2_whatsapp}">
+	                                <label for="responsavel_whatsapp2">WhatsApp</label>
+	                            </div>
+	                        </div>
+	                        <div class="col-xs-12 col-sm-12">
+	                            <label for="responsavel_email">E-mail</label>
+	                            <div class="form-group">
+	                                <div class="form-line" th:classappend="${#fields.hasErrors('email')} ? 'focused error'">
+	                                    <input type="text" id="responsavel_email" class="form-control" placeholder="" th:field="*{email}">
+	                                </div>
+                                    <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error" for="nome"></label>
+	                            </div>
+	                        </div>
+	                        <div class="col-xs-12">
+	                            <button type="submit" class="btn waves-effect bg-teal">SALVAR</button>
+                 				<a th:href="@{/responsaveis}" class="btn btn-default waves-effect">VOLTAR</a>
+	                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="card" th:unless="${responsavel.novo}">
+                <div class="header">
+                    <h2>
+                        ALUNOS
+                        <small>Lista de alunos sob sua responsabilidade e o grau de parentesco.</small>
+                    </h2>
+                    <!-- <ul class="header-dropdown m-r--5">
+                        <li class="dropdown">
+                        	<a href="javascript:void(0);" class="waves-effect col-teal js-modal-responsavel" 
+                    				data-toggle="modal" data-target="#defaultModal" th:data-aluno="${aluno.codigo}" 
+                    				th:data-nome-aluno="${aluno.nome}">
+                       			<i class="material-icons col-teal btn-icon">add</i> 
+                       			ADICIONAR RESPONSÁVEL
+                       		</a>
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">more_vert</i>
+                            </a>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a th:href="@{/ocorrencias/nova}" class="waves-effect waves-block">Nova ocorrência</a></li>
+                                <li><a th:href="@{/ocorrencias}" class="waves-effect waves-block">Atualizar</a></li>
+                            </ul>
+                        </li>
+                    </ul> -->
+                </div>
+                <div class="body">
+                   <div class="table-responsive">
+                   		<th:block>
+                      			<div class="form-group">
+		                       		<table class="table table-striped table-hover table-bordered">
+		                           		<thead>
+		                               		<tr>
+			                                   	<th>PARENTESCO</th>
+			                                   	<th>ALUNO</th>
+			                                   	<th>AÇÕES</th>
+		                               		</tr>
+		                           		</thead>
+		                           		<tbody class="">
+				                           	<th:block th:if="${responsavel.responsavelAlunos.size() > 0}">
+				                            	<tr th:each="responsavelAluno : ${responsavel.responsavelAlunos}">
+				                            		<td th:text="${responsavelAluno.parentesco}">PAI</td>
+				                            		<td class="text-uppercase">
+				                            			<a th:href="@{/alunos/{codigo}(codigo=${responsavelAluno.aluno.codigo})}"
+				                            			   th:text="|${responsavelAluno.aluno.nome} - ${responsavelAluno.aluno.matricula}|">
+				                            				JOSE FRANCISCO SANTOS - 15120
+				                            			</a>
+				                            		</td>
+				                                    <td style="width: 100px">
+				                                    	<!-- <a href='javascript:void(0);' class='js-editar-parentesco js-tooltip col-blue' title="Editar parentesco"
+                    											data-toggle="modal" data-target="#defaultModal" >
+							                                  <i class='material-icons btn-icon'>edit</i>
+							                                  
+							                            </a> -->
+				                              			<a href='javascript:void(0);' class='js-exclusao-btn js-tooltip col-pink' title="Remover aluno" 
+				                              					th:data-url="@{/responsaveis/{codigo}(codigo=${responsavelAluno.codigo})}"
+				                              					th:data-objeto="|remover ${responsavelAluno.aluno.nome}|">
+							                                  <i class='material-icons btn-icon'>delete</i> 
+							                                
+							                            </a>
+			                              			</td>
+				                            	</tr>
+				                           	</th:block>
+		                               		<tr th:unless="${responsavel.responsavelAlunos.size() > 0}"><td colspan="3">Não possui alunos sob sua responsabilidade.</td></tr>
+		                           		</tbody>
+		                       		</table>
+		               		</div>
+                     	</th:block>
+                    </div>
+                </div>
+           </div>
+        
+    </section>
+
+   <th:block layout:fragment="javascript-extra">
+   		
+   		<script th:src="@{/javascript/trino.excluir-objeto.js}"></script>
+   </th:block>
+</body>
+
+</html>

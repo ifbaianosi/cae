@@ -19,6 +19,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicUpdate;
@@ -64,7 +65,8 @@ public class Usuario implements Serializable{
 	@Column(name="data_nascimento")
 	private LocalDate dataNascimento;
 	
-	@Size(min=1, message="Selecione pelo menos um perfil")
+	@NotNull(message="Selecione pelo menos um perfil")
+	/*@Size(min=1, message="Selecione pelo menos um perfil")*/
 	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	@JoinTable(name="usuario_grupo", joinColumns = @JoinColumn(name="codigo_usuario")
 								   , inverseJoinColumns = @JoinColumn(name="codigo_grupo"))

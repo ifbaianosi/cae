@@ -18,25 +18,25 @@
 <body>
 	
     <section class="content" layout:fragment="conteudo">
-            <div class="block-header">
-            	<div class="row">
-            		<div class="col-md-8">
-            			<h2>PESQUISAR ALUNOS</h2>
-            		</div>
-            		<div class="col-md-4">
-		                <ol class="breadcrumb align-right" style="padding: 0px 0px;">
-		                    <li><a th:href="@{/}" class="js-tooltip" title="Página inicial"><i class="material-icons">home</i> Início</a></li>
-		                    <li class="active"><i class="material-icons">school</i> Alunos</li>
-		                </ol>
-            		</div>
-            	</div>
-            </div>
+           	<div class="row">
+           		<div class="col-xs-12">
+	                <ol class="breadcrumb" style="padding: 0px 0px;">
+	                    <li><a th:href="@{/}" class="js-tooltip" title="Página inicial"><i class="material-icons">home</i> Início</a></li>
+	                    <li class="active"><i class="material-icons">school</i> Alunos</li>
+	                </ol>
+           		</div>
+           	</div>
             <div class="card">
                 <div class="header">
                 	<h2>
-                        FORMULÁRIO DE PESQUISA
+                        PESQUISAR ALUNOS
                         <small>Combine os campos abaixo para filtrar alunos.</small>
                     </h2>
+                    <ul class="header-dropdown m-r--5">
+                        <li class="dropdown">
+              				<a th:href="@{/alunos/novo}" class="waves-effect col-teal "><i class="material-icons col-teal btn-icon">add</i> NOVO ALUNO</a>
+           				</li>
+           			</ul>
                 </div>
                 <div class="body"> <!--  card-padding-->
                     <div class="row">
@@ -201,13 +201,6 @@
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
                     				<a th:href="@{/alunos/novo}" class="waves-effect col-teal "><i class="material-icons col-teal btn-icon">add</i> NOVO ALUNO</a>
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">more_vert</i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li><a th:href="@{/alunos/novo}" class="waves-effect waves-block">Novo aluno</a></li>
-                                        <li><a th:href="@{/alunos}" class="waves-effect waves-block">Atualizar</a></li>
-                                    </ul>
                                 </li>
                             </ul>
                         </div>
@@ -238,7 +231,7 @@
 	                                        	<span class="label" th:text="${aluno.status.descricao}" th:classappend="${aluno.status.cor}">FREQUENTANDOO</span>
 	                                        </td>
 	                                        <td class="text-center">
-	                                        	<a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}" class="col-blue"><i class="material-icons btn-icon">edit</i>Editar</a>
+	                                        	<a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}" class="col-teal"><i class="material-icons btn-icon">edit</i>Editar</a>
 	                                         	<!-- <a sec:authorize-url="/alunos/detalhe" th:href="@{/alunos/detalhe?matricula={matricula}(matricula=${aluno.matricula})}" class="col-teal"><i class="material-icons btn-icon">history</i>Histórico</a> -->
 	                                        </td>
 	                                    </tr>

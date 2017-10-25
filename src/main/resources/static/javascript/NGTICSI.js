@@ -89,6 +89,8 @@ $(function() {
 	// Enable Bootstrap popover
 	 $('[data-toggle="popover"]').popover();
 	 
+	 $('.js-info-box-click').css( 'cursor', 'pointer' );
+	 
 	 $('.js-info-box-click').click(function(event){
 		 var url = $(event.currentTarget).data('url');
 		 console.log('click no info box', url);
