@@ -38,17 +38,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-			.antMatchers("/alunos").hasRole("PESQUISAR_ALUNO")
+			.antMatchers("/alunos/pesquisa").hasRole("CONSULTAR_DADOS_ALUNO")
 			.antMatchers("/alunos/novo").hasRole("NOVO_ALUNO")
+			.antMatchers("/alunos/{\\d+}").hasRole("EDITAR_ALUNO")
 			.antMatchers("/alunos/detalhe").hasRole("CONSULTAR_HISTORICO_ALUNO")
 			.antMatchers("/alunos/adicionar").hasRole("NOVA_OCORRENCIA")
-			
 			.antMatchers("/alunos/por").hasRole("PESQUISAR_ALUNO_POR_NOMEOUMATRICULA")
 			.antMatchers("/alunos/por-matricula").hasRole("PESQUISAR_ALUNO_POR_MATRICULA")
-			.antMatchers("/alunos/pesquisa").hasRole("CONSULTAR_DADOS_ALUNO")
+			.antMatchers("/alunos").hasRole("PESQUISAR_ALUNO")
+
+			.antMatchers("/responsaveis").hasRole("PESQUISAR_RESPONSAVEIS")
+			.antMatchers("/responsaveis/novo").hasRole("NOVO_RESPONSAVEL")
+			.antMatchers("/responsaveis/{\\d+}").hasRole("EDITAR_RESPONSAVEL")
+
+			.antMatchers("/perfis").hasRole("PESQUISAR_GRUPOS")
+			.antMatchers("/perfis/novo").hasRole("NOVO_GRUPO")
+			.antMatchers("/perfis/{\\d+}").hasRole("EDITAR_GRUPO")
+			
 			
 			.antMatchers("/usuarios").hasRole("PESQUISAR_USUARIO")
 			.antMatchers("/usuarios/novo").hasRole("NOVO_USUARIO")
+			.antMatchers("/usuarios/{\\d+}").hasRole("EDITAR_USUARIO")
 			
 			.antMatchers("/ocorrencias/totalPorMes").hasRole("VER_GRAFICO_OCORRENCIAS_MES")
 			.antMatchers("/ocorrencias").hasRole("PESQUISAR_TODAS_OCORRENCIAS")

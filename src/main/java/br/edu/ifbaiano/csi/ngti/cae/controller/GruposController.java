@@ -1,7 +1,5 @@
 package br.edu.ifbaiano.csi.ngti.cae.controller;
 
-import java.util.Optional;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -19,12 +17,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifbaiano.csi.ngti.cae.controller.page.PageWrapper;
 import br.edu.ifbaiano.csi.ngti.cae.model.Grupo;
-import br.edu.ifbaiano.csi.ngti.cae.model.Responsavel;
 import br.edu.ifbaiano.csi.ngti.cae.repository.Grupos;
+import br.edu.ifbaiano.csi.ngti.cae.repository.Permissoes;
 import br.edu.ifbaiano.csi.ngti.cae.repository.filter.GrupoFilter;
 import br.edu.ifbaiano.csi.ngti.cae.service.CadastroGrupoService;
 import br.edu.ifbaiano.csi.ngti.cae.service.exception.GrupoJaCadastradoException;
-import br.edu.ifbaiano.csi.ngti.cae.service.exception.ResponsavelJaCadastradoException;
 
 @Controller
 @RequestMapping("/perfis")
@@ -33,6 +30,9 @@ public class GruposController {
 	
 	@Autowired
 	private Grupos grupos;
+	
+	@Autowired
+	private Permissoes permissoes;
 	
 	@Autowired
 	private CadastroGrupoService cadastroGrupoService;
@@ -51,6 +51,7 @@ public class GruposController {
 	public ModelAndView novo(Grupo grupo){
 		ModelAndView mv = new ModelAndView("grupo/CadastroGrupo");
 		mv.addObject("grupo", grupo);
+		mv.addObject("permissoes", permissoes.findAll());
 		return mv;
 	}
 	
@@ -63,22 +64,24 @@ public class GruposController {
 		}
 		
 		try {
+			System.out.println("=======> antes do salvar");
 			cadastroGrupoService.salvar(grupo);
 		} catch (GrupoJaCadastradoException e) {
+			System.out.println("=======> grupo já cadastrado!!");
 			result.rejectValue("nome", e.getMessage(), e.getMessage());
 			return novo(grupo);
 		}
 			
 		attributs.addFlashAttribute("mensagemSucesso", "Grupo salvo com sucesso!");
 		
-		return new ModelAndView("redirect:/perfis/novo");
+		return new ModelAndView(grupo.isNovo() ? "redirect:/perfis/novo" : "redirect:/perfis/"+grupo.getCodigo());
 	}
 
 	 
 	@GetMapping(value="/{codigo}")
 	public ModelAndView editar(@PathVariable("codigo") Long codigo){
 		Grupo grupoOptional = grupos.porCodigoComPermissoes(codigo);
-			System.out.println("===========> permissoes do grupo " + grupoOptional.getNome() + ": "+grupoOptional.getPermissoes().size());
+			/*System.out.println("===========> permissoes do grupo " + grupoOptional.getNome() + ": "+grupoOptional.getPermissoes().size());*/
 			return novo(grupoOptional);
 	}
 }

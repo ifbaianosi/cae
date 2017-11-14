@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="'layout/LayoutPadrao'">
+	layout:decorator="'layout/LayoutPadrao'"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
     <title th:text="${ocorrencia.novo} ? 'Registrar ocorrencia' : 'Editar ocorrencia'">Registrar ocorrencia</title>
@@ -34,7 +35,7 @@
                         <small>Os campos marcados com <code>(*)</code> requer preenchimento obrigatório.</small>
                     </h2>
                     <ul class="header-dropdown m-r--5">
-                        <li class="dropdown">
+                        <li sec:authorize="hasRole('PESQUISAR_TODAS_OCORRENCIAS') or hasRole('PESQUISAR_OCORRENCIAS_PROPRIA_AUTORIA')" class="dropdown">
                  			<a th:href="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">search</i> PESQUISAR OCORRÊCNIAS</a>
                         </li>
                     </ul>

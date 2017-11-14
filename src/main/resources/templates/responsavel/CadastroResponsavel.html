@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="'layout/LayoutPadrao'">
+	layout:decorator="'layout/LayoutPadrao'"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
     <title th:text="${responsavel.novo} ? 'Cadastrar responsável' : 'Editar responsável'">Titulo da janela</title>
@@ -38,7 +39,7 @@
                         <small class="text-lowercase">Os campos marcados com <code>(*)</code> requer preenchimento obrigatório.</small>
                     </h2>
                     <ul class="header-dropdown m-r--5">
-                        <li class="dropdown">
+                        <li sec:authorize="hasRole('ROLE_PESQUISAR_RESPONSAVEIS')" class="dropdown">
                  			<a th:href="@{/responsaveis}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">search</i> PESQUISAR RESPONSÁVEIS</a>
                         </li>
                     </ul>
@@ -90,14 +91,14 @@
 	                            </div>
 	                        </div>
 	                        <div class="col-xs-12">
-	                            <button type="submit" class="btn waves-effect bg-teal">SALVAR</button>
+	                            <button sec:authorize="hasRole('ROLE_SALVAR_RESPONSAVEL')" type="submit" class="btn waves-effect bg-teal">SALVAR</button>
                  				<a th:href="@{/responsaveis}" class="btn btn-default waves-effect">VOLTAR</a>
 	                        </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="card" th:unless="${responsavel.novo}">
+            <div sec:authorize="hasRole('ROLE_PESQUISAR_ALUNO')" class="card" th:unless="${responsavel.novo}">
                 <div class="header">
                     <h2>
                         ALUNOS

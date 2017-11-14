@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="'layout/LayoutPadrao'">
+	layout:decorator="'layout/LayoutPadrao'"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
     <title th:text="${usuario.novo} ? 'Cadastrar usuario' : 'Editar usuario'">Cadastrar usuario</title>
@@ -39,8 +40,8 @@
                         <small class="text-lowercase">Os campos marcados com <code>(*)</code> requer preenchimento obrigatório.</small>
                     </h2>
                     <ul class="header-dropdown m-r--5">
-                        <li class="dropdown">
-                 		<a th:href="@{/usuarios}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">search</i> PESQUISAR USUÁRIOS</a>
+                        <li sec:authorize="hasRole('ROLE_PESQUISAR_USUARIO')" class="dropdown">
+                 			<a th:href="@{/usuarios}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">search</i> PESQUISAR USUÁRIOS</a>
                         </li>
                     </ul>
                 </div>
@@ -110,7 +111,7 @@
                                             <div th:classappend="${#fields.hasErrors('grupos')} ? 'focused error'">
                                                 <th:block th:each="grupo : ${grupos}">
 		                                        	<div> 
-								    					<input type="radio" th:value="${grupo.codigo}" class="with-gap chk-col-teal" th:field="*{grupos}">
+								    					<input type="checkbox" th:value="${grupo.codigo}" class="with-gap chk-col-teal" th:field="*{grupos}">
 		                                            	<label class="text-uppercase" th:for="${#ids.prev('grupos')}" th:text="${grupo.nome}">CAE</label>
 							    					</div>
 	                                        	</th:block>
@@ -120,7 +121,7 @@
                                     </div>
                                 </div>
                                 
-                                <button type="submit" class="btn bg-teal waves-effect  js-submit">SALVAR</button>
+                                <button sec:authorize="hasRole('ROLE_SALVAR_RESPONSAVEL')" type="submit" class="btn bg-teal waves-effect  js-submit">SALVAR</button>
                  				<a th:href="@{/usuarios}" class="btn btn-default waves-effect">VOLTAR</a>
                         		<input type="hidden" id="uuid" th:value="${uuid}" name="uuid">
                             </form>

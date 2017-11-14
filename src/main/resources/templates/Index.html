@@ -36,7 +36,7 @@
                 <div class="col-sm-3 col-xs-12">
                     <div class="info-box bg-pink hover-expand-effect" th:classappend="${#authorization.expression('hasRole(''ROLE_MENU_ALUNOS'')')} ?  js-info-box-click"  th:data-url="@{/responsaveis}"><!-- MUDAR A ROLE PARA RESPONSAVEIS -->
                         <div class="icon">
-                            <i class="material-icons">supervisor_account</i>
+                            <i class="material-icons">person</i>
                         </div>
                         <div class="content">
                             <div class="text">RESPONSÁVEIS</div>
@@ -101,7 +101,8 @@
 		                <div sec:authorize="hasRole('ROLE_VER_GRAFICO_OCORRENCIAS_MES')" class="col-xs-12">
 		                    <div class="card">
 		                        <div class="header">
-		                            <h2>OCORRÊNCIAS <small>Últimos 6 meses</small></h2>
+		                            <h2 sec:authorize="hasRole('ROLE_PESQUISAR_TODAS_OCORRENCIAS')">OCORRÊNCIAS <small>Últimos 6 meses</small></h2>
+		                            <h2 sec:authorize="hasRole('ROLE_PESQUISAR_OCORRENCIAS_PROPRIA_AUTORIA')">MEUS REGISTROS DE OCORRÊNCIAS <small>Últimos 6 meses</small></h2>
 		                        </div>
 		                        <div class="body"><iframe class="chartjs-hidden-iframe" style="width: 100%; display: block; border: 0px; height: 0px; margin: 0px; position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px;"></iframe>
 		                            <canvas id="graficoOcorrenciasPorMes" height="262" width="524" style="display: block; width: 524px; height: 262px;"></canvas>

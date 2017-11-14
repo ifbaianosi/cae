@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="'layout/LayoutPadrao'">
+	layout:decorator="'layout/LayoutPadrao'"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
     <title th:text="${grupo.novo} ? 'Cadastrar grupo' : 'Editar grupo'">Cadastrar grupo</title>
@@ -34,13 +35,13 @@
             <div class="card">
                 <div class="header">
                     <h2 class="text-uppercase">
-                    	<th:block th:if="${grupo.novo}">CADASTRAR NOVO GRUPO</th:block>
-						<th:block th:unless="${grupo.novo}" class="text-uppercase" th:text="|EDITAR GRUPO ${grupo.nome}|">EDITAR USUARIO</th:block>
+                    	<th:block th:if="${grupo.novo}">CADASTRAR NOVO PERFIL</th:block>
+						<th:block th:unless="${grupo.novo}" class="text-uppercase" th:text="|EDITAR PERFIL ${grupo.nome}|">EDITAR USUARIO</th:block>
                         <small class="text-lowercase">Os campos marcados com <code>(*)</code> requer preenchimento obrigatório.</small>
                     </h2>
                     <ul class="header-dropdown m-r--5">
-                        <li class="dropdown">
-                 		<a th:href="@{/perfis}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">search</i> PESQUISAR GRUPOS</a>
+                        <li sec:authorize="hasRole('ROLE_PESQUISAR_GRUPOS')" class="dropdown">
+                 			<a th:href="@{/perfis}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">search</i> PESQUISAR PERFIL</a>
                         </li>
                     </ul>
                 </div>
@@ -51,7 +52,7 @@
                             	
                             	<input type="hidden" th:field="*{codigo}">
                             	<th:block th:unless="${grupo.novo}">
-	                            	<input type="hidden" th:field="*{permissoes}">
+                            		<!-- <input type="hidden" th:field="*{permissoes}"> -->
                             	</th:block>
 	                            
                                 <div class="row">
@@ -74,15 +75,80 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+					                <div class="header">
+					                    <h2>
+					                        PERMISSÕES DE ACESSO
+					                        <small>permissões de acesso do perfil.</small>
+					                    </h2>
+					                </div>
+					                <div class="body">
+					                   <div class="table-responsive">
+					                   		<th:block th:if="${permissoes.size() > 0}">
+					                      			<div class="form-group">
+							                       		<table class="table table-striped table-hover table-bordered">
+							                           		<thead>
+							                               		<tr>
+							                               			<th style="width: 20px;">SELEC.</th>
+								                                   	<th>ID</th>
+								                                   	<th>PERMISSÃO</th>
+								                                   	<th>DESCRIÇÃO</th>
+							                               		</tr>
+							                           		</thead>
+							                           		<tbody class="">
+									                            	<tr th:each="permissao : ${permissoes}">
+									                            		<td style="width: 20px;">
+									        	 							<input type="checkbox" th:id="|ID_${permissao.codigo}|" th:value="${permissao.codigo}" class="with-gap chk-col-teal" th:field="*{permissoes}">
+									               							<label th:for="|ID_${permissao.codigo}|"></label>
+										           						</td>
+									                            		<td th:text="${permissao.codigo}">codigo</td>
+									                            		<td class="text-uppercase" th:text="${permissao.nome}">permissão</td>
+									                            		<td th:text="${permissao.descricao}"></td>
+									                                    <!-- <td style="width: 100px">
+									                                    	<a href='javascript:void(0);' class='js-editar-parentesco js-tooltip col-blue' title="Editar parentesco"
+					                    											data-toggle="modal" data-target="#defaultModal" >
+												                                  <i class='material-icons btn-icon'>edit</i>
+												                                  
+												                            </a>
+									                              			<a href='javascript:void(0);' class='js-exclusao-btn js-tooltip col-pink' title="Remover aluno" 
+									                              					data-url="@{/responsaveis/{codigo}(codigo=${responsavelAluno.codigo})}"
+									                              					data-objeto="|remover ${responsavelAluno.aluno.nome}|">
+												                                  <i class='material-icons btn-icon'>delete</i> 
+												                                
+												                            </a>
+								                              			</td> -->
+									                            	</tr>
+							                           		</tbody>
+							                       		</table>
+							               		</div>
+					                     	</th:block>
+					                  		<th:block th:unless="${permissoes.size() > 0}"><p>Sem permissões cadastradas para o perfil</p></th:block>
+					                    </div>
+					                </div>
+           						</div>
+                               <!--  <div class="row">
+                                    <div class="col-xs-12 col-sm-4 trino-required">
+                                        <label for="permissoes" class="control-label">Permissões de acesso</label>
+                                        <div class="form-group">
+                                            <th:block th:each="permissao : ${permissoes}">
+	                                        	<div> 
+							    					<input type="checkbox" th:value="${permissao.codigo}" class="with-gap chk-col-teal" th:field="*{permissoes}">
+	                                            	<label class="text-uppercase" th:for="${#ids.prev('permissoes')}" th:text="${permissao.nome}">CAE</label>
+						    					</div>
+                                        	</th:block>
+                                            <label th:if="${#fields.hasErrors('permissoes')}" th:errors="*{permissoes}" id="permissoes-error" class="error" for="permissoes"></label>
+                                        </div>
+                                    </div>
+                                </div> -->
                                 
-                                <button type="submit" class="btn bg-teal waves-effect  js-submit">SALVAR</button>
+                                <button sec:authorize="hasRole('ROLE_SALVAR_GRUPO')" type="submit" class="btn bg-teal waves-effect  js-submit">SALVAR</button>
                  				<a th:href="@{/perfis}" class="btn btn-default waves-effect">VOLTAR</a>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card" th:unless="${grupo.novo}">
+            <!-- <div class="card" th:unless="${grupo.novo}">
                 <div class="header">
                     <h2>
                         PERMISSÕES DE ACESSO
@@ -106,19 +172,21 @@
 		                       		<table class="table table-striped table-hover table-bordered">
 		                           		<thead>
 		                               		<tr>
-			                                   	<th>#</th>
+		                               			<th style="width: 20px;">SELEC.</th>
+			                                   	<th>ID</th>
 			                                   	<th>PERMISSÃO</th>
 			                                   	<th>DESCRIÇÃO</th>
-			                                   	<th>AÇÕES</th>
 		                               		</tr>
 		                           		</thead>
 		                           		<tbody class="">
-				                            	<tr th:each="permissao : ${grupo.permissoes}">
+				                            	<tr th:each="permissao : ${permissoes}">
+				                            		<td style="width: 20px;">
+				        	 							<input type="checkbox" th:id="|ID_${permissao.codigo}|" th:value="${permissao.codigo}" class="with-gap chk-col-teal" th:field="*{permissoes}">
+				               							<label th:for="|ID_${permissao.codigo}|"></label>
+					           						</td>
 				                            		<td th:text="${permissao.codigo}">codigo</td>
 				                            		<td class="text-uppercase" th:text="${permissao.nome}">permissão</td>
-				                            		<td class="text-uppercase">
-				                            		
-				                            		</td>
+				                            		<td th:text="${permissao.descricao}"></td>
 				                                    <td style="width: 100px">
 				                                    	<a href='javascript:void(0);' class='js-editar-parentesco js-tooltip col-blue' title="Editar parentesco"
                     											data-toggle="modal" data-target="#defaultModal" >
@@ -137,10 +205,10 @@
 		                       		</table>
 		               		</div>
                      	</th:block>
-                  		<th:block th:unless="${grupo.permissoes.size() > 0}"><p>Sem permissões cadastradas para o perfil</p></th:block>
+                  		<th:block th:unless="${permissoes.size() > 0}"><p>Sem permissões cadastradas para o perfil</p></th:block>
                     </div>
                 </div>
-           </div>
+           </div> -->
     </section>
 
    <th:block layout:fragment="javascript-extra">

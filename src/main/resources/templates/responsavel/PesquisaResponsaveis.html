@@ -27,7 +27,7 @@
                         <small>Combine os campos abaixo para filtrar registros de responsável.</small>
                     </h2>
                     <ul class="header-dropdown m-r--5">
-                        <li class="dropdown">
+                        <li sec:authorize="hasRole('ROLE_NOVO_RESPONSAVEL')" class="dropdown">
                  			<a th:href="@{/responsaveis/novo}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">add</i> NOVO RESPONSÁVEL</a>
                         </li>
                     </ul>
@@ -71,7 +71,7 @@
                         <small>A pesquisa retornou <span th:text="${pagina.totalRegistros}"></span> resultados.</small>
                     </h2>
                     <ul class="header-dropdown m-r--5">
-                        <li class="dropdown">
+                        <li sec:authorize="hasRole('ROLE_NOVO_RESPONSAVEL')" class="dropdown">
                  			<a th:href="@{/responsaveis/novo}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">add</i> NOVO RESPONSÁVEL</a>
                         </li>
                     </ul>
@@ -95,16 +95,16 @@
                                    <td scope="row" th:text="${responsavel.codigo}">1</td>
                                    <td th:text="${responsavel.nome}" class="text-uppercase">Nome do responsavel</td>
                                    <td>
-                                   		<img th:if="${responsavel.contato_whatsapp == true}" alt="whatsapp" class="img-responsive js-tooltip" title="Contato do whatsapp" style="display: inline;" th:src="@{/layout/images/whatsapp-logo.png}" width="12px" height="12px">
                                    		<span th:text="${responsavel.contato}"></span>
+                                   		<img th:if="${responsavel.contato_whatsapp == true}" alt="whatsapp" class="img-responsive js-tooltip" title="Contato do whatsapp" style="display: inline;" th:src="@{/layout/images/whatsapp-logo.png}" width="12px" height="12px">
                                    </td>
                                    <td>
-                                   		<img th:if="${responsavel.contato2_whatsapp == true}" alt="whatsapp" class="img-responsive js-tooltip" title="Contato do whatsapp" style="display: inline;" th:src="@{/layout/images/whatsapp-logo.png}" width="12px" height="12px">
                                    		<span th:text="${responsavel.contato2}"></span>
+                                   		<img th:if="${responsavel.contato2_whatsapp == true}" alt="whatsapp" class="img-responsive js-tooltip" title="Contato do whatsapp" style="display: inline;" th:src="@{/layout/images/whatsapp-logo.png}" width="12px" height="12px">
                                    </td>
                                    <td th:text="${responsavel.email}">Email do responsavel</td>
                                    <td class="text-center" style="min-width: 80px;">
-                                   	<a th:href="@{/responsaveis/{codigo}(codigo=${responsavel.codigo})}" class="col-teal js-tooltip" title="Ver detalhes"><i class="material-icons btn-icon">settings</i> Detalhes</a>
+                                   	<a th:href="@{/responsaveis/{codigo}(codigo=${responsavel.codigo})}" class="col-teal js-tooltip" title="Editar responsável"><i class="material-icons btn-icon">edit</i> EDITAR</a>
                                    </td>
                               </tr>
                               <tr th:if="${pagina.vazia}">

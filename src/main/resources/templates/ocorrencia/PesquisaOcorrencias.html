@@ -30,7 +30,7 @@
                         <small>Combine os campos abaixo para filtrar registros de ocorrência.</small>
                     </h2>
                     <ul class="header-dropdown m-r--5">
-                        <li class="dropdown">
+                        <li sec:authorize="hasRole('ROLE_NOVA_OCORRENCIA')" class="dropdown">
                        		<a th:href="@{/ocorrencias/nova}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">add</i> NOVA OCORRÊNCIA</a>
                         </li>
                     </ul>
@@ -180,7 +180,7 @@
                                 <small>A pesquisa retornou <span th:text="${pagina.totalRegistros}"></span> resultados.</small>
                             </h2>
                             <ul class="header-dropdown m-r--5">
-                                <li class="dropdown">
+                                <li sec:authorize="hasRole('ROLE_NOVA_OCORRENCIA')" class="dropdown">
 	                        		<a th:href="@{/ocorrencias/nova}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">add</i> NOVA OCORRÊNCIA</a>
                                 </li>
                             </ul>
@@ -234,10 +234,10 @@
 			       												<i class="material-icons btn-icon">open_in_new</i>
 			       											</a>
 														</th:block> -->
-				                                        <th:block sec:authorize="hasRole('ROLE_NOVO_ENCAMINHAMENTO')" th:if="${ocorrencia.encaminhamentos.size()} > 0">
-			       											<a th:href="@{/relatorios/medidaDisciplinar/{codigo}(codigo=${ocorrencia.codigo})}" target="_blank" class="col-teal js-tooltip" title="Imprimir"><i class="material-icons btn-icon">print</i></a>
+				                                        <th:block sec:authorize="hasRole('ROLE_IMPRIMIR_MEDIDA_DISCIPLINAR')" th:if="${ocorrencia.encaminhamentos.size()} > 0">
+			       											<a th:href="@{/relatorios/medidaDisciplinar/{codigo}(codigo=${ocorrencia.codigo})}" target="_blank" class="col-teal js-tooltip" title="Imprimir medida disciplinar"><i class="material-icons btn-icon">print</i></a>
 														</th:block>
-			                                        	<a th:href="@{/ocorrencias/detalhes/{codigo}(codigo=${ocorrencia.codigo})}" class="col-teal js-tooltip" title="Ver detalhes"><i class="material-icons btn-icon">settings</i> Detalhes</a>
+			                                        	<a th:href="@{/ocorrencias/detalhes/{codigo}(codigo=${ocorrencia.codigo})}" class="col-teal js-tooltip" title="Ver detalhes"><i class="material-icons btn-icon">settings</i> DETALHES</a>
 			                                        </td>
 		                                    </tr>
 		                                    <tr th:if="${pagina.vazia}">

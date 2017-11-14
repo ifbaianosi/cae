@@ -51,7 +51,6 @@ public class Usuario implements Serializable{
 	@Size(max=50, message="O nome deve conter no máximo {max} caracteres")
 	private String email;
 	
-	/* Validação especifica futuramente */
 	private String senha;
 	
 	@Transient

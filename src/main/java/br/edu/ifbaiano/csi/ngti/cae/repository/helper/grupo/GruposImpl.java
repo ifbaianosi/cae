@@ -46,7 +46,6 @@ public class GruposImpl implements GruposQueries {
 	@Transactional(readOnly = true)
 	@Override
 	public Grupo porCodigoComPermissoes(Long codigo) {
-		System.out.println("====> porCodigoComPermissoes");
 		Criteria criteria = manager.unwrap(Session.class).createCriteria(Grupo.class);
 		criteria.createAlias("permissoes", "p", JoinType.LEFT_OUTER_JOIN);
 		criteria.add(Restrictions.eq("codigo", codigo));

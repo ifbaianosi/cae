@@ -24,20 +24,28 @@
 
     <!-- Custom Css -->
     <link th:href="@{/layout/css/style.css}" rel="stylesheet">
+
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link th:href="@{/layout/css/themes/theme-teal.min.css}" rel="stylesheet" />
 </head>
 
-<body class="login-page">
-    <div class="login-box">
-        <div class="logo">
+<body class="login-page theme-teal">
+
+    <!-- CABECALHO DA APLICAÇÃO -->
+    <div th:replace="layout/fragments/Cabecalho :: cabecalho"></div>
+    
+    <div class="login-box" style="margin-top: 120px;">
+        <!-- <div class="logo">
             <img class="img-responsive" alt="logo-trino" style="margin-left: 90px;" th:src="@{/layout/images/marca-if-baiano-para-o-site.png}">
             <small style="text-shadow: 3px 3px 2px #3b5f31; font-size: 180%;">SANTA INÊS</small>
-        </div>
+        </div> -->
         <div class="card">
             <div class="body">
                 <form id="sign_in" th:action="@{/login}" method="POST">
                 	<div class="row" >
 		            	<div class="col-md-12">
-			            	<img class="img-responsive" alt="logo-trino" th:src="@{/layout/images/trino-bg.png}">
+            				<img class="img-responsive" alt="logo-trino" style="margin-left: 75px;" th:src="@{/layout/images/marca-if-baiano-para-o-site.png}">
+			            	<!-- <img class="img-responsive" alt="logo-trino" th:src="@{/layout/images/trino-bg.png}"> -->
 		            	</div>
 		            </div>
                     <div class="msg">Faça login para acesso ao sistema</div>

@@ -119,7 +119,7 @@
 				</div>
 			</div>
 		<div class="row col-xs-12">
-			<button type="submit" class="btn bg-teal waves-effect  js-submit">SALVAR</button>
+			<button sec:authorize="hasRole('ROLE_SALVAR_OCORRENCIA')" type="submit" class="btn bg-teal waves-effect  js-submit">SALVAR</button>
             <a th:href="${#authorization.expression('hasRole(''ROLE_PESQUISAR_TODAS_OCORRENCIAS'')')} ? @{/ocorrencias} : @{/ocorrencias/autoria}" class="btn btn-default waves-effect">CANCELAR</a>
 			<!-- <a th:href="${ocorrencia.novo} ? @{/ocorrencias} : @{/ocorrencias/detalhes/{codigo}(codigo=${ocorrencia.codigo})}" class="btn m-t-10 waves-effect">CANCELAR</a> -->
 		</div>
@@ -132,7 +132,7 @@
 					<div class="form-group">
 						<div class="input-group">
 							<div id="divInput" class="form-line" th:classappend="${#fields.hasErrors('alunos')} ? 'focused error'">
-								<input type="text" id="matricula" class="form-control js-matricula" placeholder="Digite a matrícula do aluno">
+								<input type="text" id="matricula" class="form-control js-matricula" placeholder="Digite a matrícula do aluno ou clique em pesquisar">
 							</div>
 							<label th:if="${#fields.hasErrors('alunos')}" th:errors="*{alunos}" id="alunos-error" class="error" for="matricula"></label>		
 							<a href="javascript:void(0);" class="btn btn-xs waves-effect js-validar-numero-matricula">

@@ -27,4 +27,5 @@ public interface OcorrenciasQueries {
 	public List<OcorrenciasPorAluno> totalOcorrenciasPorAluno();
 	public Ocorrencia buscarComAlunos(Long codigo);
 	public List<GraficoOcorrenciasPorMes> totalPorMes();
+	public List<GraficoOcorrenciasPorMes> totalPorMes(Long codigoUsuario);
 }

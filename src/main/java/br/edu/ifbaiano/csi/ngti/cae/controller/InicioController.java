@@ -2,6 +2,8 @@ package br.edu.ifbaiano.csi.ngti.cae.controller;
 
 
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -33,9 +35,16 @@ public class InicioController {
 	private Responsaveis responsaveis;
 	
 	@GetMapping
-	public ModelAndView index(@AuthenticationPrincipal UsuarioSistema usuarioSistema){
+	public ModelAndView index(@AuthenticationPrincipal UsuarioSistema usuarioSistema, HttpServletRequest request){
 		ModelAndView mv = new ModelAndView("Index");
-		mv.addObject("quantidadeOcorrencias", ocorrencias.count());
+		
+		//Obter a quantidade de ocorrencias de acordo com as permissões do usuario logado
+		Long quantidadeOcorrencias = 0L;
+		if(request.isUserInRole("PESQUISAR_TODAS_OCORRENCIAS"))
+			quantidadeOcorrencias = ocorrencias.count();
+		else quantidadeOcorrencias = ocorrencias.countByUsuario(usuarioSistema.getUsuario());
+			
+		mv.addObject("quantidadeOcorrencias", quantidadeOcorrencias);
 		mv.addObject("quantidadeAlunos", alunos.count());
 		mv.addObject("quantidadeEncaminhamentos", encaminhamentos.count());
 		mv.addObject("ocorrenciasPorLocal", ocorrencias.totalOcorrenciasPorLocal());

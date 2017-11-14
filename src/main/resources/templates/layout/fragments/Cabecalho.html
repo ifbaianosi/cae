@@ -72,7 +72,7 @@
                     
                     <!-- #END# Tasks -->
                     <!-- Right Sidebar -->
-                    <li class="pull-right"><a th:href="@{/logout}"><i class="material-icons js-tooltip" title="Sair">exit_to_app</i></a></li>
+                    <li sec:authorize="isAuthenticated()" class="pull-right"><a th:href="@{/logout}"><i class="material-icons js-tooltip" title="Sair">exit_to_app</i></a></li>
                     <!-- #END# Right Sidebar -->
                 </ul>
             </div>

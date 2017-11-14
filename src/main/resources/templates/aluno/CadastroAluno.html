@@ -42,7 +42,7 @@
                         <small class="text-lowercase">Os campos marcados com <code>(*)</code> requer preenchimento obrigatório.</small>
                     </h2>
                     <ul class="header-dropdown m-r--5">
-                        <li class="dropdown">
+                        <li sec:authorize="hasRole('ROLE_PESQUISAR_ALUNO')" class="dropdown">
                  			<a th:href="@{/alunos}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">search</i> PESQUISAR ALUNOS</a>
                         </li>
                     </ul>
@@ -297,14 +297,14 @@
                     </div>
                 </div>
             </div>     
-            <div class="card" th:unless="${aluno.novo}">
+            <div class="card" th:unless="${aluno.novo}" sec:authorize="hasRole('ROLE_PESQUISAR_RESPONSAVEIS')">
                 <div class="header">
                     <h2>
                         RESPONSÁVEIS
                         <small>Adicione e gerencie os responsáveis do aluno.</small>
                     </h2>
                     <ul class="header-dropdown m-r--5">
-                        <li class="dropdown">
+                        <li sec:authorize="hasRole('ROLE_NOVO_RESPONSAVEL')" class="dropdown">
                         	<a href="javascript:void(0);" class="waves-effect col-teal js-modal-responsavel" 
                     				data-toggle="modal" data-target="#defaultModal" th:data-aluno="${aluno.codigo}" 
                     				th:data-nome-aluno="${aluno.nome}">
@@ -340,8 +340,8 @@
 			                            		</td>
 			                                    <td class="text-uppercase" style="width: 70px;" th:text="${responsavelAluno.parentesco.descricao}">Parentesco</td>
 			                                    <td>
-			                                   		<img th:if="${responsavelAluno.responsavel.contato_whatsapp == true}" alt="whatsapp" class="img-responsive js-tooltip" title="Contato do whatsapp" style="display: inline;" th:src="@{/layout/images/whatsapp-logo.png}" width="12px" height="12px">
 			                                   		<span th:text="${responsavelAluno.responsavel.contato}"></span>
+			                                   		<img th:if="${responsavelAluno.responsavel.contato_whatsapp == true}" alt="whatsapp" class="img-responsive js-tooltip" title="Contato do whatsapp" style="display: inline;" th:src="@{/layout/images/whatsapp-logo.png}" width="12px" height="12px">
 			                                   </td>
 			                                   <td>
 			                                   		<img th:if="${responsavelAluno.responsavel.contato2_whatsapp == true}" alt="whatsapp" class="img-responsive js-tooltip" title="Contato do whatsapp" style="display: inline;" th:src="@{/layout/images/whatsapp-logo.png}" width="12px" height="12px">

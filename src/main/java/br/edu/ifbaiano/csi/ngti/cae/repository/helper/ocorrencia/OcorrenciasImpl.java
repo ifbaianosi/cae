@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
@@ -273,11 +274,13 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<GraficoOcorrenciasPorMes> totalPorMes() {
-		List<GraficoOcorrenciasPorMes> ocorrenciasMes = manager.createNamedQuery("graficoOcorrencias.UltimosSeisMeses").getResultList();
+		
+		List<GraficoOcorrenciasPorMes> ocorrenciasMes = manager.createNamedQuery("graficoOcorrencias.UltimosSeisMeses")
+				.getResultList();
 		
 		LocalDate hoje = LocalDate.now();
 		for (int i = 1; i <= 6; i++) {
-			String mesIdeal = String.format("%d/%02d", hoje.getYear(), hoje.getMonthValue());
+			String mesIdeal = String.format("%02d/%d", hoje.getMonthValue(), hoje.getYear());
 			
 			boolean possuiMes = ocorrenciasMes.stream().filter(v -> v.getMes().equals(mesIdeal)).findAny().isPresent();
 			if (!possuiMes) {
@@ -290,6 +293,27 @@ public class OcorrenciasImpl implements OcorrenciasQueries{
 		return ocorrenciasMes;
 	}
 
-
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<GraficoOcorrenciasPorMes> totalPorMes(Long codigoUsuarioLogado) {
+		
+		List<GraficoOcorrenciasPorMes> ocorrenciasMes = manager.createNamedQuery("graficoOcorrencias.UltimosSeisMesesPorUsuario")
+				.setParameter("codigoUsuario", codigoUsuarioLogado)
+				.getResultList();
+		
+		LocalDate hoje = LocalDate.now();
+		for (int i = 1; i <= 6; i++) {
+			String mesIdeal = String.format("%02d/%d", hoje.getMonthValue(), hoje.getYear());
+			
+			boolean possuiMes = ocorrenciasMes.stream().filter(v -> v.getMes().equals(mesIdeal)).findAny().isPresent();
+			if (!possuiMes) {
+				ocorrenciasMes.add(i - 1, new GraficoOcorrenciasPorMes(mesIdeal, 0));
+			}
+			
+			hoje = hoje.minusMonths(1);
+		}
+		
+		return ocorrenciasMes;
+	}
 
 }

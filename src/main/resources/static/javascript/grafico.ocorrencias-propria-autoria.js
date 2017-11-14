@@ -8,7 +8,7 @@ NGTICAE.GraficoOcorrenciasPorMes = (function() {
 	
 	GraficoOcorrenciasPorMes.prototype.iniciar = function() {
 		$.ajax({
-			url: 'ocorrencias/totalPorMes',
+			url: 'ocorrencias/totalPorMesPorUsuario',
 			method: 'GET', 
 			success: onDadosRecebidos.bind(this)
 		});
@@ -28,7 +28,7 @@ NGTICAE.GraficoOcorrenciasPorMes = (function() {
 		    data: {
 		    	labels: meses,
 		    	datasets: [{
-		    		label: 'Ocorrências',
+		    		label: 'Meus registros de ocorrências',
 		    		backgroundColor: "rgba(26,179,148,0.5)",
 	                pointBorderColor: "rgba(26,179,148,1)",
 	                pointBackgroundColor: "#fff",

@@ -38,16 +38,34 @@
 	
 	<named-native-query name="graficoOcorrencias.UltimosSeisMeses" result-set-mapping="graficoOcorrenciasMapping">
 		<query>
-			SELECT date_format(data_ocorrido, '%Y/%m') mes, count(*) total
+			SELECT date_format(data_ocorrido, '%m/%Y') mes, count(*) total
 	  			FROM ocorrencia
-	  			WHERE data_ocorrido > DATE_SUB(NOW(), INTERVAL 6 MONTH)
+	  			WHERE data_ocorrido > DATE_SUB(NOW(), INTERVAL 6 MONTH) 
 	
-				GROUP BY date_format(data_ocorrido, '%Y/%m')   
-				ORDER BY date_format(data_ocorrido, '%Y/%m') DESC
+				GROUP BY date_format(data_ocorrido, '%m/%Y')   
+				ORDER BY date_format(data_ocorrido, '%m/%Y') DESC
+	    </query>
+	</named-native-query>
+	
+	<named-native-query name="graficoOcorrencias.UltimosSeisMesesPorUsuario" result-set-mapping="graficoOcorrenciasPorUsuarioMapping">
+		<query>
+			SELECT date_format(data_ocorrido, '%m/%Y') mes, count(*) total
+	  			FROM ocorrencia
+	  			WHERE data_ocorrido > DATE_SUB(NOW(), INTERVAL 6 MONTH) AND codigo_usuario = :codigoUsuario 
+	
+				GROUP BY date_format(data_ocorrido, '%m/%Y')   
+				ORDER BY date_format(data_ocorrido, '%m/%Y') DESC
 	    </query>
 	</named-native-query>
 	
 	<sql-result-set-mapping name="graficoOcorrenciasMapping">
+		<constructor-result target-class="br.edu.ifbaiano.csi.ngti.cae.dto.GraficoOcorrenciasPorMes">
+			<column name="mes" class="java.lang.String"/>
+			<column name="total" class="java.lang.Integer"/>
+		</constructor-result>
+	</sql-result-set-mapping>
+	
+	<sql-result-set-mapping name="graficoOcorrenciasPorUsuarioMapping">
 		<constructor-result target-class="br.edu.ifbaiano.csi.ngti.cae.dto.GraficoOcorrenciasPorMes">
 			<column name="mes" class="java.lang.String"/>
 			<column name="total" class="java.lang.Integer"/>

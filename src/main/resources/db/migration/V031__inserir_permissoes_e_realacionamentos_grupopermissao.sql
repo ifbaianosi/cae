@@ -1,0 +1,37 @@
+INSERT INTO permissao (codigo, nome) VALUES
+(42, 'ROLE_MENU_GRUPOS'),
+(43, 'ROLE_PESQUISAR_GRUPOS'),
+(44, 'ROLE_NOVO_GRUPO'),
+(45, 'ROLE_EDITAR_GRUPO'),
+(46, 'ROLE_EXCLUIR_GRUPO'),
+(47, 'ROLE_SALVAR_GRUPO'),
+
+(48, 'ROLE_MENU_RESPONSAVEIS'),
+(49, 'ROLE_PESQUISAR_RESPONSAVEIS'),
+(50, 'ROLE_NOVO_RESPONSAVEL'),
+(51, 'ROLE_EDITAR_RESPONSAVEL'),
+(52, 'ROLE_EXCLUIR_RESPONSAVEL'),
+(53, 'ROLE_SALVAR_RESPONSAVEL');
+
+INSERT INTO grupo_permissao (codigo_grupo, codigo_permissao) VALUES 
+(1, 48),
+(1, 49),
+(1, 50),
+(1, 51),
+(1, 52),
+(1, 53),
+
+(5, 42),
+(5, 43),
+(5, 44),
+(5, 45),
+(5, 46),
+(5, 47),
+
+(5, 48),
+(5, 49),
+(5, 50),
+(5, 51),
+(5, 52),
+(5, 53);
+

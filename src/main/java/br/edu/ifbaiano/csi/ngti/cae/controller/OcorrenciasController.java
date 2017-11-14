@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -238,7 +239,12 @@ public class OcorrenciasController {
 	}
 	
 	@GetMapping("/totalPorMes")
-	public @ResponseBody List<GraficoOcorrenciasPorMes> listarTotalOcorrenciasPorMes() {
-		return ocorrencias.totalPorMes();
+	public @ResponseBody List<GraficoOcorrenciasPorMes> listarTotalOcorrenciasPorMes(@AuthenticationPrincipal UsuarioSistema usuarioSistema, HttpServletRequest request) {
+		if(request.isUserInRole("PESQUISAR_TODAS_OCORRENCIAS"))
+			return ocorrencias.totalPorMes();
+		else if (request.isUserInRole("PESQUISAR_OCORRENCIAS_PROPRIA_AUTORIA"))
+			return ocorrencias.totalPorMes(usuarioSistema.getUsuario().getCodigo());
+		
+		return null;
 	}
 }

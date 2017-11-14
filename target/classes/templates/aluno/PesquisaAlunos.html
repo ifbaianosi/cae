@@ -34,7 +34,7 @@
                     </h2>
                     <ul class="header-dropdown m-r--5">
                         <li class="dropdown">
-              				<a th:href="@{/alunos/novo}" class="waves-effect col-teal "><i class="material-icons col-teal btn-icon">add</i> NOVO ALUNO</a>
+              				<a sec:authorize="hasRole('ROLE_NOVO_ALUNO')" th:href="@{/alunos/novo}" class="waves-effect col-teal "><i class="material-icons col-teal btn-icon">add</i> NOVO ALUNO</a>
            				</li>
            			</ul>
                 </div>
@@ -199,7 +199,7 @@
                                 <small>A pesquisa retornou <span th:text="${pagina.totalRegistros}"></span> resultados.</small>
                             </h2>
                             <ul class="header-dropdown m-r--5">
-                                <li class="dropdown">
+                                <li sec:authorize="hasRole('ROLE_NOVO_ALUNO')" class="dropdown">
                     				<a th:href="@{/alunos/novo}" class="waves-effect col-teal "><i class="material-icons col-teal btn-icon">add</i> NOVO ALUNO</a>
                                 </li>
                             </ul>
@@ -231,7 +231,7 @@
 	                                        	<span class="label" th:text="${aluno.status.descricao}" th:classappend="${aluno.status.cor}">FREQUENTANDOO</span>
 	                                        </td>
 	                                        <td class="text-center">
-	                                        	<a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}" class="col-teal"><i class="material-icons btn-icon">edit</i>Editar</a>
+	                                        	<a th:href="@{/alunos/{codigo}(codigo=${aluno.codigo})}" class="col-teal"><i class="material-icons btn-icon">edit</i>EDITAR</a>
 	                                         	<!-- <a sec:authorize-url="/alunos/detalhe" th:href="@{/alunos/detalhe?matricula={matricula}(matricula=${aluno.matricula})}" class="col-teal"><i class="material-icons btn-icon">history</i>Histórico</a> -->
 	                                        </td>
 	                                    </tr>

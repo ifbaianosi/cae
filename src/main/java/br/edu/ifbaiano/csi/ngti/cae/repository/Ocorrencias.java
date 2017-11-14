@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import br.edu.ifbaiano.csi.ngti.cae.model.Aluno;
 import br.edu.ifbaiano.csi.ngti.cae.model.Ocorrencia;
+import br.edu.ifbaiano.csi.ngti.cae.model.Usuario;
 import br.edu.ifbaiano.csi.ngti.cae.repository.helper.ocorrencia.OcorrenciasQueries;
 
 @Repository
@@ -15,4 +16,5 @@ public interface Ocorrencias extends JpaRepository<Ocorrencia, Long>, Ocorrencia
 	public List<Ocorrencia> findByAlunoOrderByDataRegistroDesc(Aluno aluno);
 	public Long countByAluno(Aluno aluno);
 	public List<Ocorrencia> findByAluno(Aluno aluno);
+	public Long countByUsuario(Usuario Usuario);
 }

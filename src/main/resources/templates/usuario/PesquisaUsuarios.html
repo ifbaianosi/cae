@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="'layout/LayoutPadrao'">
+	layout:decorator="'layout/LayoutPadrao'"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
     <title>Pesquisar usuarios</title>
@@ -26,8 +27,8 @@
                         <small>Combine os campos abaixo para filtrar registros de usuários.</small>
                     </h2>
                     <ul class="header-dropdown m-r--5">
-                        <li class="dropdown">
-                 		<a th:href="@{/usuarios/novo}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">add</i> NOVO USUÁRIO</a>
+                        <li sec:authorize="hasRole('ROLE_NOVO_USUARIO')" class="dropdown">
+                 			<a th:href="@{/usuarios/novo}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">add</i> NOVO USUÁRIO</a>
                         </li>
                     </ul>
                 </div>
@@ -69,13 +70,13 @@
 	                    <small>A pesquisa retornou <span th:text="${pagina.totalRegistros}"></span> resultados.</small>
 	                </h2>
 	                <ul class="header-dropdown m-r--5">
-	                    <li class="dropdown">
+	                    <li sec:authorize="hasRole('ROLE_NOVO_USUARIO')" class="dropdown">
 	     					<a th:href="@{/usuarios/novo}" class="col-teal waves-effect"><i class="material-icons col-teal btn-icon">add</i> NOVO USUÁRIO</a>
 	                    </li>
 	                </ul>
 	            </div>
                 <div class="body">
-                	<div class="row">
+                	<div sec:authorize="hasRole('ROLE_ATUALIZAR_STATUS_USUARIO')" class="row">
                 		<div class="col-md-12 align-left">
 		              		<button type="button" class="btn btn-xs bg-teal waves-effect js-status-btn disabled" th:data-status="ATIVAR" th:data-url="@{/usuarios/status}">ATIVAR</button>
 		              		<button type="button" class="btn btn-xs bg-teal waves-effect js-status-btn disabled" th:data-status="DESATIVAR" th:data-url="@{/usuarios/status}">DESATIVAR</button>
